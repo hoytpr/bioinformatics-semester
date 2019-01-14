@@ -5,6 +5,7 @@ title: tidyr
 language: SQL
 ---
 
+
 ### Remember the basic rules of tidy data structure
 
 1. One column per type of information
@@ -23,7 +24,9 @@ library(dplyr)
 
 ### Gather
 
+
 * One common issue is data spread over multiple columns that should be in one
+
 
 > Copy link to Western Ghats tree data from datasets page
 
@@ -39,6 +42,7 @@ raw_data = read.csv("http://esapubs.org/archive/ecol/E091/216/Macroplot_data_Rev
 
 > Lead discussion to correct structure
 
+
 * To get the data in this form we can use `gather`
     * Removes redundant columns
     * Arguments:
@@ -46,10 +50,13 @@ raw_data = read.csv("http://esapubs.org/archive/ecol/E091/216/Macroplot_data_Rev
         * Column name for grouping of old column headers
         * Column name for grouping of old column values
         * Column range for old columns with values
+    * Gets data in long format
 
 ```
+
 clean_data <- raw_data %>%
   gather(stem, girth, TreeGirth1:TreeGirth5)
+
 ```
 
 > View data
@@ -79,6 +86,7 @@ clean_data <- raw_data %>%
   gather(stem, girth, TreeGirth1:TreeGirth5) %>%
   filter(girth != 0) %>%
   extract(stem, 'stem', 'TreeGirth(.)')
+
 ```
 
 ### Separate
@@ -140,3 +148,4 @@ stem_counts_wide <- stem_counts %>%
   unite(species_id, genus, species) %>% 
   spread(species_id, count, fill = 0)
 ```
+
