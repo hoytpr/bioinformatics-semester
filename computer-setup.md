@@ -3,11 +3,16 @@ layout: page
 title: Computer Setup
 ---
 
-***WIS 6934 students will need their own laptops set up with R by week 2, Git by week 10, and SQL by week 13.***
+***BIOC 6820 students will need their own laptops set up with R and/or python by week 2, Git by week 10, and SQL by week 13.***
 
 ### R
 
 Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
+
+### Python
+
+Use [Anaconda](https://www.anaconda.com/download/) to install Python (3.5 or greater) and make sure you 
+download the correct version  for your operating system.
 
 ### GitHub
 
@@ -92,11 +97,10 @@ and for Fedora run `sudo yum install git`.
 ### SQL
 
 Download and install [DB Browser for SQLite](http://sqlitebrowser.org/)
-### Python
 
-*Python installation is not required for WIS 6934. Python materials on this site
-are no longer under active development.*
+### Python Notes
 
-Download and install the
-[Anaconda Scientific Python Distribution](http://continuum.io/downloads).
-I recommend you use a special editor like the [Wing Intelligent Development Environment - 101](http://wingware.com/downloads/wingide-101).
+*Some Python materials on this site
+are no longer under active development. Tell the instructor
+if you are having problems*
+
