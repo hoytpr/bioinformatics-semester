@@ -18,7 +18,7 @@ office_hours_location: 110FC HBRC
 
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
 
-## OSU Spring 2019 Syllabus Attachment
+### OSU Spring 2019 Syllabus Attachment
 Located at https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Spring-2019-Syllabus-Attachment.pdf
 
 ### Professor
