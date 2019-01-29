@@ -11,7 +11,7 @@ permalink:        pretty
 # Setup
 title:            Introduction to Biological Informatics
 description:      'Where Biology Becomes Genomics'
-url:              http://www.datacarpentry.org/semester-biology
+url:              https://github.com/hoytpr/bioinformatics-semester
 baseurl:          /semester-biology
 email:            peter.r.hoyt@okstate.edu
 feedbackurl:      
@@ -20,5 +20,5 @@ author:
   url:            https://twitter.com/peterrhoyt
 
 github:
-  repo:           https://github.com/datacarpentry/semester-biology
+  repo:           https://github.com/hoytpr/semester-biology
   #               Be sure the 'Issues' feature is activated in 'Settings'
