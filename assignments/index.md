@@ -3,6 +3,9 @@ layout: page
 title: Assignments
 ---
 
+### Shell
+* [Shell Intro 1](introducing-the-Shell)
+
 ### SQL
 
 * [Introduction to Databases](sql-data)
