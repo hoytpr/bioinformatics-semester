@@ -5,7 +5,8 @@ title: Acknowledgments
 
 #### Primary Contributors
 
-Course materials and website design have been primarily developed and
+Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry.okstate.edu/faculty/dr.-peter-hoyt-1), the original course materials and website 
+design have been primarily developed and
 implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://zackbrym.weecology.org/). See our [contributors page](https://github.com/datacarpentry/semester-biology/graphs/contributors) for more 
 details.
 
@@ -14,6 +15,10 @@ details.
 The development of this course, and this site, have been supported by the Gordon
 and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
 [GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694).
+
+#### The Carpentries
+
+[The Carpentries](https://carpentries.org/) Are an organization that teaches foundational coding and data science skills to researchers worldwide. The Carpentries teach foundational coding, and data science skills to researchers worldwide. Software Carpentry, Data Carpentry, and Library Carpentry workshops are based on our lessons. Workshop hosts, Instructors, and learners must be prepared to follow our [Code of Conduct](http://docs.carpentries.org/topic_folders/policies/code-of-conduct.html). We are a diverse, global community of volunteers. Our community includes [Instructors](https://carpentries.org/instructors/), helpers, Trainers, [Maintainers](https://carpentries.org/maintainers/), Mentors, community champions, member organisations, supporters, workshop organisers, staff and a whole lot more.
 
 #### Data Carpentry
 
