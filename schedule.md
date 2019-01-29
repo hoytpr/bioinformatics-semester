@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Assignment Schedule
-assignments: ['The Shell', 'Python Assignment 1', 'Python Assignment 2',
+assignments: ['Python Assignment 1', 'Python Assignment 2',
 'Working with Data', 'Data Visualization', 'Working with Spatial Data',
 'Computational Projects', 'Programming Fundamentals 1',
 'Programming Fundamentals 2', 'Putting It All Together',
