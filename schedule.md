@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Assignment Schedule
-assignments: ['Data Entry and Storage', 'Introduction to R and RStudio',
+assignments: ['Python Assignment 1', 'Introduction to R and RStudio',
 'Working with Data', 'Data Visualization', 'Working with Spatial Data',
 'Computational Projects', 'Programming Fundamentals 1',
 'Programming Fundamentals 2', 'Putting It All Together',
