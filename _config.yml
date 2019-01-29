@@ -14,7 +14,7 @@ description:      'Where Biology Becomes Genomics'
 url:              http://www.datacarpentry.org/semester-biology
 baseurl:          /semester-biology
 email:            peter.r.hoyt@okstate.edu
-feedbackurl:      polleverywhere.com/multiple_choice_polls/KznOEBvSAnahmt7
+feedbackurl:      
 author:
   name:           'Peter R. Hoyt'
   url:            https://twitter.com/peterrhoyt
