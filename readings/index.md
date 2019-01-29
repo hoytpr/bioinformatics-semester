@@ -3,9 +3,6 @@ layout: page
 title: Readings
 ---
 
-### Shell
-* [Shell Intro 1](Introducing-the-Shell)
-
 ### SQL
 
 * [Data Entry and Storage](SQL-data)
