@@ -3,9 +3,6 @@ layout: page
 title: Lectures
 ---
 
-### Shell
-* [Shell Intro 1](Introducing-the-Shell)
-
 ### SQL
 
 * [Introduction to Databases](SQL-data)
