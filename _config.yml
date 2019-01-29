@@ -9,15 +9,15 @@ kramdown:
 permalink:        pretty
 
 # Setup
-title:            Data Carpentry for Biologists
-description:      'Teaching the tools to get computers to do cool science'
+title:            Introduction to Biological Informatics
+description:      'Where Biology Becomes Genomics'
 url:              http://www.datacarpentry.org/semester-biology
 baseurl:          /semester-biology
-email:            datacarpentrysemester@weecology.org
+email:            peter.r.hoyt@okstate.edu
 feedbackurl:      polleverywhere.com/multiple_choice_polls/KznOEBvSAnahmt7
 author:
-  name:           'Ethan White'
-  url:            https://twitter.com/ethanwhite
+  name:           'Peter R. Hoyt'
+  url:            https://twitter.com/peterrhoyt
 
 github:
   repo:           https://github.com/datacarpentry/semester-biology
