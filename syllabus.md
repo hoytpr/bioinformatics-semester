@@ -8,15 +8,18 @@ professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: Peter.r.hoyt@okstate.edu
 phone: 405-744-6206
-schedule: ['Tuesdays, 12:50-1:40', 'Fridays, 11:45-1:40']
+schedule: ['TBD']
 location: Self-paced
-office_hours: Monday 2-3:15
+office_hours: Tuesdays 10-11am
 office_hours_location: 110FC HBRC
 ---
 
 ## {{ site.title }}
 
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
+
+## OSU Spring 2019 Syllabus Attachment
+Located at https://hoytpr.github.io/semester-biology/syllabus/2019-Spring-Syllabus.pdf
 
 ### Professor
 
@@ -87,7 +90,7 @@ Knowledge of basic biology.
 ### Purpose of Course
 
 By the end of the course you will be able to use bioinformatic tools to import data 
-into R, perform analysis on that data, and export the results to graphs, text files, and
+into proper formats for genomics, perform analysis on that data, and export the results to graphs, text files, and
 databases. 
 
 ### Course Goals and Objectives
@@ -96,7 +99,7 @@ Students completing this course will be able to:
 
 * Create well structured databases
 * Extract information from databases
-* Write simple computer programs in R
+* Write simple computer programs in the BASH shell or Python
 * Automate data analysis
 * Apply these tools to address biological questions
 
@@ -144,7 +147,7 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 ### Assignment policy
 
 Assignments are due Monday night by 11:59 pm Eastern Time. Assignments should be
-submitted via Canvas. This allows you to be finished with one week's material
+submitted via [email](mailto:peter.r.hoyt@okstate.edu). This allows you to be finished with one week's material
 before starting the next week's material.
 
 
@@ -153,18 +156,18 @@ before starting the next week's material.
 Students are required to provide their own laptops/desktops and to install free and open
 source software on those computers (see [Setup]({{ site.baseurl }}/computer-setup)
 for installation instructions). Support will be provided by the instructor in
-the installation of required software. If you need but don't have access to a laptop
-please contact the instructor and they will do their best to provide you with
+the installation of required software. If you need but don't have access to a suitable
+computer please contact the instructor and they will do their best to provide you with
 one.
 
 
 ## OSU Policies
-STOPPED HERE
+
 
 ### University Policy on Accommodating Students with Disabilities
 
 Students requesting accommodation for disabilities must first register with the
-Dean of Students Office (http://www.dso.ufl.edu/drc/). The Dean of Students
+Student Disability ofice (http://sds.okstate.edu/). The Dean of Students
 Office will provide documentation to the student who must then provide this
 documentation to the instructor when requesting accommodation. You must submit
 this documentation prior to submitting assignments or taking the quizzes or
@@ -176,8 +179,8 @@ accommodations.
 ### University Policy on Academic Misconduct
 
 Academic honesty and integrity are fundamental values of the University
-community. Students should be sure that they understand the UF Student Honor
-Code at http://www.dso.ufl.edu/students.php.
+community. Students should be sure that they understand the OSU Acedemic Integrity
+Code at https://academicintegrity.okstate.edu/content/academic-integrity-resources.
 
 
 ### Netiquette and Communication Courtesy
@@ -199,8 +202,8 @@ and I will do my best to help.**
 
 ## Grading Policies
 
-Grading for this course is based on 13 equally weighted assignments. One problem
-from each assignment (selected at the instructors discretion after the
+Grading for this course is tentatively based on 13 equally weighted assignments. 
+Some assignments (selected at the instructors discretion after the
 assignments have been submitted) will receive a thorough code review and a
 detailed grade. Other problems will be graded as follows:
 
