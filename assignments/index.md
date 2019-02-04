@@ -5,7 +5,7 @@ title: Assignments
 
 ### Shell
 
-* [Shell Assignment 1](shell-1)
+* [Shell Assignment 1](shell01)
 
 ### SQL
 
