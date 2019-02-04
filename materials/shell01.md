@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: The Shell
+title: Introduction to the Shell
 language: Shell
 questions:
 - "What is a command shell and why would I use one?"
