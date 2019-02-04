@@ -5,9 +5,9 @@ title: Computer Setup
 
 ***BIOC 6820 students will need their own laptops set up with R and/or python by week 2, Git by week 10, and SQL by week 13.***
 
-### R
+### Shell
 
-Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
+Download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
 
 ### Python
 
@@ -27,7 +27,7 @@ download the correct version  for your operating system.
     2. Sign in if necessary.
     3. In the upper left corner click on the drop down with your name.
     4. Confirm that the name name of the course GitHub organization is present
-
+    
 ### Git
 
 #### Windows
@@ -93,6 +93,10 @@ result from Step 6), try the following:
 Git is probably already installed. If it is not already available install it via
 your distro's package manager. For Debian/Ubuntu run `sudo apt-get install git`
 and for Fedora run `sudo yum install git`.
+
+### R
+
+Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
 
 ### SQL
 
