@@ -5,7 +5,7 @@ title: Lectures
 
 ### Shell
 
-* [Shell Intro 1](shell01)
+* [Shell Intro 1](Introducing-the-Shell)
 
 ### SQL
 
