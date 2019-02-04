@@ -3,6 +3,10 @@ layout: page
 title: Lectures
 ---
 
+### Shell
+
+* [Shell Intro 1](shell-01)
+
 ### SQL
 
 * [Introduction to Databases](SQL-data)
