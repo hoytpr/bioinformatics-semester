@@ -3,6 +3,10 @@ layout: page
 title: Readings
 ---
 
+### Shell
+
+* [Shell Assignment 1](Shell01)
+
 ### SQL
 
 * [Data Entry and Storage](SQL-data)
