@@ -2,7 +2,7 @@
 layout: page
 element: assignment
 title: Shell Assignment 1
-language: Python
+language: Shell
 exercises: ['Getting Started', 'Finding Things']
 ---
 
