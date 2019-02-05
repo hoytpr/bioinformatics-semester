@@ -1,7 +1,7 @@
 ---
 layout: page
 element: reading
-title: Shell01
+title: Shell Assignment 1
 language: Shell
 ---
 
