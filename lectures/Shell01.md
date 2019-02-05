@@ -1,8 +1,8 @@
 ---
 layout: page
 element: lecture
-title: Shell Intro 1
-language: Python
+title: Shell Assignment 1
+language: Shell
 ---
 
 * [Introduction to the Shell]({{ site.baseurl }}/materials/shell01)
