@@ -6,6 +6,7 @@ title: Lectures
 ### Shell
 
 * [Shell Intro 1](Shell01)
+* [Shell Lesson 2](Shell02)
 
 ### SQL
 
