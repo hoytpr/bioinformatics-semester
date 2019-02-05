@@ -2,6 +2,7 @@
 layout: page
 element: notes
 title: Introduction to the Shell
+language: Python
 questions:
 - "What is a command shell and why would I use one?"
 objectives:
