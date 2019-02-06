@@ -6,6 +6,7 @@ title: Readings
 ### Shell
 
 * [Shell Assignment 1](Shell01)
+* [Shell Lesson 2](Shell02)
 
 ### SQL
 
