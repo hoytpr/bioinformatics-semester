@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Exercises
-languages: ['SQL', 'R', 'Python', 'Access']
+languages: ['Shell', 'SQL', 'R', 'Python', 'Access']
 ---
 <a href="#SQL">SQL</a> \| <a href="#R">R</a> \| <a href="#Python">Python</a> \|  <a href="#Access">Access</a>
 
