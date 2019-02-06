@@ -6,6 +6,7 @@ title: Assignments
 ### Shell
 
 * [Shell Assignment 1](shell01)
+* [Shell Lesson 2](shell02)
 
 ### SQL
 
