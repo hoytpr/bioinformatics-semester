@@ -14,6 +14,7 @@ title: Lecture Materials
 -   [Shell]({{ site.baseurl }}/materials/shell) \| [Shell Alternate]({{ site.baseurl }}/materials/shell2)
 -   [State in IDEs]({{ site.baseurl }}/materials/state-in-IDEs)
 -   [Shell Intro 1]({{ site.baseurl }}/materials/shell01)
+-   [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
 
 ### SQL <a name="SQL"></a>
 
