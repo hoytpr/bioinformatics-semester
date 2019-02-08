@@ -16,7 +16,7 @@ already have some programming background.
 To encourage folks to use this material all of the general material on this
 site is [licensed]({{ site.baseurl }}/LICENSE) under the Creative Commons Attribution License and all programs are [licensed]({{ site.baseurl }}/LICENSE) under the MIT License. 
 
-{% if site.email == 'datacarpentrysemester@weecology.org' %}
+{% if site.email == 'peter.r.hoyt@okstate.edu' %}
 Be sure to [let us know what you think](mailto:{{ site.email }}) so we can be sure to get you the best experience.
 {% else %}
 Be sure to let us know [what you think about the course material](mailto:{{ site.email }}) or [what you think about the course website](mailto:datacarpentrysemester@weecology.org) so we can be sure to get you the best experience.
