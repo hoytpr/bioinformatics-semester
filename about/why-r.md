@@ -3,7 +3,7 @@ layout: page
 title: Why R?
 ---
 
-I chose to add an R version of this course for a handful of reasons
+An R version of this course is also available for a handful of reasons
 including:
 
 1.  R is used widely in a number of disciplines, like ecology, and provides a  
@@ -25,7 +25,7 @@ including:
     on large or complex projects much easier.
 6.  [Data Carpentry](http://datacarpentry.org) 'lecture' materials are available
     in R, which provides a resource for students to learn more
-    advanced topics on their own and allows me to avoid duplicating
-    effort.  I also contribute material that I have developed back to Data 
+    advanced topics on their own and avoids duplicating
+    efforts.  It's also easy to contribute material back to Data 
     Carpentry.
 7.  [R is the most common statistics platform in Ecology](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/abstract).
