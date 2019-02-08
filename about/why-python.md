@@ -3,7 +3,7 @@ layout: page
 title: Why Python?
 ---
 
-I chose to use Python for these courses for a handful of reasons
+Python was chosen for these courses for a handful of reasons
 including:
 
 1.  It is the language with the greatest potential to be used across the
@@ -28,10 +28,11 @@ including:
     on large or complex projects much easier.
 6.  [Software Carpentry](http://software-carpentry.org), a truly
     excellent resource for learning scientific programming, is available
-    primarily in Python. This makes it easier for students to learn more
+    primarily in Python (although R is coming). 
+    This makes it easier for students to learn more
     advanced topics on their own and allows me to avoid duplicating
     effort by using Software Carpentry lectures and by contributing
-    material that I have developed back to Software Carpentry.
+    material developed in this coursee back to Software Carpentry.
 
 Or maybe I chose it because of this great [XKCD](http://xkcd.com/)
 comic. Who knows?
