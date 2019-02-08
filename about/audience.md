@@ -19,7 +19,7 @@ site is [licensed]({{ site.baseurl }}/LICENSE) under the Creative Commons Attrib
 {% if site.email == 'peter.r.hoyt@okstate.edu' %}
 Be sure to [let us know what you think](mailto:{{ site.email }}) so we can be sure to get you the best experience.
 {% else %}
-Be sure to let us know [what you think about the course material](mailto:{{ site.email }}) or [what you think about the course website](mailto:datacarpentrysemester@weecology.org) so we can be sure to get you the best experience.
+Be sure to let us know [what you think about the course material](mailto:{{ site.email }}) or [let Data Carpentry know what you think about the course website](mailto:datacarpentrysemester@weecology.org) so we can be sure to get you the best experience.
 {% endif %}
 
 Examples of folks who we are trying to help:
