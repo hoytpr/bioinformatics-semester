@@ -77,7 +77,7 @@ which will be constructed in a similar way, but not be exactly identical.
 
 On Nelle's computer, the filesystem looks like this:
 
-![The File System](../fig/filesystem.svg)
+![The File System](/fig/filesystem.svg)
 
 At the top is the **root directory**
 that holds everything else.
@@ -106,10 +106,10 @@ because its name begins with `/`.
 {: .callout}
 
 Underneath `/Users`,
-we find one directory for each user with an account on Nelle's machine,
+we find one directory for each user with an account on Nelle's machine (AKA: 'computer"),
 her colleagues *imhotep* and *larry*.  
 
-![Home Directories](../fig/home-directories.svg)
+![Home Directories](fig/home-directories.svg)
 
 The user *imhotep*'s files are stored in `/Users/imhotep`,
 user *larry*'s in `/Users/larry`,
@@ -139,10 +139,10 @@ system and how you have customized your filesystem.)
 `ls` prints the names of the files and directories in the current directory. 
 We can make its output more comprehensible by using the **flag** `-F`
 (also known as a **switch** or an **option**) ,
-which tells `ls` to add a marker to file and directory names to indicate what
-they are. A trailing `/` indicates that this is a directory. Depending on your
-settings, it might also use colors to indicate whether each entry is a file or 
-directory.
+which tells `ls` to add a marker indicating if the items in the directory are
+files, or directories. Specifically, a trailing `/` indicates that this is a directory. 
+Depending on your settings, it might also use colors to indicate whether each entry 
+is a file or directory.
 You might recall that we used `ls -F` in an earlier example.
 
 ~~~
@@ -157,10 +157,10 @@ Desktop/      Downloads/    Movies/       Pictures/
 {: .output}
 
 Here,
-we can see that our home directory contains mostly **sub-directories**.
-Any names in your output that don't have trailing slashes,
+we can see our home directory contains mostly **sub-directories**.
+If you see any names in your output that don't have trailing slashes,
 are plain old **files**.
-And note that there is a space between `ls` and `-F`:
+**Note** that there is a space between `ls` and `-F`:
 without it,
 the shell thinks we're trying to run a command called `ls-F`,
 which doesn't exist.
@@ -318,6 +318,11 @@ or available locally via: info '(coreutils) ls invocation'
 ~~~
 {: .output}
 
+That's a lot of help. We can't go through all this today, but you should always 
+know that `--help` is there for you. 
+
+But when things go wrong there are also error messages that can be helpful:
+
 > ## Unsupported command-line options
 > If you try to use an option (flag) that is not supported, `ls` and other commands
 > will usually print an error message similar to:
@@ -360,7 +365,7 @@ To **quit** the `man` pages, press <kbd>Q</kbd>.
 > Of course there is a third way to access help for commands:
 > searching the internet via your web browser. 
 > When using internet search, including the phrase `unix man page` in your search
-> query will help to find relevant results.
+> query will help to find relevant results (e.g. `unix man page ls`).
 >
 > GNU provides links to its
 > [manuals](http://www.gnu.org/manual/manual.html) including the
@@ -420,7 +425,7 @@ data-shell/
 
 Your output should be a list of all the files and sub-directories on your
 Desktop, including the `data-shell` directory you downloaded at
-the [setup for this lesson]({{ page.root }}{% link computer-setup.md %}).  Take a look at your Desktop to confirm that
+the [setup for this lesson](/computer-setup).  Take a look at your Desktop to confirm that
 your output is accurate.  
 
 As you may now see, using a bash shell is strongly dependent on the idea that
@@ -447,6 +452,7 @@ data/               north-pacific-gyre/ pizza.cfg           writing/
 ~~~
 {: .output}
 
+(Now we see the data-shell directory has both directories and ordinary files.)
 Second, we can actually change our location to a different directory, so
 we are no longer located in
 our home directory.  
@@ -512,7 +518,7 @@ $ cd data-shell
 But we get an error!  Why is this?  
 
 With our methods so far,
-`cd` can only see sub-directories inside your current directory.  There are
+`cd` can only see sub-directories *inside* your current directory.  There are
 different ways to see directories above your current location; we'll start
 with the simplest.  
 
@@ -524,7 +530,7 @@ $ cd ..
 ~~~
 {: .language-bash}
 
-`..` is a special directory name meaning
+`..` is a special directory indicator meaning:
 "the directory containing this one",
 or more succinctly,
 the **parent** of the current directory.
@@ -541,7 +547,7 @@ $ pwd
 ~~~
 {: .output}
 
-The special directory `..` doesn't usually show up when we run `ls`.  If we want
+The special directory indicator `..` doesn't usually show up when we run `ls`.  If we want
 to display it, we can give `ls` the `-a` flag:
 
 ~~~
@@ -556,24 +562,24 @@ $ ls -F -a
 {: .output}
 
 `-a` stands for "show all";
-it forces `ls` to show us file and directory names that begin with `.`,
-such as `..` (which, if we're in `/Users/nelle`, refers to the `/Users` directory)
+it forces `ls` to show us any file and directory names that begin with `.` (more on this later),
+which includes `..` (so, if we're in `/Users/nelle`,`..` refers to the `/Users` directory)
 As you can see,
-it also displays another special directory that's just called `.`,
+it also displays another special directory indicator that's just: `.`,
 which means "the current working directory".
 It may seem redundant to have a name for it,
 but we'll see some uses for it soon.
 
 Note that in most command line tools, multiple flags can be combined 
-with a single `-` and no spaces between the flags: `ls -F -a` is 
-equivalent to `ls -Fa`.
+with a single dash `-` and **no spaces** between the flags: `ls -Fa` is 
+equivalent to `ls -F -a`.
 
 > ## Other Hidden Files
 >
-> In addition to the hidden directories `..` and `.`, you may also see a file
+> In addition to the hidden directories `..` and `.`, you may also see a hidden file
 > called `.bash_profile`. This file usually contains shell configuration
-> settings. You may also see other files and directories beginning
-> with `.`. These are usually files and directories that are used to configure
+> settings. You may also see other hidden files and directories beginning
+> with `.`. These are usually special files and directories that are used to configure
 > different programs on your computer. The prefix `.` is used to prevent these
 > configuration files from cluttering the terminal when a standard `ls` command
 > is used.
@@ -581,12 +587,14 @@ equivalent to `ls -Fa`.
 
 > ## Orthogonality
 >
-> The special names `.` and `..` don't belong to `cd`;
-> they are interpreted the same way by every program.
+> To make memorizing the commands and flags of the BASH shell easier
+> The special names `.` and `..` don't belong to **just** `cd`;
+> they are interpreted the same way by every command program.
 > For example,
 > if we are in `/Users/nelle/data`,
 > the command `ls ..` will give us a listing of `/Users/nelle`.
-> When the meanings of the parts are the same no matter how they're combined,
+> When the meanings of the parts (like flags) 
+> are the same no matter how they're combined,
 > programmers say they are **orthogonal**:
 > Orthogonal systems tend to be easier for people to learn
 > because there are fewer special cases and exceptions to keep track of.
