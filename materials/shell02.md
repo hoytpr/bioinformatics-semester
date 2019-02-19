@@ -36,7 +36,7 @@ which hold files or other directories.
 Several commands are frequently used to create, inspect, rename, and delete files and directories.
 To start exploring them, we'll go to our open shell window.
 
-First let's find out where we are by running a command called `pwd`
+let's find out where we are by running a command called `pwd`
 (which stands for "print working directory"). Directories are like *places* - at any time
 while we are using the shell we are in exactly one place, called
 our **current working directory**. Commands mostly read and write files in the 
@@ -64,7 +64,11 @@ which is Nelle's **home directory**:
 > and on Windows it will be similar to `C:\Documents and Settings\nelle` or
 > `C:\Users\nelle`.  
 > (Note that it may look slightly different for different versions of Windows.)
-> In future examples, we've used Mac output as the default - Linux and Windows
+> A typical Windows file structure might look like the image below, but
+> the GitBash window will show you similar outputs to start our lesson about
+> moving through files and directories. 
+> ![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
+> Remember, In future examples, we've used Mac output as the default - Linux and Windows
 > output may differ slightly, but should be generally similar.  
 {: .callout}
 
