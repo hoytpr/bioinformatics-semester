@@ -3,7 +3,7 @@ layout: page
 title: Assignment Submission & Checklist
 ---
 
-- All assignments should be submitted through [Canvas](http://ufl.instructure.com/)
+- All assignments should be submitted through [email](mailto:peter.r.hoyt@okstate.edu)
 
 - What files to submit: 
     - **Week 1** - one text form, one .xlsx file
@@ -24,7 +24,7 @@ Code should be easy to read and understand.
 
 - Only include code and comments necessary for the assignment. Remove anything else (e.g., notes taken during class, commented code that isn't needed anymore).
 - Remove extra/duplicate files. Only turn in what is necessary for the assignment.
-- Clearly label problems using comments.
+- Clearly label problems using comments. This can earn you partial credit!
 
 #### Make sure your code runs like you think it does
 
@@ -32,6 +32,7 @@ Code should run from the start of the file to the end of the file without proble
 
 - Clear the R environment by clicking on the broom icon on the `Environment` tab.
 - Run the entire file by either clicking the `Source` button or using the `Ctrl-Shift-Enter` keyboard shortcut.
+- in the event of an incomplete assignment (code desn't run) seek instructor help. If it's too late, annotate the problem clearly
 
 #### Work with data files appropriately
 
@@ -40,3 +41,4 @@ Code should run the same way regardless of which computer it is run on. In order
 - Do not use setwd()
 - Use relative paths, not absolute paths. E.g., use `data/mydata.csv` instead of `C:\Users\Batman\DataCarp\data\mydata.csv`.
 - Make filenames in the code match the actual filenames exactly including capitalization
+- Indicate your version of R (we should not have to do this, but well... life)
