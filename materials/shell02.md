@@ -67,7 +67,9 @@ which is Nelle's **home directory**:
 > A typical Windows file structure might look like the image below, but
 > the GitBash window will show you similar outputs to start our lesson about
 > moving through files and directories. 
+> 
 > ![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
+>
 > Remember, In future examples, we've used Mac output as the default - Linux and Windows
 > output may differ slightly, but should be generally similar.  
 {: .callout}
