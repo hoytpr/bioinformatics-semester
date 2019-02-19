@@ -81,7 +81,7 @@ On Nelle's computer, the filesystem looks like this:
 
 At the top is the **root directory**
 that holds everything else.
-We refer to it using a slash character, `/`, on its own;
+We refer to it using a slash character, `/`, on its own
 this is the leading slash in `/Users/nelle`.
 
 Inside that directory are several other directories:
@@ -109,7 +109,7 @@ Underneath `/Users`,
 we find one directory for each user with an account on Nelle's machine (AKA: 'computer"),
 her colleagues *imhotep* and *larry*.  
 
-![Home Directories](/materials/Nelles_directory_structure.png)
+![Home Directories](/materials/root2guys.png)
 
 The user *imhotep*'s files are stored in `/Users/imhotep`,
 user *larry*'s in `/Users/larry`,
