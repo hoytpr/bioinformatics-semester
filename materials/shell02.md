@@ -77,7 +77,7 @@ which will be constructed in a similar way, but not be exactly identical.
 
 On Nelle's computer, the filesystem looks like this:
 
-![The File System](/materials/Root2Users.png)
+![The File System]({{ site.baseurl }}/materials/Root2Users.png)
 
 At the top is the **root directory**
 that holds everything else.
@@ -109,7 +109,7 @@ Underneath `/Users`,
 we find one directory for each user with an account on Nelle's machine (AKA: 'computer"),
 her colleagues *imhotep* and *larry*.  
 
-![Home Directories](/materials/root2guys.png)
+![Home Directories]({{ site.baseurl }}/materials/root2guys.png)
 
 The user *imhotep*'s files are stored in `/Users/imhotep`,
 user *larry*'s in `/Users/larry`,
