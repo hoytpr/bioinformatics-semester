@@ -5,7 +5,7 @@ title: Why Shell?
 
 Teaching the Shell is a critical first part of learning 
 about everything that comes later in both access to high
-Performance computers, and how to script and code. 
+performance computers, and how to script and code. 
 The best part? It's kind of fun!
 
 1.  It is the basic process language that is used across the
