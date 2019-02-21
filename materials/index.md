@@ -4,11 +4,6 @@ title: Lecture Materials
 ---
 <a href="#SQL">SQL</a> \| <a href="#R">R</a> \| <a href="#Python">Python</a> \|  <a href="#Access">Access</a>
 
-### General Programing And GIT
--   [Problem Decomposition]({{ site.baseurl }}/materials/problem-decomposition)
--   [Git Collaboration]({{ site.baseurl }}/materials/git-collaboration-example)
--   [Git in 30 minutes]({{ site.baseurl }}/materials/git-in-30-minutes)
-
 ### Shell
 
 -   [Shell]({{ site.baseurl }}/materials/shell) \| [Shell Alternate]({{ site.baseurl }}/materials/shell2)
@@ -37,6 +32,11 @@ title: Lecture Materials
 - [`knitr`]({{ site.baseurl }}/materials/knitr)
 - [R Cheat Sheet]({{ site.baseurl }}/materials/Walkthrough-R)
 - [Projects]({{ site.baseurl }}/materials/projects)
+
+### General Programing And GIT
+-   [Problem Decomposition]({{ site.baseurl }}/materials/problem-decomposition)
+-   [Git Collaboration]({{ site.baseurl }}/materials/git-collaboration-example)
+-   [Git in 30 minutes]({{ site.baseurl }}/materials/git-in-30-minutes)
 
 ### SQL <a name="SQL"></a>
 
