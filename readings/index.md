@@ -8,11 +8,6 @@ title: Readings
 * [Shell Assignment 1](Shell01)
 * [Shell Lesson 2](Shell02)
 
-### SQL
-
-* [Data Entry and Storage](SQL-data)
-* [Database Queries](SQL-queries)
-
 ### R
 
 * [Introduction to R and RStudio](R-intro)
@@ -27,6 +22,11 @@ title: Readings
 * [Low-level Database Management Libraries](R-sql)
 * [Advanced Topics](R-advanced)
 * [Additional Resources](R-additional)
+
+### SQL
+
+* [Data Entry and Storage](SQL-data)
+* [Database Queries](SQL-queries)
 
 ### Git
 
