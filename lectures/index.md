@@ -8,11 +8,6 @@ title: Lectures
 * [Shell Intro 1](Shell01)
 * [Shell Lesson 2](Shell02)
 
-### SQL
-
-* [Introduction to Databases](SQL-data)
-* [Database Structure and Joins](SQL-queries)
-
 ### R
 
 * [Introduction to R and RStudio](R-intro)
@@ -25,6 +20,11 @@ title: Lectures
 * [Working with Databases](R-databases)
 * [Version Control Basics](R-git)
 * [Putting It All Together](R-capstone)
+
+### SQL
+
+* [Introduction to Databases](SQL-data)
+* [Database Structure and Joins](SQL-queries)
 
 ### Git
 
