@@ -8,11 +8,6 @@ title: Assignments
 * [Shell Assignment 1](shell01)
 * [Shell Lesson 2](shell02)
 
-### SQL
-
-* [Introduction to Databases](sql-data)
-* [Database Structure and Joins](sql-queries)
-
 ### R
 
 * [Introduction to R and RStudio](r-intro)
@@ -28,6 +23,11 @@ title: Assignments
 * [Low-level Database Management Libraries](r-sql)
 * [Advanced Topics](r-advanced)
 * [Review](r-review)
+
+### SQL
+
+* [Introduction to Databases](sql-data)
+* [Database Structure and Joins](sql-queries)
 
 ### Git
 * [Git with R](r-git)
