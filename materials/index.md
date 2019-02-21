@@ -16,6 +16,28 @@ title: Lecture Materials
 -   [Shell Intro 1]({{ site.baseurl }}/materials/shell01)
 -   [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
 
+### R <a name="R"></a>
+
+- [Introduction]({{ site.baseurl }}/materials/r-intro)
+- [Data Structures]({{ site.baseurl }}/materials/data-structures-R)
+- [`dplyr`]({{ site.baseurl }}/materials/dplyr)
+- [`ggplot`]({{ site.baseurl }}/materials/ggplot)
+- [Functions]({{ site.baseurl }}/materials/functions-R)
+- [`for` loops]({{ site.baseurl }}/materials/for-loops-R)
+- [Other Data Structures]({{ site.baseurl }}/materials/other-data-structures-R)
+- [Conditionals]({{ site.baseurl }}/materials/conditionals-R)
+- [Problem Decomposition]({{ site.baseurl }}/materials/decomposition-R) ([R-script]({{ site.baseurl }}/materials/decomposition-example.R))
+- [Spatial Data]({{ site.baseurl }}/materials/spatial-data-R)
+- [Version Control]({{ site.baseurl }}/materials/version-control-R)
+- [Working with Databases]({{ site.baseurl }}/materials/r-databases)
+- [Low-level Database Management Libraries]({{ site.baseurl }}/materials/r-sql)
+- [`tidyr`]({{ site.baseurl }}/materials/tidyr)
+- [Project Structure]({{ site.baseurl }}/materials/project-structure)
+- [Debugging]({{ site.baseurl }}/materials/debugging-R)
+- [`knitr`]({{ site.baseurl }}/materials/knitr)
+- [R Cheat Sheet]({{ site.baseurl }}/materials/Walkthrough-R)
+- [Projects]({{ site.baseurl }}/materials/projects)
+
 ### SQL <a name="SQL"></a>
 
 #### Course Notes
@@ -50,28 +72,6 @@ title: Lecture Materials
 - [Order Doesn't Matter]({{ site.baseurl }}/materials/database-struct-order-doesnt-matter.png)
 - [Redundant Table]({{ site.baseurl }}/materials/databases-redundant-table.png)
 - [Redundant Table Restructure]({{ site.baseurl }}/materials/databases-redundant-table-restructure.png)
-
-### R <a name="R"></a>
-
-- [Introduction]({{ site.baseurl }}/materials/r-intro)
-- [Data Structures]({{ site.baseurl }}/materials/data-structures-R)
-- [`dplyr`]({{ site.baseurl }}/materials/dplyr)
-- [`ggplot`]({{ site.baseurl }}/materials/ggplot)
-- [Functions]({{ site.baseurl }}/materials/functions-R)
-- [`for` loops]({{ site.baseurl }}/materials/for-loops-R)
-- [Other Data Structures]({{ site.baseurl }}/materials/other-data-structures-R)
-- [Conditionals]({{ site.baseurl }}/materials/conditionals-R)
-- [Problem Decomposition]({{ site.baseurl }}/materials/decomposition-R) ([R-script]({{ site.baseurl }}/materials/decomposition-example.R))
-- [Spatial Data]({{ site.baseurl }}/materials/spatial-data-R)
-- [Version Control]({{ site.baseurl }}/materials/version-control-R)
-- [Working with Databases]({{ site.baseurl }}/materials/r-databases)
-- [Low-level Database Management Libraries]({{ site.baseurl }}/materials/r-sql)
-- [`tidyr`]({{ site.baseurl }}/materials/tidyr)
-- [Project Structure]({{ site.baseurl }}/materials/project-structure)
-- [Debugging]({{ site.baseurl }}/materials/debugging-R)
-- [`knitr`]({{ site.baseurl }}/materials/knitr)
-- [R Cheat Sheet]({{ site.baseurl }}/materials/Walkthrough-R)
-- [Projects]({{ site.baseurl }}/materials/projects)
 
 ### Python <a name="Python"></a>
 *Python materials were used in [previous iterations](http://www.programmingforbiologists.org/) of the course at Utah State University, but
