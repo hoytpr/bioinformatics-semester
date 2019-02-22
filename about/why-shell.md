@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Why Shell?
+title: Why Shell
 ---
 
 Teaching the Shell is a critical first part of learning 
