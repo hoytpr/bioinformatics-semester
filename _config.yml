@@ -14,7 +14,7 @@ description:      'Biology Becomes Genomics'
 url:              https://github.com/hoytpr/bioinformatics-semester
 baseurl:          /bioinformatics-semester
 email:            peter.r.hoyt@okstate.edu
-feedbackurl:      
+feedbackurl:      https://pollev.com/HOYTPR
 author:
   name:           'Peter R. Hoyt'
   url:            https://twitter.com/peterrhoyt
