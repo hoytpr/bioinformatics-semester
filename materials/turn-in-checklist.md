@@ -6,11 +6,9 @@ title: Assignment Submission & Checklist
 - All assignments should be submitted through [email](mailto:peter.r.hoyt@okstate.edu)
 
 - What files to submit: 
-    - **Week 1** - one text form, one .xlsx file
-    - **Weeks 2-9** - a zip file containing one .R file & any data files needed to run it
-    - **Week 10** - a link to a GitHub repository
-    - **Weeks 11-13** - either a zip file containing one .R file & any data files needed to run it or a link to a GitHub repository containing the .R file and any data files needed to run it
-
+    - **Week 1 - 2** - two text forms, link to a GitHub repository
+    - **Weeks 3-9** - a zip file containing one .R file & any data files needed to run it
+    - **Weeks 10-13** - either a zip file containing one .R file & any data files needed to run it or a link to a GitHub repository containing the .R file and any data files needed to run it
 
 # Code Checklist
 
@@ -32,7 +30,7 @@ Code should run from the start of the file to the end of the file without proble
 
 - Clear the R environment by clicking on the broom icon on the `Environment` tab.
 - Run the entire file by either clicking the `Source` button or using the `Ctrl-Shift-Enter` keyboard shortcut.
-- in the event of an incomplete assignment (code desn't run) seek instructor help. If it's too late, annotate the problem clearly
+- in the event of an incomplete assignment (code desn't run) seek instructor help. If it's too late, annotate the problem clearly.
 
 #### Work with data files appropriately
 
