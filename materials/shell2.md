@@ -4,10 +4,7 @@ element: notes
 title: The Shell
 ---
 
-Monday
-------
-
-###Why you should care
+### Why you should care
 * Demo a workflow pipeline
 * Commit all data files for Problem 2 using:
 
@@ -25,8 +22,6 @@ Monday
 * `svn add`
 * `svn commit`
 
-Wednesday
----------
 ### Shebangs
 A shebang is a special code at the beginning of a script to tell
 the shell to run it as a scripot for a particular language.
@@ -61,9 +56,6 @@ The two key modules for doing so are:
         directory_list = subprocess.check_output(["ls", "-l"])
         directory_list = subprocess.os.listdir('.')
 
-
-Friday
-------
 
 ### SSH
 
