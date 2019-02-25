@@ -6,7 +6,6 @@ title: Lecture Materials
 
 ### Shell
 
--   [Shell]({{ site.baseurl }}/materials/shell) \| [Shell Alternate]({{ site.baseurl }}/materials/shell2)
 -   [Shell Intro 1]({{ site.baseurl }}/materials/shell01)
 -   [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
 
@@ -112,6 +111,7 @@ with it on your computer by changing the code and seeing what happens.*
 
 #### Extra Notes
 
+-   [Shell]({{ site.baseurl }}/materials/shell) \| [Shell Alternate]({{ site.baseurl }}/materials/shell2)
 -   [Aliasing](http://nbviewer.ipython.org/urls/github.com/datacarpentry/semester-biology/raw/master/materials/aliasing.ipynb) ([notebook](https://raw.github.com/datacarpentry/semester-biology/master/materials/aliasing.ipynb))
 -   [Beautiful Soup](http://nbviewer.ipython.org/urls/github.com/datacarpentry/semester-biology/raw/master/materials/beautiful-soup.ipynb) ([notebook](https://raw.github.com/datacarpentry/semester-biology/master/materials/beautiful-soup.ipynb))
 -   [Biopython]({{ site.baseurl }}/materials/biopython-data-types-and-methods)
