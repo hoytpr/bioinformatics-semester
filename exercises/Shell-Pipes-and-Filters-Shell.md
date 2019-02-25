@@ -6,7 +6,7 @@ language: Shell
 ---
 
 
-  ## Redirecting to the same file
+## Redirecting to the same file
  
   It's a very bad idea to try redirecting
   the output of a command that operates on a file
@@ -22,7 +22,7 @@ language: Shell
   the contents of `lengths.txt`.
 {: .callout}
 
-  ## What Does `>>` Mean?
+## What Does `>>` Mean?
   We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
   By using the `echo` command to print strings, test the commands below to reveal the difference
   between the two operators:
@@ -52,7 +52,7 @@ language: Shell
 {: .challenge}
 
 
-  ## Appending Data
+## Appending Data
  
   We have already met the `head` command, which prints lines from the start of a file.
   `tail` is similar, but prints lines from the end of a file instead.
@@ -80,7 +80,7 @@ language: Shell
   {: .solution}
 {: .challenge}
 
-  ## Piping Commands Together
+## Piping Commands Together
  
   In our current directory, we want to find the 3 files which have the least number of
   lines. Which command listed below would work?
@@ -99,7 +99,7 @@ language: Shell
   {: .solution}
 {: .challenge}
 
-  ## Pipe Construction
+## Pipe Construction
  
   For the file `animals.txt` from the previous exercise, the command:
  
@@ -135,7 +135,7 @@ language: Shell
   {: .solution}
 {: .challenge}
 
-  ## Which Pipe?
+## Which Pipe?
  
   The file `animals.txt` contains 8 lines of data formatted as follows:
  
@@ -166,7 +166,7 @@ language: Shell
   {: .solution}
 {: .challenge}
 
-  ## Removing Unneeded Files
+## Removing Unneeded Files
  
   Suppose you want to delete your processed data files, and only keep
   your raw files and processing script to save storage.
