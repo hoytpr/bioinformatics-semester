@@ -5,10 +5,6 @@ title: Files and Directories
 language: Shell
 ---
 
-### Add
-
-- Exercises from Shell03 here
-
 > ## Creating Files a Different Way
 >
 > We have seen how to create text files using the `nano` editor.
