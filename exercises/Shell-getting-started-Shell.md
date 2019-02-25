@@ -1,6 +1,6 @@
 ---
 layout: exercise
-element: Shell
+topic: Shell
 title: Getting Started 
 language: Shell
 ---
