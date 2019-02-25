@@ -7,13 +7,13 @@ title: Lecture Materials
 ### Shell
 
 -   [Shell]({{ site.baseurl }}/materials/shell) \| [Shell Alternate]({{ site.baseurl }}/materials/shell2)
--   [State in IDEs]({{ site.baseurl }}/materials/state-in-IDEs)
 -   [Shell Intro 1]({{ site.baseurl }}/materials/shell01)
 -   [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
 
 ### R <a name="R"></a>
 
 - [Introduction]({{ site.baseurl }}/materials/r-intro)
+- [State in IDEs]({{ site.baseurl }}/materials/state-in-IDEs)
 - [Data Structures]({{ site.baseurl }}/materials/data-structures-R)
 - [`dplyr`]({{ site.baseurl }}/materials/dplyr)
 - [`ggplot`]({{ site.baseurl }}/materials/ggplot)
