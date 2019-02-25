@@ -4,7 +4,7 @@ element: notes
 title: State in Integrated Development Environments
 ---
 
-In most integrated development environments (including Canopy) you can run code
+In most integrated development environments (like R-studio) you can run code
 in three different ways:
 
 1. Typing code directly into the interpreter
