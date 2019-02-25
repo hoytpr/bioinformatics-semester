@@ -1,6 +1,6 @@
 ---
 layout: exercise
-element: Shell
+topic: Shell
 title: Finding Things 
 language: Shell
 ---
