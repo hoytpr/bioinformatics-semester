@@ -4,7 +4,9 @@ topic: Help
 title: Providing Feedback and Contributing New Material
 ---
 
-### Providing feedback and getting help
+### Providing feedback to Data Carpentry and getting help
+
+#### This page describes interactions with the original authors
 {% if site.github.repo == 'https://github.com/datacarpentry/semester-biology' %}
 - [Open a new issue]({{ site.github.repo }}/issues/new) at the `{{ site.github.repo | remove: 'https://github.com/' }}` repository on [GitHub](http://github.com) (*You'll have to be logged into GitHub*).
 - Provide a clear description of your question, comment, or proposed change in 
@@ -34,10 +36,10 @@ the `Title` section and use the `Leave a comment` section for further detail or 
 
 OR
 
-- You can email us at [datacarpentrysemester@weecology.org](mailto:datacarpentrysemester@weecology.org). (*Though we prefer organizing comments and issues on GitHub, we want to hear from you and we want it to be easy.*)
+- If [Dr. Hoyt](mailto:peter.r.hoyt@okstate.edu) can't help you, you can email the original authors and current course maintainers at [datacarpentrysemester@weecology.org](mailto:datacarpentrysemester@weecology.org). (*Though we prefer organizing comments and issues on GitHub, we want to hear from you and we want it to be easy.*)
 {% endif %}
 
-### Contributing New Material
+### Contributing New Material to Data Carpentry
 
 We use standard [GitHub flow](https://guides.github.com/introduction/flow/):
 fork the repository, add or change material, and submit a pull request.
