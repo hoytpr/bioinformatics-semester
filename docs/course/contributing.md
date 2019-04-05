@@ -26,7 +26,7 @@ the `Title` section and use the `Leave a comment` section for further detail or 
 
 OR
 
-- You can email [Dr. Hoyt](peter.r.hoyt@okstate.edu) or the or you can email the original authors and current course maintainers at [datacarpentrysemester@weecology.org](mailto:datacarpentrysemester@weecology.org). (*Though we prefer organizing comments and issues on GitHub, we want to hear from you and we want it to be easy.*)
+- You can email [Dr. Hoyt](peter.r.hoyt@okstate.edu) or you can email the original authors and current course maintainers at [datacarpentrysemester@weecology.org](mailto:datacarpentrysemester@weecology.org). (*Though we prefer organizing comments and issues on GitHub, we want to hear from you and we want it to be easy.*)
 
 #### Have an issue with the course website?
 - [Open a new issue](https://github.com/datacarpentry/semester-biology/issues/new) at the `datacarpentry/semester-biology` main repository on [GitHub](http://github.com) (*You'll have to be logged into GitHub*).
