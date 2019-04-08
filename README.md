@@ -1,4 +1,4 @@
-# Introduction to Biological Informatics was developed from the 
+# Introduction to Biological Informatics was created with 
 # Data Carpentry for Biologists - [Semester Course] (http://datacarpentry.org/semester-biology)
 
 ### No DOI yet
