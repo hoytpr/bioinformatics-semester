@@ -1,29 +1,26 @@
-# Data Carpentry for Biologists - Semester Course
+# Introduction to Biological Informatics was developed from the 
+# Data Carpentry for Biologists - [Semester Course] (http://datacarpentry.org/semester-biology)
 
-[![DOI](https://zenodo.org/badge/31911336.svg)](https://zenodo.org/badge/latestdoi/31911336)
+### No DOI yet
 
 This is a [forkable](https://help.github.com/articles/fork-a-repo/) set of teaching materials for teaching biologists how to work
 with data through programming, database management and computing more generally.
 
-This repository contains the complete teaching materials (excluding exams and
-answers to assignments) and [website](http://datacarpentry.org/semester-biology) for a university style and self-guided 
-course teaching computational data skills to biologists. The course is designed
+This repository contains the complete teaching materials and a [website](https://hoytpr.github.io/bioinformatics-semester/) 
+for a university style and self-guided course teaching computational data 
+skills to biologists. The course was originally designed
 to work primarily as a flipped classroom, with students reading and viewing
 videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
-[Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
-is available regarding the structure and function of the course and website
-materials for customized development and delivery of the course.
+However, due to time restrictions, we will primarily use this course as
+an online curriculum. 
 
-We encourage collaborative development. This repository was used by 
-@ethanwhite to teach a version of this course (Fall 2016) at the University of
-Florida. The course remains under active development. We welcome contributions
-to all aspects of the course/site and are especially seeking exercises and
-assignments for a range of disciplines. Key site and course materials are
-available as templates for contributions of new materials and other materials
-that are specific to the course (e.g., the syllabus) are developed in a way to
-facilitate easy customization. 
+The developers encourage collaborative development. This repository was used originally by 
+@ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
+is available regarding the structure and function of the course and website
+materials for customized development and delivery of the course. Key site and course materials are
+available as templates for contributions of new materials.
 
 - Here are some examples of customized courses:
   - [Introduction to Ecology](https://atredennick.github.io/ecology_class/) by [Andrew Tredennick](https://atredennick.github.io/)
@@ -47,16 +44,13 @@ We use standard [GitHub flow](https://guides.github.com/introduction/flow/), so
 fork the repository, add or change material, and submit a pull request.
 
 The goal of making this course forkable is to facilitate collaboration on
-developing this kind of material for university courses. The central component
-of a flipped computing course is the exercises, so one of the primary forms of
-contribution will be adding exercises to the pool of exercises. Individual
-instructors can then select from a rich pool of exercises the ones that fit the
+developing this kind of material and instructors can then select 
+from a rich pool of exercises the ones that fit the
 topics, languages, and scientific domains that best fit the material they want
-to cover in the course.
+to cover for university courses.
 
-There are lots of great resources for being introduced to the individual
-concepts being taught in courses like this. Our philosophy is to use and improve
-these external resources when available instead of creating new versions of the
+Our philosophy is to use and improve these external resources 
+when available instead of creating new versions of the
 same content. In particularly we actively use
 [Data Carpentry](http://datacarpentry.org/lessons) and
 [Software Carpentry](http://software-carpentry.org/lessons.html) workshop
