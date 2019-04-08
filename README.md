@@ -14,7 +14,7 @@ videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
 However, due to time restrictions, we will primarily use this course as
-an online curriculum. 
+an [online curriculum](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
 
 The developers encourage collaborative development. This repository was used originally by 
 @ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
