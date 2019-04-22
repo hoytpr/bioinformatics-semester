@@ -179,13 +179,13 @@ language: Shell
   3. `rm * .txt`
   4. `rm *.*`
  
-  > ## Solution
-  > 1. This would remove `.txt` files with one-character names
-  > 2. This is correct answer
-  > 3. The shell would expand `*` to match everything in the current directory,
-  > so the command would try to remove all matched files and an additional
-  > file called `.txt`
-  > 4. The shell would expand `*.*` to match all files with any extension,
-  > so this command would delete all files
-  {: .solution}
+ > ## Solution
+ > 1. This would remove `.txt` files with one-character names
+ > 2. This is correct answer
+ > 3. The shell would expand `*` to match everything in the current directory,
+ > so the command would try to remove all matched files and an additional
+ > file called `.txt`
+ > 4. The shell would expand `*.*` to match all files with any extension,
+ > so this command would delete all files
+ {: .solution}
 {: .challenge}

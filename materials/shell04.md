@@ -7,28 +7,28 @@ language: Shell
 
 ### Major question
 
-- "How can I combine existing commands to do new things?"
+- How can I combine existing commands to do new things?
 
 ### Major Objectives
 
-- "Redirect a command's output to a file."
-- "Process a file instead of keyboard input using redirection."
-- "Construct command pipelines with two or more stages."
-- "Explain what usually happens if a program or pipeline isn't given any input to process."
-- "Explain Unix's 'small pieces, loosely joined' philosophy."
+- Redirect a command's output to a file.
+- Process a file instead of keyboard input using redirection.
+- Construct command pipelines with two or more stages.
+- Explain what usually happens if a program or pipeline isn't given any input to process.
+- Explain Unix's 'small pieces, loosely joined' philosophy.
 
 ### keypoints to Learn
 
-- "`cat` displays the contents of its inputs."
-- "`head` displays the first 10 lines of its input."
-- "`tail` displays the last 10 lines of its input."
-- "`sort` sorts its inputs."
-- "`wc` counts lines, words, and characters in its inputs."
-- "`command > file` redirects a command's output to a file (overwriting any existing content)."
-- "`command >> file` appends a command's output to a file."
-- "`<` operator redirects input to a command"
-- "`first | second` is a pipeline: the output of the first command is used as the input to the second."
-- "The best way to use the shell is to use pipes to combine simple single-purpose programs (filters)."
+- `cat` displays the contents of its inputs.
+- `head` displays the first 10 lines of its input.
+- `tail` displays the last 10 lines of its input.
+- `sort` sorts its inputs.
+- `wc` counts lines, words, and characters in its inputs.
+- `command > file` redirects a command's output to a file (overwriting any existing content).
+- `command >> file` appends a command's output to a file.
+- `<` operator redirects input to a command
+- `first | second` is a pipeline: the output of the first command is used as the input to the second.
+- The best way to use the shell is to use pipes to combine simple single-purpose programs (filters).
 
 ___________________________________________
 
@@ -284,13 +284,13 @@ the output of `head` must be the file with the fewest lines.
 > {: .language-bash}
 >
 > Hint: Try executing each command twice in a row and then examining the output files.
-> > ## Solution
-> > In the first example with `>`, the string "hello" is written to `testfile01.txt`,
-> > but the file gets overwritten each time we run the command.
-> >
-> > We see from the second example that the `>>` operator also writes "hello" to a file
-> > (in this case`testfile02.txt`),
-> > but appends the string to the file if it already exists (i.e. when we run it for the second time).
+> ## Solution
+> In the first example with `>`, the string "hello" is written to `testfile01.txt`,
+> but the file gets overwritten each time we run the command.
+>
+> We see from the second example that the `>>` operator also writes "hello" to a file
+> (in this case`testfile02.txt`),
+> but appends the string to the file if it already exists (i.e. when we run it for the second time).
 > {: .solution}
 {: .challenge}
 
@@ -314,11 +314,11 @@ the output of `head` must be the file with the fewest lines.
 > 3. The first three lines and the last two lines of `animals.txt`
 > 4. The second and third lines of `animals.txt`
 >
-> > ## Solution
-> > Option 3 is correct. 
-> > For option 1 to be correct we would only run the `head` command.
-> > For option 2 to be correct we would only run the `tail` command.
-> > For option 4 to be correct we would have to pipe the output of `head` into `tail -2` by doing `head -3 animals.txt | tail -2 > animalsUpd.txt`
+> ## Solution
+> Option 3 is correct. 
+> For option 1 to be correct we would only run the `head` command.
+> For option 2 to be correct we would only run the `tail` command.
+> For option 4 to be correct we would have to pipe the output of `head` into `tail -2` by doing `head -3 animals.txt | tail -2 > animalsUpd.txt`
 > {: .solution}
 {: .challenge}
 
@@ -395,12 +395,12 @@ the calculation is "head of sort of line count of `*.pdb`".
 > 3. `wc -l * | head -n 3 | sort -n`
 > 4. `wc -l * | sort -n | head -n 3`
 >
-> > ## Solution
-> > Option 4 is the solution.
-> > The pipe character `|` is used to feed the standard output from one process to
-> > the standard input of another.
-> > `>` is used to redirect standard output to a file.
-> > Try it in the `data-shell/molecules` directory!
+> ## Solution
+> Option 4 is the solution.
+> The pipe character `|` is used to feed the standard output from one process to
+> the standard input of another.
+> `>` is used to redirect standard output to a file.
+> Try it in the `data-shell/molecules` directory!
 > {: .solution}
 {: .challenge}
 
@@ -444,7 +444,7 @@ we get three processes with data flowing from the files,
 through `wc` to `sort`,
 and from `sort` through `head` to the screen.
 
-![Redirects and Pipes](../fig/redirects-and-pipes.png)
+![Redirects and Pipes]({{ site.baseurl }}/fig/redirects-and-pipes.png)
 
 This simple idea is why Unix has been so successful.
 Instead of creating enormous programs that try to do many different things,
@@ -466,16 +466,16 @@ can be combined with every other program that behaves this way as well.
 You can *and should* write your programs this way
 so that you and other people can put those programs into pipes to multiply their power.
 
-> ## Redirecting Input
->
-> As well as using `>` to redirect a program's output, we can use `<` to
-> redirect its input, i.e., to read from a file instead of from standard
-> input. For example, instead of writing `wc ammonia.pdb`, we could write
-> `wc < ammonia.pdb`. In the first case, `wc` gets a command line
-> argument telling it what file to open. In the second, `wc` doesn't have
-> any command line arguments, so it reads from standard input, but we
-> have told the shell to send the contents of `ammonia.pdb` to `wc`'s
-> standard input.
+## Redirecting Input
+
+As well as using `>` to redirect a program's output, we can use `<` to
+redirect its input, i.e., to read from a file instead of from standard
+input. For example, instead of writing `wc ammonia.pdb`, we could write
+`wc < ammonia.pdb`. In the first case, `wc` gets a command line
+argument telling it what file to open. In the second, `wc` doesn't have
+any command line arguments, so it reads from standard input, but we
+have told the shell to send the contents of `ammonia.pdb` to `wc`'s
+standard input.
 {: .callout}
 
 > ## What Does `<` Mean?
@@ -496,32 +496,32 @@ so that you and other people can put those programs into pipes to multiply their
 > ~~~
 > {: .language-bash}
 >
-> > ## Solution
-> > `<` is used to redirect input to a command. 
-> >
-> > In both examples, the shell returns the number of lines from the input to
-> > the `wc` command.
-> > In the first example, the input is the file `notes.txt` and the file name is
-> > given in the output from the `wc` command.
-> > In the second example, the contents of the file `notes.txt` are redirected to
-> > standard input.
-> > It is as if we have entered the contents of the file by typing at the prompt.
-> > Hence the file name is not given in the output - just the number of lines.
-> > Try this for yourself:
-> >
-> > ```
-> > $ wc -l
-> > this
-> > is
-> > a test
-> > Ctrl-D # This lets the shell know you have finished typing the input
-> > ```
-> > {: .language-bash}
-> >
-> > ```
-> > 3
-> > ```
-> > {: .output}
+> ## Solution
+> `<` is used to redirect input to a command. 
+>
+> In both examples, the shell returns the number of lines from the input to
+> the `wc` command.
+> In the first example, the input is the file `notes.txt` and the file name is
+> given in the output from the `wc` command.
+> In the second example, the contents of the file `notes.txt` are redirected to
+> standard input.
+> It is as if we have entered the contents of the file by typing at the prompt.
+> Hence the file name is not given in the output - just the number of lines.
+> Try this for yourself:
+>
+> ```
+> $ wc -l
+> this
+> is
+> a test
+> Ctrl-D # This lets the shell know you have finished typing the input
+> ```
+> {: .language-bash}
+>
+> ```
+> 3
+> ```
+> {: .output}
 > {: .solution}
 {: .challenge}
 
@@ -554,11 +554,11 @@ so that you and other people can put those programs into pipes to multiply their
 > (Hint: think about very large data sets.) What other command could
 > you combine with it in a pipe to remove all duplicated lines?
 >
-> > ## Solution
-> > ```
-> > $ sort salmon.txt | uniq
-> > ```
-> > {: .language-bash}
+> ## Solution
+> ```
+> $ sort salmon.txt | uniq
+> ```
+> {: .language-bash}
 > {: .solution}
 {: .challenge}
 
@@ -585,70 +585,71 @@ so that you and other people can put those programs into pipes to multiply their
 > ~~~
 > {: .language-bash}
 > Hint: build the pipeline up one command at a time to test your understanding
-> > ## Solution
-> > The `head` command extracts the first 5 lines from `animals.txt`.
-> > Then, the last 3 lines are extracted from the previous 5 by using the `tail` command.
-> > With the `sort -r` command those 3 lines are sorted in reverse order and finally,
-> > the output is redirected to a file `final.txt`.
-> > The content of this file can be checked by executing `cat final.txt`.
-> > The file should contain the following lines:
-> > ```
-> > 2012-11-06,rabbit
-> > 2012-11-06,deer
-> > 2012-11-05,raccoon
-> > ```
-> > {: .source}
+> ## Solution
+> The `head` command extracts the first 5 lines from `animals.txt`.
+> Then, the last 3 lines are extracted from the previous 5 by using the `tail` command.
+> With the `sort -r` command those 3 lines are sorted in reverse order and finally,
+> the output is redirected to a file `final.txt`.
+> The content of this file can be checked by executing `cat final.txt`.
+> The file should contain the following lines:
+> ```
+> 2012-11-06,rabbit
+> 2012-11-06,deer
+> 2012-11-05,raccoon
+> ```
+> {: .source}
 > {: .solution}
 {: .challenge}
 
-> ## Pipe Construction
->
-> For the file `animals.txt` from the previous exercise, the command:
->
-> ~~~
-> $ cut -d , -f 2 animals.txt
-> ~~~
-> {: .language-bash}
-> 
-> uses the `-d` flag to separate each line by comma, and the `-f` flag
-> to print the second field in each line, to give the following output:
->
-> ~~~
-> deer
-> rabbit
-> raccoon
-> rabbit
-> deer
-> fox
-> rabbit
-> bear
-> ~~~
-> {: .output}
->
+## Pipe Construction
+
+For the file `animals.txt` from the previous exercise, the command:
+
+~~~
+$ cut -d , -f 2 animals.txt
+~~~
+{: .language-bash}
+
+uses the `-d` flag to separate each line by comma, and the `-f` flag
+to print the second field in each line, to give the following output:
+
+~~~
+deer
+rabbit
+raccoon
+rabbit
+deer
+fox
+rabbit
+bear
+~~~
+
+{: .output}
+
 > What other command(s) could be added to this in a pipeline to find
 > out what animals the file contains (without any duplicates in their
 > names)?
 >
-> > ## Solution
-> > ```
-> > $ cut -d , -f 2 animals.txt | sort | uniq
-> > ```
-> > {: .language-bash}
+> ## Solution
+> ```
+> $ cut -d , -f 2 animals.txt | sort | uniq
+> ```
+> {: .language-bash}
 > {: .solution}
 {: .challenge}
 
-> ## Which Pipe?
->
-> The file `animals.txt` contains 8 lines of data formatted as follows:
->
-> ~~~
-> 2012-11-05,deer
-> 2012-11-05,rabbit
-> 2012-11-05,raccoon
-> 2012-11-06,rabbit
-> ...
-> ~~~
-> {: .output}
+## Which Pipe?
+
+The file `animals.txt` contains 8 lines of data formatted as follows:
+
+~~~
+2012-11-05,deer
+2012-11-05,rabbit
+2012-11-05,raccoon
+2012-11-06,rabbit
+...
+~~~
+{: .output}
 >
 > Assuming your current directory is `data-shell/data/`,
 > what command would you use to produce a table that shows
@@ -661,10 +662,10 @@ so that you and other people can put those programs into pipes to multiply their
 > 5.  `cut -d, -f 2 animals.txt | sort | uniq -c`
 > 6.  `cut -d, -f 2 animals.txt | sort | uniq -c | wc -l`
 >
-> > ## Solution
-> > Option 5. is the correct answer.
-> > If you have difficulty understanding why, try running the commands, or sub-sections of
-> > the pipelines (make sure you are in the `data-shell/data` directory).
+> ## Solution
+> Option 5. is the correct answer.
+> If you have difficulty understanding why, try running the commands, or sub-sections of
+> the pipelines (make sure you are in the `data-shell/data` directory).
 > {: .solution}
 {: .challenge}
 
@@ -760,15 +761,15 @@ the `*` matches any number of characters;
 the expression `[AB]` matches either an 'A' or a 'B',
 so this matches all the valid data files she has.
 
-> ## Wildcard Expressions
->
-> Wildcard expressions can be very complex, but you can sometimes write
-> them in ways that only use simple syntax, at the expense of being a bit
-> more verbose.  
-> Consider the directory `data-shell/north-pacific-gyre/2012-07-03` :
-> the wildcard expression `*[AB].txt`
-> matches all files ending in `A.txt` or `B.txt`. Imagine you forgot about
-> this.
+## Wildcard Expressions
+
+Wildcard expressions can be very complex, but you can sometimes write
+them in ways that only use simple syntax, at the expense of being a bit
+more verbose.  
+Consider the directory `data-shell/north-pacific-gyre/2012-07-03` :
+the wildcard expression `*[AB].txt`
+matches all files ending in `A.txt` or `B.txt`. Imagine you forgot about
+this.
 >
 > 1.  Can you match the same set of files with basic wildcard expressions
 >     that do not use the `[]` syntax? *Hint*: You may need more than one
@@ -781,25 +782,26 @@ so this matches all the valid data files she has.
 > 3.  Under what circumstances would your new expression produce an error message
 >     where the original one would not?
 >
-> > ## Solution
-> > 1. 
-> >
-> > 	```
-> > 	$ ls *A.txt
-> > 	$ ls *B.txt
-> > 	```
-> >	{: .language-bash}
-> > 2. The output from the new commands is separated because there are two commands.
-> > 3. When there are no files ending in `A.txt`, or there are no files ending in
-> > `B.txt`.
+> ## Solution
+> 1. 
+>
+> 	```
+> 	$ ls *A.txt
+> 	$ ls *B.txt
+> 	```
+>	{: .language-bash}
+> 2. The output from the new commands is separated because there are two commands.
+> 3. When there are no files ending in `A.txt`, or there are no files ending in
+> `B.txt`.
 > {: .solution}
 {: .challenge}
 
-> ## Removing Unneeded Files
->
-> Suppose you want to delete your processed data files, and only keep
-> your raw files and processing script to save storage.
-> The raw files end in `.dat` and the processed files end in `.txt`.
+## Removing Unneeded Files
+
+Suppose you want to delete your processed data files, and only keep
+your raw files and processing script to save storage.
+The raw files end in `.dat` and the processed files end in `.txt`.
+
 > Which of the following would remove all the processed data files,
 > and *only* the processed data files?
 >
@@ -808,13 +810,13 @@ so this matches all the valid data files she has.
 > 3. `rm * .txt`
 > 4. `rm *.*`
 >
-> > ## Solution
-> > 1. This would remove `.txt` files with one-character names
-> > 2. This is correct answer
-> > 3. The shell would expand `*` to match everything in the current directory,
-> > so the command would try to remove all matched files and an additional
-> > file called `.txt`
-> > 4. The shell would expand `*.*` to match all files with any extension,
-> > so this command would delete all files
+> ## Solution
+> 1. This would remove `.txt` files with one-character names
+> 2. This is correct answer
+> 3. The shell would expand `*` to match everything in the current directory,
+> so the command would try to remove all matched files and an additional
+> file called `.txt`
+> 4. The shell would expand `*.*` to match all files with any extension,
+> so this command would delete all files
 > {: .solution}
 {: .challenge}
