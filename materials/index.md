@@ -6,9 +6,10 @@ title: Lecture Materials
 
 ### Shell
 
--   [Shell Intro 1]({{ site.baseurl }}/materials/shell01)
--   [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
-
+-  [Shell Introduction and Files]({{ site.baseurl }}/materials/shell01)
+-  [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
+-  [Genomics Shell Intro]({{ site.baseurl }}/materials/genomics-shell-intro)
+-  [Genomics Read Quality Control]({{ site.baseurl }}/materials/genomics-reads-quality-control)
 ### R <a name="R"></a>
 
 - [Introduction]({{ site.baseurl }}/materials/r-intro)

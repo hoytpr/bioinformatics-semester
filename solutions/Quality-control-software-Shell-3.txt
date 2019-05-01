@@ -1,0 +1,6 @@
+#### Week 4 Exercise answers
+
+3. Solution
+
+All of the reads contain usable data, but the quality decreases toward
+the end of the reads.

@@ -5,8 +5,10 @@ title: Lectures
 
 ### Shell
 
-* [Shell Intro 1](Shell01)
+* [Shell Introduction and Files](Shell01)
 * [Shell Lesson 2](Shell02)
+* [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
+* [Genomics Read Quality Control](Genomics-read-quality-quality-controls)
 
 ### R
 

@@ -1,0 +1,9 @@
+
+
+#### Solution to Exercise 4
+
+The `-l` flag makes `ls` use a **l**ong listing format, showing not only
+the file/directory names but also additional information such as the file size
+and the time of its last modification. If you use both the `-h` flag and the `-l` flag,
+this makes the file size "**h**uman readable", i.e. displaying something like `5.3K` 
+instead of `5369`.

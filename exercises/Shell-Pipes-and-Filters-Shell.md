@@ -6,7 +6,7 @@ language: Shell
 ---
 
 
-## Redirecting to the same file
+#### Redirecting to the same file
  
   It's a very bad idea to try redirecting
   the output of a command that operates on a file
@@ -20,9 +20,8 @@ language: Shell
   Doing something like this may give you
   incorrect results and/or delete
   the contents of `lengths.txt`.
-{: .callout}
 
-## What Does `>>` Mean?
+#### What Does `>>` Mean?
   We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
   By using the `echo` command to print strings, test the commands below to reveal the difference
   between the two operators:
@@ -31,28 +30,16 @@ language: Shell
   ~~~
   $ echo hello > testfile01.txt
   ~~~
-  {: .language-bash}
  
   and:
  
   ~~~
   $ echo hello >> testfile02.txt
   ~~~
-  {: .language-bash}
- 
-  Hint: Try executing each command twice in a row and then examining the output files.
-  > ## Solution
-  > In the first example with `>`, the string "hello" is written to `testfile01.txt`,
-  > but the file gets overwritten each time we run the command.
-  >
-  > We see from the second example that the `>>` operator also writes "hello" to a file
-  > (in this case`testfile02.txt`),
-  > but appends the string to the file if it already exists (i.e. when we run it for the second time).
-  {: .solution}
-{: .challenge}
 
+  *HINT: run each command more than once*
 
-## Appending Data
+#### Appending Data
  
   We have already met the `head` command, which prints lines from the start of a file.
   `tail` is similar, but prints lines from the end of a file instead.
@@ -65,22 +52,13 @@ language: Shell
   $ head -n 3 animals.txt > animalsUpd.txt
   $ tail -n 2 animals.txt >> animalsUpd.txt
   ~~~
-  {: .language-bash}
  
   1. The first three lines of `animals.txt`
   2. The last two lines of `animals.txt`
   3. The first three lines and the last two lines of `animals.txt`
   4. The second and third lines of `animals.txt`
  
-  > ## Solution
-  > Option 3 is correct. 
-  > For option 1 to be correct we would only run the `head` command.
-  > For option 2 to be correct we would only run the `tail` command.
-  > For option 4 to be correct we would have to pipe the output of `head` into `tail -2` by doing `head -3 animals.txt | tail -2 > animalsUpd.txt`
-  {: .solution}
-{: .challenge}
-
-## Piping Commands Together
+#### Piping Commands Together
  
   In our current directory, we want to find the 3 files which have the least number of
   lines. Which command listed below would work?
@@ -90,16 +68,7 @@ language: Shell
   3. `wc -l * | head -n 3 | sort -n`
   4. `wc -l * | sort -n | head -n 3`
  
-  > ## Solution
-  > Option 4 is the solution.
-  > The pipe character `|` is used to feed the standard output from one process to
-  > the standard input of another.
-  > `>` is used to redirect standard output to a file.
-  > Try it in the `data-shell/molecules` directory!
-  {: .solution}
-{: .challenge}
-
-## Pipe Construction
+#### Pipe Construction
  
   For the file `animals.txt` from the previous exercise, the command:
  
@@ -121,21 +90,12 @@ language: Shell
   rabbit
   bear
   ~~~
-  {: .output}
  
   What other command(s) could be added to this in a pipeline to find
   out what animals the file contains (without any duplicates in their
   names)?
- 
-  > ## Solution
-  > ```
-  > $ cut -d , -f 2 animals.txt | sort | uniq
-  > ```
-  > {: .language-bash}
-  {: .solution}
-{: .challenge}
 
-## Which Pipe?
+#### Which Pipe?
  
   The file `animals.txt` contains 8 lines of data formatted as follows:
  
@@ -146,7 +106,6 @@ language: Shell
   2012-11-06,rabbit
   ...
   ~~~
-  {: .output}
  
   Assuming your current directory is `data-shell/data/`,
   what command would you use to produce a table that shows
@@ -159,14 +118,7 @@ language: Shell
   5.  `cut -d, -f 2 animals.txt | sort | uniq -c`
   6.  `cut -d, -f 2 animals.txt | sort | uniq -c | wc -l`
  
-  > ## Solution
-  > Option 5. is the correct answer.
-  > If you have difficulty understanding why, try running the commands, or sub-sections of
-  > the pipelines (make sure you are in the `data-shell/data` directory).
-  {: .solution}
-{: .challenge}
-
-## Removing Unneeded Files
+#### Removing Unneeded Files
  
   Suppose you want to delete your processed data files, and only keep
   your raw files and processing script to save storage.
@@ -179,13 +131,3 @@ language: Shell
   3. `rm * .txt`
   4. `rm *.*`
  
- > ## Solution
- > 1. This would remove `.txt` files with one-character names
- > 2. This is correct answer
- > 3. The shell would expand `*` to match everything in the current directory,
- > so the command would try to remove all matched files and an additional
- > file called `.txt`
- > 4. The shell would expand `*.*` to match all files with any extension,
- > so this command would delete all files
- {: .solution}
-{: .challenge}

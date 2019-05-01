@@ -5,8 +5,10 @@ title: Assignments
 
 ### Shell
 
-* [Shell Assignment 1](shell01)
+* [Shell Introduction and Files](shell01)
 * [Shell Lesson 2](shell02)
+* [Genomics Shell Intro](genomics-shell-intro)
+* [Genomics Read Quality Control](shell-read-quality)
 
 ### R
 

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Assignment Schedule
-assignments: ['Shell Assignment 1', 'Shell Lesson 2','Introduction to R and RStudio',
+assignments: ['Shell Introduction and Files', 'Shell Lesson 2', 'Genomics Shell Intro', 'Genomics Read Quality Control', 'Introduction to R and RStudio',
 'Working with Data', 'Data Visualization', 'Working with Spatial Data',
 'Computational Projects', 'Programming Fundamentals 1',
 'Programming Fundamentals 2', 'Putting It All Together',

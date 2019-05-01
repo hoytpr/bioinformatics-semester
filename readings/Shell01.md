@@ -1,7 +1,7 @@
 ---
 layout: page
 element: reading
-title: Shell Assignment 1
+title: Shell Introduction and Files
 language: Shell
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: page
 element: lecture
-title: Template
-language: Access-Python-R-SQL
+title: Read Quality
+language: Shell
 ---
 
-Insert Markdown and [links to materials file]({{ site.baseurl }}/docs/templates/materials-template)
+[Read Quality]({{ site.baseurl }}/materials/quality-control-genomics)

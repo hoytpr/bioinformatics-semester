@@ -5,8 +5,10 @@ title: Readings
 
 ### Shell
 
-* [Shell Assignment 1](Shell01)
+* [Shell Introduction and Files](Shell01)
 * [Shell Lesson 2](Shell02)
+* [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
+* [Genomics Read Quality Control](Shell-read-quality)
 
 ### R
 
