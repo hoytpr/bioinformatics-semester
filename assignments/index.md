@@ -8,7 +8,9 @@ title: Assignments
 * [Shell Introduction and Files](shell01)
 * [Shell Lesson 2](shell02)
 * [Genomics Shell Intro](genomics-shell-intro)
-* [Genomics Read Quality Control](shell-read-quality)
+* [Genomics Reads Quality Control](shell-read-quality)
+* [Genomics Starting the Project](shell-genomics-starting-the-project)
+* [Genomics First Assembly](shell-genomics-first-assembly)
 
 ### R
 

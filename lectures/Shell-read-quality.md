@@ -1,8 +1,8 @@
 ---
 layout: page
 element: lecture
-title: Genomics Read Quality Control                
+title: Genomics Reads Quality Control                
 language: Shell
 ---
 
-* [Genomics Shell Quality Controls]({{ site.baseurl }}/materials/genomics-reads-quality-control)
+* [Genomics Reads Quality Controls]({{ site.baseurl }}/materials/genomics-reads-quality-control)

@@ -43,24 +43,25 @@ This lesson assumes no prior experience with the tools covered in the workshop. 
 
  *Keep the default selection ‘SSH’ and Port (22)*
 
- ![Putty Configuration](/fig/putty_screenshot_1.png)
+ ![Putty Configuration]({{ site.baseurl }}/fig/putty_screenshot_1.png)
  
- ### Review the File System
+### Review the File System
  
- The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called “folders”), which hold files or other directories. Several commands are frequently used to create, inspect, rename, and delete files and directories. 
+The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called “folders”), which hold files or other directories. Several commands are frequently used to create, inspect, rename, and delete files and directories. 
 
-3. Click ‘Open’ (You will be presented with a security warning)
+Then click ‘Open’ (You will be presented with a security warning)
 
-![Putty warning](https://datacarpentry.org/cloud-genomics/fig/putty_screenshot_2.png)
+![Putty warning]({{ site.baseurl }}/fig/putty_screenshot_2.png)
 
-4. Select ‘Yes’ to continue to connect
+Select ‘Yes’ to continue to connect
 
-5. In the final step, you will be asked to provide a login and password
-	Note: When typing your password, it is common in Unix/Linux not see any asterisks (e.g. `**) or moving cursors. Just continue typing
+In the final step, you will be asked to provide a login and password
 	
-  ![Putty login](/fig/Putty-logon1.png)
+Note: When typing your password, it is common in Unix/Linux not see any asterisks (e.g. `**`) or moving cursors. Just continue typing
+	
+  ![Putty login]({{ site.baseurl }}/fig/Putty-logon1.png)
 
-If you type the command: PS1='$ ' into your shell, followed by pressing the <kbd>Enter</kbd> key, your prompt should change to look like `$`. This isn’t necessary to follow along (in fact, your prompt may have other helpful information you want to know about). This is up to you! The dollar sign is a prompt, which shows us that the shell is waiting for input; your shell may use a different character as a prompt and may add information before the prompt. When typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.
+If you type the command: `PS1='$ '` into your shell, followed by pressing the <kbd>Enter</kbd> key, your prompt should change to look like `$`. This isn’t necessary to follow along (in fact, your prompt may have other helpful information you want to know about). This is up to you! The dollar sign is a prompt, which shows us that the shell is waiting for input; your shell may use a different character as a prompt and *may add information before the prompt*. When typing commands, either from these lessons or from other sources, do not type the prompt, only the commands that follow it.
 
 Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is the home directory within system.
 

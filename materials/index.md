@@ -6,10 +6,20 @@ title: Lecture Materials
 
 ### Shell
 
--  [Shell Introduction and Files]({{ site.baseurl }}/materials/shell01)
--  [Shell Lesson 2]({{ site.baseurl }}/materials/shell02)
+-  [Shell Introduction]({{ site.baseurl }}/materials/shell01)
+-  [Navigating Shell Files]({{ site.baseurl }}/materials/shell02)
+-  [Working with Files and Directories]({{ site.baseurl }}/materials/shell03)
+-  [Shell Pipes and Filters]({{ site.baseurl }}/materials/shell04)
 -  [Genomics Shell Intro]({{ site.baseurl }}/materials/genomics-shell-intro)
+-  [Genomics Data and Scripts]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts)
+-  [Scripts for Genomic Variant Calls]({{ site.baseurl }}/materials/genomics-run-variant-calling)
 -  [Genomics Read Quality Control]({{ site.baseurl }}/materials/genomics-reads-quality-control)
+-  [Tidy Data in Genomics]({{ site.baseurl }}/materials/genomics-data-tidiness)
+-  [Organized Projects in Genomics]({{ site.baseurl }}/materials/genomics-project-organization)
+-  [Files for Genome Assembly]({{ site.baseurl }}/materials/genomics-assembly-files)
+-  [Methods of Genome Assembly]({{ site.baseurl }}/materials/genomics-assembly-methods)
+-  [Genome Assembly Reports]({{ site.baseurl }}/materials/genomics-assembly-reporting)
+
 ### R <a name="R"></a>
 
 - [Introduction]({{ site.baseurl }}/materials/r-intro)

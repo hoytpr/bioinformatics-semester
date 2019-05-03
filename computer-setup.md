@@ -3,7 +3,12 @@ layout: page
 title: Computer Setup
 ---
 
-***BIOC 6820 students will need their own laptops set up with R and/or python by week 2, Git by week 10, and SQL by week 13.***
+***BIOC 6820 students will need their own laptops set up with Git Bash before the workshop, Git by week 6, R and/or python by week 9, and SQL by week 16.***
+
+### Special Note: 
+
+#### Data Carpentry Genomics Workshop 
+This course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST released in June 2019. However, we will not be using the Amazon Cloud Services. Instead, we will be using the Cowboy Supercomputer, or if you have a powerful enough personal computer, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. 
 
 ### Shell
 

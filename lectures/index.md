@@ -8,7 +8,9 @@ title: Lectures
 * [Shell Introduction and Files](Shell01)
 * [Shell Lesson 2](Shell02)
 * [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
-* [Genomics Read Quality Control](Genomics-read-quality-quality-controls)
+* [Genomics Reads Quality Control](Genomics-reads-quality-controls)
+* [Genomics Starting the Project](Shell-genomics-starting-the-project)
+* [Genomics First Assembly](Shell-genomics-first-assembly)
 
 ### R
 

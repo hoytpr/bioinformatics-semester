@@ -7,8 +7,8 @@ title: Acknowledgments
 
 Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry.okstate.edu/faculty/dr.-peter-hoyt-1), the original course materials and website 
 design have been primarily developed and
-implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://zackbrym.weecology.org/). See our [contributors page](https://github.com/datacarpentry/semester-biology/graphs/contributors) for more 
-details.
+implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://zackbrym.weecology.org/) in cooperation with [Data Carpentry](https://datacarpentry.org/). See our [contributors page](https://github.com/datacarpentry/semester-biology/graphs/contributors) for more 
+details. They are made available through the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
 
 #### Funding
 

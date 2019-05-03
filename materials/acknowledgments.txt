@@ -1,0 +1,4 @@
+
+This Genome Assembly Hands-on Exercise
+was developed for an OSU Bioinformatics Workshop by several people who deserve credit:
+Authors: Dana Brunson, Peter Hoyt, and Haibao Tang 

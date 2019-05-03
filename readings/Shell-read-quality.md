@@ -1,8 +1,8 @@
 ---
 layout: page
 element: reading
-title: Genomics Read Quality Control
+title: Genomics Reads Quality Control
 language: Shell
 ---
 
-[Data Carpentry Read Quality Control](https://datacarpentry.org/wrangling-genomics/02-quality-control/index.html)
+[Data Carpentry Reads Quality Control](https://datacarpentry.org/wrangling-genomics/02-quality-control/index.html)

@@ -1,7 +1,7 @@
 ---
 layout: page
 element: assignment
-title: Genomics Read Quality Control               
+title: Genomics Reads Quality Control               
 language: Shell
 exercises: ['Quality Control Software', 'Using Scripts to Wrangle']
 ---
@@ -14,8 +14,6 @@ exercises: ['Quality Control Software', 'Using Scripts to Wrangle']
 > 1. Run fastq 
 > 2. Run multiQC 
 > 3. See clear problems with data 
-
-{% include reading.html %}
 
 {% include assignment.html %}
 

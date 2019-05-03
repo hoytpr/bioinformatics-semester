@@ -1,7 +1,7 @@
 ---
 layout: exercise
-topic: Genomics Data Quality Controls
-title: Using Scripts to Wrangle
+topic: Genomics
+title: Scripts for Assembly
 language: Shell
 ---
 

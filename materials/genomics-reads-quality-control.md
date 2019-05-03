@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: Genomics Shell Quality Controls
+title: Genomics Reads Quality Controls
 language: Shell
 ---
 (This material is under development)

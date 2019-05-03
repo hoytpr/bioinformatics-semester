@@ -1,7 +1,7 @@
 ---
-layout: page
-element: notes
-title: Automating a Variant Calling Workflow
+layout: exercise
+topic: Genomics
+title: Shell Run Variant Calling
 language: Shell
 ---
 

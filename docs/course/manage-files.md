@@ -33,6 +33,8 @@ provides a [good introduction on how to do this](https://help.github.com/article
 If you have Jekyll properly installed, you can then run
 
 `bundle exec jekyll serve`
+or sometimes:
+`bundle exec jekyll serve --baseurl ''`
 
 from the command line and navigate to `http://localhost:4000/` in your browser 
 to preview the current state of the website. Access a specific file on the web at the url based on where the file is located and what the file name is. 
