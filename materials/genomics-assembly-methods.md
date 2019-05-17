@@ -5,11 +5,50 @@ title: Assembly Tools
 language: Shell
 ---
 
+## Disclaimer! Alert! Alert! These software are obsolete. They really are! 
+
+We are only using them to demonstrate 
+some processes used in bioinformatics. We want you to know you can do this!
+
+#### Why are we using outdated software?
+
+Because these software provide an easy consistent example.
+If you can grasp the fundamental concepts presented here, it is very likely 
+you will be able to better judge which software are best for your own projects. 
+It's analogous to the ["Teach a person to fish"](https://en.wiktionary.org/wiki/give_a_man_a_fish_and_you_feed_him_for_a_day;_teach_a_man_to_fish_and_you_feed_him_for_a_lifetime) philosophy.
+
+**Bioinformatics** is rapidly developing and most software used for 
+many important bioinformatics processes like assembly, 
+**could be updated multiple times before the semester completed!** 
+(This is also why we don't use a textbook) 
+
+**Online learning repositories** 
+such as [The Carpentries](https://carpentries.org/), including [Software Carpentry](https://software-carpentry.org/) and [Data Carpentry](https://datacarpentry.org/) 
+(which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, and also for their ability to remain current!  
+
+**You should do some research and find better software** 
+if you plan to perform assembly or RNA-Seq in your own experiments.
+There are many online tutorials but only ***some*** are well-maintained. In 
+particular the [Galaxy Project](https://galaxyproject.org/) is a great place to find [current bioinformatics software](https://docs.galaxyproject.org/en/master/releases/index.html) and
+[tutorials](https://galaxyproject.org/tutorials/g101/).
+
+For an interesting discussion about scientists using outdated software see this 
+2018 article [Scientists Continue to Use Outdated Methods](https://www.the-scientist.com/news-opinion/scientists-continue-to-use-outdated-methods-30438), 
+and here's a 2019 article which coins the term ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) meaning that open source software 
+stops working eventually if is not actively maintained. The software used in this beginners introduction are already suffering from software collapse. 
+
 ### Assembly
 
-Learn: Not all assemblers are the same or give the same results.
-**Which assembler should I use?**
-It is in general a good idea to run several assemblers and compare. We are using VELVET, SOAPdenovo and ABYSS in this study. All of these assemblers are de-bruijn (K-mer) graph based assemblers.
+Learn: Not all [assemblers](https://en.wikipedia.org/wiki/Sequence_assembly#Notable_assemblers) are the same or give the same results.
+Also note that there are assemblers that use a reference genome to assist in assembly (reference-guided assembly) as opposed to *de novo* assembly which does not use a genome as a reference. 
+
+**Which genome assembler should I use?**
+
+1. As inefficient as it seems, it's generally good to run several assemblers and compare results 
+to find the one best for your data! Also, if there is a good-quality reference genome, you should use it. We are using reference-guided assembly with VELVET, SOAPdenovo and 
+ABYSS in this lesson. All of these assemblers are [de-bruijn](https://en.wikipedia.org/wiki/De_Bruijn_graph) (K-mer) 
+graph based assemblers.
+2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler.
 
 ### VELVET
 

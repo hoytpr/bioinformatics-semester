@@ -22,51 +22,65 @@ and directories (also called "folders"),
 which hold files or other directories.
 
 Several commands are frequently used to create, inspect, rename, and delete files and directories.
-To start exploring them, we'll go to our open shell window.
+To start exploring them, we'll use our shell window.
 
-let's find out where we are by running a command called `pwd`
+Let's find out where we are by running a command called `pwd`
 (which stands for "print working directory"). Directories are like *places* - at any time
 while we are using the shell we are in exactly one place, called
 our **current working directory**. Commands mostly read and write files in the 
-current working directory, i.e. "here", so knowing where you are before running
+current working directory, so knowing where you are before running
 a command is important. `pwd` shows you where you are:
 
 ~~~
 $ pwd
 /Users/nelle
 ~~~
-{: .output}
 
 Here,
-the computer's response is `/Users/nelle`,
-which is Nelle's **home directory**:
+the computer's response is `/Users/nelle`. This important directory is not just
+the current working directory, it is Nelle's **home directory**. 
+
+So let's go over that again... We
+can be any place in the file structure, and `pwd` will tell us where we are, i.e.  
+the current working directory. BUT there is only ONE home directory per user.
 
 > ## Home Directory Variation
 >
+> After installing GitBash we are just going to have to understand that different
+> operating systems have different places for the scientists' home directory. 
+> for Windows my home directory is on hard drive "C" and 
+> the output of `pwd` is:
+> ~~~
+> $ pwd
+> /c/Users/Hoyt
+> ~~~
 > The home directory path will look different on different operating systems.
 > On Linux it may look like `/home/nelle`,
-> and on Windows it will be similar to `C:\Documents and Settings\nelle` or
-> `C:\Users\nelle`.  
-> (Note that it may look slightly different for different versions of Windows.)
-> A typical Windows file structure might look like the image below, and uses the drive `C:` as 
-> the "root" directory (more on that later), but
+> and on Windows it could be also look like `C:\Documents and Settings\nelle` 
+> if you are using an older version of Windows.  
+> A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
+> the "root" directory (more on that later), but our setup instructions should
+> **start** you in your `Users` directory (e.g. Users/</kbd>yourname</kbd>), 
+> with at least a `Desktop` directory inside `Users/yourname/`. There might be
+> lots of files in your `Desktop` directory, but we'll only use the `data-shell`
+> directory for this lesson. The differences may be confusing but   
 > the GitBash window will show you similar outputs to start our lesson about
 > moving through files and directories. 
 > 
 > ![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
 >
-> Remember, In future examples, we've used Mac output as the default - Linux and Windows
+> **Remember**, In future examples, we've used an Apple Macintosh output as the 
+> default - if you are on a Linux and Windows computer, the
 > output may differ slightly, but should be generally similar.  
-{: .callout}
 
 To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.  For the
 sake of this example, we'll be
-illustrating the filesystem on our scientist Nelle's computer.  After this
-illustration, you'll be learning commands to explore your own filesystem,
+illustrating the filesystem on **our scientist Nelle's computer**.  After this
+illustration, you'll be learning commands to explore your **own filesystem**,
 which will be constructed in a similar way, but not be exactly identical.  
 
-On Nelle's computer, the filesystem looks like this:
+On ***Nelle's*** computer, the filesystem looks like this:
 
 ![The File System]({{ site.baseurl }}/materials/Root2Users.png)
 
@@ -82,7 +96,7 @@ Inside the `root` directory are several other directories:
 - `tmp` (for temporary files that don't need to be stored long-term),
 and so on.  
 
-We know that our current working directory `/Users/nelle` is stored inside `/Users`
+We know that our **current working directory** `/Users/nelle` is stored inside `/Users`
 because `/Users` is the first part of its name.
 Similarly,
 we know that `/Users` is stored inside the root directory `/`

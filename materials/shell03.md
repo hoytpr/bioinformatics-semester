@@ -151,7 +151,7 @@ return to the shell.
 
 > ## Control, Ctrl, or ^ Key
 >
-> The <kbd>Control</kbd> key (referred to as the "Command Key" on a Mac) is also called the "Ctrl" key. There are various ways
+> The __<kbd>Control</kbd>__ key (referred to as the "Command Key" on a Mac) is also called the "Ctrl" key. There are various ways
 > in which using the <kbd>Control</kbd> key may be described. For example, you may
 > see an instruction to press the <kbd>Control</kbd> key and, while holding it down,
 > press the <kbd>X</kbd> key, described as any of:
@@ -219,8 +219,8 @@ $ ls
 
 > ## Deleting Is Forever!
 >
-> The Unix shell doesn't have a trash bin that we can recover deleted
-> files from (though most graphical interfaces allow this including t6hose for Linux).  Instead,
+> ***The Unix shell doesn't have a trash bin that we can recover deleted***
+> ***files from*** (though most graphical interfaces allow this including those for Linux).  Instead,
 > when we delete files using the command-line, they are unhooked from the file system so that
 > their storage space on disk can be recycled. Tools for finding and
 > recovering deleted files do exist, but there's no guarantee they'll
@@ -241,13 +241,13 @@ $ ls
 draft.txt
 ~~~
 
-Now let's move up one directory to `/Users/nelle/Desktop/data-shell` using `cd ..`:
+Now let's move up one directory to `/Users/nelle/Desktop/data-shell` using `cd ..`
 
 ~~~
 $ cd ..
 ~~~
 
-If we try to remove the entire `thesis` directory using `rm thesis`,
+Notice if we try to remove the entire `thesis` directory using `rm thesis`,
 we get an error message:
 
 ~~~
@@ -255,10 +255,10 @@ $ rm thesis
 rm: cannot remove `thesis': Is a directory
 ~~~
 
-This happens because `rm` by default only works on files, not directories.
+This happens because `rm` by default only works on files, not directories. However, It can remove directories if they are completely empty.
 
 To really get rid of `thesis` we must also delete the file `draft.txt`.
-We can do this with the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`:
+We can do this with the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`
 
 ~~~
 $ rm -r thesis
@@ -269,9 +269,9 @@ $ ls
 ## Using `rm` Safely
 
 Removing the files in a directory recursively can be a **very dangerous**
-operation. If we're concerned about what we might be deleting we can
+operation. If we're concerned about what we might be deleting we should
 add the "interactive" flag `-i` to `rm` which will ask us for confirmation
-before each step
+before each step!
 
 ~~~
 $ rm -r -i thesis
@@ -279,7 +279,6 @@ rm: descend into directory ‘thesis’? y
 rm: remove regular file ‘thesis/draft.txt’? y
 rm: remove directory ‘thesis’? y
 ~~~
-{: .language-bash}
 
 This removes everything in the directory, then the directory itself, asking
 at each step for you to confirm the deletion.
@@ -294,7 +293,6 @@ and running `nano` on `draft.txt` there.
 $ pwd
 /Users/nelle/Desktop/data-shell
 ~~~
-{: .output}
 
 ~~~
 $ mkdir thesis
@@ -305,9 +303,8 @@ $ nano thesis/draft.txt
 $ ls thesis
 draft.txt
 ~~~
-{: .output}
 
-`draft.txt` isn't a particularly informative name,
+But `draft.txt` isn't a particularly informative name,
 so let's change the file's name (rename the file) using `mv`,
 which is short for "move":
 
@@ -327,11 +324,12 @@ quotes.txt
 ~~~
 
 One has to be **careful** when specifying the target file name, since `mv` will
-silently overwrite any existing file with the same name, which could
-lead to data loss. The additional flag, `mv -i` (or `mv --interactive`),
-can be used to make `mv` ask you for confirmation before overwriting.
+***silently*** overwrite any existing file with the same name, which could
+lead to data loss. We can protect ourselves by using the additional flag, `mv -i` 
+(or `mv --interactive`), can be used to make `mv` ask you for confirmation 
+before overwriting.
 
-Unlike the `rm` command, `mv` also works on directories!
+Unlike the `rm` command, `mv` works on directories containing files!
 
 Let's move `quotes.txt` into the current working directory.
 We use `mv` once again,
@@ -347,14 +345,14 @@ $ mv thesis/quotes.txt .
 ~~~
 
 The effect is to move the file from the directory it was in to the current working directory.
-`ls` now shows us that `thesis` is empty:
+`ls` now shows us that the `thesis` directory is empty:
 
 ~~~
 $ ls thesis
-~~~
-{: .language-bash}
 
-Further,
+~~~
+
+Further (and we will use this often),
 `ls` with a filename or directory name as an argument only lists that file or directory.
 We can use this to see that `quotes.txt` is still in our current directory:
 
@@ -368,7 +366,7 @@ quotes.txt
 The `cp` (copy) command works very much like `mv`,
 except it copies a file instead of moving it.
 We can check that it did the right thing using `ls`
-with two paths as arguments --- like most Unix commands,
+with ***two paths*** as arguments --- like most Unix commands,
 `ls` can be given multiple paths at once:
 
 ~~~
@@ -388,14 +386,14 @@ ls: cannot access quotes.txt: No such file or directory
 thesis/quotations.txt
 ~~~
 
-This time it tells us that it can't find `quotes.txt` in the current directory,
+This time the shell tells us that it can't find `quotes.txt` in the current directory,
 but it does find the copy in `thesis` that we didn't delete.
 
 > ## What's In A Name?
 >
 > You may have noticed that all of Nelle's files' names are "something dot
 > something", and in this part of the lesson, we always used the extension
-> `.txt`.  This is just a convention: we can call a file `mythesis` or
+> `.txt`.  This is just a convention: We can call a file `mythesis` (no extension) or
 > almost anything else we want. However, most people use two-part names
 > most of the time to help them (and their programs) tell different kinds
 > of files apart. The second part of such a name is called the
@@ -404,7 +402,7 @@ but it does find the copy in `thesis` that we didn't delete.
 > indicates a PDF document, `.cfg` is a configuration file full of parameters
 > for some program or other, `.png` is a PNG image, and so on.
 >
-> This is just a convention, albeit an important one ([also, "albeit" is and interesting word](https://en.wiktionary.org/wiki/albeit)). Files contain
+> This is just a convention, albeit an important one ([for you word geeks, "albeit" is and interesting word](https://en.wiktionary.org/wiki/albeit)). All computer files contain
 > bytes: it's up to us and our programs to interpret those bytes
 > according to the rules for plain text files, PDF documents, configuration
 > files, images, and so on.
@@ -414,13 +412,11 @@ but it does find the copy in `thesis` that we didn't delete.
 > cause the operating system to try to open it with a music player
 > when someone double-clicks it.
 
-### Excercises
+### Exercises
 
 ## Operations with multiple files and directories
 
 Oftentimes one needs to copy or move several files at once. This can be done by providing a list of individual filenames, or specifying a naming pattern using wildcards.  
-
-
 
 ### Using wildcards for accessing multiple files at once
 
