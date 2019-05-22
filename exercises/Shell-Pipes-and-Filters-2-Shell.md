@@ -6,7 +6,7 @@ language: Shell
 ---
 
 
-#### Redirecting to the same file
+#### Redirecting to the same file is risky
  
   It's a very bad idea to try redirecting
   the output of a command that operates on a file
@@ -15,17 +15,14 @@ language: Shell
   ~~~
   $ sort -n lengths.txt > lengths.txt
   ~~~
-  {: .language-bash}
  
-  Doing something like this may give you
-  incorrect results and/or delete
+  This will at least overwrite your working file `lengths.txt`
+  and may give you incorrect results, or could just delete
   the contents of `lengths.txt`.
 
 #### What Does `>>` Mean?
   We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
-  By using the `echo` command to print strings, test the commands below to reveal the difference
-  between the two operators:
-
+  By using the `echo` command to print strings, test the two commands below to reveal the difference   between the two operators:
  
   ~~~
   $ echo hello > testfile01.txt
@@ -41,12 +38,12 @@ language: Shell
 
 #### Appending Data
  
-  We have already met the `head` command, which prints lines from the start of a file.
+  We have already used the `head` command, which prints lines from the start of a file.
   `tail` is similar, but prints lines from the end of a file instead.
  
   Consider the file `data-shell/data/animals.txt`.
-  After these commands, select the answer that
-  corresponds to the file `animalsUpd.txt`:
+  Run both the commmands below and select the answer that
+  corresponds to the final file `animalsUpd.txt`:
  
   ~~~
   $ head -n 3 animals.txt > animalsUpd.txt
@@ -60,7 +57,9 @@ language: Shell
  
 #### Piping Commands Together
  
-  In our current directory, we want to find the 3 files which have the least number of
+  In our current directory (or any directory with several files), 
+  we want to find the 3 files 
+  which have the least number of
   lines. Which command listed below would work?
  
   1. `wc -l * > sort -n > head -n 3`
@@ -70,15 +69,15 @@ language: Shell
  
 #### Pipe Construction
  
-  For the file `animals.txt` from the previous exercise, the command:
+  For the file `animals.txt` from the [previous exercise]({{ site.baseurl }}/data/animals.txt), enter the command:
  
   ~~~
   $ cut -d , -f 2 animals.txt
   ~~~
-  {: .language-bash}
   
-  uses the `-d` flag to separate each line by comma, and the `-f` flag
-  to print the second field in each line, to give the following output:
+  `cut` uses the `-d` flag to separate each line by comma, and the `-f` flag
+  to print the second field in each line. You should
+  get the following output:
  
   ~~~
   deer
@@ -91,9 +90,9 @@ language: Shell
   bear
   ~~~
  
-  What other command(s) could be added to this in a pipeline to find
-  out what animals the file contains (without any duplicates in their
-  names)?
+  What other command(s) could be added to the above `cut` command creating a
+  pipeline to list all the animals the file contains without any duplicates 
+  in their names?
 
 #### Which Pipe?
  

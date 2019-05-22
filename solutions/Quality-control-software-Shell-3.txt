@@ -1,6 +1,6 @@
-#### Week 4 Exercise answers
+#### Week 4 
 
-3. Solution
+3. Overall Read Quality Exercise answers
 
 All of the reads contain usable data, but the quality decreases toward
 the end of the reads.

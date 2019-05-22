@@ -5,7 +5,9 @@ title: Assembly Tools
 language: Shell
 ---
 
-## Disclaimer! Alert! Alert! These software are obsolete. They really are! 
+## Disclaimer Alert!  
+
+#### These software are pretty much (not yet completely) obsolete.
 
 We are only using them to demonstrate 
 some processes used in bioinformatics. We want you to know you can do this!
@@ -39,7 +41,7 @@ stops working eventually if is not actively maintained. The software used in thi
 
 ### Assembly
 
-Learn: Not all [assemblers](https://en.wikipedia.org/wiki/Sequence_assembly#Notable_assemblers) are the same or give the same results.
+**Learn**: Not all [assemblers](https://en.wikipedia.org/wiki/Sequence_assembly#Notable_assemblers) are the same or give the same results.
 Also note that there are assemblers that use a reference genome to assist in assembly (reference-guided assembly) as opposed to *de novo* assembly which does not use a genome as a reference. 
 
 **Which genome assembler should I use?**
@@ -86,17 +88,19 @@ OR
 (q to quit)
 
 Find these information from the log file:
-Paired end library insert size: _____________   
+Paired end library insert size: `_____________`   
 
-Standard deviation ______________
+Standard deviation `______________`
 
-contig stats: n50 ________  
+contig stats: 
 
-max _______ 
+n50 `________`  
 
-total __________ 
+max contig length `_______`
 
-reads used ____________ (did it use all the reads?)
+total number of contigs `__________` 
+
+reads used `____________` (did it use all the reads?)
 
 Where are the contigs stored? Save the results!
 

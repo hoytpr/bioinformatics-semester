@@ -7,11 +7,4 @@ It's very easy to use a flipped, learner-centered, approach to teaching both of
 these classes. Ethan White designed them assuming learning to program has very little
 to do with someone talking and a lot to do with students working on
 computers. Flipped classes work well for all kinds of content, but 
-they work particularly well for computer oriented classes. If
-you're interested in knowing more take a look at this great
-info-graphic:
-
-[![Flipped Classroom](https://www.knewton.com/wp-content/uploads/flipped-classroom-1.jpg "Flipped Classroom")](https://www.knewton.com/flipped-classroom/)
-
-Created by [Knewton](https://www.knewton.com/) and [Column Five
-Media](http://columnfivemedia.com/)
+they work particularly well for computer oriented classes. 

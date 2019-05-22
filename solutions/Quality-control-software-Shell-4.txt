@@ -1,6 +1,6 @@
-#### Week 4 Exercise answers
+#### Week 4 
 
-4. Solution
+4. FastQC Exercise answers
 
 We can get the list of all failed tests using `grep`. 
 

@@ -146,7 +146,7 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 
 ### Assignment policy
 
-Assignments are due Monday night by 11:59 pm Eastern Time. Assignments should be
+Assignments are due Monday night by 11:59 pm Central Time. Assignments should be
 submitted via [email](mailto:peter.r.hoyt@okstate.edu). This allows you to be finished with one week's material
 before starting the next week's material.
 

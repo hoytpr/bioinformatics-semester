@@ -3,7 +3,7 @@ layout: page
 element: assignment
 title: Genomics First Assembly                
 language: Shell
-exercises: ['Download Data', 'Assemble Genome']
+exercises: ['Download Data', 'Assemble Genomes']
 ---
 
 #### Learning Objectives

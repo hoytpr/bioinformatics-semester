@@ -43,7 +43,7 @@ If we run `sort -n` on the same input, we get this instead:
 {: .output}
 
 Can you explain why `-n` has this effect.
-[Click here for the answer]({{ site.baseurl }}/solutions/Shell-Pipes-and-Filterss-Shell-1.txt)
+[Click here for the answer]({{ site.baseurl }}/solutions/Shell-Pipes-and-Filters-Shell-1.txt)
 
 We will also use the `-n` flag to specify that the sort is
 numerical instead of alphanumerical.

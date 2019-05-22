@@ -1,6 +1,6 @@
-#### Week 4 Exercise answers
+#### Week 4 
 
-1. 
+1. Base Quality Exercise answer
 
 ~~~
 $ tail -n 4 SRR2584863_1.fastq 

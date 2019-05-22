@@ -19,7 +19,7 @@ language: Shell
 You can also use two flags at the same time. (Some of the exercise output concerns properties that we won't cover in this lesson(such as file permissions and ownership), but the rest should be useful
 nevertheless.)
 
-### Exercise 4
+### ls Exercise
 
 What does the command `ls` do when used 
 with the `-l` flag? What about if you use both the `-l` and the `-h` flag?
