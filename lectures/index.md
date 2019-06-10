@@ -15,6 +15,7 @@ title: Lectures
 ### R
 
 * [Introduction to R and RStudio](R-intro)
+* [Introduction to R](R-basics-R)
 * [Working with Data](R-data)
 * [Data Visualization](R-datavis)
 * [Programming Fundamentals 1](R-fundamentals-1)
