@@ -11,6 +11,11 @@ title: Lectures
 * [Genomics Reads Quality Control](Genomics-reads-quality-controls)
 * [Genomics Starting the Project](Shell-genomics-starting-the-project)
 * [Genomics First Assembly](Shell-genomics-first-assembly)
+* [Genomics Advanced Shell](Shell-genomics-advanced-shell)
+* [Genomics Read Quality Trimming](Shell-genomics-read-quality-trimming)
+* [Genomics Variant Calling Workflow](Shell-genomics-variant-calling-workflow)
+* [Genomics Scripting Variant Calling](Shell-genomics-scripting-variant-calling)
+
 
 ### R
 

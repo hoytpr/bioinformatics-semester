@@ -1,8 +1,10 @@
 ---
 layout: page
 title: Assignment Schedule
-assignments: ['Shell Introduction and Files', 'Shell Lesson 2', 'Genomics Shell Intro', 
-'Genomics Reads Quality Control', 'Genomics Starting the Project', 'Genomics First Assembly', 'Introduction to R and RStudio',
+assignments: ['Shell Introduction and Files', 'Shell Lesson 2', 'Genomics Shell Intro',
+'Genomics Reads Quality Control', 'Genomics Starting the Project', 'Genomics First Assembly', 'Genomics Advanced Shell', 'Genomics Read Quality Trimming',
+'Genomics Variant Calling Workflow', 'Genomics Scripting Variant Calling', 
+'Introduction to R and RStudio',
 'Working with Data', 'Data Visualization', 'Working with Spatial Data',
 'Computational Projects', 'Programming Fundamentals 1',
 'Programming Fundamentals 2', 'Putting It All Together',

@@ -1,0 +1,60 @@
+## Solution 1
+
+```
+select(variants, contains("i"), -Indiv, -FILTER, POS)
+```
+
+## Solution 2
+
+```
+filter(variants, POS >= 1e6 & POS <= 2e6, !INDEL, QUAL 200)
+```
+
+## Exercise 1 Solution
+
+```
+variants %>%
+filter(sample_id == "SRR2584863" & DP >= 10) %>%
+select(REF, ALT, POS)
+```
+
+## Exercise 2 Solution
+
+```
+variants %>%
+mutate(POLPROB = 1 - 10 ^ -(QUAL/10)) %>%
+select(sample_id, POS, QUAL, POLPROB)
+```
+
+## Challenge 3 Solution 3
+
+```
+variants_indel %>%
+  group_by(mutation_type) %>%
+  summarize(
+    max_size = max(abs(indel_size))
+  )
+```
+
+## Challenge 4 Solution
+
+```
+variants_indel %>%
+  count(sample_id)
+```
+
+## Optional Challenge
+
+## Solution
+
+```
+variants %>%
+  mutate(POLPROB = 1 - (10 ^ -(QUAL/10))) %>%
+  mutate(prob_cat = case_when(
+    POLPROB >=  .95 ~ "high",
+    POLPROB >=  .7 & POLPROB < .95 ~ "medium",
+    POLPROB < .7 ~ "low"
+  )) %>%
+  count(sample_id, prob_cat) %>%
+  spread(prob_cat, n)
+```

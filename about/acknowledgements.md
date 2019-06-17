@@ -8,13 +8,13 @@ title: Acknowledgments
 Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry.okstate.edu/faculty/dr.-peter-hoyt-1), the original course materials and website 
 design have been primarily developed and
 implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://zackbrym.weecology.org/) in cooperation with [Data Carpentry](https://datacarpentry.org/). See our [contributors page](https://github.com/datacarpentry/semester-biology/graphs/contributors) for more 
-details. They are made available through the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
+details. More recent genomics lessons were developed with tremendous effort by [volunteer experts](https://github.com/datacarpentry/organization-genomics/graphs/contributors) and [others](https://github.com/datacarpentry/wrangling-genomics/graphs/contributors) and [more](https://github.com/datacarpentry/shell-genomics/graphs/contributors) who should be appreciated. There may be some contributors not mentioned, and if they contact me I'll gladly add their names or links to this list. The curricula are made available through the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
 
 #### Funding
 
 The development of this course, and this site, have been supported by the Gordon
 and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
-[GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694).
+[GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694). As this curricula becomes more diverse it will be difficult to maintain a list of all funding sources, but we will try. 
 
 #### The Carpentries
 

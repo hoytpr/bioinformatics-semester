@@ -1,0 +1,45 @@
+sequence quality trimming solutions
+
+ ## Solution 1
+ 1) 0.23%
+ 2) 79.96%
+
+
+ ## Solution 2
+ ~~~
+ $ ls ~/miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/
+ ~~~
+
+ ~~~
+ NexteraPE-PE.fa  TruSeq2-SE.fa    TruSeq3-PE.fa
+ TruSeq2-PE.fa    TruSeq3-PE-2.fa  TruSeq3-SE.fa
+ ~~~
+
+## Bonus Exercise Solution
+
+ In your AWS terminal window do:
+
+ ~~~
+ $ fastqc ~/dc_workshop/data/trimmed_fastq/*.fastq*
+ ~~~
+ {: .bash}
+
+ In a new tab in your terminal do:
+
+ ~~~
+ $ mkdir ~/Desktop/fastqc_html/trimmed
+ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/trimmed_fastq/*.html ~/Desktop/fastqc_html/trimmed
+ $ open ~/Desktop/fastqc_html/trimmed/*.html
+ ~~~
+
+ Remember to replace everything between the `@` and `:` in your scp
+ command with your AWS instance number.
+
+ After trimming and filtering, our overall quality is much higher, 
+ we have a distribution of sequence lengths, and more samples pass 
+ adapter content. However, quality trimming is not perfect, and some
+ programs are better at removing some sequences than others. Because our
+ sequences still contain 3' adapters, it could be important to explore
+ other trimming tools like [cutadapt](http://cutadapt.readthedocs.io/en/stable/) to remove these, depending on your
+ downstream application. Trimmomatic did pretty well though, and its performance
+ is good enough for our workflow.

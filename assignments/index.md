@@ -11,6 +11,9 @@ title: Assignments
 * [Genomics Reads Quality Control](shell-read-quality)
 * [Genomics Starting the Project](shell-genomics-starting-the-project)
 * [Genomics First Assembly](shell-genomics-first-assembly)
+* [Genomics Shell Intro](shell-genomics-advanced-shell)
+* [Genomics Variant Calling](shell-genomics-variant-calling-workflow)
+* [Genomics Automating a Variant Calling Workflow](shell-genomics-scripting-variant-calling)
 
 ### R
 

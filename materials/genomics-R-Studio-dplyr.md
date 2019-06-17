@@ -7,36 +7,24 @@ language: R
 
 ### Questions:
 - How can I manipulate dataframes without repeating myself?
-objectives:
+
+## Objectives:
 - Describe what the `dplyr` package in R is used for.
 - Apply common `dplyr` functions to manipulate data in R.
 - Employ the ‘pipe’ operator to link together a sequence of functions.
 - Employ the ‘mutate’ function to apply other chosen functions to existing columns and create new columns of data.
 - Employ the ‘split-apply-combine’ concept to split the data into groups, apply analysis to each group, and combine the results.
 
-```
-source("../bin/chunk-options.R")
-knitr_fig_path("04-")
-```
+Using brackets to identify subsets (Bracket subsetting) is handy, but it can be cumbersome and difficult to read, especially for complicated operations. 
 
-```{r, include=FALSE, echo = FALSE, eval = TRUE, purl = FALSE}
-## silently read in CSV file from FigShare
-library(tidyverse)
-variants <- read_csv(
-  "https://ndownloader.figshare.com/files/14632895"
-)
-```
-
-Bracket subsetting is handy, but it can be cumbersome and difficult to read, especially for complicated operations. 
-
-Luckily, the [`dplyr`](https://cran.r-project.org/package=dplyr
+Luckily, the [`dplyr`](https://cran.r-project.org/package=dplyr)
 package provides a number of very useful functions for manipulating dataframes
 in a way that will reduce repetition, reduce the probability of making
 errors, and probably even save you some typing. As an added bonus, you might
 even find the `dplyr` grammar easier to read.
 
 Here we're going to cover 6 of the most commonly used functions as well as using
-pipes (`%>%`) to combine them.
+pipes (`%>%`) to combine them. The first five are:
 
 1. `select()`
 2. `filter()`
@@ -49,21 +37,21 @@ stuff in R. The functions we've been using, like `str()`, come built into R;
 packages give you access to more functions. You need to install a package and
 then load it to be able to use it.
 
-```{r, eval = FALSE, purl = FALSE}
+```
 install.packages("dplyr") ## install
 ```
 
 You might get asked to choose a CRAN mirror -- this is asking you to
 choose a site to download the package from. The choice doesn't matter too much; I'd recommend choosing the RStudio mirror.
 
-```{r, message = FALSE, purl = FALSE}
+```
 library("dplyr")          ## load
 ```
 
 You only need to install a package once per computer, but you need to load it
 every time you open a new R session and want to use that package.
 
-## What is dplyr?
+## What is dplyr? (Dee-ply-er)
 
 The package `dplyr` is a fairly new (2014) package that tries to provide easy
 tools for the most common data manipulation tasks. It is built to work directly
@@ -87,68 +75,52 @@ To select columns of a
 data frame, use `select()`. The first argument to this function is the data
 frame (`variants`), and the subsequent arguments are the columns to keep.
 
-```{r, echo = TRUE, eval = TRUE, purl = FALSE}
+```
 select(variants, sample_id, REF, ALT, DP)
 ```
 
 To select all columns *except* certain ones, put a "-" in front of
 the variable to exclude it.
 
-```{r, echo = TRUE, eval = TRUE, purl = FALSE}
+```
 select(variants, -CHROM)
 ```
 
 `dplyr` also provides useful functions to select columns based on their names. For instance, `ends_with()` allows you to select columns that ends with specific letters. For instance, if you wanted to select columns that end with the letter "B":
 
-```{r}
+```
 select(variants, ends_with("B"))
 ```
 
-> ## Challenge
->
-> Create a table that contains all the columns with the letter "i" except for
-> the columns "Indiv" and "FILTER", and the column "POS". Hint: look at the help
-> for the function `ends_with()` we've just covered.
->
->> ## Solution
->> 
->> ```{r}
->> select(variants, contains("i"), -Indiv, -FILTER, POS)
->> ```
-> {: .solution}
-{: .challenge}
-
-
 To choose rows, we can use `filter()`. For instance, to keep the rows for the sample `SRR2584863`:
 
-```{r, purl = FALSE}
+```
 filter(variants, sample_id == "SRR2584863")
 ```
-
 
 Note that this is equivalent to the base R code below, 
 but is easier to read!
 
-```{r, eval = FALSE, purl = FALSE}
+```
 variants[variants$sample_id == "SRR2584863",]
 ```
-
 `filter()` will keep all the rows that match the conditions that are provided. Here are a few examples:
 
-```{r}
-## rows for which the reference genome has T or G 
+
+```
+# rows for which the reference genome has T or G 
 filter(variants, REF %in% c("T", "G"))
-## rows with QUAL values greater than or equal to 100
+# rows with QUAL values greater than or equal to 100
 filter(variants, QUAL >= 100)
-## rows that have TRUE in the column INDEL
+# rows that have TRUE in the column INDEL
 filter(variants, INDEL)
-## rows that don't have missing data in the IDV column
+# rows that don't have missing data in the IDV column
 filter(variants, !is.na(IDV))
 ```
 
 `filter()` allows you to combine multiple conditions. You can separate them using a `,` as arguments to the function, they will be combined using the `&` (AND) logical operator. If you need to use the `|` (OR) logical operator, you can specify it explicitly:
 
-```{r}
+```
 ## this is equivalent to:
 ##   filter(variants, sample_id == "SRR2584863" & QUAL >= 100)
 filter(variants, sample_id == "SRR2584863", QUAL >= 100)
@@ -156,48 +128,39 @@ filter(variants, sample_id == "SRR2584863", QUAL >= 100)
 filter(variants, sample_id == "SRR2584863", (INDEL | QUAL >= 100))
 ```
 
-> ## Challenge
->
-> Select all the mutations that occurred between the positions 1e6 (one million)
-> and 2e6 (included) that are not indels and have QUAL greater than 200.
->
->> ## Solution
->> 
->> ```{r}
->> filter(variants, POS >= 1e6 & POS <= 2e6, !INDEL, QUAL > 200)
->> ```
-> {: .solution}
-{: .challenge}
+Note that the keyboard character `|` is seen in Bash scripting as a "pipe" character, that ties commands together, however  in dplyr, `|` really just means "OR". But we can use pipes in dplyer, just with a different character as shown below.
 
 ### Pipes
 
-But what if you wanted to select and filter? We can do this with pipes. Pipes, are a fairly recent addition to R. Pipes let you
+What if you wanted to select **and** filter? We can do this with pipes. Pipes, 
+are a fairly recent addition to R. Pipes let you
 take the output of one function and send it directly to the next, which is
-useful when you need to many things to the same data set. It was
-possible to do this before pipes were added to R, but it was 
-much messier and more difficult. Pipes in R look like
+useful when you need to do many things with the same data set. Pipes in R look like
 `%>%` and are made available via the `magrittr` package, which is installed as
 part of `dplyr`. If you use RStudio, you can type the pipe with
 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you're using a PC,
 or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> if you're using a Mac.
+Here's an example:
 
-```{r, echo = TRUE, eval = TRUE, purl = FALSE}
+```
 variants %>%
   filter(sample_id == "SRR2584863") %>%
-  select(REF, ALT, DP)
+  select(REF, ALT, DP) %>%
+  head(6)
 ```
 
 In the above code, we use the pipe to send the `variants` dataset first through
-`filter()`, to keep rows where `sample_id` matches a particular sample, and then through `select()` to
-keep only the `REF`, `ALT`, and `DP` columns. Since `%>%` takes
+`filter()`, keeping rows where `sample_id` matches a particular sample. Then 
+we pipe that output through `select()` to
+keep only the `REF`, `ALT`, and `DP` columns. Because `%>%` takes
 the object on its left and passes it as the first argument to the function on
-its right, we don't need to explicitly include the data frame as an argument
+its right, we don't need to explicitly include the data frame `variant` argument
 to the `filter()` and `select()` functions any more. We then pipe the results
 to the `head()` function so that we only see the first six rows of data.
 
 Some may find it helpful to read the pipe like the word "then". For instance,
 in the above example, we took the data frame `variants`, *then* we `filter`ed
-for rows where `sample_id` was SRR2584863, *then* we `select`ed the `REF`, `ALT`, and `DP` columns, *then* we showed only the first six rows. 
+for rows where `sample_id` was SRR2584863, *then* we `select` out the `REF`, `ALT`, and `DP` columns, *then* we showed only the first six rows. 
 The **`dplyr`** functions by themselves are somewhat simple,
 but by combining them into linear workflows with the pipe, we can accomplish
 more complex manipulations of data frames.
@@ -205,7 +168,7 @@ more complex manipulations of data frames.
 If we want to create a new object with this smaller version of the data we
 can do so by assigning it a new name:
 
-```{r, purl = FALSE}
+```
 SRR2584863_variants <- variants %>%
   filter(sample_id == "SRR2584863") %>%
   select(REF, ALT, DP)
@@ -213,28 +176,10 @@ SRR2584863_variants <- variants %>%
 
 This new object includes all of the data from this sample. Let's look at it to confirm it's what we want:
 
-```{r, purl = FALSE}
+```
 SRR2584863_variants
 ```
-
-> ## Exercise: Pipe and filter
->
-> Starting with the `variants` dataframe, use pipes to subset the data
-> to include only observations from SRR2584863 sample,
-> where the filtered
-> depth (DP) is at least 10. Retain only the columns `REF`, `ALT`, 
-> and `POS`.
->
->> ## Solution
->>
->> ```{r}
->>  variants %>%
->>  filter(sample_id == "SRR2584863" & DP >= 10) %>%
->>  select(REF, ALT, POS)
->> ```
->>
-> {: .solution}
-{: .challenge}
+Exercise 1 here
 
 ### Mutate
 
@@ -254,42 +199,27 @@ Let's add a column (`POLPROB`) to our `variants` dataframe that shows
 the probability of a polymorphism at that site given the data. We'll show 
 only the first six rows of data.
 
-```{r, purl = FALSE}
+```
 variants %>%
   mutate(POLPROB = 1 - (10 ^ -(QUAL/10)))
+  head(6)
 ```
 
-> ## Exercise
->
-> There are a lot of columns in our dataset, so let's just look at the
-> `sample_id`, `POS`, `QUAL`, and `POLPROB` columns for now. Add a 
-> line to the above code to only show those columns. 
-> 
->> ## Solution
->> 
->> ```{r}
->> variants %>%
->>  mutate(POLPROB = 1 - 10 ^ -(QUAL/10)) %>%
->>  select(sample_id, POS, QUAL, POLPROB)
->> ```
->>
-> {: .solution}
-{: .challenge}
-
+exercise 2 goes here
 
 We are interested in knowing the most common size for the indels. Let's create a
 new column, called "indel\_size" that contains the size difference between the
 our sequences and the reference genome. The function, `nchar()` returns the
 number of letters in a string.
  
-```{r}
+```
 variants %>%
   mutate(indel_size = nchar(ALT) - nchar(REF))
 ```
 
-When you want to create a new variable that depends on multiple conditions, the function `case_when()` in combination with `mutate()` is very useful. Our current dataset has a column that tells use whether each mutation is an indel, but we don't know if it's an insertion or a deletion. Let's create a new variable, called `mutation_type` that will take the values: `insertion`, `deletion`, or `point` depending on the value found in the `indel_size` column. We will save this data frame in a new variable, called `variants_indel`.
+When you want to create a new variable that depends on multiple conditions, the function `case_when()` in combination with `mutate()` is very useful. Our current dataset has a column that tells us whether each mutation is an indel, but we don't know if it's an insertion or a deletion. Let's create a new variable, called `mutation_type` that will take the values: `insertion`, `deletion`, or `point` depending on the value found in the `indel_size` column. We will first save our original data frame in a new variable, called `variants_indel`.
 
-```{r}
+```
 variants_indel <- variants %>%
   mutate(
     indel_size = nchar(ALT) - nchar(REF),
@@ -300,11 +230,11 @@ variants_indel <- variants %>%
     ))
 ```
 
-When `case_when()` is used within `mutate()`, each row is evaluated for the condition listed in the order listed. The first condition that returns `TRUE` will by used to fill the content of the new column (here `mutation_type`) with the value listed on the right side of the `~` is used. If none of the conditions are met, the function returns `NA` (missing data).
+When `case_when()` is used within `mutate()`, each row is evaluated for the condition in the order listed. The first condition that returns `TRUE` will by used to fill the content of the new column (here `mutation_type`) with the value listed on the right side of the `~` is used. The `~` essentially means "modeled by". If none of the conditions are met, the function returns `NA` (missing data).
 
 We can check that we captured all possibilities by looking for missing data in the new `mutation_type` column, and confirm that no row matches this condition:
 
-```{r}
+```
 variants_indel %>%
   filter(is.na(mutation_type))
 ```
@@ -322,7 +252,7 @@ or summary function to each group.
 
 For example, if we wanted to group by `mutation_type` and find the average size for the insertions and deletions:
 
-```{r, purl = FALSE}
+```
 variants_indel  %>%
   group_by(mutation_type) %>%
   summarize(
@@ -332,7 +262,7 @@ variants_indel  %>%
 
 We can have additional columns by adding arguments to the `summarize()` function. For instance, if we also wanted to know the median indel size:
 
-```{r}
+```
 variants_indel %>%
   group_by(mutation_type) %>%
   summarize(
@@ -344,28 +274,13 @@ variants_indel %>%
 
 So to view the highest filtered depth (`DP`) for each sample:
 
-```{r, purl = FALSE}
+```
 variants_indel %>%
   group_by(sample_id) %>%
   summarize(max(DP))
 ```
 
-> ## Challenge
->
-> What are the largest insertions and deletions? Hint: the function `abs()`
-> returns the absolute value.
-> 
->> ## Solution
->>
->> ```{r}
->> variants_indel %>%
->>   group_by(mutation_type) %>%
->>   summarize(
->>     max_size = max(abs(indel_size))
->>   )
->> ```
-> {: .solution}
-{: .challenge}
+Challenge 3 goes here
 
 > ## Callout: missing data and built-in functions
 >
@@ -378,12 +293,10 @@ variants_indel %>%
 > it. When dealing with simple statistics like the mean, the easiest way to
 > ignore `NA` (the missing data) is to use `na.rm = TRUE` (`rm` stands for
 > remove).
-{: .callout}
 
+It is often useful to calculate how many observations are present in each group. The function `n()` helps you do that. For example:
 
-It is often useful to calculate how many observations are present in each group. The function `n()` helps you do that:
-
-```{r}
+```
 variants_indel %>%
   group_by(mutation_type) %>%
   summarize(
@@ -391,90 +304,51 @@ variants_indel %>%
   )
 ```
 
-Because it's a common operation, the `dplyr` verb, `count()` is a "shortcut" that combines these 2 commands:
+Because `group_by` and `summarize` are very common operations, the `dplyr` verb, `count()` was provided as a "shortcut" that combines these 2 commands:
 
-```{r}
+```
 variants_indel %>%
   count(mutation_type)
 ```
 
-`group_by()` (and therfore `count()`) can also take multiple column names.
+`group_by()` can take multiple column names, and therfore `count()` can also take multiple column names.
 
 
-> ## Challenge
->
-> * How many mutations are found in each sample?
->
->> ## Solution
->>
->> ```{r}
->> variants_indel %>%
->>   count(sample_id)
->> ```
-> {: .solution}
->
-> * How many mutation types are found in sample?
->
->> ## Solution
->>
->> ```{r}
->> variants_indel %>%
->>   count(sample_id, mutation_type)
->> ```
-> {: .solution}
-{: .challenge}
+Challenge 4 goes here
 
+## (Optional) Reshaping data frames with 'spread'
 
-## Reshaping data frames
+We have learned the tidy format is useful to analyze and plot data in R, but sometimes we want to transform the "long" tidy format, into the wide format. This transformation can be done with the `spread()` function provided by the `tidyr` package (also part of the `tidyverse`).
 
-While the tidy format is useful to analyze and plot data in R, it can sometimes be useful to transform the "long" tidy format, into the wide format. This transformation can be done with the `spread()` function provided by the `tidyr` package (also part of the `tidyverse`).
+`spread()` takes a data frame as the first argument, and then additional two arguments: the column name that will become the **columns**  and the column name that will become the **cells** in the wide data.
 
-`spread()` takes a data frame as the first argument, and two arguments: the column name that will become the columns  and the column name that will become the cells in the wide data.
+To demonstrate this, let's first create a new dataframe from `variants_indel` called `variants_wide`:
 
-```{r}
+```
 variants_wide <- variants_indel %>%
   count(sample_id, mutation_type) %>%
   spread(mutation_type, n)
 variants_wide
 ```
+This is similar to "inverting" a table". We are inverting the coluns 
+`sample_id` and `mutation_type` such that `mutation_type` values are used like column headers, 
+with the underneath cells having the values of `count(sample_id)`. Any positions for the new dataframe 
+`variants_wide` without values, are given a `NA`.
 
-The opposite operation of `spread()` is taken care by `gather()`. We specify the names of the new columns, and here add `-sample_id` as this column shouldn't be affected by the reshaping:
+The opposite operation of `spread()` is taken care by `gather()`. The `gather()` command in this example extends the column `mutation_type` vertically so that each value of `n` is evaluated. We specify the names of the new columns, and here add `-sample_id` as this column shouldn't be affected by the reshaping:
 
-```{r}
+```
 variants_wide %>%
   gather(mutation_type, n, -sample_id)
 ```
 
-> ## Challenge (optional)
->
-> Based on the probability scores we calculated when we first introducted
-> `mutate()`, classify each mutation in 3 categories: high (> 0.95), medium
-> (between 0.7 and 0.95), and low (< 0.7), and create a table with `sample_id`
-> as rows, the 3 levels of quality as columns, and the number of mutations in
-> the cells.
->
->> ## Solution
->> 
->> ```{r}
->> variants %>%
->>   mutate(POLPROB = 1 - (10 ^ -(QUAL/10))) %>%
->>   mutate(prob_cat = case_when(
->>     POLPROB >=  .95 ~ "high",
->>     POLPROB >=  .7 & POLPROB < .95 ~ "medium",
->>     POLPROB < .7 ~ "low"
->>   )) %>%
->>   count(sample_id, prob_cat) %>%
->>   spread(prob_cat, n)
->> ```
-> {: .solution}
-{: .challenge}
-
+Optional challenge goes here
 
 ## Exporting
 
-We can export this new dataset using `write_csv()`:
+We can export almost all new datasets using `write_csv()`:
 
-```{r}
+```
 write_csv(variants_indel, "variants_indel.csv")
 ```
 

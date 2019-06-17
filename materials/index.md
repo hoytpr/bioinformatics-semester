@@ -2,17 +2,20 @@
 layout: page
 title: Lecture Materials
 ---
-<a href="#SQL">SQL</a> \| <a href="#R">R</a> \| <a href="#Python">Python</a> \|  <a href="#Access">Access</a>
+<a href="#Shell">Shell</a> \| <a href="#R">R</a> \| <a href="#SQL">SQL</a> \| <a href="#Python">Python</a> \|  <a href="#Access">Access</a>
 
-### Shell
+### Shell<a name="Shell"></a>
 
 -  [Shell Introduction]({{ site.baseurl }}/materials/shell01)
 -  [Navigating Shell Files]({{ site.baseurl }}/materials/shell02)
 -  [Working with Files and Directories]({{ site.baseurl }}/materials/shell03)
 -  [Shell Pipes and Filters]({{ site.baseurl }}/materials/shell04)
 -  [Genomics Shell Intro]({{ site.baseurl }}/materials/genomics-shell-intro)
+-  [Genomics Advanced Shell]({{ site.baseurl }}/materials/genomics-advanced-shell)
 -  [Genomics Data and Scripts]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts)
--  [Scripts for Genomic Variant Calls]({{ site.baseurl }}/materials/genomics-run-variant-calling)
+-  [Genomics Trimming and Filtering]({{ site.baseurl }}/materials/genomics-trimming-and-filtering)
+-  [Genomics Variant Calling]({{ site.baseurl }}/materials/genomics-variant-calling-workflow)
+-  [Automating Genomic Variant Calls]({{ site.baseurl }}/materials/genomics-run-variant-calling)
 -  [Genomics Read Quality Control]({{ site.baseurl }}/materials/genomics-reads-quality-control)
 -  [Tidy Data in Genomics]({{ site.baseurl }}/materials/genomics-data-tidiness)
 -  [Organized Projects in Genomics]({{ site.baseurl }}/materials/genomics-project-organization)
