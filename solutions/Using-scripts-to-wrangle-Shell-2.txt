@@ -1,4 +1,5 @@
 ## Exercise Week4 - Scripts with loops
 ## Solution 
 
+If you are looking at BWA, why is this solution about loops???
 Ask for help if you get stuck here! 

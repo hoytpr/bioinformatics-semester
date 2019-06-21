@@ -5,13 +5,17 @@ title: Assignments
 
 ### Shell
 
-* [Shell Introduction and Files](shell01)
-* [Shell Lesson 2](shell02)
-* [Genomics Shell Intro](genomics-shell-intro)
+* [Shell Introduction](shell-introduction)
+* [Shell Files and Directories](shell-files-and-directories)
+* [Shell Pipes and Filters](shell-pipes-and-filters)
+* [Shell Introduction to Loops](shell-introduction-to-loops)
+* [Genomics Shell Data Wrangling](shell-data-wrangling-genomics-intro)
 * [Genomics Reads Quality Control](shell-read-quality)
+* [Genomics Read Quality Trimming](shell-genomics-read-quality-trimming)
 * [Genomics Starting the Project](shell-genomics-starting-the-project)
 * [Genomics First Assembly](shell-genomics-first-assembly)
-* [Genomics Shell Intro](shell-genomics-advanced-shell)
+* [Genomics Advanced Shell](shell-genomics-advanced-shell)
+* [Genomics Advanced Loops](shell-genomics-advanced-loops)
 * [Genomics Variant Calling](shell-genomics-variant-calling-workflow)
 * [Genomics Automating a Variant Calling Workflow](shell-genomics-scripting-variant-calling)
 

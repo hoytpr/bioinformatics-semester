@@ -15,7 +15,7 @@ title: Lecture Materials
 -  [Genomics Data and Scripts]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts)
 -  [Genomics Trimming and Filtering]({{ site.baseurl }}/materials/genomics-trimming-and-filtering)
 -  [Genomics Variant Calling]({{ site.baseurl }}/materials/genomics-variant-calling-workflow)
--  [Automating Genomic Variant Calls]({{ site.baseurl }}/materials/genomics-run-variant-calling)
+-  [Automating Genomic Variant Calls]({{ site.baseurl }}/materials/genomics-automating-variant-calling)
 -  [Genomics Read Quality Control]({{ site.baseurl }}/materials/genomics-reads-quality-control)
 -  [Tidy Data in Genomics]({{ site.baseurl }}/materials/genomics-data-tidiness)
 -  [Organized Projects in Genomics]({{ site.baseurl }}/materials/genomics-project-organization)

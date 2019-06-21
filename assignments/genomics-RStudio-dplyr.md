@@ -6,4 +6,4 @@ language: Shell
 exercises: ['Genomics RStudio dplyr']
 ---
 
-
+Exercise development ongoing

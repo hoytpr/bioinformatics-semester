@@ -1,10 +1,17 @@
 ---
 layout: page
 element: assignment
-title: Genomics Shell Intro
+title: Genomics Advanced Shell
 language: Shell
-exercises: ['Genomics Shell Intro']
+exercises: ['Genomics Advanced Shell']
 ---
 
-Assignment under development May 2019
-X
+Assignment under development
+
+Lectures under development
+
+1. Regular Expressions
+2. Using `sed`
+3. Using `awk`
+
+{% include assignment.html %}

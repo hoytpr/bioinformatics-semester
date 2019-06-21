@@ -1,32 +1,26 @@
 ---
 layout: exercise
 topic: Genomics
-title: Genomics Run Variant Calling
+title: Genomics Automating Run Variant Calling
 language: Shell
 ---
-
-- "How can I make my workflow more efficient and less error-prone?"
-objectives:
+### Key objectives:
 - "Write a shell script with multiple variables."
 - "Incorporate a `for` loop into a shell script."
-- ""
-keypoints:
-- "We can combine multiple commands into a shell script to automate a workflow."
-- "Use `echo` statements within your scripts to get an automated progress update."
 
-# What is a shell script?
+### 1. Remembering shell scripts
 
-You wrote a simple shell script in a [previous lesson](http://www.datacarpentry.org/shell-genomics/05-writing-scripts/) that we used to extract bad reads from our
-FASTQ files and put them into a new file. 
+You wrote a simple shell script in a previous lesson that we used to extract bad reads from our FASTQ files.  
 
-Here's the script you wrote:
+Download the following fastq files and re-write the earlier script including a `for` loop, to unzip the files into a new directory inside the `data` directory called `data/unzip-SR01`, then find any bad reads and put the list of ALL the bad reads from all the files in the new folder with a file name SR01_S1_bad-reads.txt
 
-~~~
-grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
+[SR01_S1_L001_R1_001.fastq.gz]({{ site.base.url }}/data/SR01_S1_L001_R1_001.fastq.gz)
 
-echo "Script finished!"
-~~~
-{: .bash}
+[SR01_S1_L002_R1_001.fastq.gz]({{ site.base.url }}/data/SR01_S1_L002_R1_001.fastq.gz)
+
+[SR01_S1_L003_R1_001.fastq.gz]({{ site.base.url }}/data/SR01_S1_L003_R1_001.fastq.gz)
+
+[SR01_S1_L001_R4_001.fastq.gz]({{ site.base.url }}/data/SR01_S1_L001_R4_001.fastq.gz)
 
 That script was only two lines long, but shell scripts can be much more complicated
 than that and can be used to perform a large number of operations on one or many 
@@ -68,7 +62,7 @@ including creating our summary file. To do this, we'll take each of the commands
 process the output files and put them into a single file with a `.sh` extension. The `.sh` is not essential, but
 serves as a reminder to ourselves and to the computer that this is a shell script.
 
-# Analyzing Quality with FastQC
+### Analyzing Quality with FastQC
 
 We will use the command `touch` to create a new file where we will write our shell script. We will create this script in a new
 directory called `scripts/`. Previously, we used
@@ -162,7 +156,7 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
-> ## Using `echo` statements
+> ### Using `echo` statements
 > 
 > We've used `echo` statements to add progress statements to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
@@ -226,7 +220,7 @@ replace SRR097977_fastqc/Icons/fastqc_icon.png? [y]es, [n]o, [A]ll, [N]one, [r]e
 ~~~
 {: .output}
 
-# Automating the Rest of our Variant Calling Workflow
+### Automating the Rest of our Variant Calling Workflow
 
 Now we will create a second shell script to complete the other steps of our variant calling
 workflow. To do this, we will take all of the individual commands that we wrote before, put them into a single file, 
@@ -285,7 +279,7 @@ genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 ~~~
 {: .output}
 
-> ## Creating Variables
+> ### Creating Variables
 > Within the Bash shell you can create variables at any time (as we did
 > above, and during the 'for' loop lesson). Assign any name and the 
 > value using the assignment operator: '='. You can check the current
@@ -322,7 +316,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 {: .bash}
 
 
-> ## Indentation
+> ### Indentation
 > 
 > All of the statements within your `for` loop (i.e. everything after the `for` line and including the `done` line) 
 > need to be indented. This indicates to the shell interpretor that these statements are all part of the `for` loop
@@ -331,12 +325,12 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 {: .callout}
 
 
-> ## Exercise
+> #### Exercise
 > 
 > This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run
 > it. What output do you see?
 >
->> ## Solution 
+>> #### Solution 
 >> 
 >> ~~~
 >> $ bash run_variant_calling.sh
@@ -521,7 +515,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 ~~~
 {: .output}
 
-> ## Exercise
+> #### Exercise
 > It's a good idea to add comments to your code so that you (or a collaborator) can make sense of what you did later. 
 > Look through your existing script. Discuss with a neighbor where you should add comments. Add comments (anything following
 > a `#` character will be interpreted as a comment, bash will not try to run these comments as code). 
@@ -534,7 +528,7 @@ $ bash run_variant_calling.sh
 ~~~
 {: .bash}
 
-> ## BWA variations
+> ### BWA variations
 > BWA is a software package for mapping low-divergent sequences 
 > against a large reference genome, such as the human genome, and 
 > it's freely available [here](http://bio-bwa.sourceforge.net). It 
@@ -577,8 +571,10 @@ $ bash run_variant_calling.sh
 > {: .bash}
 > 
 > As an exercise, try and change your existing script file, from using the `aln` method to the `mem` method.
-{: .callout}
 
+### Keypoints:
+- "We can combine multiple commands into a shell script to automate a workflow."
+- "Use `echo` statements within your scripts to get an automated progress update."
 
 
 

@@ -3,7 +3,7 @@ layout: page
 element: assignment
 title: Genomics Reads Quality Control               
 language: Shell
-exercises: ['Quality Control Software', 'Using Scripts to Wrangle']
+exercises: ['Quality Control Software']
 ---
 
 #### Learning Objectives

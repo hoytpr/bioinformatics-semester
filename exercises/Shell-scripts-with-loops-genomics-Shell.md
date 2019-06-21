@@ -4,7 +4,8 @@ topic: Shell
 title: Scripts With Loops Genomics 
 language: Shell
 ---
-(This exercise is under development)
+(This advanced loops exercise is under development and content 
+below has been commented out. Or this can be deleted)
 
 <!--
 

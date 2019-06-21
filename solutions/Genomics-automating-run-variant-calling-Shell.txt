@@ -1,0 +1,55 @@
+Working script example
+
+# bin bash
+mkdir ../data/unzip-SR01
+cd ../data
+for filename in *.fastq.gz
+do
+  echo $filename
+  gzip -dN $filename 
+  mv *.fastq unzip-SR01/
+done
+grep -B1 -A2 NNNNNNNNNN ../data/unzip-SR01/*.fastq >> ../data/unzip-SR01/SR01_S1_bad-reads.txt
+
+--------------
+# bin bash
+mkdir ../data/unzip-SR01
+cd ../data
+for filename in *.fastq.gz
+do
+  echo $filename
+  gzip -dN $filename 
+  mv *.fastq unzip-SR01/
+done
+grep -B1 -A2 NNNNNNNNNN ../data/unzip-SR01/*.fastq >> ../data/unzip-SR01/SR01_S1_bad-reads.txt
+---------------
+Why are the results different when you do this???
+
+# bin bash
+mkdir ../data/unzip-SR01
+cd ../data
+for filename in *.fastq.gz
+do
+  echo $filename
+  #  set unzippedname = $filename
+  gzip -dN $filename 
+  mv *.fastq unzip-SR01/
+done
+cd unzip-SR01/
+for filename2 in *.fastq
+do
+   echo $filename2
+   grep -B1 -A2 NNNNNNNNNN $filename2 >> SR01_S1_bad-reads.txt
+done
+
+---------------------------------------------
+
+~~~
+mkdir ({{ site.base.url]]/data/unzip-SR01)
+for filename in ({{ site.base.url]]/data/*.fastq.qz)
+> do
+> unzip $filename ({{ site.base.url]]/data/unzip-SR01/$filename[unzipped.fastq])
+> cd ({{ site.base.url]]/data/unzip-SR01/)
+> grep -B1 -A2 NNNNNNNNNN *unzipped.fastq >> SR01_S1_bad-reads.txt
+> done
+~~~

@@ -1,4 +1,3 @@
 ## Exercise Week4 - Scripts with loops
 
-This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run
-it. What output do you see?
+ What output do you see? NOTHING! because we haven't written the question yet.

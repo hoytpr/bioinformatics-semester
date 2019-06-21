@@ -5,8 +5,9 @@ title: Lectures
 
 ### Shell
 
-* [Shell Introduction and Files](Shell01)
-* [Shell Lesson 2](Shell02)
+* [Shell Introduction](Shell-introduction)
+* [Shell Files and Directories](Shell-files-and-directories)
+* [Shell Pipes and Filters](Shell-pipes-and-filters)
 * [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
 * [Genomics Reads Quality Control](Genomics-reads-quality-controls)
 * [Genomics Starting the Project](Shell-genomics-starting-the-project)

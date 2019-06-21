@@ -5,8 +5,11 @@ title: Readings
 
 ### Shell
 
-* [Shell Introduction and Files](Shell01)
-* [Shell Lesson 2](Shell02)
+
+* [Shell Introduction](Shell-introduction)
+* [Shell Files and Directories](Shell-files-and-directories)
+* [Shell Pipes and Filters](Shell-pipes-and-filters)
+* [Shell Introduction to Loops](Shell-introduction-to-loops)
 * [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
 * [Genomics Read Quality Control](Shell-read-quality)
 
