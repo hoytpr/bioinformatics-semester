@@ -26,7 +26,7 @@ title: Lecture Materials
 ### R <a name="R"></a>
 
 - [Introduction]({{ site.baseurl }}/materials/r-intro)
-- [Genomics R-Studio]({{ site.baseurl }}/materials/genomics-R-Studio1)
+- [Genomics R-Studio]({{ site.baseurl }}/materials/genomics-R-Studio)
 - [Genomics R-Studio Dataframes]({{ site.baseurl }}/materials/R-Genomics-Dataframes)
 - [Genomics R-Studio dplyr]({{ site.baseurl }}/materials/genomics-R-Studio-dplyr)
 - [State in IDEs]({{ site.baseurl }}/materials/state-in-IDEs)

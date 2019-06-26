@@ -295,12 +295,12 @@ in alphabetic order. Those are the **levels**. The second part of
 `str()` tells us the **integer** assigned to each **level** using the 
 ***original*** order of "REF".  
 
-#### Say that again??
+### Say that again??
 For the sake of efficiency, R stores the 
 content of a factor as a **vector of integers**. Once the contents 
 in the object are arranged in alphabetical order, all 
 identical values are merged creating a **"level"**. Each level 
-has a unique value (and there are 59 of them in "REF") which is 
+has a *unique* value (and there are 59 of them in "REF") which is 
 assigned an **integer**. 
 
 The `head()` function told us the first value in our "REF" object 
@@ -314,11 +314,11 @@ from the top are both "G"s, and `str()` tells us that
 > 
 > Think of a column with 10,000 values. If 9,998 of the values are "ABC" 
 > and 2 of the values are "XYZ", a computer can store the 
-> information as (9998ABC, 2XYZ) rather than having to keep all 
-> 10,000 values in memory. If the 2 "XYZ" values were at positions 
-> 384 and 1768 in the column, all the information for the column 
-> could be stored as (9998ABC, 2XYZ[384,1768]). That's 25 characters 
-> instead of 30,000 characters!!!!
+> information in two "levels" as (9998ABC, 2XYZ) rather than having  
+> to keep all 10,000 values in memory. If the 2 "XYZ" values were  
+> at positions 384 and 1768 in the column, all the information 
+> for the column could be stored like (9998ABC, 2XYZ[384,1768]). 
+> That's 25 characters instead of 30,000 characters!!!!
 > 
 > When we call a function like `str()`, R uses stored vectors 
 > to re-display the object values. 

@@ -413,28 +413,32 @@ We can verify that "snp_genes" contains the new gene entry
 snp_genes
 ```
 
-Using a negative index will return a version a vector with that index's
+Using a negative index will return a version of a vector with the index's
 value removed:
 
 ```
 snp_genes[-6]
 ```
 
-We can remove that value from our vector by overwriting it with this expression:
+We can remove an index value from our vector by overwriting it with this expression:
 
 ```
 snp_genes <- snp_genes[-6]
 snp_genes
 ```
 
-We can also explicitly rename or add a value to our index using double bracket notation:
+We can also explicitly rename or add a value to our index using 
+[double bracket](https://rspatial.org/intr/4-indexing.html#list) notation:
 
 ```
-snp_genes[7]<- "APOA5"
+snp_genes[[7]]<- "APOA5"
 snp_genes
 ```
-
-Notice in the operation above that R inserts an `NA` value to extend our vector so that the gene "APOA5" is an index 7. This may be a good or not-so-good thing depending on how you use this.
+(Don't worry about the all concepts in the URL above for this lesson)
+The important thing to notice in the operation above is that R inserts 
+an `NA` value to extend our vector so that the gene "APOA5" 
+is at index 7. This may be a good or not-so-good thing depending 
+on how you use this.
 
 ### Logical Subsetting
 
@@ -459,58 +463,71 @@ In the square brackets you place the name of the vector followed by the comparis
   | a & b    | a and b                  |
 
 
-> #### The magic of programming
+> #### The *magic* of programming
 >
-> The reason why the expression `snp_positions[snp_positions > 100000000]` works
-> can be better understood if you examine what the expression "snp_positions > 100000000"
-> evaluates to:
+> To understand **why** the expression 
+> `snp_positions[snp_positions > 100000000]` 
+> works you need to examine **how** R evaluates the expression 
+> "snp_positions > 100000000". 
 >
 > ```
+> snp_positions
+> [1]   8762685  66560624  67545785 154039662
 > snp_positions > 100000000
+> [1] FALSE FALSE FALSE  TRUE
 > ```
 >
-> The output above is a logical vector, the 4th element of which is TRUE. When
-> you pass a logical vector as an index, R will return the true values:
+> The output above is a **logical** vector, the 4th element of which is TRUE. When
+> you pass a logical vector as an index, R will return the all TRUE values. 
+> You can even tell R to return **any** value, if you assign it a logical value
+> of "TRUE":
 >
 > ```
 > snp_positions[c(FALSE, FALSE, FALSE, TRUE)]
+> [1] 154039662
+> snp_positions[c(FALSE, FALSE, TRUE, FALSE)]
+> [1] 67545785
 > ```
 >
-> If you have never coded before, this type of situation starts to expose the
-> "magic" of programming. We mentioned before that in the bracket notation you
-> take your named vector followed by brackets which contain an index:
-> **named_vector[index]**. The "magic" is that the index needs to *evaluate to*
-> a number. So, even if it does not appear to be an integer (e.g. 1, 2, 3), as
-> long as R can evaluate it, we will get a result. That our expression
-> `snp_positions[snp_positions > 100000000]` evaluates to a number can be seen
-> in the following situation. If you wanted to know which **index** (1, 2, 3, or
-> 4) in our vector of SNP positions was the one that was greater than
-> 100,000,000?
->
-> We can use the `which()` function to return the indices of any item that
-> evaluates as TRUE in our comparison:
+> If you have never coded before, this example starts to expose the
+> "magic" of programming. We mentioned before that with bracket notation you
+> use a **named vector** followed by brackets which contain an **index**:
+> **`named_vector[index]`**. The "magic" is that indexes ***evaluate to***
+> a number. So, even if the indexed values are not integers, when R can evaluate 
+> the vector indexes then we will get a result! 
+> 
+> **One more example:**  To show that our expression
+> `snp_positions[snp_positions > 100000000]` evaluates to a number. 
+> If you wanted to know which **index** 
+> (1, 2, 3, or 4) in our vector of SNP positions is the one greater than
+> 100,000,000 we can use the `which()` function to return the indices 
+> of any item that evaluates as TRUE in our comparison:
 >
 > ```
 > which(snp_positions > 100000000)
+> [1] 4
 > ```
 >
 > **Why this is important**
 >
-> Often in programming we will not know what inputs
-> and values will be used when our code is executed. Rather than put in a
-> pre-determined value (e.g 100000000) we can use an object that can take on
-> whatever value we need. So for example:
+> Often in programming we are working with values, but do not know what inputs
+> and values will be used in the next step when our code is executed. 
+> Rather than always putting in a pre-determined value (e.g 100000000) 
+> we can use an **object** that can take on
+> whatever value the code needs. So for example:
 >
 > ```
 > snp_marker_cutoff <- 100000000
 > snp_positions[snp_positions > snp_marker_cutoff]
-> # So ANY SNP positions greater than 100000000 are now 
+> # Now ANY SNP positions greater than 100000000 are 
 > # the value!!!!!
 > ```
 >
-> Ultimately, it's putting together flexible, reusable code like this that gets
-> at the "magic" of programming!
-{: .callout}
+> Now you can begin to see that when the value for `snp_marker_cutoff` 
+> changes, it changes throughout the lines of code.  
+> Ultimately, putting together flexible, reusable code 
+> like this gets at the "magic" of programming!
+
 
 #### A few final vector tricks
 
@@ -521,10 +538,12 @@ but the `is.NA()` function will return a logical vector, with TRUE for any NA
 value:
 
 ```
-# current value of 'snp_genes': 
-# chr [1:7] "OXTR" "ACTN3" "AR" "OPRM1" "CYP1A1" NA "APOA5"
+# The current value of 'snp_genes': 
+snp_genes
+[1] "OXTR" "ACTN3" "AR" "OPRM1" "CYP1A1" NA "APOA5"
 
 is.na(snp_genes)
+[1] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
 ```
 
 Sometimes, you may wish to find out if a specific value (or several values) is
@@ -534,18 +553,21 @@ the vector you are searching:
 
 ```
 # current value of 'snp_genes':
-# chr [1:7] "OXTR" "ACTN3" "AR" "OPRM1" "CYP1A1" NA "APOA5"
+snp_genes
+[1] "OXTR" "ACTN3" "AR" "OPRM1" "CYP1A1" NA "APOA5"
 
 # test to see if "ACTN3" or "APO5A" is in the snp_genes vector
 # if you are looking for more than one value, you must pass this as a vector
 
 c("ACTN3","APOA5") %in% snp_genes
+[1] TRUE TRUE
 ```
 
 ### Keypoints
-- **"Effectively using R is a journey of months or years."**\* Still *you don't have to
-  be an expert to use R* and you can start using and analyzing your data with
-  with about a day's worth of training. Review this lesson whenever starting an R analysis.
+- **"Effectively using R is a journey of months or years."**\* Still 
+  *you don't have to be an expert to use R* and you can start using 
+  and analyzing your data with about a day's worth of training. 
+  Review this lesson whenever starting an R analysis.
 - It is important to understand how data are organized by R in a given object
   type and how the mode of that type (e.g. numeric, character, logical, etc.) will
   determine how R will operate on that data.
