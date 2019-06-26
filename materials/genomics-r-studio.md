@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: Genomics in R-Studio
+title: Genomics in RStudio
 language: R
 ---
 ### Questions
@@ -24,7 +24,7 @@ source("../bin/chunk-options.R")
 knitr_fig_path("02-")
 ```
 
-## "The fantastic world of R awaits you" OR "Nobody wants to learn how to use R"
+#### "The fantastic world of R awaits you" OR "Nobody wants to learn how to use R"
 
 Before we begin this lesson, we want you to be clear on the goal of the workshop
 and these lessons. This is not a course that will "teach you R". Instead this course is to "teach you enough to ***use*** R".  We believe that every learner can **achieve competency
@@ -37,7 +37,7 @@ competency and even expertise. The more familiar you get, the more
 complex the analyses you will be able to carry out, with less frustration, and
 in less time - the fantastic world of R awaits you!
 
-## What these lessons will not teach you
+#### What these lessons will not teach you
 
 Nobody wants to learn how to use R. People want to learn how to use R to analyze
 their own research questions! Ok, maybe some folks learn R for R's sake, but
@@ -57,7 +57,7 @@ below.
 - How to plot using the default R graphic tools (we *will* cover plot creation, but will do so using the popular plotting package `ggplot2`)
 - How to use advanced R statistical functions
 
-> ## Tip: Where to learn more
+> #### Tip: Where to learn more
 > The following are good resources for learning more about R. Some of them
 > can be quite technical, but if you are a regular R user you may ultimately
 > need this technical knowledge.
@@ -77,9 +77,9 @@ below.
     There are several Software Carpentry lessons in R to choose from
 {: .callout}
 
-## Creating objects in R
+#### Creating objects in R
 
-> ## Reminder
+> #### Reminder
 >
 > At this point you should be coding along in R-studio, using the "**genomics_r_basics.R**"
 > script we created in the last episode. Writing your commands in the script
@@ -137,7 +137,7 @@ In the 'Environment' window you will also get a table:
 The 'Environment' window allows you to keep track of the objects you have
 created in R. This is very helpful!!!!!
 
-## Naming objects in R
+#### Naming objects in R
 
 Here are some important details about naming objects in R.
 
@@ -166,7 +166,7 @@ There are a few more suggestions about naming and style you may want to learn
 more about as you write more R code. There are several "style guides" that
 have advice, and one to start with is the [tidyverse R style guide](http://style.tidyverse.org/index.html).
 
-> ## Tip: Pay attention to warnings in the script console
+> #### Tip: Pay attention to warnings in the script console
 >
 > If you enter a line of code in your script that contains an error, RStudio
 > may give you an error message and underline this mistake. Sometimes these
@@ -181,7 +181,7 @@ have advice, and one to start with is the [tidyverse R style guide](http://style
 > <img src="/fig/rstudio_script_warning.png" alt="rstudio script warning" style="width: 600px;"/>
 {: .callout}
 
-## Reassigning object names or deleting objects
+#### Reassigning object names or deleting objects
 
 Once an object has a value, you can change that value by overwriting it. R will
 not give you a warning or error if you overwriting an object, which
@@ -212,7 +212,7 @@ Error: object 'gene_name' not found
 ~~~
 {: .error}
 
-## Understanding object data types
+#### Understanding object data types
 
 In R, **every object has two properties**:
 
@@ -274,7 +274,7 @@ Error: object 'Earnhart' not found
 ```
 Did you notice what the object "pilot" represents now?
 
-## Mathematical and functional operations on objects in genomics
+#### Mathematical and functional operations on objects in genomics
 
 Once an object exists (which by definition also means it has a mode), R can
 appropriately manipulate that object. For example, objects of the numeric modes
@@ -309,7 +309,7 @@ human_chr_number <- 23
 human_chr_number * 2
 ```
 
-## Vectors
+### Vectors
 
 Vectors are probably the
 most used commonly used object type in R. 
@@ -342,7 +342,7 @@ work with later in this lesson, data frames, are collections of
 vectors. What we learn here about vectors will pay off even more
 when we start working with data frames. 
 
-## Creating and subsetting vectors
+#### Creating and subsetting vectors
 
 Let's create a few more vectors to play around with:
 
@@ -396,7 +396,7 @@ Also, several of these subsetting expressions can be combined:
 snp_genes[c(1:3,4)]
 ```
 
-## Adding to, removing, or replacing values in existing vectors
+#### Adding to, removing, or replacing values in existing vectors
 
 Once you have an existing vector, you may want to add a new item to it. To do
 so, you can use the `c()` function again to add your new value:
@@ -436,7 +436,7 @@ snp_genes
 
 Notice in the operation above that R inserts an `NA` value to extend our vector so that the gene "APOA5" is an index 7. This may be a good or not-so-good thing depending on how you use this.
 
-## Logical Subsetting
+### Logical Subsetting
 
 There is one last set of cool subsetting capabilities we want to introduce. It is possible within R to retrieve items in a vector based on a logical evaluation or numerical comparison. For example, let's say we wanted get all of the SNPs in our vector of SNP positions that were greater than 100,000,000. We could index using the '>' (greater than) logical operator:
 
@@ -459,7 +459,7 @@ In the square brackets you place the name of the vector followed by the comparis
   | a & b    | a and b                  |
 
 
-> ## The magic of programming
+> #### The magic of programming
 >
 > The reason why the expression `snp_positions[snp_positions > 100000000]` works
 > can be better understood if you examine what the expression "snp_positions > 100000000"
@@ -512,7 +512,7 @@ In the square brackets you place the name of the vector followed by the comparis
 > at the "magic" of programming!
 {: .callout}
 
-## A few final vector tricks
+#### A few final vector tricks
 
 Finally, there are a few other common retrieve or replace operations you may
 want to know about. First, you can check to see if any of the values of your

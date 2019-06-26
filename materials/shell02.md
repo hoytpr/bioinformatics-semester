@@ -202,7 +202,6 @@ information on how to use the command or program.
 ~~~
 $ ls --help
 ~~~
-{: .language-bash}
 
 ~~~
 Usage: ls [OPTION]... [FILE]...
@@ -322,7 +321,6 @@ GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
 Full documentation at: <http://www.gnu.org/software/coreutils/ls>
 or available locally via: info '(coreutils) ls invocation'
 ~~~
-{: .output}
 
 
 That's a lot of help. We can't go through all this today, just remember you 

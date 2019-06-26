@@ -1,6 +1,6 @@
 ---
 layout: page
-element: lecture
+element: notes
 title: "Genomics R Studio dplyr"
 language: R
 ---
