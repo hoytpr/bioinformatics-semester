@@ -224,7 +224,7 @@ Here's what else to notice:
 - the object **type** `data.frame` is displayed in the first row along with its
   **dimensions**, in this case 801 observations (rows) and 29 variables (columns)
 - Each **variable** has a name (*e.g.* `sample_id`). This is followed
-  by the object **mode** (*i.e.* `Factor`, `int`, `num`, `logi`). 
+  by the object **mode** (*i.e.* `int`, `num`, `logi`, and **`Factor`**). 
 - Notice that before each
   variable name there is a **`$`** - this will be important later.
 
@@ -310,7 +310,10 @@ from the top are both "G"s, and `str()` tells us that
 > When we call a function like `str()`, R uses stored vectors 
 > to re-display the object values. 
  {: .callout}
- 
+
+#### Maybe a chart will help?
+
+
 #### Plotting and ordering factors
 
 One of the most common uses for factors will be when you plot categorical
