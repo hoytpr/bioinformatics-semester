@@ -61,12 +61,12 @@ in [this paper](https://www.jstatsoft.org/article/view/v059i10).
 **3) Verify the data**
 
 Finally, while you don't need to be paranoid about data, you should have a plan
-for how you will prepare it for analysis. **This a focus of this lesson.**
-You probably already have a lot of intuition, expectations, assumptions about
+for how you will prepare it for analysis. **This is a focus of this lesson.**
+You probably already have a lot of intuition, expectations, or assumptions about
 your data - the range of values you expect, how many values should have
-been recorded, etc. But as the data get larger our human ability to
+been recorded, etc. But as the data get larger, our human ability to
 keep track will start to fail (and yes, it can fail for small data sets too).
-R will help you to examine your data so that you can have greater confidence
+R will help you examine your data and provide greater confidence
 in your analysis, and its reproducibility.
 
 > #### Tip: Keep your raw data separate
@@ -87,70 +87,26 @@ only use the tools provided in every R installation (so called "base" R) to
 import a comma-delimited file containing the results of our variant calling workflow.
 We will need to load the data using a function called `read.csv()`.
 
-> #### Exercise: Review the arguments of the `read.csv()` function
->
-> **Before using the `read.csv()` function, use R's help feature to answer the
-> following questions**.
->
-> *Hint*: Entering '?' before the function name and then running that line will
-> bring up the help documentation. Also, when reading this particular help
-> be careful to pay attention to the 'read.csv' expression under the 'Usage'
-> heading. Other answers will be in the 'Arguments' heading.
->
-> A) What is the default parameter for 'header' in the `read.csv()` function?
->
-> B) What argument would you have to change to read a file that was delimited
-> by semicolons (;) rather than commas?
->
-> C) What argument would you have to change to read file in which numbers
-> used commas for decimal separation (i.e. 1,00)?
->
-> D) What argument would you have to change to read in only the first 10,000 rows
-> of a very large file?
->
->> ## Solution
->>
->> A) The `read.csv()` function has the argument 'header' set to TRUE by default,
->> this means the function always assumes the first row is header information,
->> (i.e. column names)
->>
->> B) The `read.csv()` function has the argument 'sep' set to ",". This means
->> the function assumes commas are used as delimiters, as you would expect.
->> Changing this parameter (e.g. `sep=";"`) would now interpret semicolons as
->> delimiters.
->>
->> C) Although it is not listed in the `read.csv()` usage, `read.csv()` is
->> a "version" of the function `read.table()` and accepts all its arguments.
->> If you set `dec=","` you could change the decimal operator. We'd probably
->> assume the delimiter is some other character.
->>
->> D) You can set `nrow` to a numeric value (e.g. `nrow=10000`) to choose how
->> many rows of a file you read in. This may be useful for very large files
->> where not all the data is needed to test some data cleaning steps you are
->> applying.
->>
->> Hopefully, this exercise gets you thinking about using the provided help
->> documentation in R. There are many arguments that exist, but which we wont
->> have time to cover. Look here to get familiar with functions you use
->> frequently, you may be surprised at what you find they can do.
-> 
-
-Now, let's read in the file `combined_tidy_vcf.csv` which on the AWS cloud is 
-located in `/home/dcuser/.solutions/R_data/`. Alternatively you can read in
-the file directly from FigShare 
+Let's start with the file `combined_tidy_vcf.csv` which on the AWS cloud is 
+located in `/home/dcuser/.solutions/R_data/`. Alternatively you can 
+find (or even read in) the file directly from [FigShare] 
 ("https://ndownloader.figshare.com/files/14632895")
-Call this data `variants`. The
-first argument to pass to our `read.csv()` function is the file path for our
-data. The file path must be in quotes and now is a good time to remember to
-use ***tab autocompletion.*** **Using tab autocompletion helps avoid typos and
-errors in file paths.** Use it!
+When we read in the file, we will give it an **object** name. Let's call these 
+data `variants`. Remember, we are creating an object in R rather than working on the 
+datafile directly. This preserves our original data, while we can manipulate data
+as much as we want!
+  
+The first **argument** to pass to our `read.csv()` function 
+is the file path for our data. 
+The file path must be in quotes and now is a good time
+use ***tab autocompletion.*** Using tab autocompletion helps avoid typos and
+errors in file paths. **Use it!**
 
 ```
 ## read in a CSV file and save it as 'variants'
 
 variants <- read.csv("../r_data/combined_tidy_vcf.csv")
 ```
-
 
 ```
 ## silently read in CSV file from FigShare
@@ -160,43 +116,67 @@ variants <- read.csv("https://ndownloader.figshare.com/files/14632895")
 
 One of the first things you should notice is that in the Environment window,
 you have the `variants` object, listed as 801 obs. (observations/rows)
-of 29 variables (columns). Double-clicking on the name of the object will open
-a view of the data in a new tab.
+of 29 variables (columns). 
 
-<img src="{{ site.baseurl }}/fig/rstudio_dataframeview.png" alt="rstudio data frame view" style="width: 1000px;"/>
+![variants2]({{ site.baseurl }}/fig/variants-obs-col.png)
 
-#### Summarizing and determining the structure of a data frame.
+### Summarizing and determining the structure of a data frame.
 
 A **data frame is the standard way in R to store tabular data**. A data fame
-could also be thought of as a collection of vectors, all of which have the same
-length. We can learn a lot about out data frame using only ***two functions***,
-including some summary statistics as well as well as the "structure" of the data
-frame. Let's examine what each of these functions can tell us:
+could also be thought of as a ***collection of vectors***, all of which have the same
+length. We will start learning about our data frame using only two functions:
+`summary()` and `str()`. These functions will
+show us some summary statistics and the "structure" of the data
+frame. Let's start with `summary()`:
 
 ```
 ## get summary statistics on a data frame
 
 summary(variants)
 ```
+![variants]({{ site.baseurl }}/fig/summary-variants1.png)
 
-The output summary is at first a little complex, so here's what happened:
-Our data frame had 29 variables, so we get 29 fields that summarize the data.
-By clicking on the `variants` in the environment window, we can see 
-these 29 variables correspond to what might be called the "Header" row.
-Notice the `QUAL`, `IMF`, and `VDB` variables (and several others) are
-**numerical** data and so you get **summary statistics** on the min and max values for
-these columns, as well as mean, median, and interquartile ranges. In contrast, 
-many of the other variables
-(e.g. `sample_id`) are treated as **categorical data** (which have special
-treatment in R - more on this in a bit). 
+The output summary can seem a little complex at first, 
+so here's what happened:
 
-By default, the most frequent 6 different categories of each variable are shown, 
-separated by a colon character from the
-number of times they appear (e.g. the sample_id called 'SRR2584863' appeared 25 times)
-There was only one value for `CHROM`, "CP000819.1" which appeared
-in all 801 observations.
+First, what you see will depend on the size of 
+your Console or Terminal window because the beginning of the 
+summary has probably scrolled up and out of view. Scroll up 
+to the top of the summary output. It should look something like this:
 
-Before we operate on the data, we also need to know a little more about the
+![variants1]({{ site.baseurl }}/fig/variant-summary-top.png)
+
+Next, by default, console only displays fields with the 6 most frequent, unique
+**values** (or categories) for each variable.
+Our data frame has 29 variables, so we get 29 fields that summarize the data.
+You can see some of these which are named "sample_id", "CHROM", "Pos", 
+etc. 
+
+We can compare the summary of our data frame with `variants` 
+in the "source" window in RStudio.
+
+![variants2]({{ site.baseurl }}/fig/variants-summary1.png)
+
+We can see these 29 **variables** correspond to what could 
+be called the "column names" or the "header row".
+
+Notice the `Pos`, `QUAL`, and `IDV` variables (and several others) are
+**numerical** data and so you get **summary statistics** on 
+the `Min.` and `Max.` values for
+these columns, as well as `Mean`, `Median`, and interquartile ranges. 
+
+In contrast, many of the other variables
+(e.g `sample_id`, `CHROM`, etc.) are treated as **categorical data** where values 
+are listed, along with how many times 
+the values are seen in the column **vector**. 
+
+Notice the `sample_id` value "SRR2584863" appeared 25 
+times, and, there was only one value 
+for `CHROM` which is "CP000819.1" and it appeared
+in all 801 observations. Categorical data have special
+treatment in R (more on this later). 
+
+Before we manipulate the data, we also need to know a little more about the
 data frame **structure**. To do that we use the `str()` function:
 
 ```
@@ -236,21 +216,26 @@ str(variants)
  $ gt_GT        : int  1 1 1 1 1 1 1 1 1 1 ...
  $ gt_GT_alleles: Factor w/ 57 levels "A","AC","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 31 46 46 29 25 46 1 1 4 15 ...
  ```
-Ok, thats a lot up unpack! Here's what to notice.
+Okay, that's a lot to unpack! You can see (at least) 
+that the rows and columns of the **object** `variants` have changed. 
 
-- the **object type** `data.frame` is displayed in the first row along with its
+Here's what else to notice:
+
+- the object **type** `data.frame` is displayed in the first row along with its
   **dimensions**, in this case 801 observations (rows) and 29 variables (columns)
-- Each variable (column) has a name (e.g. `sample_id`). This is followed
-  by the object **mode** (e.g. factor, int, num, etc.). Notice that before each
-  variable name there is a `$` - this will be important later.
+- Each **variable** has a name (*e.g.* `sample_id`). This is followed
+  by the object **mode** (*i.e.* `Factor`, `int`, `num`, `logi`). 
+- Notice that before each
+  variable name there is a **`$`** - this will be important later.
 
 ### Introducing Factors
 
-**Factors** are the final major data structure we will introduce in our R genomics
-lessons. Factors can be thought of as vectors which are specialized for
+**Factors** are the final major data structure (mode) we will 
+introduce in our R genomics
+lessons. Factors can be thought of as **vectors** which are specialized for
 categorical data. Because R is specialized for statistics, it makes 
-sense to have a way to deal with categorial data as if they were 
-continuous (e.g. numerical) data. 
+sense to have a way to deal with categorical data as if they were 
+continuous (*e.g.* numerical) data. 
  
 Sometimes you may want to have data treated as a factor, 
 but not always! Since some of the data in our data frame are already 
@@ -258,8 +243,9 @@ identified as factors, lets see how factors work!
  
 First, we'll extract one of the (non-numerical) columns of our data frame 
 to a new **object**, so that we don't end up modifying the `variants` 
-object by mistake. Here's where we use the **`$`** to represent a specific
-vector (e.g. a column) in our data frame:
+object by mistake. Here's where we use the **`$`** which always 
+means that whatever follows it represents a 
+vector (*e.g.* a column) in our data frame:
 
 ```
 ## extract the "REF" column to a new object
@@ -278,9 +264,10 @@ head(REF)
 What we get back are two lines. The first line represents a shortened form of 
 all the items in our object *(think: everything in the column)*. 
 The second line is something called "Levels".
-**Levels are the different categories that make up a factor** 
+**Levels are the different categories of a factor** 
 *(think: every unique value in the column)*. By default, R
-will organize the levels in a factor in alphabetical order. So the first level in this factor is
+will organize the levels in a factor in alphabetical order. 
+So the first level in this factor is
 "A".
 
 Lets look at the contents of a factor in a slightly different way using `str()`:
@@ -291,7 +278,7 @@ str(REF)
 ```
 
 The `str()` function first shows the contents of the object arranged
-in alphabetic order. Those are the **levels**. The second part of 
+in alphabetic order. Those are the **levels** again. The second part of 
 `str()` tells us the **integer** assigned to each **level** using the 
 ***original*** order of "REF".  
 
@@ -317,7 +304,7 @@ from the top are both "G"s, and `str()` tells us that
 > information in two "levels" as (9998ABC, 2XYZ) rather than having  
 > to keep all 10,000 values in memory. If the 2 "XYZ" values were  
 > at positions 384 and 1768 in the column, all the information 
-> for the column could be stored like (9998ABC, 2XYZ[384,1768]). 
+> for the column could be stored like (9998ABC, 2XYZ*[384,1768]*). 
 > That's 25 characters instead of 30,000 characters!!!!
 > 
 > When we call a function like `str()`, R uses stored vectors 
@@ -368,350 +355,33 @@ This was easy, but isn't a particularly pretty example of a plot. We'll be learn
 Next, we are going to talk about how you can get specific values from data frames, and where necessary, change the mode of a column of values.
 
 The first thing to remember is that a data frame is two-dimensional (rows and
-columns). Therefore, to select a specific value we will will once again use
-`[]` (bracket) notation, but we will specify more than one value (except in some cases
-where we are taking a range).
+columns). Therefore, to select a specific value we will once again use
+`[]` (bracket) notation, and can specify more than one value (we also 
+can specify a range).
 
-> #### Exercise: Subsetting a data frame
->  **Move to Exercises**
-> **Try the following indices and functions and try to figure out what they return**
-> 
-> a. `variants[1,1]`
->
-> b. `variants[2,4]`
->
-> c. `variants[801,29]`
->
-> d. `variants[2, ]`
->
-> e. `variants[-1, ]`
->
-> f. `variants[1:4,1]`
->
-> g. `variants[1:10,c("REF","ALT")]`
->
-> h. `variants[,c("sample_id")]`
->
-> i. `head(variants)`
->
-> j. `tail(variants)`
->
-> k. `variants$sample_id`
->
-> l. `variants[variants$REF == "A",]`
->
->> ## Solution (put in solutions)
->> a. 
->> ```
->> variants[1,1]
-[1] SRR2584863
-Levels: SRR2584863 SRR2584866 SRR2589044
->> ```
->> 
->> b. 
->> ```
->> variants[2,4]
-[1] NA
->> ```
->> 
->> c. 
->> ```
->> variants[801,29]
-57 Levels: A ... TGGGGGGGGG
->> ```
->> 
->> d. 
->> ```
->> variants[2, ]
-   sample_id      CHROM    POS ID REF ALT QUAL
-2 SRR2584863 CP000819.1 263235 NA   G   T   85
-  FILTER INDEL IDV IMF DP      VDB RPB MQB BQB
-2     NA FALSE  NA  NA  6 0.096133   1   1   1
-  MQSB       SGB     MQ0F ICB HOB AC AN     DP4
-2   NA -0.590765 0.166667  NA  NA  1  1 0,1,0,5
-  MQ
-2 33
-                                                               Indiv
-2 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-  gt_PL gt_GT gt_GT_alleles
-2 112,0     1             T
->> ```
->>
->> e. 
->> ```
->> variants[-1, ]
-     sample_id      CHROM     POS ID
-2   SRR2584863 CP000819.1  263235 NA
-3   SRR2584863 CP000819.1  281923 NA
-4   SRR2584863 CP000819.1  433359 NA
-5   SRR2584863 CP000819.1  473901 NA
-6   SRR2584863 CP000819.1  648692 NA
-7   SRR2584863 CP000819.1 1331794 NA
-8   SRR2584863 CP000819.1 1733343 NA
-9   SRR2584863 CP000819.1 2103887 NA
-10  SRR2584863 CP000819.1 2333538 NA
-...
-        G
-33                                                         G
-34                                                         G
-35                                                         G
- [ reached getOption("max.print") -- omitted 766 rows ]
->> ```
->> 
->> ```
->> head(variants[-1, ])
-   sample_id      CHROM     POS ID      REF       ALT QUAL FILTER
-2 SRR2584863 CP000819.1  263235 NA        G         T   85     NA
-3 SRR2584863 CP000819.1  281923 NA        G         T  217     NA
-4 SRR2584863 CP000819.1  433359 NA CTTTTTTT CTTTTTTTT   64     NA
-5 SRR2584863 CP000819.1  473901 NA     CCGC    CCGCGC  228     NA
-6 SRR2584863 CP000819.1  648692 NA        C         T  210     NA
-7 SRR2584863 CP000819.1 1331794 NA        C         A  178     NA
-  INDEL IDV IMF DP      VDB RPB MQB BQB     MQSB       SGB     MQ0F
-2 FALSE  NA  NA  6 0.096133   1   1   1       NA -0.590765 0.166667
-3 FALSE  NA  NA 10 0.774083  NA  NA  NA 0.974597 -0.662043 0.000000
-4  TRUE  12 1.0 12 0.477704  NA  NA  NA 1.000000 -0.676189 0.000000
-5  TRUE   9 0.9 10 0.659505  NA  NA  NA 0.916482 -0.662043 0.000000
-6 FALSE  NA  NA 10 0.268014  NA  NA  NA 0.916482 -0.670168 0.000000
-7 FALSE  NA  NA  8 0.624078  NA  NA  NA 0.900802 -0.651104 0.000000
-  ICB HOB AC AN     DP4 MQ
-2  NA  NA  1  1 0,1,0,5 33
-3  NA  NA  1  1 0,0,4,5 60
-4  NA  NA  1  1 0,1,3,8 60
-5  NA  NA  1  1 1,0,2,7 60
-6  NA  NA  1  1 0,0,7,3 60
-7  NA  NA  1  1 0,0,3,5 60
-                                                               Indiv
-2 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-3 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-4 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-5 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-6 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-7 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-  gt_PL gt_GT gt_GT_alleles
-2 112,0     1             T
-3 247,0     1             T
-4  91,0     1     CTTTTTTTT
-5 255,0     1        CCGCGC
-6 240,0     1             T
-7 208,0     1             A
-Using '-1' shows the row numbers
->> ```
->>
->> f. 
->> ```
->> variants[1:4,1]
+Here are a couple examples:
+
+```
+variants[1:4,1]
 [1] SRR2584863 SRR2584863 SRR2584863 SRR2584863
 Levels: SRR2584863 SRR2584866 SRR2589044
->> ```
->> 
->> g. 
->> ```
->> variants[1:10,c("REF","ALT")]
-                                REF
-1                                 T
-2                                 G
-3                                 G
-4                          CTTTTTTT
-5                              CCGC
-6                                 C
-7                                 C
-8                                 G
-9  ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG
-10                               AT
-                                                ALT
-1                                                 G
-2                                                 T
-3                                                 T
-4                                         CTTTTTTTT
-5                                            CCGCGC
-6                                                 T
-7                                                 A
-8                                                 A
-9  CCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG
-10                                              ATT
->> ```
->> 
->> h. 
->> ```
->> variants[,c("sample_id")]
-...
-[756] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[761] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[766] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[771] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[776] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[781] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[786] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[791] SRR2584866 SRR2589044 SRR2589044 SRR2589044 SRR2589044
-[796] SRR2589044 SRR2589044 SRR2589044 SRR2589044 SRR2589044
-[801] SRR2589044
-Levels: SRR2584863 SRR2584866 SRR2589044
->> ```
->> 
->> ```
->> head(variants[,c("sample_id")])
-[1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863
-Levels: SRR2584863 SRR2584866 SRR2589044
->>```
->>
->> i. 
->> ```
->> head(variants)
-   sample_id      CHROM    POS ID      REF       ALT QUAL FILTER
-1 SRR2584863 CP000819.1   9972 NA        T         G   91     NA
-2 SRR2584863 CP000819.1 263235 NA        G         T   85     NA
-3 SRR2584863 CP000819.1 281923 NA        G         T  217     NA
-4 SRR2584863 CP000819.1 433359 NA CTTTTTTT CTTTTTTTT   64     NA
-5 SRR2584863 CP000819.1 473901 NA     CCGC    CCGCGC  228     NA
-6 SRR2584863 CP000819.1 648692 NA        C         T  210     NA
-  INDEL IDV IMF DP       VDB RPB MQB BQB     MQSB       SGB     MQ0F
-1 FALSE  NA  NA  4 0.0257451  NA  NA  NA       NA -0.556411 0.000000
-2 FALSE  NA  NA  6 0.0961330   1   1   1       NA -0.590765 0.166667
-3 FALSE  NA  NA 10 0.7740830  NA  NA  NA 0.974597 -0.662043 0.000000
-4  TRUE  12 1.0 12 0.4777040  NA  NA  NA 1.000000 -0.676189 0.000000
-5  TRUE   9 0.9 10 0.6595050  NA  NA  NA 0.916482 -0.662043 0.000000
-6 FALSE  NA  NA 10 0.2680140  NA  NA  NA 0.916482 -0.670168 0.000000
-  ICB HOB AC AN     DP4 MQ
-1  NA  NA  1  1 0,0,0,4 60
-2  NA  NA  1  1 0,1,0,5 33
-3  NA  NA  1  1 0,0,4,5 60
-4  NA  NA  1  1 0,1,3,8 60
-5  NA  NA  1  1 1,0,2,7 60
-6  NA  NA  1  1 0,0,7,3 60
-                                                               Indiv
-1 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-2 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-3 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-4 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-5 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-6 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-  gt_PL gt_GT gt_GT_alleles
-1 121,0     1             G
-2 112,0     1             T
-3 247,0     1             T
-4  91,0     1     CTTTTTTTT
-5 255,0     1        CCGCGC
-6 240,0     1             T
->> ```
->> 
->> j. 
->> ```
->> tail(variants)
-     sample_id      CHROM     POS ID REF ALT QUAL FILTER INDEL IDV
-796 SRR2589044 CP000819.1 3444175 NA   G   T  184     NA FALSE  NA
-797 SRR2589044 CP000819.1 3481820 NA   A   G  225     NA FALSE  NA
-798 SRR2589044 CP000819.1 3893550 NA  AG AGG  101     NA  TRUE   4
-799 SRR2589044 CP000819.1 3901455 NA   A  AC   70     NA  TRUE   3
-800 SRR2589044 CP000819.1 4100183 NA   A   G  177     NA FALSE  NA
-801 SRR2589044 CP000819.1 4431393 NA TGG   T  225     NA  TRUE  10
-    IMF DP       VDB RPB MQB BQB     MQSB       SGB MQ0F ICB HOB AC
-796  NA  9 0.4714620  NA  NA  NA 0.992367 -0.651104    0  NA  NA  1
-797  NA 12 0.8707240  NA  NA  NA 1.000000 -0.680642    0  NA  NA  1
-798   1  4 0.9182970  NA  NA  NA 1.000000 -0.556411    0  NA  NA  1
-799   1  3 0.0221621  NA  NA  NA       NA -0.511536    0  NA  NA  1
-800  NA  8 0.9272700  NA  NA  NA 0.900802 -0.651104    0  NA  NA  1
-801   1 10 0.7488140  NA  NA  NA 1.007750 -0.670168    0  NA  NA  1
-    AN     DP4 MQ
-796  1 0,0,4,4 60
-797  1 0,0,4,8 60
-798  1 0,0,3,1 52
-799  1 0,0,3,0 60
-800  1 0,0,3,5 60
-801  1 0,0,4,6 60
-                                                                 Indiv
-796 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-797 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-798 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-799 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-800 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-801 /home/dcuser/dc_workshop/results/bam/SRR2589044.aligned.sorted.bam
-    gt_PL gt_GT gt_GT_alleles
-796 214,0     1             T
-797 255,0     1             G
-798 131,0     1           AGG
-799 100,0     1            AC
-800 207,0     1             G
-801 255,0     1             T
->> ```
->> 
->> k. 
->> ```
->> variants$sample_id
-[776] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[781] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[786] SRR2584866 SRR2584866 SRR2584866 SRR2584866 SRR2584866
-[791] SRR2584866 SRR2589044 SRR2589044 SRR2589044 SRR2589044
-[796] SRR2589044 SRR2589044 SRR2589044 SRR2589044 SRR2589044
-[801] SRR2589044
-Levels: SRR2584863 SRR2584866 SRR2589044
-NOTE that $ is a subsetting symbol that selects a single
-element of a list. SO this selects all of column "sample_id"
->> ```
->>
->> ```
->> head(variants$sample_id)
-[1] SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863 SRR2584863
-Levels: SRR2584863 SRR2584866 SRR2589044
->> ```
->> 
->> l. 
->> ```
->> variants[variants$REF == "A",]
->> `...`
-96  199,0     1             G
-104 255,0     1             G
-107 255,0     1             G
-109 218,0     1             G
-110 255,0     1             G
-111 252,0     1             G
-[ reached getOption("max.print")--omitted 130 rows ]
- The $ selected only REF where REF == "A" 
- as the ROW, then ALL columns. (AKA: all 
- columns of variants where column 
- REF = "A"). The REF column doesn't 
- show so use head below
->> ```
->>
->> ```
->> head(variants[variants$REF == "A",])
-    sample_id      CHROM     POS ID REF ALT QUAL FILTER INDEL IDV IMF
-11 SRR2584863 CP000819.1 2407766 NA   A   C  104     NA FALSE  NA  NA
-12 SRR2584863 CP000819.1 2446984 NA   A   C  225     NA FALSE  NA  NA
-14 SRR2584863 CP000819.1 2665639 NA   A   T  225     NA FALSE  NA  NA
-16 SRR2584863 CP000819.1 3339313 NA   A   C  211     NA FALSE  NA  NA
-18 SRR2584863 CP000819.1 3481820 NA   A   G  200     NA FALSE  NA  NA
-19 SRR2584863 CP000819.1 3488669 NA   A   C  225     NA FALSE  NA  NA
-   DP       VDB      RPB      MQB      BQB     MQSB       SGB
-11  9 0.0230738 0.900802 0.150134 0.750668 0.500000 -0.590765
-12 20 0.0714027       NA       NA       NA 1.000000 -0.689466
-14 19 0.9960390       NA       NA       NA 1.000000 -0.690438
-16 10 0.4059360       NA       NA       NA 1.007750 -0.670168
-18  9 0.1070810       NA       NA       NA 0.974597 -0.662043
-19 13 0.0162706       NA       NA       NA 1.000000 -0.680642
-       MQ0F ICB HOB AC AN      DP4 MQ
-11 0.333333  NA  NA  1  1  3,0,3,2 25
-12 0.000000  NA  NA  1  1 0,0,10,6 60
-14 0.000000  NA  NA  1  1 0,0,12,5 60
-16 0.000000  NA  NA  1  1  0,0,4,6 60
-18 0.000000  NA  NA  1  1  0,0,4,5 60
-19 0.000000  NA  NA  1  1  0,0,8,4 60
-                                                                Indiv
-11 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-12 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-14 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-16 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-18 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-19 /home/dcuser/dc_workshop/results/bam/SRR2584863.aligned.sorted.bam
-   gt_PL gt_GT gt_GT_alleles
-11 131,0     1             C
-12 255,0     1             C
-14 255,0     1             T
-16 241,0     1             C
-18 230,0     1             G
-19 255,0     1             C
->> ```
->>
+```
+```
+variants[1:10,c("REF","ALT")]
+
+                                REF                                                ALT
+1                                 T                                                  G
+2                                 G                                                  T
+3                                 G                                                  T
+4                          CTTTTTTT                                          CTTTTTTTT
+5                              CCGC                                             CCGCGC
+6                                 C                                                  T
+7                                 C                                                  A
+8                                 G                                                  A
+9  ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG AGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG
+10                               AT                                                ATT
+> 
+```
 
 The subsetting notation is very similar to what we learned for
 vectors. The key differences include:

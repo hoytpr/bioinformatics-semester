@@ -27,8 +27,8 @@ knitr_fig_path("02-")
 #### "The fantastic world of R awaits you" OR "Nobody wants to learn how to use R"
 
 Before we begin this lesson, we want you to be clear on the goal of the workshop
-and these lessons. This is not a course that will "teach you R". Instead this course is to "teach you enough to ***use*** R".  We believe that every learner can **achieve competency
-with R**. You reach competency when you find that you are able to
+and these lessons. This is not a course that will "teach you R". Instead this course is to "teach you enough to ***use*** R".  We believe that every learner can achieve ***competency***
+with R. You reach competency when you find that you are able to
 **use R to handle common analysis challenges in a reasonable amount of time**
 (which includes time needed to look at learning materials, search for answers
 online, and ask colleagues for help). As you spend more time using R (there is
@@ -519,8 +519,9 @@ In the square brackets you place the name of the vector followed by the comparis
 > ```
 > snp_marker_cutoff <- 100000000
 > snp_positions[snp_positions > snp_marker_cutoff]
+> 
 > # Now ANY SNP positions greater than 100000000 are 
-> # the value!!!!!
+> # the returned value!!!!!
 > ```
 >
 > Now you can begin to see that when the value for `snp_marker_cutoff` 
