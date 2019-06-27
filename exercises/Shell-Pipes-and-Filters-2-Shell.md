@@ -4,7 +4,9 @@ topic: Shell
 title: Pipes and Filters 
 language: Shell
 ---
+Uncomment below to work on exercise
 
+<!--
 
 #### Redirecting to the same file is risky
  
@@ -129,4 +131,7 @@ language: Shell
   2. `rm *.txt`
   3. `rm * .txt`
   4. `rm *.*`
+  
+  -->
  
+Shell-Pipes-and-Filters-2-Shell.md

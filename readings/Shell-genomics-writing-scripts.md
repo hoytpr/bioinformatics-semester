@@ -1,6 +1,6 @@
 ---
-layout: exercise
-topic: Genomics
+layout: page
+element: reading
 title: Writing Scripts and Working with Data
 language: Shell
 ---

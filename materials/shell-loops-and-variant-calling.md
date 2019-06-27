@@ -1,6 +1,6 @@
 ---
-layout: exercise
-topic: Genomics
+layout: page
+element: notes
 title: Shell Run Variant Calling
 language: Shell
 ---

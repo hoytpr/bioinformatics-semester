@@ -4,10 +4,13 @@ topic: Shell
 title: Sorting 
 language: Shell
 ---
+Uncomment below to work on exercise
+
+<!--
 
 Now let's use the `sort` command to sort its contents.
 
-> ## What Does `sort -n` Do?
+**What Does `sort -n` Do?**
 
 Run `sort` on a file containing the following lines:
 
@@ -18,7 +21,6 @@ Run `sort` on a file containing the following lines:
 22
 6
 ~~~
-{: .source}
 
 the output is:
 
@@ -29,7 +31,6 @@ the output is:
 22
 6
 ~~~
-{: .output}
 
 If we run `sort -n` on the same input, we get this instead:
 
@@ -40,7 +41,7 @@ If we run `sort -n` on the same input, we get this instead:
 19
 22
 ~~~
-{: .output}
+
 
 Can you explain why `-n` has this effect.
 [Click here for the answer]({{ site.baseurl }}/solutions/Shell-Pipes-and-Filters-Shell-1.txt)
@@ -53,7 +54,7 @@ instead, it sends the sorted result to the screen:
 ~~~
 $ sort -n lengths.txt
 ~~~
-{: .language-bash}
+
 
 ~~~
   9  methane.pdb
@@ -64,7 +65,7 @@ $ sort -n lengths.txt
  30  octane.pdb
 107  total
 ~~~
-{: .output}
+
 
 We can put the sorted list of lines in another temporary file called `sorted-lengths.txt`
 by putting `> sorted-lengths.txt` after the command,
@@ -76,12 +77,12 @@ we can run another command called `head` to get the first few lines in `sorted-l
 $ sort -n lengths.txt > sorted-lengths.txt
 $ head -n 1 sorted-lengths.txt
 ~~~
-{: .language-bash}
+
 
 ~~~
   9  methane.pdb
 ~~~
-{: .output}
+
 
 Using `-n 1` with `head` tells it that
 we only want the first line of the file;
@@ -89,3 +90,6 @@ we only want the first line of the file;
 and so on.
 Since `sorted-lengths.txt` contains the lengths of our files ordered from least to greatest,
 the output of `head` must be the file with the fewest lines.
+-->
+
+Shell-Pipes-and-Filters-1-Shell.md

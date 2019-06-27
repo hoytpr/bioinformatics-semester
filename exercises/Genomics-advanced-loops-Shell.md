@@ -4,7 +4,10 @@ topic: Genomics
 title: Genomics Advanced Loops
 language: Shell
 ---
+Uncomment below to work on exercise
 
+
+<!--
 #### Exercise Week(?) placeholder for advanced loops
 Change the title to Genomics Advanced Loops
 
@@ -28,3 +31,5 @@ Genomics-advanced-loops-Shell-2   etc.
 1. What output do you see?
 
 2. BWA is a software package
+-->
+Genomics-advanced-loops-Shell.md

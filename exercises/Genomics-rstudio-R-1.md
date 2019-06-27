@@ -4,9 +4,10 @@ topic: Genomics
 title: Genomics RStudio
 language: R
 ---
-Uncomment below to work on exercise 0
+Uncomment below to work on exercise 1
 
 <!--
+
 ### Working with Dataframes
 
 #### Exercise: Review the arguments of the `read.csv()` function
@@ -372,4 +373,4 @@ head(variants[variants$REF == "A",])
 ```
 -->
 
-End of zero
+End of 1

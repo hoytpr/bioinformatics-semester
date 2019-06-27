@@ -4,7 +4,9 @@ topic: Shell
 title: Getting Started 
 language: Shell
 ---
-### Exercises Week1
+Uncomment below to work on exercise
+
+<!--
 
 #### Answer the following using the Linux/Mac shell or GitBash on Windows:
 #### Enter your answers at: [https://docs.google.com/forms/d/1-E8OZ2PjhyiA4nC2xFhZNU-DB8degcnC0X8o9XLIFAM/edit](https://docs.google.com/forms/d/1-E8OZ2PjhyiA4nC2xFhZNU-DB8degcnC0X8o9XLIFAM/edit)
@@ -23,6 +25,8 @@ nevertheless.)
 
 What does the command `ls` do when used 
 with the `-l` flag? What about if you use both the `-l` and the `-h` flag?
+-->
 
+Shell-getting-started-Shell.md
 
 

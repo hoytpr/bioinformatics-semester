@@ -4,6 +4,9 @@ topic: Genomics
 title: Sequence Quality Trimming
 language: Shell
 ---
+Uncomment below to work on exercise
+
+<!--
 
 > ## Exercise 1
 >
@@ -28,4 +31,7 @@ language: Shell
 > FastQC on your trimmed FASTQ files and visualize the HTML files
 > to see whether your per base sequence quality is higher after
 > trimming.
->
+
+-->
+
+Genomics-trimming-and-filtering-Shell.md

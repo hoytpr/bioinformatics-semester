@@ -15,7 +15,14 @@ Lectures under development
 2. Using `sed`
 3. Using `awk`
 
+Uncomment below to work on exercise
+Not Used?
+
+<!--
+
 The solutions have the same name as this file except with .txt suffix, and 
 numbers 1. 2. etc. to match the exercise numbers
 Genomics-advanced-shell-Shell-1
 Genomics-advanced-shell-Shell-2   etc.
+
+-->

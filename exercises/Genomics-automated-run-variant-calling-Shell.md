@@ -4,6 +4,10 @@ topic: Genomics
 title: Genomics Automated Run Variant Calling
 language: Shell
 ---
+Uncomment below to work on exercise
+Not Used?
+
+<!--
 
 ### Assignment Exercise 1
 

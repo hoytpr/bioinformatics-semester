@@ -4,6 +4,11 @@ topic: Genomics
 title: Genomics Automating Run Variant Calling
 language: Shell
 ---
+Uncomment below to work on exercise
+Not Used?
+
+<!--
+
 ### Key objectives:
 - "Write a shell script with multiple variables."
 - "Incorporate a `for` loop into a shell script."
@@ -578,4 +583,4 @@ $ bash run_variant_calling.sh
 
 
 
-
+-->

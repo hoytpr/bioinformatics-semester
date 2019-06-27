@@ -4,7 +4,10 @@ topic: Genomics
 title: Genomics RStudio dplyr
 language: R
 ---
+Uncomment below to work on exercise
+Genomics-RStudio-dplyr-R.md
 
+<!--
 ## Challenge 1
 
 Create a table that contains all the columns with the letter "i" except for
@@ -43,3 +46,6 @@ Based on the probability scores we calculated when we first introducted
 (between 0.7 and 0.95), and low (< 0.7), and create a table with `sample_id`
 as rows, the 3 levels of quality as columns, and the number of mutations in
 the cells.
+-->
+
+End of dplyr-1

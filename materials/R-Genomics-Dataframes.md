@@ -312,7 +312,7 @@ from the top are both "G"s, and `str()` tells us that
  {: .callout}
 
 #### Maybe a chart will help?
-
+![Factors]({{ site.baseurl }}/fig/Factors.png)
 
 #### Plotting and ordering factors
 

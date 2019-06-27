@@ -4,6 +4,9 @@ topic: Genomics
 title: Genomics Shell Data Wrangling
 language: Shell
 ---
+Uncomment below to work on exercise
+
+<!--
 
 #### This file is Exercise Week (?) - Data Wrangling
 
@@ -18,5 +21,8 @@ Create solutions giving them the same name as this file except
 with .txt suffix, and numbers 1. 2. etc. to match the exercise numbers
 Have to capitalize the "language" !!!!! tested !!!
 
+-->
+
 Genomics-shell-data-wrangling-shell-1.txt
 Genomics-shell-data-wrangling-Shell-2.txt   etc.
+

@@ -4,7 +4,11 @@ topic: Genomics
 title: Genomics RStudio
 language: R
 ---
-These lines may be deleted from the lecture if desired
+#### Exercise subtitle Genomics RStudio-2
+
+Uncomment below to work on exercise 2
+
+<!--
 ### Working with Dataframes
 
 #### Exercise: Review the arguments of the `read.csv()` function
@@ -27,4 +31,6 @@ used commas for decimal separation (i.e. 1,00)?
 
 D) What argument would you have to change to read in only the first 10,000 rows
 of a very large file?
+-->
 
+End of 2

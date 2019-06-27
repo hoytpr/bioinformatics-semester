@@ -4,6 +4,9 @@ topic: Genomics
 title: Writing Scripts and Working with Data
 language: Shell
 ---
+Uncomment below to work on exercise
+
+<!--
 
 questions:
 - How can we automate a commonly used set of commands?
@@ -398,3 +401,7 @@ C:\User\your-pc-username\Downloads
 
 
 <div id="div_aws_unix" style="display:block" markdown="1">
+
+-->
+
+Genomics-writing-scripts-Shell.md

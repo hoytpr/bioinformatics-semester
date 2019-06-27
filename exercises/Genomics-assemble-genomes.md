@@ -4,6 +4,9 @@ topic: Genomics
 title: Assemble Genomes
 language: Shell
 ---
+Uncomment below to work on exercise
+
+<!--
 
 ### Genomics VELVET Exercises
 
@@ -120,3 +123,5 @@ Observe the outputs as in the lecture.
 Align contigs to your **best** assembly. 
 Use nucmer, and mummerplot to create PDF files of the best assembly 
 and email the best assembly to yourself, and to the instructor. 
+
+-->
