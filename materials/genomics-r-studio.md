@@ -5,18 +5,16 @@ title: Genomics in RStudio
 language: R
 ---
 ### Questions
-- "What will these lessons not cover?"
-- "What are the basic features of the R language?"
-- "What are the most common objects in R?"
+- What will these lessons not cover?
+- What are the basic features of the R language?
+- What are the most common objects in R?
 
 ### Objectives
-- "Be able to create the most common R objects including vectors"
-- "Understand that vectors have modes, which correspond to the type of data they
-  contain"
-- "Be able to use arithmetic operators on R objects"
-- "Be able to retrieve (subset), name, or replace, values from a vector"
-- "Be able to use logical operators in a subsetting operation"
-- "Understand that lists can hold data of more than one mode and can be indexed"
+- Be able to create the most common R objects including vectors
+- Understand that vectors have modes, which correspond to the type of data they
+  contain
+- Be able to use arithmetic operators on R objects
+- Understand that lists can hold data of more than one mode and can be indexed
 
 ### The Pot of Gold...
 ```
@@ -342,6 +340,8 @@ work with later in this lesson, data frames, are collections of
 vectors. What we learn here about vectors will pay off even more
 when we start working with data frames. 
 
+<!--
+
 #### Creating and subsetting vectors
 
 Let's create a few more vectors to play around with:
@@ -462,6 +462,7 @@ In the square brackets you place the name of the vector followed by the comparis
   | a \| b   | a or b                   |
   | a & b    | a and b                  |
 
+-->
 
 > #### The *magic* of programming
 >

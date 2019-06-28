@@ -1,31 +1,21 @@
 ---
 layout: page
-element: lecture
-title: "R Genomics continued - factors and data frames"
+element: notes
+title: R Genomics Data Frames and Factors
 language: R
 ---
-This lecture may be split after updating
-Subtitle: **Wrangling the Variant Calling Workflow**
 ### Questions:
 
-- "How do I get started with tabular data (e.g. spreadsheets) in R?"
-- "What are some best practices for reading data into R?"
-- "How do I save tabular data generated in R?"
+- How do I get started with tabular data (e.g. spreadsheets) in R?
+- What are some best practices for reading data into R?
+- How do I save tabular data generated in R?
 
 ### Objectives:
-- "Explain the basic principle of tidy datasets"
-- "Be able to load a tabular dataset using base R functions"
-- "Be able to determine the structure of a data frame including its dimensions
-  and the datatypes of variables"
-- "Be able to subset/retrieve values from a data frame"
-- "Understand how R may coerce data into different modes"
-- "Be able to change the mode of an object"
-- "Understand that R uses factors to store and manipulate categorical data"
-- "Be able to manipulate a factor, including subsetting and reordering"
-- "Be able to apply an arithmetic function to a data frame"
-- "Be able to coerce the class of an object (including variables in a data frame)"
-- "Be able to import data from Excel"
-- "Be able to save a data frame as a delimited file"
+
+- Understand that R uses factors to store and manipulate categorical data
+- Be able to apply an arithmetic function to a data frame
+- Be able to import data from Excel
+- Be able to save a data frame as a delimited file
 
 (Long-term objective lines of code)
 ```
@@ -299,19 +289,25 @@ from the top are both "G"s, and `str()` tells us that
 
 > #### How is this more efficient?
 > 
-> Think of a column with 10,000 values. If 9,998 of the values are "ABC" 
-> and 2 of the values are "XYZ", a computer can store the 
-> information in two "levels" as (9998ABC, 2XYZ) rather than having  
-> to keep all 10,000 values in memory. If the 2 "XYZ" values were  
-> at positions 384 and 1768 in the column, all the information 
-> for the column could be stored like (9998ABC, 2XYZ*[384,1768]*). 
-> That's 25 characters instead of 30,000 characters!!!!
+> Think of a column with 10,000 values! If 9,997 of the values are "ABC" 
+> and 3 of the values are "XYZ", a computer might store the 
+> information in two "levels" as (9997ABC1, 3XYZ2) rather than 
+> having to keep all 10,000 values in memory. 
+>
+> Even if the computer had to remember the 3 "XYZ" values were 
+> at positions 384, 1768, and 7899 in the column, all the information 
+> for the column could be stored like:    
+> (9998ABC1, 2XYZ2*[384,1768,7899]*). 
+> 
+> That's **32** characters instead of **30,000** characters and
+> includes the **values** (ABC, XYZ) the **counts** (9998, 2) and
+> the **integers** (1, 2) with positional information!!!!
 > 
 > When we call a function like `str()`, R uses stored vectors 
 > to re-display the object values. 
- {: .callout}
 
-#### Maybe a chart will help?
+
+### Maybe a chart will help?
 ![Factors]({{ site.baseurl }}/fig/Factors.png)
 
 #### Plotting and ordering factors
@@ -329,7 +325,7 @@ plot(REF)
 This was easy, but isn't a particularly pretty example of a plot. We'll be learning much more about creating nice, publication-quality graphics later in this lesson. 
 
 **(Good time for review and break)**
-
+<!--
 <!-- For now, let's explore how we can order -->
 <!-- the factors in our plot so that the first four values are "A", "C", "G", "T", with multi-nucleotide -->
 <!-- combinations listed alphabetically after these four. -->
@@ -353,7 +349,10 @@ This was easy, but isn't a particularly pretty example of a plot. We'll be learn
 <!-- Although not all levels are shown, notice there are `<` signs indicating an -->
 <!-- order. -->
 
-#### Subsetting data frames
+<!--
+
+#### Subsetting data frames (moved to separate lecture)
+genomics-rstudio-data-subsetting.md
 
 Next, we are going to talk about how you can get specific values from data frames, and where necessary, change the mode of a column of values.
 
@@ -506,7 +505,7 @@ summary(SRR2584863_variants)
 ### New Lecture
 
 > #### What is coercion?
-> Changing the mode of an object intentionally.
+> Changing the **mode** of an object intentionally.
 >
 > #### Tip: coercion isn't limited to data frames
 >
@@ -570,22 +569,27 @@ Sometimes coercion is straight forward, but what would happen if we tried
 using `as.numeric()` on `snp_chromosomes_2`
 
 ```
+snp_chromosomes_2
+[1] "3"  "11" "X"  "6" 
 snp_chromosomes_2 <- as.numeric(snp_chromosomes_2)
 Warning message:
 NAs introduced by coercion
 ```
 
 If we check, we will see that an `NA` value (R's default value for missing
-data) has been introduced.
+data) has been introduced. Basically there is NO WAY to coerce a "X"
+into a numeric. So now when we look at snp_chrmosomes we see 
+"X" has been replaced with an 'NA'.
 
 ```
 snp_chromosomes_2
-[1]  3 11 NA  6
+[1]  3 11 **NA**  6
 ```
 
 Trouble can ***really*** start when we try to coerce a factor. For example, when we
-try to coerce the `sample_id` column in our data frame into a numeric mode
-look at the result:
+try to coerce the `sample_id` column in our original data frame into a 
+numeric mode.   
+Look at the result:
 
 ```
 as.numeric(variants$sample_id)
@@ -617,14 +621,15 @@ as.numeric(variants$sample_id)
 [801] 3
 ```
 
-Strangely, ***almost*** it works! Instead of giving an error message, R returns
-numeric values. These numeric values are the **integers assigned to the levels in
-this factor**. This kind of behavior can lead to hard-to-find bugs, for example
-when we expect to have numbers in a factor, and we get additional numbers from a coercion. If
+Strangely, it ***almost*** works! Instead of giving an error message, R returns
+numeric values. BUT these numeric values are the **integers** assigned to the **levels** in
+this factor. This kind of behavior can lead to hard-to-find bugs, for example
+when we *expect* to have numbers in a factor, and we *get* numbers from a coercion. 
+But they the intergers, not the values. If
 we don't look carefully, we may not notice a problem.
 
-If you need to coerce an entire column you can overwrite it using an expression
-like this one:
+One more note about coercion: If you need to coerce an entire column 
+you can overwrite it using an expression like this one:
 
 ```
 # make the 'REF' column a character type column
@@ -635,32 +640,32 @@ variants$REF <- as.character(variants$REF)
 typeof(variants$REF)
 [1] "character"
 ```
+-->
+<!--
 
-#### Using StringsAsFactors = FALSE
-
-Lets summarize this section on coercion with a few take home messages.
+#### Coercion take home messages
 
 - When you explicitly coerce one data type into another (this is known as
-  **explicit coercion**), be careful to check the result. Ideally, you should try to see if its possible to avoid steps in your analysis that force you to
-  coerce.  
+  **explicit coercion**), be careful to check the result. Ideally, you should 
+  try to avoid steps in your analysis that force you to
+  coerce (if possible).  
 - R will sometimes coerce without you asking for it. This is called
   (appropriately) **implicit coercion**. For example when we tried to create
-  a vector with multiple data types, R chose one type through implicit
+  a vector that had multiple data types, R chose ***one*** type through implicit
   coercion.
-- Check the structure (`str()`) of your data frames before working with them!
-
+- Check the structure (`str()`) of your data frames after coercion 
+  (or maybe always) before working with them!
+#### Using StringsAsFactors = FALSE
 One way to avoid needless coercion when
 importing a data frame using any one of the `read.table()` functions (e.g. `read.csv()`) is to use the argument `StringsAsFactors` set to FALSE 
-(`StringsAsFactors = FALSE`). By default,
+(i.e. `StringsAsFactors = FALSE`). By default,
 this argument is TRUE. Setting it to FALSE will treat any non-numeric column as
-"character" type. 
-#### Example 
+"character" type. Some programmers set this as the default in R.
+#### Example
+
+Read in `read.csv` again as `variantsSTR` using `StringsAsFactors = FALSE`
 ```
 variantsStr <- read.csv("https://ndownloader.figshare.com/files/14632895", stringsAsFactors = FALSE)
-```
-```
-typeof(variantsStr)
-[1] "list"
 ```
 ```
 str(variantsStr)
@@ -695,13 +700,29 @@ str(variantsStr)
  $ gt_GT        : int  1 1 1 1 1 1 1 1 1 1 ...
  $ gt_GT_alleles: chr  "G" "T" "T" "CTTTTTTTT" ...
  ```
- Notice that there are no "factor" coulmns in our data frame. Most coulmns that showed up as "factors" mode in the dataframe `variants` are now `chr` or "character" mode in `variantsStr` (and don't have assigned "levels"). 
-
+ Notice that there are no "factor" coulmns in our data frame. Most coulmns that showed up as "factors" mode in the dataframe `variants` are now `chr` or "character" mode in `variantsStr` You can look at the vector for variable "ALT" and see they don't have assigned "levels"). 
+```
+> summary (variantsStr$ALT)
+   Length     Class      Mode 
+      801 character character 
+> summary (variants$ALT)
+                                                       A 
+                                                     211 
+                                                      AC 
+                                                       2 
+                    ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG 
+                                                       1
+(etc.)
+```
 
 The `read.csv()` documentation, also shows you how to
-explicitly set your columns to a specific type using the `colClasses` argument. Other R packages
-(such as the Tidyverse "readr") don't have this particular conversion issue,
-but many packages will still try to guess a data type.
+explicitly set your columns to a specific type using the `colClasses` argument. 
+Other R packages (such as the Tidyverse "readr") don't have this 
+particular coercion issue, 
+but many packages ***will*** try to guess a data type.
+Check your structures!
+
+-->
 
 #### Data frame bonus material: math, sorting, renaming
 
@@ -730,8 +751,9 @@ head(sorted_by_DP$DP)
 ```
 
 > #### Exercise
-> The `order()` function lists values in increasing order by default. Look at the documentation
-> for this function and change `sorted_by_DP` to start with variants with the greatest filtered
+> The `order()` function lists values in increasing order by default. 
+> Look at the documentation for this function and change 
+> `sorted_by_DP` to start with variants with the largest filtered
 > depth ("DP").
 > 
 > > #### Solution

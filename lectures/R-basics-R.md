@@ -6,6 +6,6 @@ language: R
 ---
 #### Three new lectures
 
-1. [Introduction]({{ site.baseurl }}/materials/genomics-r-studio)
+1. [Introduction to RStudio Genomics]({{ site.baseurl }}/materials/genomics-r-studio)
 2. [Data Structures]({{ site.baseurl }}/materials/r-genomics-dataframes)
-3. [Paths]({{ site.baseurl }}/materials/genomics-r-studio-dplyr)
+3. [Data Subsetting]({{ site.baseurl }}/materials/genomics-rstudio-data-subsetting)
