@@ -3,6 +3,8 @@ layout: page
 element: notes
 title: Introduction to the Shell
 language: Shell
+---
+
 questions:
 - "What is a command shell and why would I use one?"
 objectives:
@@ -18,7 +20,7 @@ keypoints:
 - "A shell is a program whose primary purpose is to read commands and run other programs."
 - "The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines."
 - "The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be."
----
+
 ### Background
 At a high level, computers do four things:
 

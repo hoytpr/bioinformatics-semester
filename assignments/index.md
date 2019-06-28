@@ -15,9 +15,10 @@ title: Assignments
 * [Genomics Starting the Project](shell-genomics-starting-the-project)
 * [Genomics First Assembly](shell-genomics-first-assembly)
 * [Genomics Advanced Shell](shell-genomics-advanced-shell)
-* [Genomics Advanced Loops](shell-genomics-advanced-loops)
+* [Genomics Read Quality Trimming](shell-genomics-read-quality-trimming)
 * [Genomics Variant Calling](shell-genomics-variant-calling-workflow)
 * [Genomics Automating a Variant Calling Workflow](shell-genomics-scripting-variant-calling)
+* [Genomics Advanced Loops](shell-genomics-advanced-loops)
 
 ### R
 

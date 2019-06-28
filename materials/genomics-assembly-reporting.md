@@ -4,8 +4,7 @@ element: notes
 title: Assembly Reporting
 language: Shell
 ---
-
-### Reporting
+### Hands-on Genome Assembly Reporting
 
 A **contig** is a contiguous length of genomic sequence. A scaffold is composed of ordered contigs and gaps. By far the most widely used statistics for describing the quality of a genome assembly are its scaffold and contig **N50s**. A contig N50 is calculated by first ordering every contig by length from longest to shortest. Next, starting from the longest contig, the lengths of each contig are summed, until this running sum equals one-half of the total length of all contigs in the assembly. The contig N50 of the assembly is the length of the shortest contig in this list. The scaffold N50 is calculated in the same fashion but uses scaffolds rather than contigs. The longer the scaffold N50 is, the better the assembly is. However, it is important to keep in mind that a poor assembly that has forced unrelated reads and contigs into scaffolds can have an erroneously large N50.
 

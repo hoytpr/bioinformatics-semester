@@ -4,13 +4,12 @@ element: notes
 title: Assembly Tools
 language: Shell
 ---
+### Hands-on Genome Assembly Tools 
 
-## Disclaimer Alert!  
+#### DISCLAIMER: These software are pretty much (not yet completely) obsolete.
 
-#### These software are pretty much (not yet completely) obsolete.
-
-We are only using them to demonstrate 
-some processes used in bioinformatics. We want you to know you can do this!
+We are using them to demonstrate some processes used in 
+bioinformatics. We want you to know you can do this!
 
 #### Why are we using outdated software?
 

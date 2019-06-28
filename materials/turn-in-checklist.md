@@ -6,9 +6,14 @@ title: Assignment Submission & Checklist
 - All assignments should be submitted through [email](mailto:peter.r.hoyt@okstate.edu)
 
 - What files to submit: 
+#### (Too preliminary at this point)
+
+<!--
+
     - **Week 1 - 2** - two text forms, link to a GitHub repository
     - **Weeks 3-9** - a zip file containing one .R file & any data files needed to run it
     - **Weeks 10-13** - either a zip file containing one .R file & any data files needed to run it or a link to a GitHub repository containing the .R file and any data files needed to run it
+<--
 
 # Code Checklist
 

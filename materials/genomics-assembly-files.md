@@ -4,15 +4,32 @@ element: notes
 title: Read Processing
 language: Shell
 ---
+### Hands-on Genome Assembly Read Processing
 
 Goal: get familiar with genome assemblers, pre-processing, reporting and validation. Exercise will be based on chromosomes of a mutant genotype of bakers’ yeast, as practice of de-novo genome assembly. Here we have the benefits of a reference genome to validate our assembly. [(Acknowledgments)]({{ site.baseurl }}/materials/acknowledgments.txt)
 
 ### Data and directory structure
+This exercise will use the local University supercomputing resources. 
+Normally, we would not be able to perform these assemblies
+"interactively" i.e by entering commands at the command prompt. 
+Instead we would enter commands by submitting our commands as a "job" in the 
+computers "queue". Most of the commands we enter will be identical
+to the commands you would place inside your "job submission script"
+which we'll discuss later, but there's plenty of information 
+on the HPCC site [for new users](https://hpcc.okstate.edu/content/new-user-tutorial)
 
-Log into the Cowboy Supercomputer (picture here):
-https://hpcc.okstate.edu/content/logging-cowboy
+Everyone should [have an account](http://hpcc.okstate.edu/requesting-hpcc-account) on the Cowboy supercomputer
+by now. If you do not, ask for a temporary account before 
+proceeding with this lesson. 
 
-Make a copy of all the data into your `/scratch/username` directory.
+Log into the Cowboy Supercomputer:
+[Instructions here](https://hpcc.okstate.edu/content/logging-cowboy)
+
+Then open your FTP software, and connect to your account on Cowboy.
+Using FTP, transfer the file `mcbios.tar.gz` on your desktop 
+into your `/scratch/username` directory on Cowboy.
+Then from your terminal program (Windows users will
+have to use "Putty")to type in the following commands:
 ~~~
 $ cd /scratch/username
 $ cp /scratch/bioworkshop/mcbios.tar.gz .

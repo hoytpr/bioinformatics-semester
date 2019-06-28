@@ -19,9 +19,9 @@ title: Lecture Materials
 -  [Genomics Read Quality Control]({{ site.baseurl }}/materials/genomics-reads-quality-control)
 -  [Tidy Data in Genomics]({{ site.baseurl }}/materials/genomics-data-tidiness)
 -  [Organized Projects in Genomics]({{ site.baseurl }}/materials/genomics-project-organization)
--  [Files for Genome Assembly]({{ site.baseurl }}/materials/genomics-assembly-files)
--  [Methods of Genome Assembly]({{ site.baseurl }}/materials/genomics-assembly-methods)
--  [Genome Assembly Reports]({{ site.baseurl }}/materials/genomics-assembly-reporting)
+-  [Hands-on Processing Reads for Assembly]({{ site.baseurl }}/materials/genomics-assembly-files)
+-  [Hands-on Genome Assembly]({{ site.baseurl }}/materials/genomics-assembly-methods)
+-  [Hands-on Genome Assembly Reports]({{ site.baseurl }}/materials/genomics-assembly-reporting)
 
 ### R <a name="R"></a>
 

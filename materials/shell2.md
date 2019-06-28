@@ -24,7 +24,7 @@ title: The Shell
 
 ### Shebangs
 A shebang is a special code at the beginning of a script to tell
-the shell to run it as a scripot for a particular language.
+the shell to run it as a script for a particular language.
 
 Comes from Sharp(#) + Bang(!)
 

@@ -3,16 +3,18 @@ layout: page
 element: notes
 title: Navigating Files and Directories
 language: Shell
-questions:
+---
+
+#### Questions:
 - How can I move around on my computer?
 - How can I see what files and directories I have?
 - How can I specify the location of a file or directory on my computer?
-objectives:
+#### Objectives:
 - Explain the similarities and differences between a file and a directory.
 - Translate an absolute path into a relative path and vice versa.
 - Construct absolute and relative paths that identify specific files and directories.
 - Demonstrate the use of tab completion, and explain its advantages.
----
+
 
 The part of the operating system responsible for managing files and directories 
 is called the **file system**.

@@ -6,16 +6,13 @@ language: Shell
 exercises: ['Writing Scripts for Calling Variants']
 ---
 
-This assignment is experimental, to determine where links can be 
+This assignment is experimental, to show links can be 
 inserted to remind learners of the readings 
-rather than using the include statement (commented out below)
+rather than using an include statement.
 
 The **readings** are here:
 
-* [Writing Scripts and Working with Data]({{ site.baseurl }}/readings/Shell-genomics-writing-scripts-Shell)
+* [Writing Scripts and Working with Data]({{ site.baseurl}}/readings/Shell-genomics-writing-scripts)
+
 
 {% include assignment.html %}
-
-<!--
-{% include assignment.html %}
--->
