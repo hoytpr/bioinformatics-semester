@@ -233,9 +233,9 @@ identified as factors, lets see how factors work!
  
 First, we'll extract one of the (non-numerical) columns of our data frame 
 to a new **object**, so that we don't end up modifying the `variants` 
-object by mistake. Here's where we use the **`$`** which always 
-means that whatever follows it represents a 
-vector (*e.g.* a column) in our data frame:
+object by mistake. Here's where we use the **`$`**. In R, the dollar 
+sign **($)** has a special meaning. It means that whatever comes directly 
+after it is a column in a data frame:
 
 ```
 ## extract the "REF" column to a new object
@@ -324,7 +324,15 @@ plot(REF)
 
 This was easy, but isn't a particularly pretty example of a plot. We'll be learning much more about creating nice, publication-quality graphics later in this lesson. 
 
-**(Good time for review and break)**
+One more thing. When you are referring to, or requesting from, a two-dimensional dataframe
+it's not hard to understand that you'll need to use the row, and the column, of 
+whatever you refer to. But you must always refer to "ROW" first, and then "COLUMN".   
+**Example:**  
+"dataObject[2,4]" means "give me whatever is in the 2nd row and 4th column 
+of the data frame called 'dataObject'"
+
+To remember this convention, try thinking of "RC Cola". In the brand's name, "RC" stands for "Royal Crown"... but we can pretend it stands for "Row Column".
+
 <!--
 <!-- For now, let's explore how we can order -->
 <!-- the factors in our plot so that the first four values are "A", "C", "G", "T", with multi-nucleotide -->
