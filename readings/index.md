@@ -19,6 +19,7 @@ title: Readings
 ### R
 
 * [Introduction to R and RStudio](R-intro)
+* [Genomics RStudio Coercion](R-genomics-r-studio-coercion)
 * [Working with Data](R-data)
 * [Data Visualization](R-datavis)
 * [Programming Fundamentals 1](R-fundamentals-1)

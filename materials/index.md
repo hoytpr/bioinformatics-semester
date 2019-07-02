@@ -29,6 +29,7 @@ title: Lecture Materials
 - [Genomics R-Studio]({{ site.baseurl }}/materials/genomics-R-Studio)
 - [Genomics R-Studio Dataframes]({{ site.baseurl }}/materials/R-Genomics-Dataframes)
 - [Genomics R-Studio dplyr]({{ site.baseurl }}/materials/genomics-R-Studio-dplyr)
+- [Genomics R-Studio Coercion]({{ site.baseurl }}/materials/genomics-rstudio-coercion)
 - [State in IDEs]({{ site.baseurl }}/materials/state-in-IDEs)
 - [Data Structures]({{ site.baseurl }}/materials/data-structures-R)
 - [`dplyr`]({{ site.baseurl }}/materials/dplyr)

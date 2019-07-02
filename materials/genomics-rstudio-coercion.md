@@ -228,3 +228,157 @@ Other R packages (such as the Tidyverse "readr") don't have this
 particular coercion issue, 
 but many packages ***will*** try to guess a data type.
 Check your structures!
+
+### Bonus Section 
+
+(Material based on  http://monashbioinformaticsplatform.github.io/2015-09-28-rbioinformatics-intro-r/01-supp-factors.html)
+
+#### Working  with coercion and factors
+
+Coercing a string factor to a number can cause problems:
+
+```
+f<-factor(c(3.4, 1.2, 5))
+as.numeric(f)
+```
+```
+[1] 2 1 3
+```
+This does not behave as expected (and there is no warning).
+
+The **recommended way** is to use the integer vector to **index** the factor levels:
+```
+levels(f)[f]
+[1] "3.4" "1.2" "5"  
+```
+This returns a character vector, the as.numeric() function is still required 
+to convert the values to the proper type (numeric).
+```
+f<-levels(f)[f]
+f<-as.numeric(f)
+```
+
+#### Factor manipulations
+
+For practice, instead of using our example data of 
+genomic `variants`, let's use a new dataframe to manipulate 
+factors. Read in a set of medical results called "sample.csv"
+to a new object called "dat".
+
+`dat<-read.csv(file='data/sample.csv')`
+
+In RStudio, you should see a new object `dat` with 100 
+observations and 9 variables. 
+Now lets look at the structure:
+
+`str(dat)`
+```
+'data.frame':   100 obs. of  9 variables:
+ $ ID           : Factor w/ 100 levels "Sub001","Sub002",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Gender       : Factor w/ 4 levels "f","F","m","M": 3 3 3 1 3 4 1 3 3 1 ...
+ $ Group        : Factor w/ 3 levels "Control","Treatment1",..: 1 3 3 2 2 3 1 3 3 1 ...
+ $ BloodPressure: int  132 139 130 105 125 112 173 108 131 129 ...
+ $ Age          : num  16 17.2 19.5 15.7 19.9 14.3 17.7 19.8 19.4 18.8 ...
+ $ Aneurisms_q1 : int  114 148 196 199 188 260 135 216 117 188 ...
+ $ Aneurisms_q2 : int  140 209 251 140 120 266 98 238 215 144 ...
+ $ Aneurisms_q3 : int  202 248 122 233 222 320 154 279 181 192 ...
+ $ Aneurisms_q4 : int  237 248 177 220 228 294 245 251 272 185 ...
+ ```
+ Notice the first 3 columns have been converted to factors. 
+ These values were text in the data file so R automatically
+interpreted them as catagorical variables. What does the
+ summary look like?
+ 
+ `summary(dat)`
+ 
+ ```
+        ID     Gender        Group    BloodPressure        Age       
+ Sub001 : 1   f:35   Control   :30   Min.   : 62.0   Min.   :12.10  
+ Sub002 : 1   F: 4   Treatment1:35   1st Qu.:107.5   1st Qu.:14.78  
+ Sub003 : 1   m:46   Treatment2:35   Median :117.5   Median :16.65  
+ Sub004 : 1   M:15                   Mean   :118.6   Mean   :16.42  
+ Sub005 : 1                          3rd Qu.:133.0   3rd Qu.:18.30  
+ Sub006 : 1                          Max.   :173.0   Max.   :20.00  
+ (Other):94                                                         
+  Aneurisms_q1    Aneurisms_q2    Aneurisms_q3    Aneurisms_q4  
+ Min.   : 65.0   Min.   : 80.0   Min.   :105.0   Min.   :116.0  
+ 1st Qu.:118.0   1st Qu.:131.5   1st Qu.:182.5   1st Qu.:186.8  
+ Median :158.0   Median :162.5   Median :217.0   Median :219.0  
+ Mean   :158.8   Mean   :168.0   Mean   :219.8   Mean   :217.9  
+ 3rd Qu.:188.0   3rd Qu.:196.8   3rd Qu.:248.2   3rd Qu.:244.2  
+ Max.   :260.0   Max.   :283.0   Max.   :323.0   Max.   :315.0  
+ ```
+ 
+ The `$Gender` variable looks wrong, as if someone entered some values 
+ using capital letters, and some with lowercase letters. Lets 
+ visualize these data, and fix them!
+ 
+ The function `table` allows you to subset the `$Gender` column, 
+ and displays the counts of the levels:
+ 
+```
+table(dat$Gender)
+ f  F  m  M 
+35  4 46 15
+```
+ 
+ You can even plot a tablle subset:
+ 
+`barplot(table(dat$Gender))`
+
+![barplot]({{ site.baseurl }}/fig/barplot.png)
+
+We can definitely see the problem in this column, 
+but how can we fix it? It's pretty simple really, we just
+tell R that all the capital "M"'s should be small "m"'s
+
+`dat$Gender[dat$Gender=='M']<-'m'`
+
+(This R command looks at the column `dat$Gender` and where the 
+column `dat$Gender` equals "M", we want to give it the new 
+value of "m"). Then we can plot the `dat$Gender` 
+column vs the `dat$BloodPressure` column.
+
+`plot(x=dat$Gender,y=dat$BloodPressure)`
+
+![first-updated-plot]({{ site.baseurl }}/fig/first-updated-plot.png)
+
+But something is wrong!! Why does this plot show 4 levels?
+
+*Hint* how many levels does `dat$Gender` have?
+```
+levels(dat$Gender)
+[1] "f" "F" "m" "M"
+```
+(Ever heard the expression 
+"[Gone but not forgotten](https://en.wikipedia.org/wiki/Gone,_But_Not_Forgotten)")? 
+This is like that. 
+ 
+Even though we changed all the values of "M" to "m", 
+The **factor** `dat$Gender` still has the numerical vector, 
+with value "M" = 0, meaning this level is no 
+longer used. But to completely eliminate levels from a factor,
+we need to **explicity** tell R that “M” is no longer a 
+valid value for this column.   
+This requires the use of the **`droplevels()`** function which 
+drops unused levels from a factor.
+
+```
+dat$Gender<-droplevels(dat$Gender)
+plot(x=dat$Gender,y=dat$BloodPressure)
+``` 
+
+![removed-M-plot]({{ site.baseurl }}/fig/removed-M-plot.png)
+
+Now you can finish fixing this variable and plot it!
+
+```
+dat$Gender[dat$Gender=='F']<-'f'
+dat$Gender<-droplevels(dat$Gender)
+plot(x = dat$Gender, y = dat$BloodPressure)
+```
+
+![final-levels-plot]({{ site.baseurl }}/fig/final-levels-plot.png)
+
+
+

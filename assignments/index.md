@@ -24,6 +24,8 @@ title: Assignments
 
 * [Introduction to R and RStudio](r-intro)
 * [Working with Data](r-data)
+* [Genomics RStudio Dataframes](r-genomics-rstudio-dataframes)
+* [Genomics Coercing Data](r-genomics-rstudio-coercion)
 * [Data Visualization](r-datavis)
 * [Programming Fundamentals 1](r-fundamentals-1)
 * [Programming Fundamentals 2](r-fundamentals-2)

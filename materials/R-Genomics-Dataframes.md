@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: R Genomics Data Frames and Factors
+title: Genomics R Data Frames and Factors
 language: R
 ---
 ### Questions:
@@ -17,12 +17,10 @@ language: R
 - Be able to import data from Excel
 - Be able to save a data frame as a delimited file
 
-(Long-term objective lines of code)
-```
-source("../bin/chunk-options.R")
-knitr_fig_path("03-")
-```
-**(Open or reopen RStudio and locate `combined_tidy_vcf.csv`**
+
+**This alpha-stage lesson is an amalgam of lessons.**
+
+**(use RStudio and locate `combined_tidy_vcf.csv`)**
 ### Working with spreadsheets (tabular data)
 
 A substantial amount of the data we work with in genomics will be tabular data,
@@ -51,7 +49,7 @@ in [this paper](https://www.jstatsoft.org/article/view/v059i10).
 **3) Verify the data**
 
 Finally, while you don't need to be paranoid about data, you should have a plan
-for how you will prepare it for analysis. **This is a focus of this lesson.**
+for how you will prepare it for analysis. **Planning is a focus of this lesson.**
 You probably already have a lot of intuition, expectations, or assumptions about
 your data - the range of values you expect, how many values should have
 been recorded, etc. But as the data get larger, our human ability to
@@ -72,7 +70,7 @@ in your analysis, and its reproducibility.
 
 
 ### Importing tabular data into R
-There are several ways to import data into R. But we will
+There are several ways to import data into R. But for now we will
 only use the tools provided in every R installation (so called "base" R) to
 import a comma-delimited file containing the results of our variant calling workflow.
 We will need to load the data using a function called `read.csv()`.
@@ -206,8 +204,8 @@ str(variants)
  $ gt_GT        : int  1 1 1 1 1 1 1 1 1 1 ...
  $ gt_GT_alleles: Factor w/ 57 levels "A","AC","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 31 46 46 29 25 46 1 1 4 15 ...
  ```
-Okay, that's a lot to unpack! You can see (at least) 
-that the rows and columns of the **object** `variants` have changed. 
+Okay, that's a lot to take in! But you should at least be able to see 
+that the rows and columns of the **object** `variants` are displayed differently. 
 
 Here's what else to notice:
 
@@ -221,9 +219,12 @@ Here's what else to notice:
 ### Introducing Factors
 
 **Factors** are the final major data structure (mode) we will 
-introduce in our R genomics
-lessons. Factors can be thought of as **vectors** which are specialized for
-categorical data. Because R is specialized for statistics, it makes 
+introduce in our R genomics lessons. We are only going to learn 
+some basics about factors, but you can learn more by searching 
+for ["Factors in R"](https://www.google.com/search?ei=-SwaXdOvLc3WtAac3ZcY&q=Factors+in+R+examples&oq=Factors+in+R+examples&gs_l=psy-ab.3..33i299.4605.7193..7876...0.0..0.197.911.7j2......0....1..gws-wiz.......0i71j0j0i22i30.IacwJmo16DQ). 
+ 
+Factors can be thought of as **vectors** which are specialized for
+**categorical** data. Because R is specialized for statistics, it makes 
 sense to have a way to deal with categorical data as if they were 
 continuous (*e.g.* numerical) data. 
  
@@ -254,7 +255,7 @@ head(REF)
 What we get back are two lines. The first line represents a shortened form of 
 all the items in our object *(think: everything in the column)*. 
 The second line is something called "Levels".
-**Levels are the different categories of a factor** 
+**Levels are the unique categories of a factor** 
 *(think: every unique value in the column)*. By default, R
 will organize the levels in a factor in alphabetical order. 
 So the first level in this factor is
@@ -267,14 +268,15 @@ str(REF)
  Factor w/ 59 levels "A","ACAGCCAGCCAGCCAGCCAGCCAGCCAGCCAG",..: 49 33 33 30 24 16 16 33 2 12 ...
 ```
 
-The `str()` function first shows the contents of the object arranged
-in alphabetic order. Those are the **levels** again. The second part of 
+The first thing we see with the `str()` function is that this factor
+has 59 levels. The the values (or categories) of those levels are displayed
+in alphabetic order. Those are the unique **levels** again. The second part of 
 `str()` tells us the **integer** assigned to each **level** using the 
 ***original*** order of "REF".  
 
 ### Say that again??
 For the sake of efficiency, R stores the 
-content of a factor as a **vector of integers**. Once the contents 
+content of a factor as a **vector with integers**. Once the contents 
 in the object are arranged in alphabetical order, all 
 identical values are merged creating a **"level"**. Each level 
 has a *unique* value (and there are 59 of them in "REF") which is 
@@ -282,7 +284,7 @@ assigned an **integer**.
 
 The `head()` function told us the first value in our "REF" object 
 is "T", but the second part of the `str()` output tells us that 
-"T" in alphabetical order happens to be at the 49th level 
+"T" *in alphabetical order* happens to be at the 49th level 
 of our factor. According to `head()` the next two values 
 from the top are both "G"s, and `str()` tells us that 
 "G" is the 33rd level of our factor.
@@ -294,13 +296,13 @@ from the top are both "G"s, and `str()` tells us that
 > information in two "levels" as (9997ABC1, 3XYZ2) rather than 
 > having to keep all 10,000 values in memory. 
 >
-> Even if the computer had to remember the 3 "XYZ" values were 
+> Even if the computer had to remember the 3 "XYZ" values were originally
 > at positions 384, 1768, and 7899 in the column, all the information 
-> for the column could be stored like:    
+> for the column could be stored something like:    
 > (9998ABC1, 2XYZ2*[384,1768,7899]*). 
 > 
 > That's **32** characters instead of **30,000** characters and
-> includes the **values** (ABC, XYZ) the **counts** (9998, 2) and
+> includes the **levels/values** (ABC, XYZ) the **counts** (9998, 2) and
 > the **integers** (1, 2) with positional information!!!!
 > 
 > When we call a function like `str()`, R uses stored vectors 
