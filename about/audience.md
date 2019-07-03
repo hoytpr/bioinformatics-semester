@@ -9,12 +9,13 @@ learners, or folks who aren't taking a formal class and are interested
 in learning online on their own time. We are starting with the classroom
 students and then attempting to build on the material generated to make
 it maximally useful to the broader audience of biologists who want to
-learn how to use programming and database management systems. We are
-interested in helping folks who are complete beginners and those who
+learn how to use programming and bioinformatics software. We are
+interested in helping folks who are complete beginners and welcome those who
 already have some programming background.
 
-To encourage folks to use this material all of the general material on this
-site is [licensed]({{ site.baseurl }}/LICENSE) under the Creative Commons Attribution License and all programs are [licensed]({{ site.baseurl }}/LICENSE) under the MIT License. 
+To encourage folks to use this material, all of the general material on this
+site is [licensed]({{ site.baseurl }}/LICENSE) under the Creative Commons Attribution 
+License and all programs are [licensed]({{ site.baseurl }}/LICENSE) under the MIT License. 
 
 {% if site.email == 'peter.r.hoyt@okstate.edu' %}
 Be sure to [let us know what you think](mailto:{{ site.email }}) so we can be sure to get you the best experience.

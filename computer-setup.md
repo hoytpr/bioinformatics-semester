@@ -70,7 +70,7 @@ download the correct version  for your operating system.
     1. Open RStudio
     2. File -> New Project -> Version Control -> Git
     3. If you reach a page called `Clone Git Repository` with some fields to
-       fill out everything is working
+       fill out, everything is working
 
 If the git installation didn't work (i.e., you don't get the expect result from
 Step 5), try the following:
@@ -103,7 +103,7 @@ and for Fedora run `sudo yum install git`.
 
 Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
 
-### SQL
+### SQL (Optional)
 
 Download and install [DB Browser for SQLite](http://sqlitebrowser.org/)
 

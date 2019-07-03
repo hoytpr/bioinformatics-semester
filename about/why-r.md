@@ -3,7 +3,7 @@ layout: page
 title: Why R?
 ---
 
-An R version of this course is also available for a handful of reasons
+An R version of this course is used for a handful of reasons
 including:
 
 1.  R is used widely in a number of disciplines, like ecology, and provides a  

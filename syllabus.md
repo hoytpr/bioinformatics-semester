@@ -6,7 +6,7 @@ credits: 3
 semester: Fall 2019
 professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
-email: Peter.r.hoyt@okstate.edu
+email: peter.r.hoyt@okstate.edu
 phone: 405-744-6206
 schedule: ['TBD']
 location: Self-paced
@@ -77,9 +77,8 @@ There is no required text book for this class.
 
 Computers are increasingly essential to the study of all aspects of
 biology. The course seeks to improve cross-disciplinary understanding and
-will be taught using R and SQLite, but the concepts learned will easily apply to
-all programming languages and database management systems. No background in
-programming or databases is required.
+will be taught using the Bash Shell and R, but the concepts learned will easily apply to
+all programming languages. No background in programming is required. 
 
 
 ### Prerequisite Knowledge and Skills
@@ -90,16 +89,16 @@ Knowledge of basic biology.
 ### Purpose of Course
 
 By the end of the course you will be able to use bioinformatic tools to import data 
-into proper formats for genomics, perform analysis on that data, and export the results to graphs, text files, and
-databases. 
+into proper formats for genomics, perform analysis on that data, and export the 
+results to graphs, text files, and databases. 
 
 ### Course Goals and Objectives
 
 Students completing this course will be able to:
 
-* Create well structured databases
-* Extract information from databases
-* Write simple computer programs in the BASH shell or Python
+* Create well structured dataframes
+* Extract information from dataframes
+* Write simple computer programs in the BASH shell or R
 * Automate data analysis
 * Apply these tools to address biological questions
 
@@ -107,7 +106,7 @@ Students completing this course will be able to:
 ### How this course relates to the Student Learning Outcomes 
 
 This course contributes to the interdisciplinary techniques required to generate, 
-analyze, and interpret complex biologically derived datasets as part of genomics and
+analyze, and interpret complex biologically derived datasets as part of genomics
 by providing students the skills and knowledge they need to use bioinformatics tools
 used in research.
 
@@ -146,9 +145,10 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 
 ### Assignment policy
 
-Assignments are due Monday night by 11:59 pm Central Time. Assignments should be
-submitted via [email](mailto:peter.r.hoyt@okstate.edu). This allows you to be finished with one week's material
-before starting the next week's material.
+Assignments are due Monday night by 11:59 pm Central Time. This allows you to be 
+finished with one week's material before starting the next week's material.
+Assignments should be submitted via [email](mailto:peter.r.hoyt@okstate.edu). 
+Submitting to [Canvas](https://canvas.okstate.edu/courses/39012) is an ongoing effort. 
 
 
 ### Course Technology
@@ -157,7 +157,7 @@ Students are required to provide their own laptops/desktops and to install free 
 source software on those computers (see [Setup]({{ site.baseurl }}/computer-setup)
 for installation instructions). Support will be provided by the instructor in
 the installation of required software. If you need but don't have access to a suitable
-computer please contact the instructor and they will do their best to provide you with
+computer please contact an instructor and they will do their best to provide you with
 one.
 
 
@@ -187,7 +187,7 @@ Code at https://academicintegrity.okstate.edu/content/academic-integrity-resourc
 
 All members of the class are expected to follow rules of common
 courtesy in all email messages, threaded discussions and chats.
-
+For guidance please read the [Carpentries Code of Conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html#code-of-conduct-detailed-view)
 
 ## Getting Help
 
@@ -214,8 +214,6 @@ detailed grade. Other problems will be graded as follows:
     50%
 * Answer demonstrates a lack of understanding of the core concept: 0%
 
-Independent projects may focus on databases, programming, or a combination or
-the two.
 
 ### Grading scale
 

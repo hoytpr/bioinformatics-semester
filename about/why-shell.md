@@ -15,7 +15,8 @@ The best part? It's kind of fun!
     windows, icons and pointers. They are easy to learn and 
 	fantastic for simple tasks where a vocabulary consisting of 
 	"click" translates easily into "do the thing I want". But 
-	this magic relies on wanting a simple set of things, and 
+	this magic relies on wanting a simple set of things, having the 
+	GUI present all those things, and 
 	having programs that can do exactly those things. 
 3.  If you wish to do complex, purpose-specific things it helps 
     to have a richer means of expressing your instructions to the 

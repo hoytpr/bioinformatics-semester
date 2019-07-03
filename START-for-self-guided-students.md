@@ -11,9 +11,9 @@ Check out the [target audience]({{ site.baseurl }}/about/audience) of the course
 
 As a self-guided student you can 1) follow along with the whole course at your own pace or 2) find a couple modules that will be helpful to you in isolation. 
 
-1. If you are following the whole course, we suggest you follow the [schedule]({{ site.baseurl }}/schedule), which begins with introduction to the [Shell]({{ site.baseurl }}/about/why-shell/), and goes on to include introductions into [R]({{ site.baseurl }}/about/why-r/) and we may get to [SQL]({{ site.baseurl }}/about/why-python/). Each [assignment]({{ site.baseurl }}/assignments) includes listings for video and text materials, as well as the practice [exercises]({{ site.baseurl }}/exercises). We provide output files with each exercise to give you a hint what your code should accomplish.
+1. If you are following the whole course, we suggest you follow the [schedule]({{ site.baseurl }}/schedule), which begins with introduction to the [Shell]({{ site.baseurl }}/about/why-shell/), and goes on to include introductions into [R]({{ site.baseurl }}/about/why-r/). Each [assignment]({{ site.baseurl }}/assignments) includes listings for video or text materials, as well as the practice [exercises]({{ site.baseurl }}/exercises). We provide output files with each exercise to give you a hint what your code should accomplish.
 
-2. If you are interested in just a couple of modules in SQL or R, the best way to find out the assignment that is best suited to your needs is browsing through the [schedule]({{ site.baseurl }}/schedule). 
+2. If you are interested in just a couple of modules in Shell, R, SQL, or Python the best way to find out the assignment that is best suited to your needs is browsing through the [schedule]({{ site.baseurl }}/schedule). 
 
 *If you are interested in the Python material, the [lesson material]({{ site.baseurl }}/materials/) and [assignments]({{ site.baseurl }}/assignments/) developed in previous iterations of the course are still available, but with less direction.*
 
