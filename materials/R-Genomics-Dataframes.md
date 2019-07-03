@@ -819,11 +819,13 @@ installed on our cloud instance).
 
 First, in the RStudio menu go to **File**, select **Import Dataset**, and
 choose **From Excel...** (notice there are several other options you can
-explore).
+explore). If asked to install or update files, go ahead and say yes, 
+it will only take a few seconds.
 
 <img src="{{ site.baseurl }}/fig/rstudio_import_menu.png " alt="rstudio import menu" style="width: 600px;"/>
 
 Next, under **File/Url:** click the <KBD>Browse</KBD> button and navigate to the **Ecoli_metadata.xlsx** file located at `/home/dcuser/dc_sample_data/R`.
+(On your system it could be in /data/Ecoli_metadata.xlsx)
 You should now see a preview of the data to be imported:
 
 <img src="{{ site.baseurl }}/fig/rstudio_import_screen.png " alt="rstudio import screen" style="width: 1200px;"/>
@@ -838,7 +840,10 @@ now you can choose your preference.
 
 In this exercise, we will leave the title of the data frame as
 **Ecoli_metadata**, and there are no other options we need to adjust. Click the
-<KBD>Import</KBD> button to import the data.
+<KBD>Import</KBD> button to import the data. RStudio will show new DATA 
+under the Environment tab of the Data window, and a new tab showing the 
+imported data will show in the "Source" window. Change back to the 
+"genomics_r_basics.R" script window of the Source window. 
 
 Finally, let's check the first few lines of the `Ecoli_metadata` data
 frame:
@@ -852,9 +857,14 @@ Ecoli_metadata <-  readxl::read_xlsx("../data/Ecoli_metadata.xlsx")
 head(Ecoli_metadata)
 ```
 
+<img src="{{ site.baseurl }}/fig/Ecoli-metadata-head.png " alt="rstudio import screen" style="width: 648px;"/>
+
+
 The type of this object is 'tibble', a type of data
 frame we will talk more about in the 'dplyr' section. If you needed
 a true R data frame you could coerce with `as.data.frame()`.
+
+Do Exercise [Genomics-rstudio-R-4](/exercises/Genomics-rstudio-R-4)
 
 > #### Exercise: Putting it all together - data frames
 >
@@ -876,18 +886,13 @@ a true R data frame you could coerce with `as.data.frame()`.
 >
 > H) Save the edited Ecoli_metadata data frame as "exercise_solution.csv" in your current working directory.
 >
->> ## Solution
->> ```
->> dim(Ecoli_metadata)
->> levels(as.factor(Ecoli_metadata$cit))
->> table(as.factor(Ecoli_metadata$cit))
->> Ecoli_metadata[7,7]
->> median(Ecoli_metadata$genome_size)
->> colnames(Ecoli_metadata)[colnames(Ecoli_metadata) == "sample"] <- "sample_id"
->> Ecoli_metadata$genome_size_bp <- Ecoli_metadata$genome_size * 1000000
->> write.csv(Ecoli_metadata, file = "exercise_solution.csv")
->> ```
-> 
+
+
+When you are done, your RStudio windows should look like this:
+
+<img src="{{ site.baseurl }}/fig/Ecoli-metadata-new-size-bp-column.png " alt="rstudio bp screen" style="width: 772px;"/>
+
+<img src="{{ site.baseurl }}/fig/Ecoli-metadata-new-csv.png " alt="rstudio bp screen" style="width: 497px;"/>
 
 ### Keypoints:
 - It is easy to import data into R from tabular formats including Excel.

@@ -4,7 +4,7 @@ element: lecture
 title: Introduction to R and RStudio
 language: R
 ---
-
+Lecture 1 "Introduction" is developed for 2019
 1. [Introduction]({{ site.baseurl }}/materials/r-intro)
 2. [Data Structures]({{ site.baseurl }}/materials/data-structures-R)
 3. [Paths]({{ site.baseurl }}/materials/paths-R)

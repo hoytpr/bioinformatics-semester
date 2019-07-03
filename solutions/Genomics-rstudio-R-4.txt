@@ -1,0 +1,57 @@
+## Solution
+
+dim(Ecoli_metadata)
+[1] 30  8
+
+levels(as.factor(Ecoli_metadata$cit))
+[1] "minus"   "plus"    "unknown"
+
+table(as.factor(Ecoli_metadata$cit))
+
+  minus    plus unknown 
+      9       9      12
+	  
+Ecoli_metadata[7,7]
+# A tibble: 1 x 1
+  genome_size
+        <dbl>
+1        4.62
+
+median(Ecoli_metadata$genome_size)
+[1] 4.625
+
+colnames(Ecoli_metadata)[colnames(Ecoli_metadata) == "sample"] <- "sample_id"
+head(Ecoli_metadata)
+ # A tibble: 6 x 8
+  sample_id generation clade   strain cit     run       genome_size 
+  <chr>          <dbl> <chr>   <chr>  <chr>   <chr>           <dbl>
+1 REL606             0 N/A     REL606 unknown NA               4.62
+2 REL1166A        2000 unknown REL606 unknown SRR098028        4.63
+3 ZDB409          5000 unknown REL606 unknown SRR098281        4.6 
+4 ZDB429         10000 UC      REL606 unknown SRR098282        4.59
+5 ZDB446         15000 UC      REL606 unknown SRR098283        4.66
+6 ZDB458         20000 (C1,C2) REL606 unknown SRR098284        4.63
+or
+Ecoli_metadata$sample_id
+ [1] "REL606"   "REL1166A" "ZDB409"   "ZDB429"   "ZDB446"   "ZDB458"   "ZDB464*" 
+ [8] "ZDB467"   "ZDB477"   "ZDB483"   "ZDB16"    "ZDB357"   "ZDB199*"  "ZDB200"  
+[15] "ZDB564"   "ZDB30*"   "ZDB172"   "ZDB158"   "ZDB143"   "CZB199"   "CZB152"  
+[22] "CZB154"   "ZDB83"    "ZDB87"    "ZDB96"    "ZDB99"    "ZDB107"   "ZDB111"  
+[29] "REL10979" "REL10988"
+
+Ecoli_metadata$genome_size_bp <- Ecoli_metadata$genome_size * 1000000
+head(Ecoli_metadata)
+
+# A tibble: 6 x 8
+  sample_id generation clade   strain cit     run       genome_size genome_size_bp
+  <chr>          <dbl> <chr>   <chr>  <chr>   <chr>           <dbl>          <dbl>
+1 REL606             0 N/A     REL606 unknown NA               4.62        4620000
+2 REL1166A        2000 unknown REL606 unknown SRR098028        4.63        4630000
+3 ZDB409          5000 unknown REL606 unknown SRR098281        4.6         4600000
+4 ZDB429         10000 UC      REL606 unknown SRR098282        4.59        4590000
+5 ZDB446         15000 UC      REL606 unknown SRR098283        4.66        4660000
+6 ZDB458         20000 (C1,C2) REL606 unknown SRR098284        4.63        4630000
+
+write.csv(Ecoli_metadata, file = "exercise_solution.csv")
+# see Files tab
+

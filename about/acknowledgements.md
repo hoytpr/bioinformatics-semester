@@ -14,8 +14,9 @@ details. More recent genomics lessons were developed with tremendous effort by [
 
 This particular course by Dr. Hoyt emphasizes making the curricula more 
 understandable for a specific target
-audience of Life Scientists, who are **truly beginners**. To strive toward this 
-goal Dr. Hoyt will use pedagogy created by experts including 
+audience of Life Scientists, who are **truly beginners**, who want or need 
+to be better. To strive toward this 
+goal Dr. Hoyt will embrace pedagogy created by experts including 
 [Dr. Rochelle Tractenberg](https://cbpr.georgetown.edu/rochelle_tractenberg/#)
 who developed the [Mastery Rubric for Bioinformatics](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/) (described in an interview by 
 [Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
@@ -25,7 +26,7 @@ currently under peer-review.
 
 #### Funding
 
-The initiail development of this course, was supported by the Gordon
+The initial development of this course, was supported by the Gordon
 and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
 [GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694). 
 Dr. Hoyt is generously supported by the 

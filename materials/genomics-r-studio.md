@@ -566,8 +566,8 @@ c("ACTN3","APOA5") %in% snp_genes
 ```
 
 ### Keypoints
-- **"Effectively using R is a journey of months or years."**\* Still 
-  *you don't have to be an expert to use R* and you can start using 
+- **"Effectively using R is a journey of months or years."**__\*__    
+  Still *you don't have to be an expert to use R* and you can start using 
   and analyzing your data with about a day's worth of training. 
   Review this lesson whenever starting an R analysis.
 - It is important to understand how data are organized by R in a given object

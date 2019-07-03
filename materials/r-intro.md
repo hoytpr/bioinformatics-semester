@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: Introduction to R for Genomics
+title: Introduction to R and RStudio
 language: R
 ---
 
@@ -9,12 +9,12 @@ language: R
 
 > Read "Why R?" on this website
 
-## Getting ready to use R for the first time
+### Getting ready to use R for the first time
 
 In this lesson we will take you through the very first things you need to get
 R working.
 
-## Advantages of using R
+### Advantages of using R
 
 At more than 20 years old, R is fairly mature and [growing in popularity](https://www.tiobe.com/tiobe-index/r/). However, programming isn’t a popularity contest. Here are key advantages of
 analyzing data in R:
@@ -69,18 +69,21 @@ called an **RStudio Project**. An RStudio project allows you to more easily:
 
 1. To create a project, go to the <kbd>File</kbd> menu, and click <kbd>New Project...</kbd>.
 
-<img src="/fig/new_project_window.png" alt="rstudio default session" style="width: 600px;"/>
+    <img src="/fig/new_project_window.png" alt="rstudio default session" style="width: 600px;"/>
 
 2. In the window that opens select **New Directory**, then **New Project**. For
 "Directory name:" enter **dc_genomics_r**. For "Create project as subdirectory of",
 you may leave the default, which is your home directory "~".
 
-3. Finally click <kbd>Create Project</kbd>. In the "Files" tab of your output
+3. **Packrat** check off "**Use packrat with this project**" and follow any
+installation instructions. See the **Tip** below.
+
+4. Finally click <kbd>Create Project</kbd>. In the "Files" tab of your output
 pane (more about the RStudio layout in a moment), you should see an RStudio
  project file, **dc_genomics_r.Rroj**. All RStudio projects end with the
  "**.Rproj**" file extension.
 
->## Tip: Make your project more reproducible with Packrat
+>### Tip: Make your project more reproducible with Packrat
 > One of the most wonderful and also frustrating aspects of working with R is
 > managing packages. We will talk more about them, but packages (e.g. ggplot2)
 > are add-ons that extend what you can do with R. Unfortunately it is very
@@ -90,12 +93,9 @@ pane (more about the RStudio layout in a moment), you should see an RStudio
 > their scripts on your machine. [Packrat](https://rstudio.github.io/packrat/)
 > is an RStudio add-on that will associate your packages and project so that
 > your work is more portable and reproducible. To turn on Packrat click on
-> the <KBD>Tools</KBD> menu and select <KBD>Project Options</KBD>. Under
-> **Packrat** check off "**Use packrat with this project**" and follow any
-> installation instructions.
-{: .callout}
+> the <KBD>Tools</KBD> menu and select <KBD>Project Options</KBD>.
 
-## Creating your first R script
+### Creating your first R script
 
 Now that we are ready to start exploring R, we will want to keep a record of the
 commands we are using. To do this we can create an R script:
@@ -108,32 +108,33 @@ window that opens, name your file **"genomics_r_basics"**. The new script
 **genomics_r_basics.R** should appear under "files" in the output pane. By
 convention, R scripts end with the file extension **.R**.
 
-## Overview and customization of the RStudio layout
+### Overview and customization of the RStudio layout
 
-Here are the major windows (or panes) of the RStudio
-environment:
+Although yours may be arranged differently, Here are the major windows (or panes) of the    
+**RStudio environment:**
 
 <img src="/fig/rstudio_session_4pane_layout.png" alt="rstudio default session" style="width: 1000px;"/>
 
-- **Source**: This pane is where you will write/view R scripts. Some outputs
+- **Source**: IMPORTANT!!  This pane is where you will write/view R scripts. Some outputs
   (such as if you view a dataset using `View()`) will appear as a tab here.
 - **Console/Terminal**: This is actually where you see the execution of
   commands. This is the same display you would see if you were using R at the
-  command line without RStudio. You can work interactively (i.e. enter R
+  command line without RStudio. You can (but we won't) work interactively (i.e. enter R
   commands here), but for the most part we will run a script (or lines in a
-  script) in the source pane and watch their execution and output here. The
-  "Terminal" tab give you access to the BASH terminal (the Linux operating
+  script) in the ***Source*** pane and watch their execution and output in the ***Console***. 
+  The "Terminal" tab gives you access to the BASH terminal (the Linux operating
   system, unrelated to R).
 - **Environment/History**: Here, RStudio will show you what datasets and
   objects (variables) you have created and which are defined in memory.
   You can also see some properties of objects/datasets such as their type
   and dimensions. The "History" tab contains a history of the R commands you've executed R.
-- **Files/Plots/Packages/Help**: This multipurpose pane will show you the
+- **Files/Plots/Packages/Help/Viewer**: This multipurpose pane will show you the
   contents of directories on your computer. You can also use the "Files" tab to
   navigate and set the working directory. The "Plots" tab will show the output
   of any plots generated. In "Packages" you will see what packages are actively
   loaded, or you can attach installed packages. "Help" will display help files
-  for R functions and packages.
+  for R functions and packages. RStudio includes a Viewer pane that can be used 
+  to view local web content.
 
 All of the panes in RStudio have configuration options. For example, you can
 minimize/maximize a pane, or by moving your mouse in the space between
@@ -142,20 +143,22 @@ pane layout are in the <KBD>View</KBD> menu. Other options such as font sizes,
 colors/themes, and more are in the <KBD>Tools</KBD> menu under
 <KBD>Global Options</KBD>.
 
->## You are working with R
+>### Yes, this is R. You are working with R!
 > Although we won't be working with R at the terminal, there are lots of reasons
-> to. For example, once you have written an RScript, you can run it at any Linux
-> or Windows terminal without the need to start up RStudio. We don't want
-> you to get confused - RStudio runs R, but R is not RStudio. For more on
+> to. For example, once you have written an RScript, you can run it in any Linux
+> or Windows terminal without the need to start up RStudio. 
+> 
+> So let's be clear: We don't want you to get confused - RStudio runs R, 
+> but R is not RStudio. For more on
 > running an R Script at the terminal see this [Software Carpentry lesson](https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/).
-{: .callout}
 
-## Getting to work with R: navigating directories
+
+### Getting to work with R: navigating directories
 Now that we have covered the more aesthetic aspects of RStudio, we can get to
 work using some commands. We will write, execute, and save the commands we
-learn in our **genomics_r_basics.R** script that is loaded in the Source pane.
-First, lets see what directory we are in. To do so, type the following command
-into the script:
+learn in our **genomics_r_basics.R** script that we loaded in the Source pane.
+First, lets see what directory we are in. To do so, click inside the Console
+window, and type the following command into the script:
 
 ```
 getwd()
@@ -171,16 +174,24 @@ In the console, we expect to see the following output*:
 ~~~
 [1] "/home/dcuser/dc_genomics_r"
 ~~~
-{: .output}
+
+We can predict this output when we are working on a defined system or instance 
+such as AWS. If you are on a different machine, you might get a different directory as 
+the default directory. For example:
+
+```
+[1] "C:/Users/Buddy/Desktop/R-testing/dc_genomics_r"
+```
 
 \* Notice, at the Console, you will also see the instruction you executed
 above the output in blue.
 
-Since we will be learning several commands, we may already want to keep some
-short notes in our script to explain the purpose of the command. Entering a `#`
-before any line in an R script turns that line into a comment, which R will
-not try to interpret as code. Edit your script to include a comment on the
-purpose of commands you are learning, e.g.:
+Since we will be learning several commands, we will want to keep some
+short notesor "comments" in our script to explain the purpose of the 
+command. Entering a `#` before any line in an R script turns that line 
+into a comment, which R will not try to interpret as code. To get started, 
+edit your script to include a comment on the purpose of commands you 
+are learning, e.g.:
 
 ```
 # this command shows the current working directory
@@ -188,7 +199,7 @@ getwd()
 ```
 For the purposes of this exercise we want you to be in the directory `"/home/dcuser/R_data"`.
 What if you weren't? You can set your home directory using the `setwd()`
-command. Enter this command in your script, but *don't run* this yet.
+command. Enter this comment and command in your script, but ***don't run*** this yet.
 
 ```
 # This sets the working directory
@@ -215,41 +226,44 @@ working directory is the first step to analyzing your data.
 > ## Tip: Never use `setwd()`
 >
 > Wait, what was the last 2 minutes about? Well, setting your working directory
-> is something you need to do, you need to be very careful about using this as
-> a step in your script. For example, what if your script is being on a computer
+> is something you need to do, but not as
+> a step in your script. For example, what if your script is on a computer
 > that has a different directory structure? The top-level path in a Unix file
 > system is root `/`, but on Windows it is likely `C:\`. This is one of several
 > ways you might cause a script to break because a file path is configured
-> differently than your script anticipates. R packages like [here](https://cran.r-project.org/package=here)
+> differently than your script anticipates. A workaround for this is to use 
+> R packages like [here](https://cran.r-project.org/package=here)
 > and [file.path](https://www.rdocumentation.org/packages/base/versions/3.4.3/topics/file.path)
-> allow you to specify file paths is a way that is more operating system
+> which allow you to specify file paths in a way that is mostly operating system
 > independent. See Jenny Bryan's [blog post](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/) for this
 > and other R tips.
 
-## Using functions in R, without needing to master them
+### Using functions in R, without needing to master them
 
-A function in R (or any computing language) is a short
-program that takes some input and returns some output. Functions may seem like an advanced topic (and they are), but you have already
-used at least one function in R. `getwd()` is a function! The next sections will help you understand what is happening in
-any R script.
+A **function** in R (or any computing language) is a short
+program that takes some input and returns some output. Functions may seem 
+like an advanced topic (and they are), but you have already
+used at least one function in R. `getwd()` is a function! The next sections 
+will help you understand what is happening in any R script.
 
 You have hopefully noticed a pattern - an R
 function has three key properties:
-- Functions have a name (e.g. `dir`, `getwd`); note that functions are case
+- Functions have a **name** (e.g. `dir`, `getwd`); note that functions are case
   sensitive!
-- Following the name, functions have a pair of `()`
-- Inside the parentheses, a function may take 0 or more arguments
+- Following the name, functions have a pair of **parentheses** `()`
+- Inside the parentheses, a function may take 0 or more **arguments**
 
-An argument may be a specific input for your function and/or may modify the
+An **argument** may be a specific input for your function and/or may modify the
 function's behavior. For example the function `round()` will round a number
 with a decimal:
 
 ```
-/# This will round a number to the nearest integer
+ # This function will round a number to the nearest integer
 round(3.14)
+[1] 3
 ```
 
-## Getting help with function arguments
+### Getting help with function arguments
 
 What if you wanted to round to one significant digit? `round()` can
 do this, but you may first need to read the help to find out how. To see the help
@@ -260,38 +274,45 @@ name:
 ?round()
 ```
 
-The "Help" tab will show you information (often, too much information). You
-will slowly learn how to read and make sense of help files. Checking the "Usage" or "Examples"
-headings is often a good place to look first. If you look under "Arguments," we
-also see what arguments we can pass to this function to modify its behavior.
-You can also see a function's argument using the `args()` function:
+The "Help" tab will show you information (often, too much information) 
+on "Rounding of Numbers". You will slowly learn how to read and make 
+sense of help files. The "Usage" or "Examples"
+headings are often a good place to look first. If you look under "Arguments" you
+also see what arguments can be passed to this function to modify its behavior.
+You can also see the arguments for a function using the `args()` function:
 
 ```
 args(round)
+function (x, digits = 0) 
+NULL
 ```
 
-`round()` takes two arguments, `x`, which is the number to be 
-rounded, and a
-`digits` argument. The `=` sign indicates that a default (in this case 0) is
-already set. Since `x` is not set, `round()` requires we provide it, in contrast
-to `digits` where R will use the default value 0 unless you explicitly provide
-a different value. We can explicitly set the digits parameter when we call the
-function:
+Now we see that `round()` takes two arguments; `x`, which is the number 
+to be rounded, and a `digits` argument. Something to remember is that when 
+the `args()` function gives you an `=` sign it indicates that a default 
+(in this case 0) is already set. R will use the default value 0 unless you 
+explicitly provide a different value. Since there is no default for `x`, `round()` 
+requires we provide it (which is why "NULL" was also returned, but ignore that 
+or now). After providing `x`, we can explicitly set the `digits` 
+parameter when we call the `round()` function:
 
 ```
 round(3.14159, digits = 2)
+[1] 3.14
 ```
 
-Or, R accepts what we call "positional arguments", if you pass a function
-arguments separated by commas, R assumes that they are in the order you saw
-when we used `args()`. In the case below that means that `x` is 3.14159 and
-digits is 2.
+To make things easier, R accepts what are called **"positional arguments"**. If you 
+give arguments separated by commas, R assumes the arguments are in the same 
+order as when you used `args()`. In the case below that means that `x` is 3.14159 and
+digits is 2 (the same as if you used `digits = 2`).
 
 ```
 round(3.14159, 2)
+[1] 3.14
 ```
 
-Finally, what if you are using `?` to get help for a function in a package not installed on your system, such as when you are running a script which has dependencies.
+What happens if you are using `?` to get help for a function not installed on your 
+system? Here's an example:    
 
 ```
 ?geom_point()
@@ -303,18 +324,23 @@ will return an error:
 Error in .helpForCall(topicExpr, parent.frame()) :
    no methods for ‘geom_point’ and no documentation for it as a function
 ~~~
-{: .error}
 
-Use two question marks (i.e. `??geom_point()`) and R will return
-results from a search of the documentation for packages you have installed on your computer
-in the "Help" tab. Finally, if you think there
+Use two question marks (i.e. `??geom_point()`) and R will use
+the "Help" tab and return results from a search of all package documentation
+you have installed on your computer. Finally, if you think there
 should be a function, for example a statistical test, but you aren't
-sure what it is called in R, or what functions may be available, use
-the `help.search()` function.
+sure what it is called in R, use the "Help" tab search box.
 
-We will discuss more on where to look for the libraries and packages that contain functions you want to use. For now, be aware that two important ones are [CRAN](https://cran.r-project.org/) - the main repository for R, and [Bioconductor](http://bioconductor.org/) - a popular repository for bioinformatics-related R packages.
+<img src="/fig/search-tab-r.png" alt="rstudio search" style="width: 656px;"/>
 
-## RStudio contextual help
+#### More on finding things later
+We will discuss more on where to look for the libraries and packages that 
+contain functions you want to use. For now, be aware that two important ones 
+are [CRAN](https://cran.r-project.org/) - the main repository for R, 
+and [Bioconductor](http://bioconductor.org/) - a popular repository for 
+bioinformatics-related R packages.
+
+### RStudio contextual help
 
 Here is one last bonus we will mention about RStudio. It's difficult to
 remember all of the arguments and definitions associated with a given function.
@@ -323,21 +349,29 @@ RStudio will display functions and associated help:
 
 <img src="/fig/studio_contexthelp1.png" alt="rstudio default session" style="width: 600px;"/>
 
-Once you type a function, hitting the <KBD>Tab</KBD> inside the parentheses
-will show you the function's arguments and provide additional help
-for each of these arguments.
+Once you type a function, hitting the <KBD>Tab</KBD> while the cursor is 
+inside the parentheses will show you the function's arguments and 
+use the arrow keys to provide additional help for each of the arguments.
 
 <img src="/fig/studio_contexthelp2.png" alt="rstudio default session" style="width: 600px;"/>
 
+```
+________________________________________________________________
+> Do [Exercise 1.1-1.3 - Basic Expressions]({{ site.baseurl }}/exercises/Expressions-and-variables-basic-expressions-R/)
 
-_____________________________________________________________________
+> Do [Exercise 2 - Basic Variables]({{ site.baseurl }}/exercises/Expressions-and-variables-basic-variables-R/)
+
+> Do [Exercise 4.1-4.3 - Built-in Functions]({{ site.baseurl }}/exercises/Functions-built-in-functions-R/)
 
 .
 .
 .
 .
 _________________________________________________________________
+```
+<!--
 
+Start of UF scripts
 
 
 
@@ -492,3 +526,5 @@ mass_kg
 str(weight_lb)
 str('hello world')
 ```
+
+-->

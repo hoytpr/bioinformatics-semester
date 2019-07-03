@@ -4,7 +4,7 @@ topic: Genomics
 title: Genomics RStudio
 language: R
 ---
-Uncomment below to work on exercise 0
+Uncomment below to work on exercise 3
 
 <!--
 ### Working with Dataframes
@@ -372,4 +372,4 @@ head(variants[variants$REF == "A",])
 ```
 -->
 
-End of zero
+End of three
