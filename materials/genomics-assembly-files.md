@@ -4,9 +4,17 @@ element: notes
 title: Read Processing
 language: Shell
 ---
+## A Genome Assembly Workshop 
+This part of the course uses a traditional workshop pedagody with "slides" for readings, and 
+"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced. 
+
 ### Hands-on Genome Assembly Read Processing
 
-Goal: get familiar with genome assemblers, pre-processing, reporting and validation. Exercise will be based on chromosomes of a mutant genotype of bakers’ yeast, as practice of de-novo genome assembly. Here we have the benefits of a reference genome to validate our assembly. [(Acknowledgments)]({{ site.baseurl }}/materials/acknowledgments.txt)
+Goal: get familiar with genome assemblers, pre-processing, reporting and validation. 
+Exercise will be based on chromosomes of a mutant genotype of bakers’ yeast, as practice 
+of *de-novo* genome assembly. Here we have the benefits of a reference genome to validate 
+our assembly. We must be sure to [acknowledge]({{ site.baseurl }}/materials/acknowledgments) 
+those who helped design these lessons.
 
 ### Data and directory structure
 This exercise will use the local University supercomputing resources. 
@@ -28,6 +36,7 @@ Log into the Cowboy Supercomputer:
 Then open your FTP software, and connect to your account on Cowboy.
 Using FTP, transfer the file `mcbios.tar.gz` on your desktop 
 into your `/scratch/username` directory on Cowboy.
+
 Then from your terminal program (Windows users will
 have to use "Putty")to type in the following commands:
 ~~~
@@ -38,6 +47,16 @@ $ cd mcbios/
 $ ls
 abyss data  results soap velvet 
 ~~~
+
+#### Option 2 (Local)
+
+Alternatively the file [mcbios.zip]({{ site.baseurl }}/data/mcbios.zip) can be 
+saved to your local machine and unzipped. Save the file on your desktop
+and then unzip it using a GUI-based decompression software, or if using
+GitBash Shell, change to your Desktop directory and enter:
+`unzip mcbios.zip`
+
+### File Structure 
 
 What you have:
 ~~~
