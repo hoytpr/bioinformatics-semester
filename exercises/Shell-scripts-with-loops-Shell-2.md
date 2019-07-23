@@ -4,6 +4,9 @@ topic: Shell
 title: Shell Scripts With Loops
 language: Shell
 ---
+(uncomment below to work on exercise)
+
+<!--
 
 #### Exercise Week(?) placeholder for first  loops
 Change the title to Shell Scripts With Loops
@@ -26,4 +29,6 @@ numbers 1. 2. etc. to match the exercise numbers
 Shell-shell-scripts-with-loops-Shell-1.txt
 Shell-shell-scripts-with-loops-Shell-2.txt   etc.
 
+-->
+Shell-scripts-with-loops-Shell-2.md
 

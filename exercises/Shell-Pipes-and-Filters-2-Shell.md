@@ -10,17 +10,36 @@ Uncomment below to work on exercise
 
 #### Redirecting to the same file is risky
  
-  It's a very bad idea to try redirecting
-  the output of a command that operates on a file
-  to the same file. For example:
- 
+Make sure you have a file `lengths.txt` from the homework,
+or you can re-create it using nano and the lines:
+
+```
+2
+6
+10
+19
+22
+```
+First, let's make a copy of `lengths.txt`:
+
+`cp lengths.txt lengthsbkp.txt`
+
+Then let's do something we normally would NOT do
+and look at the results:
+
   ~~~
   $ sort -n lengths.txt > lengths.txt
+  $ cat lengths.txt
+    2
+    6
+    10
+    19
+    22
   ~~~
  
-  This will at least overwrite your working file `lengths.txt`
-  and may give you incorrect results, or could just delete
-  the contents of `lengths.txt`.
+  This overwrites your working file `lengths.txt` forever 
+  and without any warnings! In general NEVER redirect 
+  a file to the same file.
 
 #### What Does `>>` Mean?
   We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
@@ -38,24 +57,26 @@ Uncomment below to work on exercise
 
   *HINT: run each command more than once*
 
-#### Appending Data
- 
-  We have already used the `head` command, which prints lines from the start of a file.
-  `tail` is similar, but prints lines from the end of a file instead.
- 
-  Consider the file `data-shell/data/animals.txt`.
-  Run both the commmands below and select the answer that
-  corresponds to the final file `animalsUpd.txt`:
- 
-  ~~~
-  $ head -n 3 animals.txt > animalsUpd.txt
-  $ tail -n 2 animals.txt >> animalsUpd.txt
-  ~~~
- 
-  1. The first three lines of `animals.txt`
-  2. The last two lines of `animals.txt`
-  3. The first three lines and the last two lines of `animals.txt`
-  4. The second and third lines of `animals.txt`
+#### appending
+Consider the file `data-shell/data/animals.txt`.
+After these commands, select the answer that
+corresponds to the file `animalsUpd.txt`:
+
+~~~
+$ head -n 3 animals.txt > animalsUpd.txt
+$ tail -n 2 animals.txt >> animalsUpd.txt
+~~~
+
+1. The first three lines of `animals.txt`
+2. The last two lines of `animals.txt`
+3. The first three lines and the last two lines of `animals.txt`
+4. The second and third lines of `animals.txt`
+
+#### Solution
+Option 3 is correct. 
+For option 1 to be correct we would only run the `head` command.
+For option 2 to be correct we would only run the `tail` command.
+For option 4 to be correct we would have to pipe the output of `head` into `tail -2` by doing `head -3 animals.txt | tail -2 > animalsUpd.txt`
  
 #### Piping Commands Together
  

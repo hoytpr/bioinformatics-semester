@@ -5,6 +5,16 @@ title: Files and Directories
 language: Shell
 ---
 
+#### Answer the following using the Linux/Mac shell or GitBash on Windows:
+
+
+uncomment below to work on exercise. Output files  won't be used here
+
+<!--
+
+Submit your answers on [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/1077150)
+
+
 ### Exercises Week 1
 
 1. 
@@ -36,3 +46,5 @@ language: Shell
 	c. `mv statstics.txt .`
 	d. `cp statstics.txt .`
 ~~~
+
+-->

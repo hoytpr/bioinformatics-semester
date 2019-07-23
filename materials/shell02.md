@@ -46,7 +46,7 @@ So let's go over that again... We
 can be any place in the file structure, and `pwd` will tell us where we are, i.e.  
 the current working directory. BUT there is only ONE home directory per user.
 
-> ## Home Directory Variation
+> ### Home Directory Variation
 >
 > After installing GitBash we are just going to have to understand that different
 > operating systems have different places for the scientists' home directory. 
@@ -56,24 +56,25 @@ the current working directory. BUT there is only ONE home directory per user.
 > $ pwd
 > /c/Users/Hoyt
 > ~~~
-> The home directory path will look different on different operating systems.
-> On Linux it may look like `/home/nelle`,
-> and on Windows it could be also look like `C:\Documents and Settings\nelle` 
-> if you are using an older version of Windows.  
-> A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
-> the "root" directory (more on that later), but our setup instructions should
-> **start** you in your `Users` directory (e.g. Users/</kbd>yourname</kbd>), 
-> with at least a `Desktop` directory inside `Users/yourname/`. There might be
-> lots of files in your `Desktop` directory, but we'll only use the `data-shell`
-> directory for this lesson. The differences may be confusing but   
-> the GitBash window will show you similar outputs to start our lesson about
-> moving through files and directories. 
-> 
-> ![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
->
-> **Remember**, In future examples, we've used an Apple Macintosh output as the 
-> default - if you are on a Linux and Windows computer, the
-> output may differ slightly, but should be generally similar.  
+
+The home directory path will look different on different operating systems.
+On Linux it may look like `/home/nelle`,
+and on Windows it could be also look like `C:\Documents and Settings\nelle` 
+if you are using an older version of Windows.  
+A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
+the "root" directory (more on that later), but our setup instructions should
+**start** you in your `Users` directory (e.g. `Users/yourname`), 
+with at least a `Desktop` directory inside `Users/yourname/`. There might be
+lots of files in your `Desktop` directory, but we'll only use the `data-shell`
+directory for this lesson. The differences may be confusing but   
+the GitBash window will show you similar outputs to start our lesson about
+moving through files and directories. 
+
+![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
+
+**Remember**, In future examples, we've used an Apple Macintosh output as the 
+default - if you are on a Linux or Windows computer, the
+output may differ slightly, but should be generally similar.  
 
 To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.  For the
@@ -104,7 +105,7 @@ Similarly,
 we know that `/Users` is stored inside the root directory `/`
 because its name begins with `/`.
 
-> ## Slashes
+> ### Slashes
 >
 > Notice that there are two meanings for the `/` character.
 > When it appears at the front of a file or directory name,
@@ -131,14 +132,9 @@ which stands for "listing":
 
 ~~~
 $ ls
-~~~
-{: .language-bash}
-
-~~~
 Applications Documents    Library      Music        Public
 Desktop      Downloads    Movies       Pictures
 ~~~
-{: .output}
 
 (Again, your results may be slightly different depending on your operating
 system and how you have customized your filesystem.)
@@ -154,14 +150,9 @@ whether each entry is a file or directory.
 
 ~~~
 $ ls -F
-~~~
-{: .language-bash}
-
-~~~
 Applications/ Documents/    Library/      Music/        Public/
 Desktop/      Downloads/    Movies/       Pictures/
 ~~~
-{: .output}
 
 Here,
 we can see our home directory contains mostly **sub-directories**.
@@ -182,13 +173,11 @@ to use a command and what flags it accepts:
     ~~~
     $ ls --help
     ~~~
-    {: .bash}
 
 2. We can read its manual with `man`, such as:
     ~~~
     $ man ls 
     ~~~
-    {: .bash}
 
 **Depending on your environment you might find that only one of these works
 (either `man` or `--help`).**
@@ -201,11 +190,10 @@ Many bash commands, and programs that people have written that can be
 run from within bash, support a `--help` flag to display more
 information on how to use the command or program.
 
+<small>
 ~~~
 $ ls --help
-~~~
 
-~~~
 Usage: ls [OPTION]... [FILE]...
 List information about the FILEs (the current directory by default).
 Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.
@@ -330,16 +318,12 @@ should always know that `--help` is there for you.
 
 But when things go wrong there are also error messages that can be helpful:
 
-### Unsupported command-line options
+#### Unsupported command-line options
 If you try to use an option (flag) that is not supported, `ls` and other commands
 will usually print an error message similar to:
 
 ~~~
 $ ls -j
-~~~
-{: .language-bash}
-
-~~~
 ls: invalid option -- 'j'
 Try 'ls --help' for more information.
 ~~~
@@ -350,7 +334,6 @@ The other way to learn about `ls` is to type:
 ~~~
 $ man ls
 ~~~
-{: .bash}
 
 This will turn your terminal into a page with a description 
 of the `ls` command and its options and, if you're lucky, some examples
@@ -377,9 +360,8 @@ GNU provides links to its
 [manuals](http://www.gnu.org/manual/manual.html) including the
 [core GNU utilities](http://www.gnu.org/software/coreutils/manual/coreutils.html),
 which covers many commands introduced within this lesson.
-{: .callout}
 
-## Looking at our Project directories
+### Looking at our Project directories
 
 We can also use `ls` to see the contents of a different directory.  Let's take a
 look at our `Desktop` directory by running `ls -F Desktop`, i.e.,
@@ -389,13 +371,8 @@ we want a listing of something other than our current working directory:
 
 ~~~
 $ ls -F Desktop
-~~~
-{: .language-bash}
-
-~~~
 data-shell/
 ~~~
-{: .output}
 
 Your output should be a list of all the files and sub-directories on your
 Desktop, including the `data-shell` directory you downloaded at
@@ -417,14 +394,9 @@ a directory name to `ls`:
 
 ~~~
 $ ls -F Desktop/data-shell
-~~~
-{: .language-bash}
-
-~~~
 creatures/          molecules/          notes.txt          solar.pdf
 data/               north-pacific-gyre/ pizza.cfg          writing/
 ~~~
-{: .output}
 
 (Now we see the data-shell directory has both directories and ordinary files.)
 Second, we can actually change our location to a different directory, so
@@ -446,7 +418,6 @@ $ cd Desktop
 $ cd data-shell
 $ cd data
 ~~~
-{: .language-bash}
 
 These commands will move us from our home directory onto our Desktop, then into
 the `data-shell` directory, then into the `data` directory.  If you try typing in just `cd` 
@@ -458,24 +429,14 @@ because that's where we now are:
 
 ~~~
 $ pwd
-~~~
-{: .language-bash}
-
-~~~
 /Users/nelle/Desktop/data-shell/data
 ~~~
-{: .output}
 
 ~~~
 $ ls -F
-~~~
-{: .language-bash}
-
-~~~
 amino-acids.txt   elements/     pdb/	        salmon.txt
 animals.txt       morse.txt     planets.txt     sunspot.txt
 ~~~
-{: .output}
 
 We now know how to go down the directory tree, but
 **how do we go up**?  We might try the following:
@@ -508,7 +469,6 @@ if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/Desktop/data-
 $ pwd
 /Users/nelle/Desktop/data-shell
 ~~~
-{: .output}
 
 You might have noticed the special directory indicator `..` doesn't 
 show up when we run `ls`.  If we want to display it, we can give `ls` 
@@ -519,7 +479,6 @@ $ ls -F -a
 ./   .bash_profile  data/      north-pacific-gyre/  pizza.cfg  thesis/
 ../  creatures/     molecules/ notes.txt            solar.pdf  writing/
 ~~~
-{: .output}
 
 The flag `-a` stands for "show all". It forces `ls` to show us hidden files 
 and directory names that begin with `.` (more on this later),
@@ -534,7 +493,7 @@ Note that in most command line tools, multiple flags can be combined
 with a single dash `-` and **no spaces** between the flags: For example: `ls -Fa` is 
 equivalent to `ls -F -a`.
 
-## Other Hidden Files
+### Other Hidden Files
 
 In addition to the hidden directories `..` and `.`, you may also see a hidden file
 called `.bash_profile`. This file usually contains shell configuration
@@ -546,7 +505,7 @@ configuration files from cluttering the terminal when a standard `ls` command
 is used.
 {: .callout}
 
-## Orthogonality
+#### Orthogonality
 
 To make memorizing the commands and flags of the BASH shell easier
 The special names `.` and `..` don't belong to **just** the command `cd`;
@@ -572,7 +531,6 @@ How can you check what happened?  `pwd` gives us the answer!
 $ pwd
 /Users/nelle
 ~~~
-{: .output}
 
 It turns out that `cd` without an argument will return you to your home directory,
 which is great if you've gotten lost in your own filesystem. 
@@ -584,7 +542,6 @@ to move to `data` in one step:
 ~~~
 $ cd Desktop/data-shell/data
 ~~~
-{: .language-bash}
 
 Check that we've moved to the right place by running `pwd` and `ls -F`  
 
@@ -614,12 +571,10 @@ to move to `data-shell`.
 $ pwd
 /Users/nelle/Desktop/data-shell/data
 ~~~
-{: .output}
 
 ~~~
 $ cd /Users/nelle/Desktop/data-shell
 ~~~
-{: .language-bash}
 
 Run `pwd` and `ls -F` to ensure that we're in the directory we expect. 
 (NOTE: This may not work exactly the same depending on your operating system)
@@ -641,9 +596,9 @@ that the former brings you *up*, while the latter brings you *back*. You can
 think of it as the *Last Channel* button on a TV remote.
 {: .callout}
 
-## Example Exercises 
+### Example Exercises 
 
-> ### Relative Path Resolution
+> #### Relative Path Resolution
 >
 > Using the filesystem diagram below, if `pwd` displays `/Users/thing`,
 > what will `ls -F ../backup` display?
@@ -655,16 +610,15 @@ think of it as the *Last Channel* button on a TV remote.
 >
 > ![File System for Challenge Questions]({{ site.baseurl }}/fig/filesystem-challenge.svg)
 >
-> > ### Solution
+> > #### Solution
 > > 1. No: there *is* a directory `backup` in `/Users`.
 > > 2. No: this is the content of `Users/thing/backup`,
 > >    but with `..` we asked for one level further up.
 > > 3. No: see previous explanation.
 > > 4. Yes: `../backup/` refers to `/Users/backup/`.
-> {: .solution}
-{: .challenge}
+> 
 
-> ### `ls` Reading Comprehension
+> #### `ls` Reading Comprehension
 >
 > Assuming a directory structure as in the above Figure
 > (File System for Challenge Questions), if `pwd` displays `/Users/backup`,
@@ -674,23 +628,21 @@ think of it as the *Last Channel* button on a TV remote.
 > ~~~
 > pnas_sub/ pnas_final/ original/
 > ~~~
-> {: .output}
 >
 > 1.  `ls pwd`
 > 2.  `ls -r -F`
 > 3.  `ls -r -F /Users/backup`
 > 4.  Either #2 or #3 above, but not #1.
 >
-> > ### Solution
+> > #### Solution
 > >  1. No: `pwd` is not the name of a directory.
 > >  2. Yes: `ls` without directory argument lists files and directories
 > >     in the current directory.
 > >  3. Yes: uses the absolute path explicitly.
 > >  4. Correct: see explanations above.
-> {: .solution}
-{: .challenge}
+> 
 
-## Nelle's Pipeline: Organizing Files
+### Nelle's Pipeline: Organizing Files
 
 Knowing just this much about files and directories,
 Nelle is ready to organize the files that the protein assay machine will create.
@@ -734,7 +686,6 @@ Nelle can see her files using the command:
 ~~~
 $ ls north-pacific-gyre/2012-07-03/
 ~~~
-{: .language-bash}
 
 This is a lot to type, but she can let the shell do most of the work 
 using what is called **tab completion**.
@@ -743,7 +694,6 @@ If she types:
 ~~~
 $ ls nor
 ~~~
-{: .language-bash}
 
 and then presses <kbd>Tab</kbd> (the tab key on her keyboard),
 the shell automatically completes the directory name for her:
@@ -751,7 +701,6 @@ the shell automatically completes the directory name for her:
 ~~~
 $ ls north-pacific-gyre/
 ~~~
-{: .language-bash}
 
 If she presses <kbd>Tab</kbd> again,
 Bash will add `2012-07-03/` to the command,
@@ -763,7 +712,7 @@ and so on.
 This **tab completion**, is an extremely useful tool that you should practice
 and we will see it in many other tools as we go on.
 
-## Lesson Keypoints:
+#### Lesson Keypoints:
 
 - The file system is responsible for managing information on the disk.
 - Information is stored in files, which are stored in directories (folders).

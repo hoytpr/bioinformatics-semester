@@ -5,77 +5,206 @@ title: Introduction to Loops
 language: Shell
 ---
 
+### Introduction to Shell Loops
+
+Loops are key to productivity improvements through automation as 
+they allow us to execute commands repeatedly. 
+Similar to wildcards and tab completion, using loops also reduces 
+the amount of typing (and typing mistakes). 
+Loops are helpful when performing operations on groups of sequencing 
+files, such as unzipping or trimming multiple
+files. We will use loops for these purposes in subsequent analyses, but 
+will cover the basics of them for now.
 
 #### Writing 'for' loops
 
-Loops are key to productivity improvements through automation as they allow us to execute commands repeatedly. 
-Similar to wildcards and tab completion, using loops also reduces the amount of typing (and typing mistakes). 
-Loops are helpful when performing operations on groups of sequencing files, such as unzipping or trimming multiple
-files. We will use loops for these purposes in subsequent analyses, but will cover the basics of them for now.
+When the shell sees the keyword `for`, it knows to repeat a command 
+(or group of commands) once for each item in a list. 
+Each time the loop runs (called an iteration), an item in the list 
+is assigned in sequence to the **variable**, and 
+the commands inside the loop are executed, before moving on to the 
+next item in the list. Inside the loop, we call for 
+the variable's value by putting **`$`** in front of it. The **`$`** 
+tells the shell interpreter to treat the **variable**
+as a variable **name** and **substitute the variable's value in its place**, 
+rather than treat it as text or an external command.
 
-When the shell sees the keyword `for`, it knows to repeat a command (or group of commands) once for each item in a list. 
-Each time the loop runs (called an iteration), an item in the list is assigned in sequence to the **variable**, and 
-the commands inside the loop are executed, before moving on to  the next item in the list. Inside the loop, we call for 
-the variable's value by putting `$` in front of it. The `$` tells the shell interpreter to treat the **variable**
-as a variable name and substitute its value in its place, rather than treat it as text or an external command. 
+#### Temporarily Changing the Prompt
 
-Let's write a for loop to show us the first two lines of the fastq files we downloaded earlier. You will notice shell prompt changes from `$` to `>` and back again as we were typing in our loop. The second prompt, `>`, is different to remind us that we haven’t finished typing a complete command yet. A semicolon, `;`, can be used to separate two commands written on a single line.
+Most of you probably have a "$" as your terminal prompt. Some of you 
+may have the greater-than symbol ">". In either case, this could cause 
+confusion as we are just starting to use loops. So we are going to 
+change our prompt to a question mark followed by a space "? ". This is 
+only temporary, and you 
+don't have to do this if you are pretty sure you won't get confused
+when using the "$" for variables in loops.
 
-~~~
-$ cd ../untrimmed_fastq/
-$ for filename in *.fastq
+> To change your prompt from "$ " to "? " just type:
+> 
+> `PS1="? "`
+> 
+> If you want to change it back, just type:
+> 
+> `PS1="$ "`
+
+Let's write a for loop to show us the first two lines of some of Nelle's files. 
+Starting from the `data-shell` directory, cd to the `/data/` directory
+
+`$ cd data/`
+
+Check what is in this directory:
+```
+? ls -F
+amino-acids.txt  animals.txt  morse.txt  planets.txt  sunspot.txt
+animal-counts/   elements/    pdb/       salmon.txt
+```
+change into the `pdb` directory and look around
+
+```
+? cd pdb
+? ls -F
+aldrin.pdb            glycol.pdb         pentane.pdb
+ammonia.pdb           heme.pdb           piperine.pdb
+ascorbic-acid.pdb     lactic-acid.pdb    propane.pdb
+benzaldehyde.pdb      lactose.pdb        pyridoxal.pdb
+camphene.pdb          lanoxin.pdb        quinine.pdb
+cholesterol.pdb       lsd.pdb            strychnine.pdb
+cinnamaldehyde.pdb    maltose.pdb        styrene.pdb
+citronellal.pdb       menthol.pdb        sucrose.pdb
+codeine.pdb           methane.pdb        testosterone.pdb
+cubane.pdb            methanol.pdb       thiamine.pdb
+cyclobutane.pdb       mint.pdb           tnt.pdb
+cyclohexanol.pdb      morphine.pdb       tuberin.pdb
+cyclopropane.pdb      mustard.pdb        tyrian-purple.pdb
+ethane.pdb            nerol.pdb          vanillin.pdb
+ethanol.pdb           norethindrone.pdb  vinyl-chloride.pdb
+ethylcyclohexane.pdb  octane.pdb         vitamin-a.pdb
+```
+So we have found Nelle's stash of metabolite data that was passed down to her from 
+a previous graduate student. When we check to see if the 48 files are all 
+similar we see they are not:
+
+```
+? wc -l *.pdb
+   30 aldrin.pdb
+    7 ammonia.pdb
+   24 ascorbic-acid.pdb
+etc...
+   34 tyrian-purple.pdb
+   23 vanillin.pdb
+   10 vinyl-chloride.pdb
+   55 vitamin-a.pdb
+ 1808 total
+```
+So what do the files look like? We can look at each one individually, but what if there are 6000
+files? What if the files were much larger (e.g. 3Gb each)? We know we can look at the beginnings of any file using the `head` command so let's try that first:
+
+```
+? head -n 5 aldrin.pdb
+COMPND      ALDRIN
+AUTHOR      DAVE WOODCOCK  97 08 06
+ATOM      1  C           1      -0.888   0.654  -1.753
+ATOM      2  C           1       0.276   1.404  -1.135
+ATOM      3  C           1       1.381   0.453  -0.730
+```
+These files look a little complex. To see if they are all generated by the same person
+and have the same date, or additional information, we will generate a short summary 
+of each file using a loop. We could do this 
+a different way, but this prepares us for later lessons where we will use much bigger files.  
+
+The image below gives the basic anatomy of a simple "loop"
+![loop1]({{ site.baseurl }}/fig/loop1.png)
+
+Now let's type this in ourselves:
+
+```
+? for filename in *.pdb
 > do
-> head -n 2 ${filename}
+> head -n 5 ${filename}
 > done
-~~~
+```
 
-The for loop begins with the formula `for <variable> in <group to iterate over>`. In this case, the word `filename` is designated 
-as the variable to be used over each iteration. In our case `SRR097977.fastq` and `SRR098026.fastq` will be substituted for `filename` 
-because they fit the pattern of ending with .fastq in directory we've specified. The next line of the for loop is `do`. The next line is 
-the code that we want to execute. We are telling the loop to print the first two lines of each variable we iterate over. Finally, the
+The for loop begins with the formula `for <variable> in <file group to iterate over>`. 
+In this case, the word `filename` is designated 
+as the variable to be used over each iteration. In our case `aldrin.pdb` and `ammonia.pdb` 
+(and so on) will be substituted for `filename` 
+because they fit the pattern of ending with `.pdb` in the directory we've specified. 
+The next line of the for loop is `do`. The next line is 
+the code that we want to execute. We are telling the loop to print the first 
+five lines of each variable we iterate over. Finally, the
 word `done` ends the loop.
 
-After executing the loop, you should see the first two lines of both fastq files printed to the terminal. Let's create a loop that 
+After executing the loop, you should see the first five lines of all `.pdb` files printed 
+to the terminal. Let's create a loop that 
 will save this information to a file.
 
 ~~~
-$ for filename in *.fastq
+$ for filename in *.pdb
 > do
-> head -n 2 ${filename} >> seq_info.txt
+> head -n 5 ${filename} >> pdb_info.txt
 > done
 ~~~
 
-Note that we are using `>>` to append the text to our `seq_info.txt` file. If we used `>`, the `seq_info.txt` file would be rewritten
-every time the loop iterates, so it would only have text from the last variable used. Instead, `>>` adds to the end of the file.
+Note that we are using `>>` to **append** the text to our `pdb_info.txt` file. 
+If we used `>`, the `pdb_info.txt` file would be rewritten
+every time the loop iterates, so it would only have text from the last 
+variable used. Instead, `>>` continuously adds to the end of the file.
 
-## Using Basename in 'for' loops
-`basename` is a function in UNIX that is helpful for removing a uniform part of a name from a list of files. In this case, we will use `basename` to remove the `.fastq` extension from the files that we’ve been working with. 
+Use `cat` to verify the `pdb_info.txt` file looks like the screen output 
+you observed when running the loop without any redirection. 
 
-~~~
-$ basename SRR097977.fastq .fastq
-~~~
-
-We see that this returns just the SRR accession, and no longer has the .fastq file extension on it.
-
-~~~
-SRR097977
-~~~
-
-If we try the same thing but use `.fasta` as the file extension instead, nothing happens. This is because basename only works when it exactly matches a string in the file.
+### Using Basename in 'for' loops
+`basename` is a function in UNIX that is helpful for removing a uniform 
+part of a name from a list of files. In this case, we will use `basename` 
+to remove the `.pdb` extension from the files that we’ve been working with. 
 
 ~~~
-$ basename SRR097977.fastq .fasta
-SRR097977.fastq
+$ basename aldrin.pdb .pdb
 ~~~
 
-Basename is really powerful when used in a 'for' loop. It allows to access just the file prefix, which you can use to name things. Let's try this.
-
-Inside our 'for' loop, we create a new variable name. We call the basename function inside the parenthesis, then give our variable name from the for loop, in this case `${filename}`, and finally state that `.fastq` should be removed from the file name. It’s important to note that we’re not changing the actual files, we’re creating a new variable called `name`. The line `> echo ${name}` will print to the terminal the variable name each time the for loop runs. Because we are iterating over two files, we expect to see two lines of output.
+We see that this returns just the metabolite name, and no longer has the .pdb 
+file extension on it.
 
 ~~~
-$ for filename in *.fastq
+aldrin
+~~~
+
+If we try the same thing but use `.pdf` as the file extension instead, nothing happens. This is because basename only works when it exactly matches a string in the file.
+
+~~~
+$ basename aldrin.pdb .pdf
+aldrin.pdb
+~~~
+
+Basename is really powerful when used in a `for` loop. It allows 
+us to access just the file prefix, which you can use to name things. 
+Let's try this.
+
+Inside our `for` loop, we create a new variable name. We call 
+the `basename` function inside the parenthesis, then submit our variable 
+name from the for loop, in this example `${filename}`, and finally indicate 
+that `.pdb` should be removed from the file name. It’s important to note 
+that **we’re not changing the actual files**, we’re creating a new variable 
+called `name`. The line `> echo ${name}` will print to the terminal 
+the variable name each time the for loop runs. Because we are iterating 
+over 48 files, we expect to see 48 lines of output.
+
+~~~
+$ for filename in *.pdb
 > do
-> name=$(basename ${filename} .fastq)
+> name=$(basename ${filename} .pdb)
 > echo ${name}
 > done
+
+aldrin
+ammonia
+ascorbic-acid
+benzaldehyde
+camphene
+cholesterol
+cinnamaldehyde
+etc...
 ~~~
+
+This lesson is very similar to the one we will use for manipulating files in 
+the genomics part of the course. 

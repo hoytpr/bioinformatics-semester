@@ -4,7 +4,7 @@ element: notes
 title: Working With Files and Directories
 language: Shell
 ---
-
+(exercises at bottom to be removed)
 ### Questions:
 
 - "How can I create, copy, and delete files and directories?"
@@ -28,15 +28,10 @@ and use `ls -F` to see what it contains:
 
 ~~~
 $ pwd
-`/Users/nelle/Desktop/data-shell`
-~~~
-{: .output}
-
-~~~
+/Users/nelle/Desktop/data-shell
 $ ls -F
 creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.pdf  writing/
 ~~~
-{: .output}
 
 ### Create a directory
 
@@ -46,7 +41,6 @@ Let's create a new directory called `thesis` using the command `mkdir thesis`
 ~~~
 $ mkdir thesis
 ~~~
-{: .language-bash}
 
 As you might guess from its name,
 `mkdir` means "make directory". 
@@ -58,7 +52,6 @@ the new directory is created within the current working directory:
 $ ls -F
 creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.pdf  thesis/  writing/
 ~~~
-{: .output}
 
 ## Two ways of doing the same thing
 Using the shell to create a directory is no different than using a file explorer.
@@ -95,14 +88,12 @@ tips for the names of your files.
 
 **Important:** If you need to refer to names of files or directories that have whitespace
 or another non-alphanumeric character, you should surround the name in quotes (`""`).
-{: .callout}
 
 Since we've just created the `thesis` directory, there's nothing in it yet:
 
 ~~~
 $ ls -F thesis
 ~~~
-{: .language-bash}
 
 ### Create a text file
 Let's change our working directory to `thesis` using `cd`,
@@ -112,7 +103,6 @@ then run a text editor called Nano to create a file called `draft.txt`:
 $ cd thesis
 $ nano draft.txt
 ~~~
-{: .language-bash}
 
 > ### Which Editor?
 >
@@ -136,7 +126,6 @@ $ nano draft.txt
 > your computer's start menu, it may want to save files in your desktop or
 > documents directory instead. You can change this by navigating to
 > another directory the first time you "Save As..."
-{: .callout}
 
 Let's type in a few lines of text.
 Once we're happy with our text, we can press <kbd>Ctrl</kbd>+<kbd>O</kbd> (press the Ctrl or Control key and, while
@@ -144,7 +133,7 @@ holding it down, press the O key) to write our data to disk
 (we'll be asked what file we want to save this to:
 press <kbd>Return</kbd> to accept the suggested default of `draft.txt`).
 
-![Nano in Action](../../fig/nano-screenshot.png)
+![Nano in Action]({{ site.baseurl }}/fig/nano-screenshot.png)
 
 Once our file is saved, we can use `Ctrl-X` to quit the editor and
 return to the shell.
@@ -232,10 +221,6 @@ Let's re-create `draft.txt`
 ~~~
 $ pwd
 /Users/nelle/Desktop/data-shell/thesis
-~~~
-{: .output}
-
-~~~
 $ nano draft.txt
 $ ls
 draft.txt
@@ -263,7 +248,6 @@ We can do this with the [recursive](https://en.wikipedia.org/wiki/Recursion) opt
 ~~~
 $ rm -r thesis
 $ ls
-
 ~~~
 
 ## Using `rm` Safely
@@ -292,14 +276,8 @@ and running `nano` on `draft.txt` there.
 ~~~
 $ pwd
 /Users/nelle/Desktop/data-shell
-~~~
-
-~~~
 $ mkdir thesis
 $ nano thesis/draft.txt
-~~~
-
-~~~
 $ ls thesis
 draft.txt
 ~~~
@@ -349,7 +327,6 @@ The effect is to move the file from the directory it was in to the current worki
 
 ~~~
 $ ls thesis
-
 ~~~
 
 Further (and we will use this often),
@@ -486,7 +463,7 @@ expanding wildcards, and this is another example of orthogonal design.
 > $ cp 2015-____-____ ~/send_to_bob/all_november_files/
 > $ cp ____ ~/send_to_bob/all_datasets_created_on_a_23rd/
 > ~~~
-> {: .language-bash}
+> -----------------------------------------
 >
 > Help Sam by filling in the blanks.
 >

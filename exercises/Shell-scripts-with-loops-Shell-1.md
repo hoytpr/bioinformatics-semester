@@ -5,7 +5,9 @@ title: Shell Scripts With Loops
 language: Shell
 ---
 
-(This exercise is under development)
+(uncomment below to work on exercise)
+
+<!--
 
 ## Question 1
 
@@ -29,3 +31,6 @@ Where the output is:
 5 B
 5 C
 ```
+--> 
+
+Shell-scripts-with-loops-Shell-1.md
