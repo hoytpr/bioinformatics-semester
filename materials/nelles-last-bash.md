@@ -4,19 +4,28 @@ element: notes
 title: Nelles Last Bash
 language: Shell
 ---
-### Nelle moves on
+### Nelle needs to move on
 
 We've studied **loops** which are key to productivity improvements through 
 automation as they allow us to execute commands repeatedly. 
 Similar to wildcards and tab completion, using loops also reduces the
 amount of typing (and typing mistakes).
 
-Nelle has to finish her project, and she has several hundred genome data 
-files named `basilisk.dat`, `unicorn.dat`, and so on.
+Nelle needs to finish her project, and she has 1518 protein abundance files
+(not counting the files with "Z" in the name) to process through `goostats`, 
+and several hundred genome data 
+files named `basilisk.dat`, `unicorn.dat`, (and so on) to map the proteins.
 
-To simulate Nelle's project,
-we'll use the `creatures` directory which only has two example files,
-but the principles can be applied to many many more files at once.
+To simulate Nelle's project, first make sure you are in the 
+`creatures` directory which only has two example genome files.
+
+```
+cd~
+cd Desktop/nelle/data-shell/creatures
+```
+Remember to use "tab-completion" and also that we are using 
+two of Nelle's files but the principles can be applied to many 
+more files.
 
 #### Backup your data
 Nelle needs to modify her files, but also save a version of the original files, naming the copies
@@ -30,7 +39,7 @@ but that gave her an error:
 ~~~
 cp: target `original-*.dat' is not a directory
 ~~~
-because that command is the same as:
+because that command is the same as typing:
 ~~~
 $ cp basilisk.dat unicorn.dat original-*.dat
 ~~~
@@ -38,7 +47,7 @@ $ cp basilisk.dat unicorn.dat original-*.dat
 
 when `cp` receives more than two inputs it
 expects the last input to be a directory where it can copy all the files it was passed.
-Instead, Nelle needs to use a **loop**. She starts with:
+Instead, Nelle needs to use a **loop**. 
 Here's the loop she needs:
 
 ~~~
@@ -75,13 +84,26 @@ BUT, programs are only useful if people can understand them,
 so meaningless variable names (like `x`) or misleading names (like `temperature`)
 increase the odds that the program won't do what its readers think it does.
 
-## Variables in Loops
+### Variables in Loops
 
-This exercise refers to the `data-shell/molecules` directory.
+Nelle plans ahead, and knows she wants a position after she graduates that 
+targets alkane metabolites produced by gelatinous marine organisms. 
+Nelle has started saving special descriptions of alkanes in her `data-shell/molecules` 
+directory. So before she starts working on the critical data files
+she decides to practice using variables in `for` loops on these files. 
+This gives us a good opportunity to practice working with loops
+in the shell. First we need to change to the correct directory:
+
+```
+cd ../molecules
+```
+
 `ls` gives the following output:
 ~~~
 cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
 ~~~
+#### Practice exercise
+
 What is the output of the following code?
 ~~~
 $ for datafile in *.pdb
@@ -100,7 +122,7 @@ $ for datafile in *.pdb
 ~~~
 
 These two loops give different outputs because
-The first code block gives the **same output** on each iteration through
+**the first code block gives the same output on each iteration** through
 the loop.
 Bash expands the wildcard `*.pdb` within the loop body to match all files ending in `.pdb`
 and then lists them using `ls`.
@@ -110,8 +132,8 @@ $ for datafile in cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  
 > do
 >	ls cubane.pdb  ethane.pdb  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
 > done
-
-The second code block lists a different file on each loop iteration.
+```
+**The second code block lists a *different* file on each loop iteration.**
 The value of the `datafile` variable is evaluated using `$datafile`,
 and then listed using `ls`.
 
@@ -124,7 +146,15 @@ pentane.pdb
 propane.pdb
 ```
 
-Here's a slightly more complicated loop:
+Change back to Nelle's `creatures` directory:
+```
+cd ../creatures
+ls
+basilisk.dat
+unicorn.dat
+```
+
+Now let's run a slightly more complicated loop:
 
 ~~~
 $ for filename in *.dat
@@ -136,7 +166,7 @@ $ for filename in *.dat
 
 The shell starts by expanding `*.dat` to create the list of files it will process.
 The **loop body** then executes two commands for each of those files.
-The first command; `echo`, just prints to standard output (the terminal).
+The first command; `echo`, prints to standard output (the terminal).
 Since the shell expands `$filename` to be the name of a file,
 `echo $filename` just prints the name of the file.
 
@@ -155,11 +185,11 @@ to run `basilisk.dat` as a program!
 The second command uses the `head` and `tail` combination to select lines 81-100
 from whatever file is being processed, and prints to the standard output.
 > #### Spaces in Names
-> It is simpler just to avoid using spaces (or other special characters) in filenames.
-> If one list element
-> contains a space character, we need to surround it with
-> quotes, and surround our loop variable with quotes.
-> For exampleif the directory had files:
+> It is best to **avoid using spaces** (or other special characters) in filenames.
+> But there is a workaround if one of the list elements
+> contains a space character: We need to surround it with
+> quotes, **and** surround our loop variable with quotes.
+> For example if the directory had files:
 >
 > ~~~
 > red dragon.dat
@@ -186,10 +216,12 @@ This calculates some statistics from a protein sample file, and takes two argume
 Since she's still learning how to use the shell,
 she decides to build up the required commands in stages.
 Her first step is to make sure that she can select the right input files --- remember,
-these are ones whose names end in 'A' or 'B', rather than 'Z'. Starting from her home directory, Nelle types:
+these are ones whose names end in 'A' or 'B', rather than 'Z'. 
+Also remember that we are using 17 files in our simulation, but Nelle has 1518
+files to process! Starting from her `creatures` directory, Nelle types:
 
 ~~~
-$ cd north-pacific-gyre/2012-07-03
+$ cd ../north-pacific-gyre/2012-07-03
 $ for datafile in NENE*[AB].txt
 > do
 >     echo $datafile
@@ -223,31 +255,33 @@ NENE02043A.txt stats-NENE02043A.txt
 NENE02043B.txt stats-NENE02043B.txt
 ~~~
 She hasn't actually run `goostats` yet,
-but now she's sure she can select the right files and generate the right output filenames.
+but now she's sure she can select the right files 
+and generate the right output filenames.
 
-Typing in commands over and over again is becoming tedious,
-though, and Nelle is worried about making mistakes,
-so instead of re-entering her loop, she presses the up arrow.
-In response, the shell redisplays the whole loop on one line
+Typing in loop commands over and over again is becoming tedious,
+and Nelle is worried about making mistakes,
+so instead of re-entering her loop, she presses the **up arrow**.
+In response, the shell redisplays the whole loop on **one line**
 (using semi-colons to separate the pieces):
 
 ~~~
 $ for datafile in NENE*[AB].txt; do echo $datafile stats-$datafile; done
 ~~~
-Using the left arrow key,
+Using the **left arrow** key,
 Nelle backs up and changes the command `echo` to `bash goostats`:
 
 ~~~
 $ for datafile in NENE*[AB].txt; do bash goostats $datafile stats-$datafile; done
 ~~~
 
-When she presses <kbd>Enter</kbd>,
+When she presses **<kbd>Enter</kbd>**,
 the shell runs the modified command.
 However, nothing appears to happen --- there is no output.
-After a moment, Nelle realizes that since her script doesn't print anything to the screen any longer,
-she has no idea whether it is running, much less how quickly.
+After a moment, Nelle realizes that since her script doesn't print 
+anything to the screen any longer,
+she has no idea whether it is running on all 1518 files much less how quickly.
 She kills the running command by typing `Ctrl-C`,
-uses up-arrow to repeat the command,
+uses **up-arrow** to repeat the command,
 and edits it to read:
 
 ~~~
@@ -271,4 +305,4 @@ and uses `cat stats-NENE01729B.txt`
 to examine one of the completed output files.
 It looks good,
 so she decides to get some coffee and catch up on her reading.
-
+![script-running]({{ site.baseurl }}/fig/reading-book.png)

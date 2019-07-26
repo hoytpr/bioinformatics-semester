@@ -4,20 +4,15 @@ element: notes
 title: Scripts and Working with Genomic Data
 language: Shell
 ---
-
-questions:
+### Questions:
 - How can we automate a commonly used set of commands?
-objectives:
+### Objectives:
 - Use the `nano` text editor to modify text files.
 - Write a basic shell script.
 - Use the `bash` command to execute a shell script.
 - Use `chmod` to make a script an executable program.
-keypoints:
-- Scripts are a collection of commands executed together.
-- Transferring information to and from virtual and local computers.
 
-
-## Writing files
+### Writing files
 
 We've been able to do a lot of work with files that already exist, but what if we want to write our own files. We're not going to type in a FASTA file, but we'll see as we go through other tutorials, there are a lot of reasons we'll want to write a file, or edit an existing file.
 
@@ -32,7 +27,6 @@ then run `nano` to create a file called `README.txt`:
 $ cd ~/shell_data/untrimmed_fastq
 $ nano README.txt
 ~~~
-{: .bash}
 
 You should see something like this: 
 
@@ -40,7 +34,7 @@ You should see something like this:
 
 The text at the bottom of the screen shows the keyboard shortcuts for performing various tasks in `nano`. We will talk more about how to interpret this information soon.
 
-> ## Which Editor?
+> ####     Which Editor?
 >
 > When we say, "`nano` is a text editor," we really do mean "text": it can
 > only work with plain character data, not tables, images, or any other
@@ -62,7 +56,6 @@ The text at the bottom of the screen shows the keyboard shortcuts for performing
 > your computer's start menu, it may want to save files in your desktop or
 > documents directory instead. You can change this by navigating to
 > another directory the first time you "Save As..."
-{: .callout}
 
 Let's type in a few lines of text. Describe what the files in this
 directory are or what you've been doing with them.
@@ -73,7 +66,7 @@ press <kbd>Return</kbd> to accept the suggested default of `README.txt`.
 Once our file is saved, we can use <kbd>Ctrl</kbd>-<kbd>X</kbd> to quit the editor and
 return to the shell.
 
-> ## Control, Ctrl, or ^ Key
+> ### Control, Ctrl, or ^ Key
 >
 > The Control key is also called the "Ctrl" key. There are various ways
 > in which using the Control key may be described. For example, you may
@@ -90,24 +83,20 @@ return to the shell.
 > In `nano`, along the bottom of the screen you'll see `^G Get Help ^O WriteOut`.
 > This means that you can use <kbd>Ctrl</kbd>-<kbd>G</kbd> to get help and <kbd>Ctrl</kbd>-<kbd>O</kbd> to save your
 > file.
-{: .callout}
 
 Now you've written a file. You can take a look at it with `less` or `cat`, or open it up again and edit it with `nano`.
 
-> ## Exercise
+> ### Exercise
 >
 > Open `README.txt` and add the date to the top of the file and save the file. 
 >
-> > ## Solution
+> > ### Solution
 > > 
 > > Use `nano README.txt` to open the file.  
 > > Add today's date and then use <kbd>Ctrl</kbd>-<kbd>X</kbd> to exit and `y` to save.
 > >
-> {: .solution}
->
-{: .challenge}
 
-## Writing scripts
+### Writing scripts
 
 A really powerful thing about the command line is that you can write scripts. Scripts let you save commands to run them and also lets you put multiple commands together. Though writing scripts may require an additional time investment initially, this can save you time as you run them repeatedly. Scripts can also address the challenge of reproducibility: if you need to repeat an analysis, you retain a record of your command history within the script.
 
@@ -118,14 +107,12 @@ Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
 ~~~
-{: .bash}
 
 We're going to create a new file to put this command in. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
 $ nano bad-reads-script.sh
 ~~~
-{: .bash}
 
 Type your `grep` command into the file and save it as before. Be careful that you did not add the `$` at the beginning of the line.
 
@@ -134,19 +121,10 @@ Now comes the neat part. We can run this script. Type:
 ~~~
 $ bash bad-reads-script.sh
 ~~~
-{: .bash}
 
 It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can see that there are now reads in the file.
 
-
-> ## Exercise
->
-> We want the script to tell us when it's done.  
-> 1. Open `bad-reads-script.sh` and add the line `echo "Script finished!"` after the `grep` command and save the file.  
-> 2. Run the updated script.
-{: .challenge}
-
-## Making the script into a program
+### Making the script into a program
 
 We had to type `bash` because we needed to tell the computer what program to use to run this script. Instead we can turn this script into its own program. We need to tell it that it's a program by making it executable. We can do this by changing the file permissions. We talked about permissions in [an earlier episode](http://www.datacarpentry.org/shell-genomics/03-working-with-files/).
 
@@ -154,45 +132,38 @@ First, let's look at the current permissions.
 
 ~~~
 $ ls -l bad-reads-script.sh
-~~~
-{: .bash}
-
-~~~
 -rw-rw-r-- 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
-{: .output}
 
-We see that it says `-rw-r--r--`. This shows that the file can be read by any user and written to by the file owner (you). We want to change these permissions so that the file can be executed as a program. We use the command `chmod` like we did earlier when we removed write permissions. Here we are adding (`+`) executable permissions (`+x`).
+We see that it says `-rw-r--r--`. This shows that the file 
+can be read by any user and written to by the file owner 
+(you). We want to change these permissions so that the 
+file can be executed as a program. We use the command `chmod` 
+to change write permissions. 
+Here we are adding (`+`) executable permissions (`+x`).
+(**NOTE:** the following only works in a real linux environment, 
+and will not work in GitBash terminal)
 
 ~~~
 $ chmod +x bad-reads-script.sh
 ~~~
-{: .bash}
 
 Now let's look at the permissions again.
 
 ~~~
 $ ls -l bad-reads-script.sh
-~~~
-{: .bash}
-
-~~~
 -rwxrwxr-x 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
-{: .output}
 
 Now we see that it says `-rwxr-xr-x`. The `x`'s that are there now tell us we can run it as a program. So, let's try it! We'll need to put `./` at the beginning so the computer knows to look here in this directory for the program.
 
 ~~~
 $ ./bad-reads-script.sh
 ~~~
-{: .bash}
 
 The script should run the same way as before, but now we've created our very own computer program!
 
-You will learn more about writing scripts in [a later lesson](http://www.datacarpentry.org/wrangling-genomics/02-automating_a_workflow/).
-
-## Moving and Downloading Data
+### Moving and Downloading Data
 
 So far, we've worked with data that is pre-loaded on the instance in the cloud. Usually, however,
 most analyses begin with moving data onto the instance. Below we'll show you some commands to 
@@ -224,7 +195,6 @@ To see which program you have type:
 $ which curl
 $ which wget
 ~~~
-{: .bash}
 
 ``which`` is a BASH program that looks through everything you have
 installed, and tells you what folder it is installed to. If it can't
@@ -235,23 +205,10 @@ On Mac OSX, you'll likely get the following output:
 
 ~~~
 $ which curl
-~~~
-{: .bash}
-
-~~~
 /usr/bin/curl
-~~~
-{: .output}
-
-~~~
 $ which wget
-~~~
-{: .bash}
-
-~~~
 $
 ~~~
-{: .output}
 
 This output means that you have ``curl`` installed, but not ``wget``.
 
@@ -262,7 +219,6 @@ following commands to download the file:
 $ cd
 $ wget ftp://ftp.ensemblgenomes.org/pub/release-37/bacteria/species_EnsemblBacteria.txt
 ~~~
-{: .bash}
 
 or
 
@@ -270,7 +226,6 @@ or
 $ cd
 $ curl -O ftp://ftp.ensemblgenomes.org/pub/release-37/bacteria/species_EnsemblBacteria.txt
 ~~~
-{: .bash}
 
 Since we wanted to *download* the file rather than just view it, we used ``wget`` without
 any modifiers. With ``curl`` however, we had to use the -O flag, which simultaneously tells ``curl`` to
@@ -286,11 +241,11 @@ machine, not your local one.
 
 What if the data you need is on your local computer, but you need to get it *into* the
 cloud? There are also several ways to do this, but it's *always* easier
-to start the transfer locally. **This means if you're typing into a terminal, the terminal
-should not be logged into your instance, it should be showing your local computer. If you're
+to start the transfer locally. **This means if you're typing into a terminal, and the terminal
+should not be logged into your instance, it should be your local computer termianl. If you're
 using a transfer program, it needs to be installed on your local machine, not your instance.**
 
-## Transferring Data Between your Local Machine and the Cloud
+### Transferring Data Between your Local Machine and the Cloud
 ### scp
 
 `scp` stands for 'secure copy protocol', and is a widely used UNIX tool for moving files
@@ -300,7 +255,6 @@ and use it to copy a single file:
 ~~~
 scp <file I want to move> <where I want to move it>
 ~~~
-{: .bash}
 
 Note that you are always running `scp` locally, but that *doesn't* mean that
 you can only move files from your local computer. A command like:
@@ -308,14 +262,12 @@ you can only move files from your local computer. A command like:
 ~~~
 $ scp <local file> <AWS instance>
 ~~~
-{: .bash}
 
 To move it back, you just re-order the to and from fields:
 
 ~~~
 $ scp <AWS instance> <local file>
 ~~~
-{: .bash}
 
 #### Uploading Data to your Virtual Machine with scp
 
@@ -324,7 +276,6 @@ $ scp <AWS instance> <local file>
 ~~~
 $  scp local_file.txt dcuser@ip.address:/home/dcuser/
 ~~~
-{: .bash}
 
 #### Downloading Data from your Virtual Machine with scp
 
@@ -335,26 +286,23 @@ Let's download a text file from our remote machine. You should have a file that 
 ~~~
 $ find ~ -name *.txt
 ~~~
-{: .bash}
 
 
-1. Download the bad reads file in ~/shell_data/scripted_bad_reads.txt to your home ~/Download directory using the following command **(make sure you use substitute dcuser@ ip.address with your remote login credentials)**:
+1. Download the bad reads file in ~/shell_data/scripted_bad_reads.txt to your home ~/Download directory using the following command **(make sure you use substitute dcuser@your-instance-number with your remote login credentials)**:
 
 ~~~
 $ scp dcuser@ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
 ~~~
-{: .bash}
 
-Remember that in both instances, the command is run from your local machine, we've just flipped the order of the to and from parts of the command.
+Remember that with both commands, they are run from your **local** machine, and we've flipped the order of the 'to' and 'from' parts of the command.
 </div>
-
 These directions are platform specific so please follow the instructions for your system:
+NOTE: (The following selection doesn't work
+using the course template instead of the workshop template)
 
 **Please select the platform you wish to use for the exercises: <select id="id_platform" name="platformlist" onchange="change_content_by_platform('id_platform');return false;"><option value="aws_unix" id="id_aws_unix" selected> AWS_UNIX </option><option value="aws_win" id="id_aws_win" selected> AWS_Windows </option></select>**
 
-
 <div id="div_aws_win" style="display:block" markdown="1">
-
 
 ### Uploading Data to your Virtual Machine with PSCP
 
@@ -372,14 +320,12 @@ go to your start menu/search enter the term **'cmd'**; you will be able to start
 ~~~
 > cd Downloads
 ~~~
-{: .bash}
 
-5. Locate a file on your computer that you wish to upload (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and login credentials)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute 'your-pc-username' for your actual pc username)**
+5. Locate a file on your computer that you wish to upload (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and login credentials)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute 'your-username' for your actual pc username)**
 
 ~~~
-C:\User\your-pc-username\Downloads> pscp.exe local_file.txt dcuser@ip.address:/home/dcuser/
+C:\User\your-username\Downloads> pscp.exe local_file.txt dcuser@EC-number-ip.address:/home/dcuser/
 ~~~
-{: .bash}
 
 ### Downloading Data from your Virtual Machine with PSCP
 
@@ -387,14 +333,17 @@ C:\User\your-pc-username\Downloads> pscp.exe local_file.txt dcuser@ip.address:/h
 2. Download the text file using the following command **(make sure you use substitute 'your-pc-username' for your actual pc username and dcuser@ ip.address with your remote login credentials)**
 
 ~~~
-C:\User\your-pc-username\Downloads> pscp.exe dcuser@ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
+C:\User\your-pc-username\Downloads> pscp.exe dcuser@EC-number-ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
 
 C:\User\your-pc-username\Downloads
 ~~~
-{: .bash}
 
 </div>
 
 
 
 <div id="div_aws_unix" style="display:block" markdown="1">
+
+### Keypoints:
+- Scripts are a collection of commands executed together.
+- Transferring information to and from virtual and local computers.

@@ -61,7 +61,6 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_2.fa
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_1.fastq.gz
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fastq.gz 
 ~~~
-{: .bash}
 
 > #### Faster option
 > 
@@ -71,11 +70,9 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fa
 > ~~~
 > cp ~/.backup/untrimmed_fastq/*fastq.gz .
 > ~~~
-> {: .bash}
 > 
 > This command creates a copy of each of the files in the `.backup/untrimmed_fastq/` directory that end in `fastq.gz` and
 > places the copies in the current working directory (signified by `.`). 
-{: .tip}
 
 
 The data comes in a compressed format, which is why there is a `.gz` at the end of the file names. This makes it faster to transfer, and allows it to take up less space on our computer. Let's unzip one of the files so that we can look at the fastq format.
@@ -83,7 +80,6 @@ The data comes in a compressed format, which is why there is a `.gz` at the end 
 ~~~
 $ gunzip SRR2584863_1.fastq.gz 
 ~~~
-{: .bash}
 
 ### Quality Control
 
@@ -157,13 +153,13 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 +
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
-{: .output}
 
 we can now see that there are a range of quality score, but that the end of the sequence
 very poor (`#` = a quality score of 2). 
 
-(Do Week4 Exercise 1)
-
+**[Do the In-class Exercise by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
+Work on the questions yourself, 
+before looking at the answers (take about 5 minutes).
 #### Assessing Quality using FastQC
 In real life, you won't be assessing the quality of your reads by visually inspecting your 
 FASTQ files. Rather, you'll be using a software program to assess read quality and 
@@ -197,42 +193,34 @@ Now let's take a look at a quality plot on the other end of the spectrum.
 
 Here, we see positions within the read in which the boxes span a much wider range. Also, quality scores drop quite low into the "bad" range, particularly on the tail end of the reads. The FastQC tool produces several other diagnostic plots to assess sample quality, in addition to the one plotted above. 
 
-## Running FastQC  
+### Running FastQC  
 
-We will now assess the quality of the reads that we downloaded. First, make sure you're still in the `untrimmed_fastq` directory
+We will now assess the quality of the reads that we downloaded. First, make sure you're in the `untrimmed_fastq` directory
 
 ~~~
 $ cd ~/dc_workshop/data/untrimmed_fastq/ 
 ~~~
-{: .bash}
 
-> ## Exercise
-> 
->  How big are the files?
-> (Hint: Look at the options for the `ls` command to see how to show
-> file sizes.)
->
->> ## Solution
->>  
->> ~~~
->> $ ls -l -h
->> ~~~
->> {: .bash}
->> 
->> ~~~
->> -rw-rw-r-- 1 dcuser dcuser 545M Jul  6 20:27 SRR2584863_1.fastq
->> -rw-rw-r-- 1 dcuser dcuser 183M Jul  6 20:29 SRR2584863_2.fastq.gz
->> -rw-rw-r-- 1 dcuser dcuser 309M Jul  6 20:34 SRR2584866_1.fastq.gz
->> -rw-rw-r-- 1 dcuser dcuser 296M Jul  6 20:37 SRR2584866_2.fastq.gz
->> -rw-rw-r-- 1 dcuser dcuser 124M Jul  6 20:22 SRR2589044_1.fastq.gz
->> -rw-rw-r-- 1 dcuser dcuser 128M Jul  6 20:24 SRR2589044_2.fastq.gz
->> ~~~
->> {: .output}
->> 
->> There are six FASTQ files ranging from 124M (124MB) to 545M. 
->> 
-> {: .solution}
-{: .challenge}
+#### Review Exercise
+
+How big are the files?
+(Hint: Look at the options for the `ls` command to see how to show
+easily understandable file sizes.)
+
+#### Solution
+ 
+~~~
+$ ls -l -h
+-rw-rw-r-- 1 dcuser dcuser 545M Jul  6 20:27 SRR2584863_1.fastq
+-rw-rw-r-- 1 dcuser dcuser 183M Jul  6 20:29 SRR2584863_2.fastq.gz
+-rw-rw-r-- 1 dcuser dcuser 309M Jul  6 20:34 SRR2584866_1.fastq.gz
+-rw-rw-r-- 1 dcuser dcuser 296M Jul  6 20:37 SRR2584866_2.fastq.gz
+-rw-rw-r-- 1 dcuser dcuser 124M Jul  6 20:22 SRR2589044_1.fastq.gz
+-rw-rw-r-- 1 dcuser dcuser 128M Jul  6 20:24 SRR2589044_2.fastq.gz
+~~~
+
+There are six FASTQ files ranging from 124M (124MB) to 545M. 
+The biggest file (SRR2584863_1.fastq) is not in compressed format
 
 FastQC can accept multiple file names as input, and on both zipped and unzipped files, so we can use the \*.fastq* wildcard to run FastQC on all of the FASTQ files in this directory.
 
@@ -255,7 +243,6 @@ Approx 35% complete for SRR2584863_1.fastq
 Approx 40% complete for SRR2584863_1.fastq
 Approx 45% complete for SRR2584863_1.fastq
 ~~~
-{: .output}
 
 In total, it should take about five minutes for FastQC to run on all
 six of our FASTQ files. When the analysis completes, your prompt
@@ -269,17 +256,12 @@ Approx 95% complete for SRR2589044_2.fastq.gz
 Analysis complete for SRR2589044_2.fastq.gz
 $
 ~~~
-{: .output}
 
 The FastQC program has created several new files within our
 `data/untrimmed_fastq/` directory. 
 
 ~~~
 $ ls 
-~~~
-{: .bash}
-
-~~~
 SRR2584863_1.fastq        SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
 SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
 SRR2584863_1_fastqc.zip   SRR2584866_1.fastq.gz     SRR2589044_1.fastq.gz
@@ -287,11 +269,10 @@ SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
 SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 SRR2584863_2.fastq.gz     SRR2584866_2.fastq.gz     SRR2589044_2.fastq.gz
 ~~~
-{: .output}
 
 For each input FASTQ file, FastQC has created a `.zip` file and a
 `.html` file. The `.zip` file extension indicates that this is 
-actually a compressed set of multiple output files. We'll be working
+a compressed set of multiple output files. We'll be working
 with these output files soon. The `.html` file is a stable webpage
 displaying the summary report for each of our samples.
 
@@ -304,7 +285,6 @@ $ mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
 $ mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/ 
 $ mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/ 
 ~~~
-{: .bash}
 
 Now we can navigate into this results directory and do some closer
 inspection of our output files.
@@ -312,9 +292,8 @@ inspection of our output files.
 ~~~
 $ cd ~/dc_workshop/results/fastqc_untrimmed_reads/ 
 ~~~
-{: .bash}
 
-## Viewing the FastQC results
+### Viewing the FastQC results
 
 If we were working on our local computers, we'd be able to display each of these 
 HTML files as a webpage: 
@@ -337,6 +316,7 @@ let's transfer them to our local computers (i.e. your laptop).
 To transfer a file from a remote server to our own machines, we will
 use `scp`, which we learned yesterday in the Shell Genomics lesson. 
 
+Transferring files
 First we
 will make a new directory on our computer to store the HTML files
 we're transferring. Let's put it on our desktop for now. Open a new
@@ -422,7 +402,6 @@ SRR2584863_1_fastqc.zip   SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
 SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
 SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
-{: .output}
 
 Our `.zip` files are compressed files. They each contain multiple 
 different types of output files for a single input FASTQ file. To
@@ -432,10 +411,6 @@ wildcard.
 
 ~~~
 $ unzip *.zip 
-~~~
-{: .bash}
-
-~~~
 Archive:  SRR2584863_1_fastqc.zip
 caution: filename not matched:  SRR2584863_2_fastqc.zip
 caution: filename not matched:  SRR2584866_1_fastqc.zip
@@ -443,7 +418,6 @@ caution: filename not matched:  SRR2584866_2_fastqc.zip
 caution: filename not matched:  SRR2589044_1_fastqc.zip
 caution: filename not matched:  SRR2589044_2_fastqc.zip
 ~~~
-{: .output}
 
 This didn't work. We unzipped the first file and then got a warning
 message for each of the other `.zip` files. This is because `unzip` 
@@ -461,7 +435,6 @@ $ for filename in *.zip
 > unzip $filename
 > done
 ~~~
-{: .bash}
 
 In this example, the input is six filenames (one filename for each of our `.zip` files).
 Each time the loop iterates, it will assign a file name to the variable `filename`
@@ -499,7 +472,6 @@ Archive:  SRR2589044_2_fastqc.zip
   inflating: SRR2589044_2_fastqc/fastqc_data.txt  
   inflating: SRR2589044_2_fastqc/fastqc.fo  
 ~~~
-{: .output}
 
 The `unzip` program is decompressing the `.zip` files and creating
 a new directory (with subdirectories) for each of our samples, to 
@@ -517,7 +489,6 @@ SRR2584863_2_fastqc       SRR2584866_2_fastqc       SRR2589044_2_fastqc
 SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
 SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
-{:. output}
 
 The `.html` files and the uncompressed `.zip` files are still present,
 but now we also have a new directory for each of our samples. We can 
@@ -525,10 +496,6 @@ see for sure that it's a directory if we use the `-F` flag for `ls`.
 
 ~~~
 $ ls -F 
-~~~
-{: .bash}
-
-~~~
 SRR2584863_1_fastqc/      SRR2584866_1_fastqc/      SRR2589044_1_fastqc/
 SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
 SRR2584863_1_fastqc.zip   SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
@@ -536,16 +503,11 @@ SRR2584863_2_fastqc/      SRR2584866_2_fastqc/      SRR2589044_2_fastqc/
 SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
 SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
-{: .output}
 
 Let's see what files are present within one of these output directories.
 
 ~~~
 $ ls -F SRR2584863_1_fastqc/ 
-~~~
-{: .bash}
-
-~~~
 fastqc_data.txt  fastqc.fo  fastqc_report.html	Icons/	Images/  summary.txt
 ~~~
 {: .output}
@@ -554,10 +516,6 @@ Use `less` to preview the `summary.txt` file for this sample.
 
 ~~~
 $ less SRR2584863_1_fastqc/summary.txt 
-~~~
-{: .bash}
-
-~~~
 PASS    Basic Statistics        SRR2584863_1.fastq
 PASS    Per base sequence quality       SRR2584863_1.fastq
 PASS    Per tile sequence quality       SRR2584863_1.fastq
@@ -570,7 +528,6 @@ PASS    Sequence Duplication Levels     SRR2584863_1.fastq
 PASS    Overrepresented sequences       SRR2584863_1.fastq
 WARN    Adapter Content SRR2584863_1.fastq
 ~~~
-{: .output}
 
 The summary file gives us a list of tests that FastQC ran, and tells
 us whether this sample passed, failed, or is borderline (`WARN`). Remember to quit from `less` you enter `q`.
@@ -585,7 +542,6 @@ it to `~/dc_workshop/docs`.
 ~~~
 $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt 
 ~~~
-{: .bash}
 
 ### Other notes  -- Optional 
 
@@ -601,7 +557,7 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 > used to generate your data, so that you can tell your quality control program which encoding
 > to use. If you choose the wrong encoding, you run the risk of throwing away good reads or 
 > (even worse) not throwing away bad reads!
-{: .callout}
+
 
 
 > #### Same Symbols, Different Meanings
@@ -616,4 +572,4 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 >
 > If *you* type `>` or `$` yourself, it is an instruction from you that
 > the shell to redirect output or get the value of a variable.
-{: .callout}
+

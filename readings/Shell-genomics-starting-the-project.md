@@ -5,4 +5,6 @@ title: Genomics Starting the Project
 language: Shell
 ---
 
-[Data Carpentry Project Planning](https://github.com/datacarpentry/organization-genomics/blob/gh-pages/_episodes/02-project-planning.md)
+[Data Carpentry Project Planning](https://datacarpentry.org/organization-genomics/02-project-planning/index.html)
+
+[Data Carpentry Genomics Command-line](https://datacarpentry.org/shell-genomics/03-working-with-files/index.html)

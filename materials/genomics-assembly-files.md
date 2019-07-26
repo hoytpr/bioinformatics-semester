@@ -4,7 +4,7 @@ element: notes
 title: Read Processing
 language: Shell
 ---
-## A Genome Assembly Workshop 
+### A Genome Assembly Workshop 
 This part of the course uses a traditional workshop pedagody with "slides" for readings, and 
 "hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced. 
 
@@ -17,8 +17,8 @@ our assembly. We must be sure to [acknowledge]({{ site.baseurl }}/materials/ackn
 those who helped design these lessons.
 
 ### Data and directory structure
-This exercise will use the local University supercomputing resources. 
-Normally, we would not be able to perform these assemblies
+This exercise will likely use the local University supercomputing resources. 
+(AKA: The HPCC) Normally, we would not be able to perform these assemblies
 "interactively" i.e by entering commands at the command prompt. 
 Instead we would enter commands by submitting our commands as a "job" in the 
 computers "queue". Most of the commands we enter will be identical
@@ -26,7 +26,8 @@ to the commands you would place inside your "job submission script"
 which we'll discuss later, but there's plenty of information 
 on the HPCC site [for new users](https://hpcc.okstate.edu/content/new-user-tutorial)
 
-Everyone should [have an account](http://hpcc.okstate.edu/requesting-hpcc-account) on the Cowboy supercomputer
+Depending on which system is available, everyone should [have an account](http://hpcc.okstate.edu/requesting-hpcc-account) 
+on the "Cowboy" supercomputer
 by now. If you do not, ask for a temporary account before 
 proceeding with this lesson. 
 
@@ -34,31 +35,33 @@ Log into the Cowboy Supercomputer:
 [Instructions here](https://hpcc.okstate.edu/content/logging-cowboy)
 
 Then open your FTP software, and connect to your account on Cowboy.
-Using FTP, transfer the file `mcbios.tar.gz` on your desktop 
-into your `/scratch/username` directory on Cowboy.
+You should have been given the file `mcbios.tar.gz`, for you to 
+place on your desktop. Alternatively, download the file 
+[mcbios.zip]({{ site.baseurl }}/data/mcbios.zip) to your local machine 
+and unzip it. Then using FTP, transfer the file `mcbios.tar.gz`  
+(or `mcbios.zip`) into your `/scratch/username` directory on Cowboy.
+NOTE that you should substitute `username` with your actual 
+username for the computer. For example, my username is `phoyt`
+and the mcbios.zip file will be uploaded to `/scratch/phoyt`.
 
 Then from your terminal program (Windows users will
-have to use "Putty")to type in the following commands:
+use "Putty") type in the following commands:
 ~~~
 $ cd /scratch/username
 $ cp /scratch/bioworkshop/mcbios.tar.gz .
 $ tar xvf mcbios.tar.gz
 $ cd mcbios/
 $ ls
+~~~
+The output should be:
+
+~~~
 abyss data  results soap velvet 
 ~~~
 
-#### Option 2 (Local)
-
-Alternatively the file [mcbios.zip]({{ site.baseurl }}/data/mcbios.zip) can be 
-saved to your local machine and unzipped. Save the file on your desktop
-and then unzip it using a GUI-based decompression software, or if using
-GitBash Shell, change to your Desktop directory and enter:
-`unzip mcbios.zip`
-
 ### File Structure 
 
-What you have:
+What you should now have:
 ~~~
 |-- abyss
 |   `-- abyss31
@@ -94,28 +97,27 @@ What you have:
     `-- velvetk31.pbs
 ~~~
 
-
-
 We will dive into each directory for each task:  fastqc, velvet, soap, abyss and nucmer in that order. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as  a note to yourself later.
 
 ### Important notes before hands-on
-Since we are using the Cowboy cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These scripts include information for the scheduler as well as the commands to execute your job.
-
-### Read processing
-Please Note: Those who have successfully completed “module2” of the Bioinformatics Applications/File Formats session (on Monday) can skip the Read Processing section.
+Since we are using the Cowboy cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
 
 #### The data:
+Move into your `data` directory:
 
 `$ cd /scratch/username/mcbios/data/`  
 OR 
+
 `$ cd data`
 
+Use `ls` to see what files or directories are present:
 ~~~
 $ ls
 group1  group2  group3  group4  group5
 ~~~
-
-Each group should work on a different chromosome in yeast.
+There are five group directories, so that different groups of students
+can work on a different chromosome in yeast. You can then compare your results. 
+As an example, everyone should look inside the `group1` directory:
 
 ~~~
 $ cd group1
@@ -124,22 +126,21 @@ ref.fasta  PE-350.1.fastq  PE-350.2.fastq
 $ head PE-350.1.fastq
 ~~~
 
-Our assembly will start using one Illumina library, PE-350, which is a paired end (fragment) reads library, divided into two datasets: `.1.fastq` and `.2.fastq`,  which are paired reads very close to 350 bp apart. Also, `ref.fasta` is the included reference sequence for comparison with your assembly.
+By now, you should all be familiar with `.fastq` sequencer files.
+Our assembly will start using one Illumina library, PE-350, which is a paired end reads library, divided into two datasets: `1.fastq` and `2.fastq`,  which are the paired reads very close to 350 bp apart. Every read in the `1.fastq` file should have a corresponding read in the `2.fastq` file. Also, `ref.fasta` is the included reference sequence for comparison with your assembly.
 
-#### Understand FASTQ format
+#### Review FASTQ format
 >Learn: What information is included? What does each line mean?
 >Four consecutive lines define ONE read in the fastq file
 >
 >~~~
 >@READ-ID
->ATAGAGATAGAGAGAG (the sequence: here 16 nucleotides)
+>ATAGAGATAGAGAGAG (the sequence: here showing 16 nucleotides)
 >+READ-ID (usually empty. Can repeat READ-ID)
->;9;7;;.7;3933334 (quality identifiersfor each base)
+>;9;7;;.7;3933334 (**quality** identifiersfor each of the 16 bases shown)
 >~~~
 >
 >Each base has quality identifier called PHRED score, typically between value 0-40 for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There are also two systems of such conversion, PHRED+33 and PHRED+64. PHRED+33 is used in new Illumina protocols. PHRED+64 is used rarely, but be aware!
->
->How does this work?
 > 
 >“Phred quality scores   are defined as a property which is logarithmically related to the base-calling error probabilities  .”
 > 
@@ -147,43 +148,53 @@ Our assembly will start using one Illumina library, PE-350, which is a paired en
 
 Or you can just use this chart: 
 
-~~~
-Phred Quality Score	Probability of incorrect base call	Base call accuracy
-10	1 in 10	90%
-20	1 in 100	99%
-30	1 in 1000	99.9%
-40	1 in 10000	99.99%
-50	1 in 100000	99.999%
-~~~
+| Quality Score	| Probability of incorrect base call | Base call accuracy |
+| ---- | ------------- | -----------|
+| 10 | 1 in 10 |90% |
+| 20 | 1 in 100 | 99% |
+| 30 | 1 in 1000 | 99.9% |
+| 40 | 1 in 10000 | 99.99% |
+| 50 | 1 in 100000 | 99.999% |
 
-If your base has PHRED quality of 20 (i.e. 1% error), PHRED(20)+33=**53**, which corresponds to the character 5 using the reference chart below. Under PHRED+64 system, 20+64=84, which is T. When using the table below, can you guess if a sequence quality score is using PHRED+33, or PHRED+64 encoding? (hint: use the cheat sheet below)
+Almost all modern sequence data uses the PHRED+33 (version 1.8 or newer) base call system. 
+
+If a base call has PHRED quality of 20 (i.e. 1% error), PHRED(20)+33=**53**, 
+which corresponds to the character 5 using the reference chart below 
+(the "S" range). There is an older PHRED+64 system 
+(older than version 1.8, the "I" range) that is rarely used anymore, 
+but in PHRED+64 20+64=84, which is T. 
+
+Using the table below you can usually determine if sequence quality scores 
+are using PHRED+33, or PHRED+64 encoding. (hint: PHRED+33 max score is "J")
 
 ![PredScores]({{ site.baseurl }}/fig/PhredScores.png)
 
- S - Sanger/Illumina 1.8+        Phred+33
- I - Solexa/Illumina 1.3/1.5     Phred+64
-
 Go back to our FASTQ files,  find out answers to these questions
-Library PE-350 contains a total of `______` reads. (hint: count # of lines using the command line by typing:
-  `wc -l PE-350.1.fastq` 
-and divide by 4). Leave out the quotes. 
+and submit them to [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/108839)
 
-The base quality in my data is encoded in `________` (Phred+33 or Phred+64 ?) .
+The base quality in my data is encoded in `________` (Phred+33 or Phred+64 ?).
 
-or make the command line do all the arithmetic: 
+Library PE-350 contains a total of `______` reads. 
+
+(big hint: count # of lines using the terminal shell by typing:    
+  `wc -l PE-350.1.fastq`    
+and divide by 4 or make the command line do all the arithmetic): 
 
 `$ expr (cat PE-350.1.fastq | wc -l) / 4`
 
 ### How good is your sequencing run? Use FASTQC
 
-Fastqc runs very quickly, so we can run this on the login nodes.  
-`$ module load fastqc`
+Fastqc runs very quickly, so we can enter these commands interactively 
+without submitting them as a "job".
 
-For info on fastqc (read this later):
+If you want help with fastqc, you can type:
 `$ fastqc -h`
 
-Now perform the fastqc quality control
-`$ fastqc PE-350.1.fastq`
+Now perform the fastqc quality control 
+```
+$ module load fastqc
+$ fastqc PE-350.1.fastq
+```
 
 (**protip**: do this again to the PE-350.2.fastq file by using the up arrow
 to bring up the last command, then use arrow keys to move over to change 

@@ -4,85 +4,91 @@ element: notes
 title: Project Organization
 language: Shell
 ---
-
-questions:
+### Questions:
 - "How can I organize my file system for a new bioinformatics project?"
 - "How can I document my work?"
-objectives:
+### Objectives:
 - "Create a file system for a bioinformatics project."
 - "Explain what types of files should go in your `docs`, `data`, and `results` directories."
 - "Use the `history` command and a text editor like `nano` to document your work on your project."
-keypoints:
-- "Spend the time to organize your file system when you start a new project. Your future self will thank you!"
-- "Always save a write-protected copy of your raw data."
 
+### Getting your project started
 
-# Getting your project started
+Project organization is one of the **most important parts** of 
+a sequencing project, and yet is often overlooked amidst the
+excitement of getting a first look at new data. You can always reorganize your project when (for example) you decide to publish the data, but it's much better to get yourself organized from the beginning.   
 
-Project organization is one of the most important parts of a sequencing project, and yet is often overlooked amidst the
-excitement of getting a first look at new data. Of course, while it's best to get yourself organized before you even begin your analyses,
-it's never too late to start, either.  
+You should approach your sequencing project similar to any 
+biological experiment.  This ideally begins with good 
+experimental design. 
 
-You should approach your sequencing project similarly to how you do a biological experiment and this ideally begins with experimental design. We're going to assume that you've already designed a beautiful 
-sequencing experiment to address your biological question, collected appropriate samples, and that you have 
-enough statistical power to answer the questions you're interested in asking. These 
-steps are all incredibly important, but beyond the scope of our course. 
-For all of those steps (collecting specimens, extracting DNA, prepping your samples)
-you've likely kept a lab notebook that details how and why you did each step. However, the process of documentation doesn't stop at 
-the sequencer!  
+> We're going to *assume* that you've 
+> already designed a beautiful sequencing experiment to 
+> address your biological hypothesis, collected appropriate 
+> samples, and that you have enough statistical power to 
+> answer the questions you're interested in asking... right?!?!? 
+> These steps are all incredibly important, but beyond the scope 
+> of our course. 
+
+For all of those steps (collecting 
+specimens, extracting DNA, prepping your samples, etc.)
+you've likely kept a **lab notebook** that details how 
+and why you did each step. However, the process of documentation 
+doesn't start or stop at the sequencer!  
 
 Genomics projects can quickly accumulate hundreds of files across 
-tens of folders. Every computational analysis you perform over the course of your project is going to create
-many files, which can especially become a problem when you'll inevitably want to run some of those
-analyses again. For instance, you might have made significant headway into your project, but then have to remember the PCR conditions
-you used to create your sequencing library months prior. 
+dozens of folders. Every computational analysis you perform over 
+the course of your project is going to create
+**many** files, which becomes a problem when you'll *inevitably 
+want to run some of those analyses again, or document 
+how you performed the analyses*. Try to think in 
+terms of your "past-self", "present-self" and "future self". 
+For instance, your present-self might have made significant 
+headway into your project, but then has to remember the PCR conditions
+your past-self used to create your sequencing library months prior. 
 
-Other questions might arise along the way: 
+Examples of just a few "future-self" questions that might arise: 
 - What were your best alignment results?
 - Which folder were they in: Analysis1, AnalysisRedone, or AnalysisRedone2?
 - Which quality cutoff did you use?
 - What version of a given program did you implement your analysis in?
 
-Good documentation is key to avoiding this issue, and luckily enough,
-recording your computational experiments is even easier than recording lab data. Copy/Paste will become
-your best friend, sensible file names will make your analysis understandable by you and your collaborators, and 
-writing the methods section for your next paper will be easy! Remember that in any given project of yours, it's worthwhile to consider
-a future version of yourself as an entirely separate collaborator. The better your documenation is, the more this 'collaborator' will
-feel indebted to you!
+The only way to prevent these from being problems is by good documentation!
+Luckily enough, recording your computational experiments is 
+even easier than recording lab data. Copy/Paste will become
+your friend, sensible file names will make your analysis 
+understandable by you and your collaborators, and 
+writing the methods section for your next paper should be easy! 
+In fact, it's worthwhile to consider
+your future-self as an entirely separate collaborator. 
+The better your documenation is, the more this 'collaborator' will
+thank you!
 
 With this in mind, let's have a look at the best practices for 
-documenting your genomics project. Your future self will thank you.  
-
-In this exercise we will setup a file system for the project we will be working on during this workshop.  
-
-We will start by creating a directory that we can use for the rest of the workshop. First navigate to your home directory. Then confirm that you are in the correct directory using the `pwd` command.
+documenting your genomics project. We start by **creating a directory**
+that we can use for the rest of the workshop. First navigate 
+to your AWS home directory. Use `cd`<kbd>Enter</kbd>, and 
+confirm that you are in the correct directory using the `pwd` command.
 
 ~~~
 $ cd
 $ pwd
 ~~~
-{: .bash}
 
 You should see the output: 
 
 ~~~
 /home/dcuser  
 ~~~
-{: .output}
 
-> ## Tip  
-> If you aren't in your home directory, the easiest way to get there is to enter the command `cd`, which
-> always returns you to home.  
-{: .callout}
-
-> ## Exercise  
+> #### In-class Exercise  
 > Use the `mkdir` command to make the following directories:   
 > - `dc_workshop`
 > - `dc_workshop/docs`
 > - `dc_workshop/data`
 > - `dc_workshop/results`
 > 
-> > ## Solution
+> > #### Solution
 > > 
 > > ~~~
 > > $ mkdir dc_workshop
@@ -90,9 +96,6 @@ You should see the output:
 > > $ mkdir dc_workshop/data
 > > $ mkdir dc_workshop/results
 > > ~~~
-> > {: .bash}
-> {: .solution}
-{: .challenge}
 
 Use `ls -R` to verify that you have created these directories. The `-R` option for `ls` stands for recursive. This option causes
 `ls` to return the contents of each subdirectory within the directory
@@ -101,7 +104,6 @@ iteratively.
 ~~~
 $ ls -R dc_workshop
 ~~~
-{: .bash}
 
 You should see the following output:
 
@@ -115,9 +117,8 @@ dc_workshop/docs:
 
 dc_workshop/results: 
 ~~~
-{: .output}
 
-# Organizing your files
+### Organizing your files
 
 Before beginning any analysis, it's important to save a copy of your
 raw data. The raw data should never be changed. Regardless of how
@@ -129,29 +130,34 @@ your data that you never modify guarantees that you will always be
 able to start over if something goes wrong with your analysis. When
 starting any analysis, you can make a copy of your raw data file and
 do your manipulations on that file, rather than the raw version. We
-learned in [a previous episode](http://www.datacarpentry.org/shell-genomics/03-working-with-files/#file-permissions) how to prevent overwriting our raw data
+learned in [the READINGS for todays lesson](http://www.datacarpentry.org/shell-genomics/03-working-with-files/#file-permissions) how to prevent overwriting our raw data
 files by setting restrictive file permissions. 
 
-You can store any results that are generated from your analysis in
-the `results` folder. This guarantees that you won't confuse results
-file and data files in six months or two years when you are looking
+> NOTE: We previously used the `chmod` command in the Bash shell 
+> to make files executable, but this didn't work in the Windows 
+> `GitBash` terminal. This is a good time to review file permissions 
+> while we are using a "real" linux environment.
+
+We will store any results generated from our analysis in
+the `results` folder. This guarantees that we won't confuse results
+file and data files in six months or two years when your 
+future self is looking
 back through your files in preparation for publishing your study.
 
-The `docs` folder is the place to store any written analysis of your
-results, notes about how your analyses were carried out, and 
-documents related to your eventual publication.
+The `docs` folder is the place to store notes about how your analyses were carried out, any written contextual analysis of your
+results, and documents related to your eventual publication.
 
-# Documenting your activity on the project
+### Documenting your activity on the project
 
 When carrying out wet-lab analyses, most scientists work from a 
 written protocol and keep a hard copy of written notes in their lab
-notebook, including any things they did differently from the 
+notebook. Daily notes include any things they did differently from the 
 written protocol. This detailed
-record-keeping process is just as important when doing computational
-analyses. Luckily, it's even easier to record the steps you've 
-carried out computational than it is when working at the bench.
+record-keeping process is **just as important** when doing computational
+analyses. Luckily, it's easier to record the steps you've 
+carried out computationally than it is when working at the bench.
 
-The `history` command is a convenient way to document all the
+The **`history`** command is a convenient way to document all the
 commands you have used while analyzing and manipulating your project
 files. Let's document the work we have done on our project so far. 
 
@@ -160,35 +166,37 @@ View the commands that you have used so far during this session using `history`:
 ~~~
 $ history
 ~~~
-{: .bash}
 
-The history likely contains many more commands than you have used for the current project. Let's view the last
-several commands that focus on just what we need for this project.   
-
-View the last n lines of your history (where n = approximately the last few lines you think relevant). For our example, we will use the last 7:
+You should see that history contains all your entered shell commands. 
+There are probably more commands than you have used for the current
+project. To view the last **`n`** lines of your history 
+(where `n` = approximately the last few lines you think relevant) 
+we can use `tail`. 
+For our example, to view the last 7 shell commands:
 
 ~~~   
 $ history | tail -n 7
 ~~~
-{: .bash}
 
-Using your knowledge of the shell, use the append redirect `>>` to create a file called
-`dc_workshop_log_XXXX_XX_XX.sh` (Use the four-digit year, two-digit month, and two digit day, e.g.
-`dc_workshop_log_2017_10_27.sh`)  
+Using your knowledge of the shell, use the append 
+redirect `>>` to create a file called
+`dc_workshop_log_XXXX_XX_XX.sh` (Use the four-digit year, two-digit month, and two digit day, *e.g.*
+`dc_workshop_log_2020_10_27.sh`)  
 
-You may have noticed that your history contains the `history` command itself. To remove this redundancy
+You may have noticed that your history contains the `history` 
+command itself. To remove this redundancy
 from our log, let's use the `nano` text editor to fix the file:  
 
 ~~~
-$ nano dc_workshop_log_2017_10_27.sh
+$ nano dc_workshop_log_2020_10_27.sh
 ~~~
-{: .bash}
 
-(Remember to replace the `2017_10_27` with your workshop date.)
+(Remember to replace the `2020_10_27` with your *actual *
+lesson or workshop date.)
 
-From the `nano` screen, you can use your cursor to navigate, type, and delete any redundant lines.   
+From the `nano` screen, you can use your cursor to navigate, type, and delete line numbers, or any redundant lines.   
 
-> ## Navigating in Nano
+> #### Navigating in Nano
 > 
 > Although `nano` is useful, it can be frustrating to edit documents, as you 
 > can't use your mouse to navigate to the part of the document you would like to edit.
@@ -203,25 +211,27 @@ From the `nano` screen, you can use your cursor to navigate, type, and delete an
 > | <kbd>Ctrl</kbd>-<kbd>E</kbd> | to move to the end of the current line |
 > | <kbd>Ctrl</kbd>-<kbd>W</kbd> | to search |
 > 
-{: .callout}
 
 Add a date line and comment to the line where you have created the directory, for example:   
 
 ~~~
-# 2017_10_27   
+# 2020_10_27   
 # Created sample directories for the Data Carpentry workshop  
 ~~~
-{: .bash}
 
-`bash` treats the `#` character as a comment character. Any text on a line after a `#` is ignored by bash when evaluating the text as code.
+The bash shell treats the `#` character as a comment character.    
+**Any text on a line after a `#` character is ignored by bash** 
+when evaluating the text 
+as code with [one exeception](https://en.wikipedia.org/wiki/Shebang_(Unix)). 
 
-Next, remove any lines of the history that are not relevant by navigating to those lines and using your 
+Next, remove any lines of the history that are not relevant by 
+navigating to those lines and using your 
 delete key. Save your file and close `nano`.
 
 Your file should look something like this: 
 
 ~~~
-# 2017_10_27
+# 2020_10_27
 # Created sample directories for the Data Carpentry workshop
 
 mkdir dc_workshop
@@ -229,42 +239,34 @@ mkdir dc_workshop/docs
 mkdir dc_workshop/data
 mkdir dc_workshop/results
 ~~~
-{: .output}
 
-If you keep this file up to date, you can use it to re-do your work on your project if something happens to your results files. To demonstrate how this works, first delete
-your `dc_workshop` directory and all of its subdirectories. Look at your directory 
+If you keep this file up to date, you can use it to re-do your work on 
+your project if something happens to your results files. To demonstrate 
+how this works, first delete
+your `dc_workshop` directory and all of its subdirectories. 
+Look at your directory 
 contents to verify the directory is gone. 
 
 ~~~
 $ rm -r dc_workshop
 $ ls
+shell_data	dc_workshop_log_2020_10_27.sh
 ~~~
-{: .bash}
-
-~~~
-shell_data	dc_workshop_log_2017_10_27.sh
-~~~
-{: .output}
 
 Then run your workshop log file as a bash script. You should see the `dc_workshop`
 directory and all of its subdirectories reappear. 
 
 ~~~
-$ bash dc_workshop_log_2017_10_27.sh
+$ bash dc_workshop_log_2020_10_27.sh
 $ ls
+shell_data	dc_workshop dc_workshop_log_2020_10_27.sh
 ~~~
-{: .bash}
-
-~~~
-shell_data	dc_workshop dc_workshop_log_2017_10_27.txt
-~~~
-{: .output}
 
 It's important that we keep our workshop log file outside of our `dc_workshop` directory
 if we want to use it to recreate our work. It's also important for us to keep it up to
 date by regularly updating with the commands that we used to generate our results files.
 
-Congratulations! You've finished your introduction to using the shell for genomics
+**Congratulations!** You've finished your introduction to using the shell for genomics
 projects. You now know how to navigate your file system, create, copy, move,
 and remove files and directories, and automate repetitive tasks using scripts and 
 wildcards. With this solid foundation, you're ready to move on to apply all of these new
@@ -273,5 +275,9 @@ analysis work. Don't worry if everything doesn't feel perfectly comfortable yet.
 going to have many more opportunities for practice as we move forward on our 
 bioinformatics journey!
 
-## References
+#### References
 [A Quick Guide to Organizing Computational Biology Projects](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424)
+
+### Keypoints:
+- "Spend the time to organize your file system when you start a new project. Your future self will thank you!"
+- "Always save a write-protected copy of your raw data."

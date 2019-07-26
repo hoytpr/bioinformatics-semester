@@ -65,4 +65,4 @@ If you type the command: `PS1='$ '` into your shell, followed by pressing the <k
 
 Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is the home directory within system.
 
-
+Go to the [NEXT LESSON]({{ site.baseurl}}/materials/genomics-advanced-shell)

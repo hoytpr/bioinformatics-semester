@@ -6,14 +6,7 @@ language: Shell
 exercises: ['Quality Control Software']
 ---
 
-#### Learning Objectives
-(This material is under development)
-
-> Following this assignment students should be able to:
->
-> 1. Run fastq 
-> 2. Run multiQC 
-> 3. See clear problems with data 
+#### In-class read-quality Exercise
 
 {% include assignment.html %}
 

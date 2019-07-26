@@ -4,25 +4,15 @@ element: notes
 title: Advanced Shell
 language: Shell
 ---
-
-questions:
+### Questions:
 - "How can I search within files?"
 - "How can I combine existing commands to do new things?"
-objectives:
+### Objectives:
 - "Employ the `grep` command to search for information within files."
 - "Print the results of a command to a file."
 - "Construct command pipelines with two or more stages."
-keypoints:
-- "`grep` is a powerful search tool with many options for customization."
-- "`>`, `>>`, and `|` are different ways of redirecting output."
-- "`command > file` redirects a command's output to a file."
-- "`command >> file` redirects a command's output to a file without overwriting the existing contents of the file."
-- "`command_1 | command_2` redirects the output of the first command as input to the second command."
-- "for loops are used for iteration"
-- "`basename` gets rid of repetitive parts of names"
 
-
-## Searching files
+### Searching files
 
 We discussed in a previous episode how to search within a file using `less`. We can also
 search within files without even opening them, using `grep`. `grep` is a command-line
@@ -33,7 +23,7 @@ regular expressions in this lesson, and are instead going to specify the strings
 we are searching for.
 Let's give it a try!
 
-> ## Nucleotide abbreviations
+> #### Nucleotide abbreviations
 > 
 > The four nucleotides that appear in DNA are abbreviated `A`, `C`, `T` and `G`. 
 > Unknown nucleotides are represented with the letter `N`. An `N` appearing
@@ -41,7 +31,6 @@ Let's give it a try!
 > confidently determine the nucleotide in that position. You can think of an `N` as a `NULL` value
 > within a DNA sequence. 
 > 
-{: .callout}
 
 We'll search for strings inside of our fastq files. Let's first make sure we are in the correct 
 directory.
@@ -50,17 +39,16 @@ directory.
 $ cd ~/shell_data/untrimmed_fastq
 ~~~
 
-Suppose we want to see how many reads in our file have really bad segments containing 10 consecutive unknown nucleotides (Ns).
+Suppose we want to see how many reads in our file have really bad segments containing 10 consecutive unknown nucleotides ("N").
 
-> ## Determining quality
-> 
-> In this lesson, we're going to be manually searching for strings of `N`s within our sequence
-> results to illustrate some principles of file searching. It can be really useful to do this
-> type of searching to get a feel for the quality of your sequencing results, however, in your 
-> research you will most likely use a bioinformatics tool that has a built-in program for
-> filtering out low-quality reads. You'll learn how to use one such tool in 
-> [a later lesson]({{ site.baseurl }}/materials/genomics-assembly-files/).
-> 
+### Determining quality
+
+In this lesson, we're going to be manually searching for strings of `N`s within our sequence
+results to illustrate some principles of file searching. It can be really useful to do this
+type of searching to get a feel for the quality of your sequencing results, however, in your 
+research you will most likely use a bioinformatics tool that has a built-in program for
+filtering out low-quality reads. You'll learn how to use one such tool in 
+[a later lesson]({{ site.baseurl }}/materials/genomics-assembly-files/).
 
 Let's search for the string NNNNNNNNNN in the SRR098026 file.
 ~~~
@@ -311,3 +299,13 @@ $ for filename in *.txt
 >> ~~~
 >> 
 >>
+
+### Keypoints:
+- "`grep` is a powerful search tool with many options for customization."
+- "`>`, `>>`, and `|` are different ways of redirecting output."
+- "`command > file` redirects a command's output to a file."
+- "`command >> file` redirects a command's output to a file without overwriting the existing contents of the file."
+- "`command_1 | command_2` redirects the output of the first command as input to the second command."
+- "for loops are used for iteration"
+- "`basename` gets rid of repetitive parts of names"
+

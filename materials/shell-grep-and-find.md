@@ -1,7 +1,7 @@
 ---
 layout: page
 element: notes
-title: The Shell grep and find
+title: Shell grep and find
 language: Shell
 ---
 

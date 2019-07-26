@@ -2,7 +2,7 @@
 layout: page
 title: Assignment Schedule
 assignments: ['Shell Introduction', 'Shell Files and Directories', 'Shell Pipes and Filters',
-'Introduction to Loops', 'Genomics Shell Intro',
+'Introduction to Loops', 'Shell grep and find', 'Genomics Shell Intro',
 'Genomics Reads Quality Control', 'Genomics Starting the Project', 'Genomics First Assembly', 'Genomics Advanced Shell', 'Genomics Read Quality Trimming', 'Genomics Variant Calling Workflow', 'Genomics Scripting Variant Calling', 'Introduction to R and RStudio', 'Genomics in RStudio', 'Genomics RStudio dplyr',
 'Genomics RStudio coercion', 'Working with Data', 'Data Visualization', 'Working with Spatial Data',
 'Computational Projects', 'Programming Fundamentals 1',
