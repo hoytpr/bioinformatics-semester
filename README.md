@@ -12,21 +12,21 @@ title: README
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260317.svg)](https://doi.org/10.5281/zenodo.3260317)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260309.svg)](https://doi.org/10.5281/zenodo.3260309)
 
-Because of the many contributors, an ommission is likely and unintentional. 
+Because of the many contributors, an omission is likely and unintentional. 
 Please contact me to be included. 
 
-This is a [forkable](https://help.github.com/articles/fork-a-repo/) set of teaching materials for teaching 
-biologists how to work with data through programming, database management and computing more generally.
+This course version is a [forkable](https://help.github.com/articles/fork-a-repo/) set of teaching materials for teaching 
+biologists how to work with data through the shell, programming, and computing more generally.
 
 This repository contains the complete teaching materials and a [website](https://hoytpr.github.io/bioinformatics-semester/) 
 for a university style and self-guided course teaching computational data 
 skills to biologists. The course was originally designed
-to work primarily as a flipped classroom, with students reading and viewing
+to work as a flipped classroom, with students reading and viewing
 videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
 We will primarily operate this course as
-an [flipped class](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
+a [flipped class](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
 
 The developers encourage collaborative development. This repository was used originally by 
 @ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
@@ -34,7 +34,7 @@ is available regarding the structure and function of the course and website
 materials for customized development and delivery of the course. Key site and course materials are
 available as templates for contributions of new materials.
 
-- Here are some examples of customized courses:
+- Here are some other examples of customized courses:
   - [Introduction to Ecology](https://atredennick.github.io/ecology_class/) by [Andrew Tredennick](https://atredennick.github.io/)
   - [Data Science for Agriculture](https://github.com/palderman/DataSciAg/) by [Phillip Alderman](http://pss.okstate.edu/pass-drctry/faculty/alderman)
 
