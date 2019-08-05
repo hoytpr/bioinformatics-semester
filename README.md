@@ -1,10 +1,22 @@
-# Introduction to Biological Informatics was created with 
-# Data Carpentry for Biologists - [Semester Course](http://datacarpentry.org/semester-biology)
+---
+layout: page
+title: README
+---
 
-### No DOI yet
+### Introduction to Biological Informatics was created with the:
+### Data Carpentry for Biologists - [Semester Course](http://datacarpentry.org/semester-biology)
 
-This is a [forkable](https://help.github.com/articles/fork-a-repo/) set of teaching materials for teaching biologists how to work
-with data through programming, database management and computing more generally.
+### You can cite the material used in this course using the follwing DOI:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260609.svg)](https://doi.org/10.5281/zenodo.3260609)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260560.svg)](https://doi.org/10.5281/zenodo.3260560)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260317.svg)](https://doi.org/10.5281/zenodo.3260317)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260309.svg)](https://doi.org/10.5281/zenodo.3260309)
+
+Because of the many contributors, an ommission is likely and unintentional. 
+Please contact me to be included. 
+
+This is a [forkable](https://help.github.com/articles/fork-a-repo/) set of teaching materials for teaching 
+biologists how to work with data through programming, database management and computing more generally.
 
 This repository contains the complete teaching materials and a [website](https://hoytpr.github.io/bioinformatics-semester/) 
 for a university style and self-guided course teaching computational data 
@@ -13,8 +25,8 @@ to work primarily as a flipped classroom, with students reading and viewing
 videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
-However, due to time restrictions, we will primarily use this course as
-an [online curriculum](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
+We will primarily operate this course as
+an [flipped class](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
 
 The developers encourage collaborative development. This repository was used originally by 
 @ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
@@ -94,7 +106,8 @@ If you have Jekyll properly installed, you can then run
 `bundle exec jekyll serve --baseurl ''`
 
 from the command line and navigate to http://localhost:4000/ in your browser to
-preview the current state of the website.
+preview the current state of the website. Any changes made to `_config.yml` will 
+require that you restart Jekyll to view them locally.
 
 
 ## Creating new pages
