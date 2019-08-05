@@ -9,10 +9,15 @@ Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry
 design have been primarily developed and
 implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://zackbrym.weecology.org/) in cooperation with [Data Carpentry](https://datacarpentry.org/). See our [contributors page](https://github.com/datacarpentry/semester-biology/graphs/contributors) for more 
 details. More recent genomics lessons from the Carpentries were developed thanks to 
-[volunteer experts](https://github.com/datacarpentry/organization-genomics/graphs/contributors) 
-and [others](https://github.com/datacarpentry/wrangling-genomics/graphs/contributors) 
-(and [more](https://github.com/datacarpentry/shell-genomics/graphs/contributors)) who should 
-be appreciated. Annotations indicating specific contributors are scatterred throughout the 
+[genomics data experts](https://github.com/datacarpentry/organization-genomics/graphs/contributors) 
+, [genomics wrangling experts](https://github.com/datacarpentry/wrangling-genomics/graphs/contributors) 
+and [shell experts](https://github.com/datacarpentry/shell-genomics/graphs/contributors)) who should 
+be appreciated. You can cite the material used in this course using the follwing DOI:
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260609.svg)](https://doi.org/10.5281/zenodo.3260609)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260560.svg)](https://doi.org/10.5281/zenodo.3260560)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260317.svg)](https://doi.org/10.5281/zenodo.3260317)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260309.svg)](https://doi.org/10.5281/zenodo.3260309)
+Annotations indicating specific contributors are scattered throughout the 
 lessons, but there are inevitably some contributors not mentioned, and if they contact me 
 I'll gladly add their names or links to this list. The curricula are made available through 
 the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
@@ -21,9 +26,11 @@ the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
 
 This particular course by Dr. Hoyt emphasizes making the curricula more 
 understandable for a specific target
-audience of Life Scientists, who are **truly beginners**, and who want or need 
+audience of Life Scientists, who are    
+**truly beginners**, and who want or need 
 to be better. To strive toward this 
-goal Dr. Hoyt will embrace active learning and pedagogy created by experts including 
+goal Dr. Hoyt will embrace The Carpentries active learning pedagogy and continue to
+improve the course through practices of education experts including 
 [Dr. Rochelle Tractenberg](https://cbpr.georgetown.edu/rochelle_tractenberg/#)
 who developed the [Mastery Rubric for Bioinformatics](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/) (described in an interview by 
 [Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
@@ -33,12 +40,12 @@ currently under peer-review.
 
 #### Funding
 
-The initial development of this course, was supported by the Gordon
-and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
-[GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694). 
 Dr. Hoyt is generously supported by the 
 [Department of Biochemistry and Molecular Biology](http://biochemistry.okstate.edu/) at 
 [Oklahoma State University](https://go.okstate.edu/). 
+The initial development of this course, was supported by the Gordon
+and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
+[GBMF4563](https://www.moore.org/grants/list/GBMF4563) and [GBMF4855](https://www.moore.org/grants/list/GBMF4855), and by an [NSF CAREER award](http://nsf.gov/awardsearch/showAward?AWD_ID=0953694). 
 As these curricula become more diverse it will be difficult to maintain a 
 list of all funding sources, but we will try. 
 
