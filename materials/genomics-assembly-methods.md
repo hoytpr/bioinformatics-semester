@@ -11,7 +11,7 @@ language: Shell
 We are using them to demonstrate some processes used in 
 bioinformatics. We want you to know you can do this!
 
-#### Why are we using outdated software?
+#### Why are we using older software?
 
 Because these software provide an easy consistent example.
 If you can grasp the fundamental concepts presented here, it is very likely 
@@ -27,7 +27,7 @@ many important bioinformatics processes like assembly,
 such as [The Carpentries](https://carpentries.org/), including [Software Carpentry](https://software-carpentry.org/) and [Data Carpentry](https://datacarpentry.org/) 
 (which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, and also for their ability to remain current!  
 
-**You should do some research and find better software** 
+**Do some research and find the best software for your project** 
 if you plan to perform assembly or RNA-Seq in your own experiments.
 There are many online tutorials but only ***some*** are well-maintained. In 
 particular the [Galaxy Project](https://galaxyproject.org/) is a great place to find [current bioinformatics software](https://docs.galaxyproject.org/en/master/releases/index.html) and
@@ -141,13 +141,9 @@ soap.config  soapk31.pbs
 ~~~
 SOAPdenovo is different as it uses a configuration file `soap.config`, where we tell SOAP what our data are. We include detailed info below so we can move ahead with the computation step.
 
-(Table under construction using below verbiage)
+#### SOAPdenovo options and arguments
 
-
-
-
-
-[LIB]	Calls the soap denovo command library into action
+`[LIB]`	Calls the soap denovo command library into action
 
 `avg_ins=350`	This value indicates the average insert size of this library or the peak value position in the insert size distribution figure.
 
@@ -163,6 +159,7 @@ SOAPdenovo will use the pair-end libraries with insert size from smaller to larg
 
 `q2=../../data/group1/PE-350.2.fastq`	Pair-end file 2 (with quality scores)
 
+#### Running SOAPdenovo
 First edit the soap.config file to the correct data for your group:
 
 `$ nano -w soap.config`
@@ -174,7 +171,7 @@ q1=../../data/group1/PE-350.1.fastq
 q2=../../data/group1/PE-350.2.fastq
 ```
 
-Understand `soapk31.pbs`, it is important to know SOAPdenovo has 4 steps: **pregraph, contig, map, and scaff** are ‘step 1’ and correspond to making K-mer graph, then **contigging, map reads back, and scaffolding** are steps 2-4 respectively.  These steps can be run separately or all together as we are doing here.  See the command line options section of the manual for more information. 
+Understand `soapk31.pbs`, it is important to know SOAPdenovo has 4 steps: **pregraph, contig, map, and scaff** are ‘step 1’ and correspond to making a K-mer graph, then **contigging, map reads back, and scaffolding** are steps 2-4 respectively.  These steps can be run separately or all together as we are doing here.  See the command line options section of the manual for more information. 
 
 At this point you don’t need to change the submit script, if you want to look at it:
 

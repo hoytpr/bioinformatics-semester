@@ -58,7 +58,7 @@ will be very difficult to set up appointments less than 24 hours in advance.*
 ### Website
 
 The syllabus and other relevant class information and resources will be posted
-at [{{ site.url}}]({{ site.baseurl }}/).
+at [the GitHub site](https://hoytpr.github.io/bioinformatics-semester/).
 Changes to the schedule will be posted to this site so please try to check it
 periodically for updates.
 
@@ -90,16 +90,16 @@ Knowledge of basic biology.
 
 By the end of the course you will be able to use bioinformatic tools to import data 
 into proper formats for genomics, perform analysis on that data, and export the 
-results to graphs, text files, and databases. 
+results to graphs, text files, and potentially databases. 
 
 ### Course Goals and Objectives
 
 Students completing this course will be able to:
 
-* Create well structured dataframes
-* Extract information from dataframes
 * Write simple computer programs in the BASH shell or R
 * Automate data analysis
+* Create well structured dataframes
+* Extract information from dataframes
 * Apply these tools to address biological questions
 
 
@@ -145,10 +145,10 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 
 ### Assignment policy
 
-Assignments are due Monday night by 11:59 pm Central Time. This allows you to be 
+Assignments are due Friday night by 11:59 pm Central Time. This allows you to be 
 finished with one week's material before starting the next week's material.
-Assignments should be submitted via [email](mailto:peter.r.hoyt@okstate.edu). 
-Submitting to [Canvas](https://canvas.okstate.edu/courses/39012) is an ongoing effort. 
+Assignments should be submitted via [Canvas](https://canvas.okstate.edu/courses/51969/quizzes)
+using the "quizzes" category. In emergencies, assignments can be submitted by [email](mailto:peter.r.hoyt@okstate.edu). 
 
 
 ### Course Technology
@@ -232,11 +232,11 @@ detailed grade. Other problems will be graded as follows:
 
 ## Course Schedule
 
-The details course schedule is available on the course website at:
-[{{ site.url }}/schedule]({{ site.baseurl }}/schedule).
+The details of the course schedule are available on the course website:
+[schedule]({{ site.baseurl }}/schedule).
 
 
-**Disclaimer:** This syllabus represents my current plans and objectives. As we
+**Disclaimer:** This syllabus represents our current plans and objectives. As we
 go through the semester, those plans may need to change to enhance the class
 learning opportunity. Such changes will be communicated clearly both on the
 website and in class.

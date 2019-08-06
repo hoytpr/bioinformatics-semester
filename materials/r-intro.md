@@ -355,6 +355,9 @@ use the arrow keys to provide additional help for each of the arguments.
 
 <img src="/fig/studio_contexthelp2.png" alt="rstudio default session" style="width: 600px;"/>
 
+
+<!--
+
 ```
 ________________________________________________________________
 > Do [Exercise 1.1-1.3 - Basic Expressions]({{ site.baseurl }}/exercises/Expressions-and-variables-basic-expressions-R/)
@@ -369,12 +372,9 @@ ________________________________________________________________
 .
 _________________________________________________________________
 ```
-<!--
+
 
 Start of UF scripts
-
-
-
 
 Create a new folder for today's scripts
 

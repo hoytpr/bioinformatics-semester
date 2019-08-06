@@ -305,4 +305,5 @@ and uses `cat stats-NENE01729B.txt`
 to examine one of the completed output files.
 It looks good,
 so she decides to get some coffee and catch up on her reading.
+
 ![script-running]({{ site.baseurl }}/fig/reading-book.png)

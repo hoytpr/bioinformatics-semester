@@ -3,11 +3,13 @@ layout: default
 ---
 
 This website hosts introductory material for teaching biologists how to interact
-with data including: data structure, database management systems, and
+with data including: use of the Unix shell, creating scripts, using genomics tools 
+at the command-line, and creating automated genomics scripts. It leads into 
+using R-programming with data structures, and
 programming for data manipulation, analysis, and visualization. It is designed
 for self-guided students but can be used to be used as a flipped university course. 
 Instructors are welcome to modify and use the material for your own 
-courses. Many people have contributed to the development of this course, and 
+courses. Many people have contributed to the development of this course (see [Acknowledgements]({{ site.baseurl }}/about/Acknowledgements), [README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages), and 
 we/they encourage collaborative development and contributions by other
 instructors, with the hopes that this will lead to better training and resources 
 for everyone. 
@@ -26,6 +28,8 @@ For Students
 : <a href="{{ site.baseurl}}/materials/datasets">
   <i class="fa fa-download fa-fw"></i> Datasets</a>
 
+<!--
+
 For Instructors
 : <a href="{{ site.baseurl}}/readings">
   <i class="fa fa-book fa-fw"></i> Readings</a>
@@ -39,3 +43,5 @@ For Instructors
   <i class="fa fa-magic fa-fw"></i> Exercises</a>
 : <a href="{{ site.baseurl}}/docs">
   <i class="fa fa-question-circle fa-fw"></i> Course Development Help</a>
+
+-->

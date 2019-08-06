@@ -34,14 +34,19 @@ proceeding with this lesson.
 Log into the Cowboy Supercomputer:
 [Instructions here](https://hpcc.okstate.edu/content/logging-cowboy)
 
+> *Special note to curriculum developers:
+> This course was reaching the data limit for Github, so files had 
+> to be moved. If you are teaching this course, please feel free
+> to request any datafiles. This will be fixed in the future.*
+
 Then open your FTP software, and connect to your account on Cowboy.
 You should have been given the file `mcbios.tar.gz`, for you to 
-place on your desktop. Alternatively, download the file 
-[mcbios.zip]({{ site.baseurl }}/data/mcbios.zip) to your local machine 
-and unzip it. Then using FTP, transfer the file `mcbios.tar.gz`  
+place on your desktop. **Alternatively, registered students can download the file 
+[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto your local machine 
+and unzip it**. Then using FTP, transfer the file `mcbios.tar.gz`
 (or `mcbios.zip`) into your `/scratch/username` directory on Cowboy.
 NOTE that you should substitute `username` with your actual 
-username for the computer. For example, my username is `phoyt`
+username for the computer. For example, if your username is `phoyt`
 and the mcbios.zip file will be uploaded to `/scratch/phoyt`.
 
 Then from your terminal program (Windows users will
@@ -97,7 +102,7 @@ What you should now have:
     `-- velvetk31.pbs
 ~~~
 
-We will dive into each directory for each task:  fastqc, velvet, soap, abyss and nucmer in that order. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as  a note to yourself later.
+We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as a note to your future self.
 
 ### Important notes before hands-on
 Since we are using the Cowboy cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
@@ -115,7 +120,7 @@ Use `ls` to see what files or directories are present:
 $ ls
 group1  group2  group3  group4  group5
 ~~~
-There are five group directories, so that different groups of students
+There are five group directories, so that up to five different groups of students
 can work on a different chromosome in yeast. You can then compare your results. 
 As an example, everyone should look inside the `group1` directory:
 
@@ -136,7 +141,7 @@ Our assembly will start using one Illumina library, PE-350, which is a paired en
 >~~~
 >@READ-ID
 >ATAGAGATAGAGAGAG (the sequence: here showing 16 nucleotides)
->+READ-ID (usually empty. Can repeat READ-ID)
+>+READ-ID (usually empty. Otherwise will repeat READ-ID)
 >;9;7;;.7;3933334 (**quality** identifiersfor each of the 16 bases shown)
 >~~~
 >
@@ -146,7 +151,7 @@ Our assembly will start using one Illumina library, PE-350, which is a paired en
 > 
 >-Wikipedia.
 
-Or you can just use this chart: 
+The basics of PHRED scores are decsribed in this chart: 
 
 | Quality Score	| Probability of incorrect base call | Base call accuracy |
 | ---- | ------------- | -----------|
@@ -158,20 +163,22 @@ Or you can just use this chart:
 
 Almost all modern sequence data uses the PHRED+33 (version 1.8 or newer) base call system. 
 
-If a base call has PHRED quality of 20 (i.e. 1% error), PHRED(20)+33=**53**, 
-which corresponds to the character 5 using the reference chart below 
-(the "S" range). There is an older PHRED+64 system 
-(older than version 1.8, the "I" range) that is rarely used anymore, 
-but in PHRED+64 20+64=84, which is T. 
+If a base call has PHRED **quality** score of 20 (i.e. 1% error), 
+the PHRED+33 system adds 33 to the quality score: PHRED(20)+33=**53**, 
+which corresponds to and is given the **character** 5 using the reference chart below 
+(the "S" range) which is what shows up on the fourth line of every read within a fastq file. 
+
+> There is an older PHRED+64 system 
+> (older than version 1.8, the "I" range) that is rarely used anymore, 
+> where in PHRED+64 a score of 20 would be PHRED(20)+64=84, which is T.
+> It is very, very uncommon to see any sequence data using PHRED+64. 
 
 Using the table below you can usually determine if sequence quality scores 
 are using PHRED+33, or PHRED+64 encoding. (hint: PHRED+33 max score is "J")
 
-![PredScores]({{ site.baseurl }}/fig/PhredScores.png)
+![PhredScores]({{ site.baseurl }}/fig/PhredScores.png)
 
-Go back to our FASTQ files,  find out answers to these questions
-and submit them to [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/108839)
-
+### Exercise
 The base quality in my data is encoded in `________` (Phred+33 or Phred+64 ?).
 
 Library PE-350 contains a total of `______` reads. 
@@ -202,15 +209,15 @@ to bring up the last command, then use arrow keys to move over to change
 
 fastqc puts the results in the same folder as the data (in this case `data/group1/`)
 
-Instructions to download your fastqc results are at this link.
+Download your fastqc results using FTP (Filezilla, WinSCP, or even at the command-line using SCP).
 
-FASTQC generates a HTML report for each FASTQ file you run.  Use the WINSCP program to find the folder in `/scratch/username/mcbios/data/group1` (if you are in a different group, use that group's number) which holds the results of your analysis.  Use WinSCP transfer the PE-350.1_fastqc folder to your desktop and double-click on  file fastqc_report.html (on your desktop) to open it in a browser. For more information and to see examples of what bad data look like, read the FASTQC manual when you have time. 
+FASTQC generates a HTML report for each FASTQ file you run.  Use the WINSCP program to find the folder in `/scratch/username/mcbios/data/group1` (if you are in a different group, use that group's number) which holds the results of your analysis.  Use WinSCP to transfer the PE-350.1_fastqc folder to your desktop and double-click on  file fastqc_report.html (on your desktop) to open it in a browser. For more information and to see examples of what bad data look like, read the FASTQC manual when you have time. 
 
-#### Exercise
+#### Assignment
 
-Report on Library PE-350 fastQC stats: 
-Read count `_____`, Read length `_____` 
-Duplication level `_____`, Adapters? `_____` (hint: look for“over-represented sequences” in report)
-Answer the same questions for PE-350.2.fastq
+Find the assignment and submit answers to [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/108839) 
+
+
+
 
 

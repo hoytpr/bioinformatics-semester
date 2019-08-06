@@ -6,7 +6,6 @@ language: Shell
 exercises: ['Tidy Data Rules', 'Organizing Early']
 ---
 Uncomment below to work on assignment
-(under development)
 
 <!--
 

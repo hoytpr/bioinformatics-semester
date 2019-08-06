@@ -13,30 +13,29 @@ Objectives:
 - Write a shell script that operates on a set of files defined by the user on the command line.
 - Create pipelines that include shell scripts you, and others, have written.
 
-### Shell Magic!
+### Nelle's Shell Works Well!
 
 Nelle has graduated and moved on to a new position. She is continuing similar studies
-with a group of scientists in Antactica, and has continued to improve her coding skills. 
-We are finally ready to see what makes the shell such a powerful programming environment.
-We are going to take the commands we repeat frequently and save them in files
+with a group of scientists in Antarctica, and has continued to improve her coding skills. 
+She is ready to use the shell as a powerful programming environment.
+We are going to follow along as she takes the commands we repeat 
+frequently and saves them in files
 so that we can re-run all those operations again later by typing a single command.
+
 For historical reasons,
 a bunch of commands saved in a file is usually called a **shell script**,
 but make no mistake:
 these are actually small **programs**.
 
-Let's start by going back to `molecules/` and creating a new file, `middle.sh` which will
-become our shell script:
+Let's start by going back to `molecules/` and use the command `nano middle.sh` 
+to open a file, `middle.sh` which will become our shell script:
 
 ~~~
 $ cd molecules
 $ nano middle.sh
 ~~~
 
-The command `nano middle.sh` opens the file `middle.sh` within the text editor "nano"
-(which runs within the shell).
-If the file does not exist, it will be created.
-We can use the text editor to directly edit the file -- we'll simply insert the following line:
+Let's insert the following line:
 
 ~~~
 head -n 15 octane.pdb | tail -n 5
@@ -67,18 +66,6 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 Sure enough,
 our script's output is exactly what we would get if we ran that pipeline directly.
 
-> ## Text vs. Whatever
->
-> We usually call programs like Microsoft Word or LibreOffice Writer "text
-> editors", but we need to be a bit more careful when it comes to
-> programming. By default, Microsoft Word uses `.docx` files to store not
-> only text, but also formatting information about fonts, headings, and so
-> on. This extra information isn't stored as characters, and doesn't mean
-> anything to tools like `head`: they expect input files to contain
-> nothing but the letters, digits, and punctuation on a standard computer
-> keyboard. When editing programs, therefore, you must either use a plain
-> text editor, or be careful to save files as plain text.
-
 What if we want to select lines from an arbitrary file?
 We could edit `middle.sh` each time to change the filename,
 but that would probably take longer than just retyping the command.
@@ -88,14 +75,14 @@ Instead, let's edit `middle.sh` and make it more versatile:
 $ nano middle.sh
 ~~~
 
-Now, within "nano", replace the text `octane.pdb` with the special variable called `$1`:
+Now, within `nano`, replace the text `octane.pdb` with the special variable called `$1`:
 
 ~~~
 head -n 15 "$1" | tail -n 5
 ~~~
 
 Inside a shell script,
-`$1` means "the first filename (or other argument, or standard input) on the command line".
+`$1` means "the first filename (or value, or input) on the command line".
 We can now run our script like this:
 
 ~~~
@@ -118,16 +105,17 @@ ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
 ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 ~~~
 
-> ## Double-Quotes Around Arguments
+> ### Double-Quotes Around Arguments
 >
 > For the same reason that we put the loop variable inside double-quotes,
 > in case the filename happens to contain any spaces,
 > we surround `$1` with double-quotes.
 
 
-We still need to edit `middle.sh` each time we want to adjust the range of lines,
-though.
-Let's fix that by using the special variables `$2` and `$3` for the
+THis script is great if we always want lines 11 through 15 of each file, but 
+if we want to change the lines that are output, we would still need to 
+edit `middle.sh` each time.
+Let's fix that by using more special variables like `$2` and `$3` for the
 number of lines to be passed to `head` and `tail` respectively:
 
 ~~~
@@ -147,7 +135,7 @@ ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 ~~~
 
 By changing the arguments to our command we can change our script's
-behaviour:
+output:
 
 ~~~
 $ bash middle.sh pentane.pdb 20 5
@@ -165,8 +153,8 @@ We can improve our script by adding some **comments** at the top:
 ~~~
 $ nano middle.sh
 
-# Select lines from the middle of a file.
-# Usage: bash middle.sh filename end_line num_lines
+# This selects lines from the middle of a file.
+# To use: bash middle.sh filename end_line num_lines
 head -n "$2" "$1" | tail -n "$3"
 ~~~
 
@@ -174,10 +162,11 @@ A comment starts with a `#` character and runs to the end of the line.
 The computer ignores comments,
 but they're invaluable for helping people (including your future self) understand and use scripts.
 The only caveat is that each time you modify the script,
-you should check that the comment is still accurate:
-an explanation that sends the reader in the wrong direction is worse than none at all.
+you should check that the comment is still accurate!
+An explanation that sends the reader in the wrong direction is worse than none at all.
 
-What if we want to process many files in a single pipeline?
+*What if we want to process many files in a single pipeline?*
+
 For example, if we want to sort our `.pdb` files by length, we would type:
 
 ~~~
@@ -191,15 +180,15 @@ We could put this in a file,
 but then it would only ever sort a list of `.pdb` files in the current directory.
 If we want to be able to get a sorted list of other kinds of files,
 we need a way to get all those names into the script.
-We can't use `$1`, `$2`, and so on
+BUT, we can't use `$1`, `$2`, and so on
 because we don't know how many files there are.
-Instead, we use the special variable `$@`,
+Instead, we use the special variable **`$@`**,
 which means,
-"All of the command-line arguments to the shell script."
+***"All of the command-line arguments to the shell script."***
 We also should put `$@` inside double-quotes
 to handle the case of arguments containing spaces
 (`"$@"` is equivalent to `"$1"` `"$2"` ...)
-Here's an example:
+Here's an example using a script we name "sorted.sh":
 
 ~~~
 $ nano sorted.sh
@@ -207,7 +196,9 @@ $ nano sorted.sh
 # Usage: bash sorted.sh one_or_more_filenames
 wc -l "$@" | sort -n
 ~~~
-
+Now we can not only sort by lines all the *.pdb files in the `molecules` directory, 
+we can add more files to sort, for example in the `creatures` directory. 
+All we have to do is enter the correct path to the files we want to sort!
 ~~~
 $ bash sorted.sh *.pdb ../creatures/*.dat
 9 methane.pdb
@@ -220,9 +211,10 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 163 ../creatures/unicorn.dat
 ~~~
 
-> ## List Unique Species
+> ### Using loops with special variables
 >
-> Leah has several hundred data files, each of which is formatted like this:
+> Remember when we were learning [how to use pipes]({{ site.baseurl }}/materials/shell04/#pipes) with the file animals.txt?
+> Imagine if you had several hundred files, all formatted like this:
 >
 > ~~~
 > 2013-11-05,deer,5
@@ -237,7 +229,8 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 >
 > An example of this type of file is given in `data-shell/data/animal-counts/animals.txt`.
 > 
-> Write a shell script called `species.sh` that takes any number of
+> Earlier we wrote a pipeline to extract and count the unique species in the file. 
+> Now let's write a shell script called `species.sh` that takes ***any number*** of
 > filenames as command-line arguments, and uses `cut`, `sort`, and
 > `uniq` to print a list of the unique species appearing in each of
 > those files separately.
@@ -248,104 +241,57 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 > > # Script to find unique species in csv files where species is the second data field
 > > # This script accepts any number of file names as command line arguments
 > >
-> > # Loop over all files
+> > # First it loops over all files
 > > for file in $@ 
 > > do
 > > 	echo "Unique species in $file:"
-> > 	# Extract species names
+> > 	# Inside the loop it extracts species names
 > > 	cut -d , -f 2 $file | sort | uniq
 > > done
 > > ```
 > > 
 
-> ## Why Isn't It Doing Anything?
->
-> What happens if a script is supposed to process a bunch of files, but we
-> don't give it any filenames? For example, what if we type:
->
-> ~~~
-> $ bash sorted.sh
-> ~~~
->
-> but don't say `*.dat` (or anything else)? In this case, `$@` expands to
-> nothing at all, so the pipeline inside the script is effectively:
->
-> ~~~
-> $ wc -l | sort -n
-> ~~~
->
-> Since it doesn't have any filenames, `wc` assumes it is supposed to
-> process standard input, so it just sits there and waits for us to give
-> it some data interactively. From the outside, though, all we see is it
-> sitting there: the script doesn't appear to do anything.
+### Special variables need inputs!
 
-Pretend we have just run a series of commands that did something useful --- for example,
-that created a graph we'd like to use in a paper.
-We'd like to be able to re-create the graph later if we need to,
-so we want to save the commands in a file.
-Instead of typing them in again
-(and potentially getting them wrong)
-we can do this:
+What happens if a script is supposed to process a bunch of files, but we
+don't give it any filenames? For example, what if we type:
 
 ~~~
-$ history | tail -n 5 > redo-figure-3.sh
+$ bash sorted.sh
 ~~~
 
-The file `redo-figure-3.sh` now contains:
+but don't say `*.dat` (or anything else)? In this case, `$@` expands to
+nothing at all, so the pipeline inside the script is effectively:
 
 ~~~
-297 bash goostats NENE01729B.txt stats-NENE01729B.txt
-298 bash goodiff stats-NENE01729B.txt /data/validated/01729.txt > 01729-differences.txt
-299 cut -d ',' -f 2-3 01729-differences.txt > 01729-time-series.txt
-300 ygraph --format scatter --color bw --borders none 01729-time-series.txt figure-3.png
-301 history | tail -n 5 > redo-figure-3.sh
+$ wc -l | sort -n
 ~~~
 
-After a moment's work in an editor to remove the serial numbers on the commands,
-and to remove the final line where we called the `history` command,
-we have a completely accurate record of how we created that figure.
-
-> ### Why Record Commands in the History Before Running Them?
->
-> If you run the command:
->
-> ~~~
-> $ history | tail -n 5 > recent.sh
-> ~~~
->
-> the last command in the file is the `history` command itself, i.e.,
-> the shell has added `history` to the command log before actually
-> running it. In fact, the shell *always* adds commands to the log
-> before running them. Why do you think it does this?
->
-> > ### Solution
-> > If a command causes something to crash or hang, it might be useful
-> > to know what that command was, in order to investigate the problem.
-> > Were the command only be recorded after running it, we would not
-> > have a record of the last command run in the event of a crash.
-> 
-
-In practice, most people develop shell scripts by running commands at the shell prompt a few times
-to make sure they're doing the right thing,
-then saving them in a file for re-use.
-This style of work allows people to recycle
-what they discover about their data and their workflow with one call to `history`
-and a bit of editing to clean up the output
-and save it as a shell script.
+Since it doesn't have any filenames, `wc` assumes it is supposed to
+process standard input, so it just sits there and waits for us to give
+it some data interactively. From the outside, though, all we see is it
+sitting there: the script doesn't appear to do anything.
 
 ### Future Nelle's Pipeline: Creating a Script
 
 **Nelle has moved on**, but never forgot how the supervisor insisted that 
 all her analytics must be reproducible. The easiest way to capture 
 all the steps is in a script. Nelle is much better at scripting now, 
-and wants to rewrite some scripts for re-analyzing her data.
+and wants to rewrite some scripts for analyzing her new data
+from Antarctica.
 
 First we return to Nelle's data directory:
 ```
 $ cd ../north-pacific-gyre/2012-07-03/
 ```
+She checks her notes and sees her pipeline to run goostats was:
+~~~
+$ for datafile in NENE*[AB].txt; do echo $datafile; bash goostats $datafile stats-$datafile; done
+~~~
 
-She runs the editor and writes the following:
+She smiles as she realizes that her past self didn't make this loop into 
+a script, with information about how it was used. So Nelle runs 
+the editor and writes the following:
 
 ~~~
 # Calculate stats for data files.
@@ -371,6 +317,8 @@ $ bash do-stats.sh NENE*[AB].txt | wc -l
 
 so that the output is just the **number** of files processed
 rather than the names of the files that were processed.
+Nelle then emails the script to her former supervisor, who is planning to 
+do more analyses on gelatinous marine life. 
 
 One thing to note about Nelle's script is that
 it lets the person running it decide what files to process.
@@ -385,17 +333,52 @@ do
 done
 ~~~
 
-The advantage to this latter script is that this 
-always selects the right files:
-she doesn't have to remember to exclude the 'Z' files.
-The disadvantage is that it *always* selects *just* those files --- she can't run it on all files
+This latter script is good because it always selects the right files:
+Nelle doesn't have to remember to exclude the 'Z' files.
+The disadvantage is that it *always* selects *just* those 
+files --- she can't run it on all files
 (including the 'Z' files),
-or on the 'G' or 'H' files her new colleagues in Antarctica are producing,
-without editing the script.
-If she wanted to be more adventurous,
-she could modify her script to check for command-line arguments,
-and use `NENE*[AB].txt` if none were provided.
-Of course, this introduces another tradeoff between flexibility and complexity.
+or on the 'G' or 'H' files her former supervisor is creating. Also,
+the larger files her new colleagues in Antarctica are producing
+use a different filename convention. But her script is flexible!
+
+### History for Nelle's Figure-3
+
+One thing Nelle learned long ago was that her `history` could be
+very useful for remembering and writing good scripts.
+She remembers creating Figure-3, and then while trying to 
+make it better, she forgot how she started formatting the data! 
+To re-create the graph all she had to do was output her 
+`history` to a file, then edit it to create the graph again.
+The other advantage of using `history` is she doesn't need to
+type the commands in again(and potentially getting them wrong).
+She does this:
+
+~~~
+$ history | tail -n 5 > redo-figure-3.sh
+~~~
+
+The file `redo-figure-3.sh` now contains:
+
+~~~
+297 bash goostats NENE01729B.txt stats-NENE01729B.txt
+298 bash goodiff stats-NENE01729B.txt /data/validated/01729.txt > 01729-differences.txt
+299 cut -d ',' -f 2-3 01729-differences.txt > 01729-time-series.txt
+300 ygraph --format scatter --color bw --borders none 01729-time-series.txt figure-3.png
+301 history | tail -n 5 > redo-figure-3.sh
+~~~
+
+After a moment's work in an editor to remove the serial numbers on the commands,
+and to remove the final line where she called the `history` command,
+she has a completely accurate record of how she created that figure.
+
+In practice, most people develop shell scripts by running commands at the shell prompt a few times
+to make sure they're doing the right thing,
+then saving them in a file for re-use.
+This style of work allows people to recycle
+what they discover about their data and their workflow with one call to `history`
+and a bit of editing to clean up the output
+and save it as a shell script.
 
 > ### Class Exercise: Debugging Scripts
 >
@@ -410,14 +393,12 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 >     bash goostats $datafile stats-$datafile
 > done
 > ~~~
-> {: .language-bash}
 >
 > When you run it:
 >
 > ~~~
 > $ bash do-errors.sh NENE*[AB].txt
 > ~~~
-> {: .language-bash}
 >
 > the output is blank.
 > To figure out why, re-run the script using the `-x` option:
@@ -425,24 +406,22 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > ~~~
 > bash -x do-errors.sh NENE*[AB].txt
 > ~~~
-> {: .language-bash}
 >
 > What is the output showing you?
 > Which line is responsible for the error?
 >
-> > ## Solution
+> > ### Solution
 > > The `-x` flag causes `bash` to run in debug mode.
 > > This prints out each command as it is run, which will help you to locate errors.
 > > In this example, we can see that `echo` isn't printing anything. We have made a typo
 > > in the loop variable name, and the variable `datfile` doesn't exist, hence returning
 > > an empty string.
-> {: .solution}
-{: .challenge}
 
-### keypoints:
-- "Save commands in files (usually called shell scripts) for re-use."
-- "`bash filename` runs the commands saved in a file."
-- "`$@` refers to all of a shell script's command-line arguments."
-- "`$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc."
-- "Place variables in quotes if the values might have spaces in them."
-- "Letting users decide what files to process is more flexible and more consistent with built-in Unix commands."
+### Keypoints:
+
+- Save commands in files (usually called shell scripts) for re-use.
+- `bash filename` runs the commands saved in a file.
+- `$@` refers to all of a shell script's command-line arguments.
+- `$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc.
+- Place variables in quotes if the values might have spaces in them.
+- Letting users decide what files to process is more flexible and more consistent with built-in Unix commands.

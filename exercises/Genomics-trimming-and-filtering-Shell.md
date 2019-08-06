@@ -8,7 +8,11 @@ Uncomment below to work on exercise
 
 <!--
 
-> ## Exercise 1
+These have all been copied into 
+Genomics Read Quality Trimming
+Exercise.
+
+> Exercise 1
 >
 > Use the output from your Trimmomatic command to answer the
 > following questions.
@@ -16,15 +20,12 @@ Uncomment below to work on exercise
 > 1) What percent of reads did we discard from our sample?
 > 2) What percent of reads did we keep both pairs?
 >
-
-> ## Exercise 2
+>  Exercise 2
 > We trimmed our fastq files with Nextera adapters, 
 > but there are other adapters that are commonly used.
 > What other adapter files came with Trimmomatic?
 >
-
-
-> ## Bonus Exercise (Advanced)
+>  Bonus Exercise (Advanced)
 >
 > Now that we've quality controlled our samples, they should perform
 > better on the quality tests run by FastQC. Go ahead and re-run

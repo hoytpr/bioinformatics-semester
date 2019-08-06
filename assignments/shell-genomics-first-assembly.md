@@ -6,14 +6,7 @@ language: Shell
 exercises: ['Download Data', 'Assemble Genomes']
 ---
 
-#### Learning Objectives
-
-> Following this assignment students should be able to:
->
-> - Quality assess and improve raw sequence data
-> - Understand that there are different kinds of assemblers
-> - Know that using and optimizing multiple assemblies is best practice
-> - Perform and analyze a basic assembly
+[//]: # Uncomment below to work on exercise
 
 {% include assignment.html %}
 

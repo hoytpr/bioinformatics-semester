@@ -5,6 +5,12 @@ title: Genomics Advanced Shell
 language: Shell
 ---
 
+Uncomment below to work on exercise
+
+Tidy Data for Spring Break week
+
+<!--
+
 Assignment under development
 
 Lectures under development
@@ -14,11 +20,6 @@ Lectures under development
 1. Regular Expressions
 2. Using `sed`
 3. Using `awk`
-
-Uncomment below to work on exercise
-Not Used?
-
-<!--
 
 The solutions have the same name as this file except with .txt suffix, and 
 numbers 1. 2. etc. to match the exercise numbers

@@ -6,6 +6,4 @@ language: Shell
 exercises: ['Genomics Read Quality Trimming']
 ---
 
-Under development
-
 {% include assignment.html %}

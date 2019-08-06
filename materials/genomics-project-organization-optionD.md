@@ -72,25 +72,75 @@ documenting your genomics project.
 ## Options for this course
 
 Here is where the course and the workshops start to diverge into ***options***.    
-**Option A** is to use an online cloud computing resource (currently AWS) as is 
+**Option A** is to use an online cloud computing resource as is 
 described in the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html).     
-**Option B** is on the same page as **Option A** but is "Using the lessons on 
-your local machine". For Windows users, this works, mostly, using the 
+**Option B** is on the same page as **Option A** but is "Using the lessons 
+on your local machine". For Windows users, this works, mostly, using the 
 Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!    
-**Option C** might be available where you work using the University's supercomputers.     
-[**Option D**]({{ site.baseurl }}/materials/genomics-project-organization-optionD/#optionD) 
-is a great possibility, if the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
-cloud instance remains available.
+**Option C** might be availble where you work using the University's supercomputers.     
+**Option D** is only a possibility, but involves using a [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) cloud instance.
 
-### OptionA eventually leads back here
+### OptionD Cyverse Cloud
 
-***AWS:*** Follow the instructions on the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html). 
+**Option D** <a name="optionD"></a>  If you didn't mean to click on OptionD, 
+[go back to the OptionA AWS page.]({{ site.baseurl }}/materials/genomics-project-organization/#options)
 
-While logged into your AWS instance (or from inside of a 
-terminal window)     
-We start by **creating a directory**
+***Cyverse***: Obtain an account on [Cyverse](https://user.cyverse.org/register).
+
+After getting an account on Cyverse, request access (register for) an Atmosphere account. 
+For justification, state that you are taking a course at Oklahoma State 
+University from Dr. Peter R. Hoyt.
+
+To continue this lesson, log into your [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) account.
+Go to the "Images" tab and locate the image named ["DataCarpentry Genomics May2019
+May 8th 19 10:55 by williams"](https://atmo.cyverse.org/application/images/1699)
+Click on the blue "Launch" button under your username in the top right corner.
+
+If asked for "Resources" select "Medium 1" from the drop-down menu.
+
+The instance should say "Launching" with a circular indicator going crazy. 
+
+Now you have to wait about 35 minutes for the image to create the instance. (1:57PM until 2:33PM) 
+
+Return to the Atmosphere webpage, and click on the "Projects" tab to see your new "Project" called "Workshop".
+ 
+![projects]({{ site.baseurl }}/fig/cyverse-project.png)
+
+At the bottom of the "Workshop" Project window, click on the small three stacked nodes icon to see the progress of the instance. 
+
+The Instance should be "Active" under "Status" and under "Activity" should say "Deploying" 
+with an IP Address!
+ 
+![progress]({{ site.baseurl }}/fig/cyverse-deploying.png)
+
+The IP address is important for later, so write it down. 
+Once the instance says "Active" with a bright green DOT, you are good to proceed.  
+
+Click on the instance name and you should see a GUI with an option to "Open web shell" near the top-right. Click on "Open web shell". 
+
+This will put you inside a Terminal window (you will use the terminal from your browser), 
+BUT (and this is important!), you will still need to connect to the Workshop 
+because it is a "Docker image" (we won't be discussing these for a while).
+
+To connect to the Workshop Docker image, use ssh by entering the command 
+`ssh dcuser@127.0.0.1 -p 21 (password: data4Carp)`. 
+
+> SSH stands for "Secure Shell" or "Secure Socket Shell".
+> SSH is a secure way to access a computer over a network. 
+> This command also indicates that your username is "dcuser" and you want to access 
+> the computer at the IP address 127.0.0.1, using the port number 21 (-p 21). 
+
+After entering the command, you will immediately be asked for a password, which is "data4Carp"
+
+> NOTE: When we get to the R Lessons, in a NEW **web browser** tab, enter 
+> your Atmosphere instance IP address + ":8787" for example If your 
+> Atmosphere IP is "123.45.678" you would enter "123.45.678:8787" 
+> (user: dcuser, password: data4Carp)
+
+***Now*** you are inside the Genomics Workshop Cloud instance!
+From inside of the terminal window we start by **creating a directory**
 that we can use for the rest of the workshop/lesson. First navigate 
-to your AWS home directory. Use `cd`<kbd>Enter</kbd>, and 
+to your home directory. Use `cd`<kbd>Enter</kbd>, and 
 confirm that you are in the correct directory using the `pwd` command.
 
 ~~~
@@ -204,8 +254,7 @@ $ history | tail -n 7
 
 Using your knowledge of the shell, use the append 
 redirect `>>` to create a file called
-`dc_workshop_log_XXXX_XX_XX.sh` (Use the four-digit year, 
-two-digit month, and two digit day, *e.g.*
+`dc_workshop_log_XXXX_XX_XX.sh` (Use the four-digit year, two-digit month, and two digit day, *e.g.*
 `dc_workshop_log_2020_10_27.sh`)  
 
 You may have noticed that your history contains the `history` 
@@ -268,12 +317,14 @@ mkdir dc_workshop/results
 If you keep this file up to date, you can use it to re-do your work on 
 your project if something happens to your results files. To demonstrate 
 how this works, first delete
-your `dc_workshop` directory and all of its subdirectories. 
+your `dc_workshop` directory and all of its subdirectories.
+~~~
+$ rm -r dc_workshop
+~~~ 
 Look at your directory 
 contents to verify the directory is gone. 
 
 ~~~
-$ rm -r dc_workshop
 $ ls
 shell_data	dc_workshop_log_2020_10_27.sh
 ~~~

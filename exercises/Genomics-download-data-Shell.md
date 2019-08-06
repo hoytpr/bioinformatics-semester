@@ -8,6 +8,10 @@ Uncomment below to work on exercise
 
 <!--
 
+What is the Basecall accuracy of a single nucleotide with a PHRED score of "35"?
+
+What is the base call accuracy of a single nucleotide with a fastq score (line 4) of "E"?
+
 Log into the Cowboy Supercomputer using Putty or your terminal program. If you need a refresher on this the High Performance Computing Center has [a tutorial:](https://hpcc.okstate.edu/content/logging-cowboy)
 
 Click the following link to [download the data for your assembly and lessons]({{ site.baseurl }}/data/mcbios.zip)

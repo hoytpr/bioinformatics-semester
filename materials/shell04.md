@@ -17,25 +17,13 @@ language: Shell
 - Explain what usually happens if a program or pipeline isn't given any input to process.
 - Explain Unix's 'small pieces, loosely joined' philosophy.
 
-### keypoints to Learn
-
-- `cat` displays the contents of its inputs.
-- `head` displays the first 10 lines of its input.
-- `tail` displays the last 10 lines of its input.
-- `sort` sorts its inputs.
-- `wc` counts lines, words, and characters in its inputs.
-- `command > file` redirects a command's output to a file (overwriting any existing content).
-- `command >> file` appends a command's output to a file.
-- `<` operator redirects input to a command
-- `first | second` is a pipeline: the output of the first command is used as the input to the second.
-- The best way to use the shell is to use pipes to combine simple single-purpose programs (filters).
-
 ___________________________________________
 
-Now that we know a few basic commands,
+We'll get back to Nelle's journey soon, but now that we know a few basic commands,
 we can finally look at the shell's most powerful feature:
 the ease with which it lets us combine existing programs in new ways.
-We'll start with a directory called `molecules`
+
+We start with a directory called `molecules`
 that contains six files describing some simple organic molecules.
 The `.pdb` extension indicates that these files are in Protein Data Bank format,
 a simple text format that specifies the type and position of each atom in the molecule.
@@ -96,10 +84,10 @@ The greater than symbol, `>`, tells the shell to **redirect** the command's outp
 to a file instead of printing it to the screen. (This is why there is no screen output:
 everything that `wc` would have printed has gone into the
 file `lengths.txt` instead.)  The shell will create
-the file if it doesn't exist. If the file exists, it will be
-silently overwritten, which may lead to data loss and thus requires
-some caution.
-`ls lengths.txt` confirms that the file exists:
+the file if it doesn't exist. ***A word of caution:*** If the file exists, it will be
+silently overwritten, which may lead to data loss!!! 
+
+The command `ls lengths.txt` confirms that the file exists:
 
 ~~~
 $ ls lengths.txt
@@ -107,8 +95,8 @@ lengths.txt
 ~~~
 
 We can now send the content of `lengths.txt` to the screen using `cat lengths.txt`.
-`cat` stands for "concatenate":
-it prints the contents of files one after another.
+`cat` stands for "concatenate" and
+it outputs (prints) the contents of files one after another.
 There's only one file in this case,
 so `cat` just shows us what it contains:
 
@@ -123,57 +111,56 @@ $ cat lengths.txt
  107  total
 ~~~
 
-> ## Output Page by Page
->
-> We'll continue to use `cat` in this lesson, for convenience and consistency,
-> but it has the disadvantage that it always dumps the whole file onto your screen.
-> More useful in practice is the command **`less`**,
-> which you use with `less lengths.txt`.
-> This displays a screenful of the file, and then stops.
-> You can go forward one screenful by pressing the spacebar,
-> or back one by pressing `b`.  Press `q` to quit.
+### Using `less` for Page by Page Output
 
-Now let's use the `sort` command to sort its contents.
+We'll continue to use `cat` in this lesson, for convenience and consistency,
+but it has the disadvantage that it always dumps the whole file onto your screen.
+More useful in practice is the command **`less`**,
+which is used like: `less lengths.txt`.
+This displays one screenful of the file, and then stops.
+You can go forward one screenful by pressing the spacebar,
+or back one by pressing `b`.  Press `q` to quit.
 
-> #### From Homework: What Does `sort -n` Do?
->
-> If we run `sort` on a file containing the following lines:
->
-> ~~~
-> 10
-> 2
-> 19
-> 22
-> 6
-> ~~~
->
-> the output is:
->
-> ~~~
-> 10
-> 19
-> 2
-> 22
-> 6
-> ~~~
->
-> If we run `sort -n` on the same input, we get this instead:
->
-> ~~~
-> 2
-> 6
-> 10
-> 19
-> 22
-> ~~~
->
-> The `-n` flag specifies a numerical rather than an alphanumerical sort.
+### Using `sort`
+Not surprisingly, the `sort` command sorts elements in a file. 
+The default for `sort` is to use **alphanumerical** order. 
+This is important to know when working with numbers.
+If we run `sort` on a file containing the following lines:
 
-We will also use the `-n` flag to specify that the sort is
-numerical instead of **alpha**numerical.
-This does *not* change the file;
-instead, it sends the sorted result to the screen:
+~~~
+10
+2
+19
+22
+6
+~~~
 
+the output is slightly different because it's sorted in *alphanumerical* order:
+
+~~~
+10
+19
+2
+22
+6
+~~~
+
+If we run `sort -n` on the same input, we get this instead:
+
+~~~
+2
+6
+10
+19
+22
+~~~
+
+The `-n` flag specifies a **numerical** rather than an alphanumerical sort.
+
+It's also important to know that using `sort` does *not* change the file;
+instead, it outputs the sorted result to the screen.
+
+Now let's use the `sort` command to sort the contents of `lengths.txt`.
 ~~~
 $ sort -n lengths.txt
   9  methane.pdb
@@ -185,11 +172,11 @@ $ sort -n lengths.txt
 107  total
 ~~~
 
-We can put the sorted list of lines in another temporary file called `sorted-lengths.txt`
-by putting `> sorted-lengths.txt` after the command,
+We can put a permanent sorted list of lines in another file called `sorted-lengths.txt`
+by redirecting the output using `> sorted-lengths.txt` after the command,
 just as we used `> lengths.txt` to put the output of `wc` into `lengths.txt`.
 Once we've done that,
-we can run another command called `head` to get the first few lines in `sorted-lengths.txt`:
+we can run the `head` command to output the first few lines of `sorted-lengths.txt`. Let's just look at the top line using `head -n 1`:
 
 ~~~
 $ sort -n lengths.txt > sorted-lengths.txt
@@ -200,32 +187,35 @@ $ head -n 1 sorted-lengths.txt
   9  methane.pdb
 ~~~
 
-Using `-n 1` with `head` tells it that
+Remember that using `-n 1` telss the `head` command
 we only want the first line of the file;
 `-n 20` would get the first 20,
 and so on.
-Since `sorted-lengths.txt` contains the lengths of our files ordered from least to greatest,
+Since `sorted-lengths.txt` contains the lengths of our files in
+numerical order (*i.e.* from least to greatest),
 the output of `head` must be the file with the fewest lines.
 
-> ## Redirecting to the same file
->
-> It's a very bad idea to try redirecting
-> the output of a command that operates on a file
-> to the ***same*** file. For example:
->
-> ~~~
-> $ sort -n lengths.txt > lengths.txt
-> ~~~
->
-> Doing something like this may give you
-> incorrect results and/or delete
-> the contents of `lengths.txt`.
+#### Always redirect output to a different filename
+
+While working with files it's almost always a very bad idea to 
+redirect a command's output to the ***same*** file. For example:
+
+~~~
+$ sort -n lengths.txt > lengths.txt
+~~~
+
+Although `sort` doesn't change the file when the output
+goes to the terminal, if you redirect the output to a file, 
+the file has the new sorted structure. If you redirect a file to 
+the ***same*** filename, it will overwrite (the same as deleting)
+the original contents of `lengths.txt`! Little things like this
+may cause incorrect results later. 
 
 
-### What Does `>>` Mean?
+### Another redirect: `>>` to append
 We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
-By using the `echo` command to print strings, test the commands below to reveal the difference
-between the two operators:
+By using the `echo` command to output some text, test the commands below 
+to reveal the difference between the two operators `>` and `>>`:
 
 ~~~
 $ echo hello > testfile01.txt
@@ -244,16 +234,22 @@ but the file gets overwritten each time we run the command.
 
 We see from the second example that the `>>` operator also writes "hello" to a file
 (in this case`testfile02.txt`),
-but **appends** the string to the file if it already exists (i.e. when we run it for the second time).
+but **appends** the string to the file when the file already exists (*i.e.* when we run it for the second time).
 
 
 ### Appending Data
 
 We have already met the `head` command, which prints lines from the start of a file.
-`tail` is similar, but prints lines from the end of a file instead.
+The `tail` command is similar, but prints lines from the end of a file instead. 
+So `tail` is very useful when working with "appending" outputs to a new file.
 
-Consider the file `data-shell/data/animals.txt`.
-After these commands, select the answer that
+Consider the file `data-shell/data/animals.txt`. First we can check how 
+many lines are in the file:
+```
+wc -l animals.txt
+8
+```
+After the following commands, select the answer that
 corresponds to the file `animalsUpd.txt`:
 
 ~~~
@@ -434,6 +430,7 @@ standard input.
 > a test
 > ```
 > <kbd>Ctrl-D</kbd> # This lets the shell know you have finished typing the input
+> and the shell executes the `wc -l` command using your input.
 >
 > ```
 > 3
@@ -469,7 +466,7 @@ Why do you think `uniq` only removes **adjacent** duplicated lines?
 (Hint: think about very large data sets.) What other command could
 you combine with it in a pipe to remove all duplicated lines?
 
-#### Solution help
+#### Solution Hint
 What's the output of:
 ```
 $ sort salmon.txt | uniq
@@ -477,7 +474,7 @@ $ sort salmon.txt | uniq
 
 <!--
 
-Solution: Te `head` command extracts the first 5 lines from `animals.txt`.> Then, the last 3 lines are extracted from the previous 5 by using the `tail` command.> With the `sort -r` command those 3 lines are sorted in reverse order and finally,> the output is redirected to a file `final.txt`.> The content of this file can be checked by executing 
+Solution: The `head` command extracts the first 5 lines from `animals.txt`. Then, the last 3 lines are extracted from the previous 5 by using the `tail` command. With the `sort -r` command those 3 lines are sorted in reverse order and finally, the output is redirected to a file `final.txt`. The content of this file can be checked by executing 
 
 -->
 
@@ -526,7 +523,7 @@ bear
 > $ cut -d , -f 2 animals.txt | sort | uniq
 > ```
 
-
+<a name="pipes"></a>
 ### Build a Pipe
 
 The file `animals.txt` contains 8 lines of data formatted as follows:
@@ -578,4 +575,17 @@ $ cut -d, -f 2 animals.txt | sort | uniq -c
 
 **Congratulations, you are well on the way to understanding 
 how to build pipelines in the Shell!**
+
+### Keypoints to Learn
+
+- `cat` displays the contents of its inputs.
+- `head` displays the first 10 lines of its input.
+- `tail` displays the last 10 lines of its input.
+- `sort` sorts its inputs.
+- `wc` counts lines, words, and characters in its inputs.
+- `command > file` redirects a command's output to a file (overwriting any existing content).
+- `command >> file` appends a command's output to a file.
+- `<` operator redirects input to a command
+- `first | second` is a pipeline: the output of the first command is used as the input to the second.
+- The best way to use the shell is to use pipes to combine simple single-purpose programs (filters).
 

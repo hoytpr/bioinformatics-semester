@@ -2,6 +2,9 @@
 layout: page
 title: Praise for Data Carpentry for Biologists
 ---
+(These learners took the Data Carpentry Workshops, or the Data Carpentry 
+Semester Course this course has evolved from. Dr. Hoyt welcomes feeedback
+to improve this course, and welcomes praise also!)
 
 > This is one of the most immediately useful courses I've ever
 > taken. Materials/resources for the class were excellent - always informative.

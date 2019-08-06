@@ -104,11 +104,21 @@ $ cd thesis
 $ nano draft.txt
 ~~~
 
+> ### Text vs. Whatever
+>
+> We usually call programs like Microsoft Word or LibreOffice Writer "text
+> editors", but we need to be a bit more careful when it comes to
+> programming. By default, Microsoft Word uses `.docx` files to store not
+> only text, but also formatting information about fonts, headings, and so
+> on. This extra information isn't stored as characters, and doesn't mean
+> anything to many shell tools. They expect input files to contain
+> nothing but the letters, digits, and punctuation on a standard computer
+> keyboard. When editing programs, therefore, you must either use a plain
+> text editor, or be careful to save files as plain text.
+
 > ### Which Editor?
 >
-> When we say, "`nano` is a text editor," we really do mean "text": it can
-> only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because it is one of the 
+> We use `nano` in examples because it is one of the 
 > least complex text editors. However, because of this trait, it may 
 > not be powerful enough or flexible enough for the work you need to do
 > after this workshop. On Unix systems (such as Linux and Mac OS X),

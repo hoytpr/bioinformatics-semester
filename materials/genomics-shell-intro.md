@@ -7,7 +7,7 @@ language: Shell
 
 ### Starting Genomics
 
-In previous lessons, you learned how to use the bash shell to interact with your computer through a command line interface. In this lesson, you will be applying this new knowledge to a more genomics oriented shell, located on a remote supercomputer (or even a remote cloud service). We will spend most of our time learning about the basics of the shell by manipulating some experimental data. Some of the data we’re going to be working with is quite large, and we’re also going to be using several bioinformatics packages in later lessons to work with this data. To avoid having to spend time downloading the data and downloading and installing all of the software, we’re going to be working with data on a remote server.
+In previous lessons, you learned how to use the bash shell to interact with your computer through a command line interface. In this lesson, you will be applying this new knowledge to a more genomics oriented shell, located on a remote supercomputer (or even a remote cloud service). We will spend most of our time learning about the basics of the shell by manipulating some experimental data. Some of the data we’re going to be working with is quite large, and we’re also going to be using several bioinformatics packages in later lessons to work with this data. To avoid having to spend time downloading the data and downloading and installing all of the software, we’re going to be working with data on a remote server. However, if you want to have the data we are using for this lesson, registered students can download it from [Canvas](https://canvas.okstate.edu/courses/51969/files/3495393/download?download_frd=1) then unzip it locally.
 
 ### Objectives
 

@@ -5,21 +5,21 @@ title: Introduction to the Shell
 language: Shell
 ---
 
-questions:
-- "What is a command shell and why would I use one?"
+#### Questions:
+- What is a command shell and why would I use one?
 objectives:
-- "Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs."
-- "Explain when and why command-line interfaces should be used instead of graphical interfaces."
+- Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
+- Explain when and why command-line interfaces should be used instead of graphical interfaces.
 keypoints:
-- "Explain the steps in the shell's read-run-print cycle."
-- "Most commands take flags (options) which begin with a `-`."
-- "Identify the actual command, flags, and filenames in a command-line call."
-- "Explain the steps in the shell's read-run-print cycle."
-- "Demonstrate the use of tab completion and explain its advantages."
+- Explain the steps in the shell's read-run-print cycle.
+- Most commands take flags (options) which begin with a `-`.
+- Identify the actual command, flags, and filenames in a command-line call.
+- Explain the steps in the shell's read-run-print cycle.
+- Demonstrate the use of tab completion and explain its advantages.
 keypoints:
-- "A shell is a program whose primary purpose is to read commands and run other programs."
-- "The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines."
-- "The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be."
+- A shell is a program whose primary purpose is to read commands and run other programs.
+- The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines.
+- The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be.
 
 ### Background
 At a high level, computers do four things:
@@ -44,7 +44,7 @@ If you wish to do complex, purpose-specific things it helps to have a richer mea
 of expressing your instructions to the computer. It doesn't need to be complicated or
 difficult, just a vocabulary of commands and a simple grammar for using them.
 
-This is what the shell provides - a simple language and a **command-line interface** 
+This is what the shell provides - a **simple language** and a **command-line interface** 
 to use it through. 
 
 The heart of a command-line interface is a **read-evaluate-print loop** (REPL). It is called
@@ -58,7 +58,7 @@ loops back and waits for you to enter another command.
 
 
 The Shell is a program which runs other programs rather than doing calculations itself.
-The most popular Unix shell is Bash, (the Bourne Again SHell --- so-called because 
+The most common Unix shell is Bash, (the Bourne Again SHell --- so-called because 
 it's derived from a shell written by Stephen Bourne).
 Bash is the default shell on most modern implementations of Unix
 and in most packages that provide Unix-like tools for Windows.
@@ -76,28 +76,37 @@ Network/              Volumes/
 bash-3.2$ 
 ~~~
 
-The first line shows only a **prompt**,
-indicating that the shell is waiting for input.
-Your shell may use different text for the prompt. Most importantly: 
+The first line shows only a **prompt** ("bash-3.2$"),
+indicating that the shell (in this case, a version "3.2") is waiting for input.
+Technically, the "$" is defined as the "prompt" but your shell may use 
+different text for the prompt.    
+Most importantly:    
 when typing commands, either from these lessons or from other sources,
 *do not type the prompt*, only the commands that follow it.
 
-The part that you type,
-`ls -F /` in the second line of the example,
-typically has the following structure: a **command**,
+IN the above example, the part that you type in the second 
+line of the example is,
+`ls -F /`,
+This typically has the following structure: a **command**,
 some **flags** (also called **options** or **switches**) and an **argument**.
-Flags start with a single dash (`-`) or two dashes (`--`), and change the behaviour of a command.
-Arguments tell the command what to operate on (e.g. files and directories).
-Sometimes flags and arguments are referred to as parameters.
-A command can be called with more than one flag and more than one argument: but a
-command doesn't always require an argument or a flag.
+
+**Commands** are actually special programs that are built into the Shell, 
+and are mostly the same for all types of "shells" available..
+
+**Flags** start with a single dash (`-`) or two dashes (`--`), and change the behaviour of a command.
+
+**Arguments** tell the command what to operate on (e.g. files and directories).
+
+Sometimes flags and arguments are referred to as ***parameters***.
+A command can be called with more than one flag and more than one argument: or, a
+command may not require an argument or a flag.
 
 In the second line of the example above, our **command** is `ls`, with a **flag** `-F` and an
 **argument** `/`. Each part is separated by spaces: if you omit the space 
 between `ls` and `-F` the shell will look for a command called `ls-F`, which 
-doesn't exist. Also, capitalization matters: `LS` is different from `ls`. 
+doesn't exist. Also, ***capitalization matters***: `LS` is different from `ls`. 
 
-Next we see the output that our command produced. In this case it is a listing 
+On the next line we see the output that our command produced. In this case it is a listing 
 of files and folders in a location called `/` - we'll cover what all these mean 
 later today. Those using a macOS might recognize the output in this example.
 
@@ -109,14 +118,16 @@ prompt look the same by executing the command `PS1='$ '`. But you can also leave
 your prompt as it is - often the prompt includes useful information about who and where 
 you are.
 
-Open a shell window and try executing `ls -F /` for yourself (don't forget that spaces
+Open a shell window (Windows users open the "GitBash window) and try 
+executing `ls -F /` for yourself (don't forget that spaces
 and capitalization are important!). You can change the prompt too, if you like.
 
 ### How does the shell know what `ls` and its flags mean?
 
 Every command is a program stored somewhere on the computer, and the shell keeps a
 list of places to search for commands (the list is in a **variable** called `PATH`, 
-but those are concepts we'll meet later and are not too important at the moment). Recall
+but those are concepts we'll meet later and are not too important at the moment). 
+Right now, the most important thing to remember is
 that commands, flags and arguments are separated by spaces.
 
 So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that the
@@ -129,8 +140,7 @@ So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that
     b. Execute it, passing it the flags and arguments (`-F` and `/`) to 
        interpret as the program sees fit 
 3. Print the output produced by the program
-
-and then print the prompt and wait for you to enter another command.
+4. and then print the prompt and wait for you to enter another command.
 
 > ## Command not found 
 > If the shell can't find a program whose name is the command you typed, it 
@@ -149,17 +159,18 @@ and then print the prompt and wait for you to enter another command.
 > the space between `ls` and `-F`. 
 {: .callout}
 
-### Is it difficult?
+### Is the Shell difficult?
 
-It is a different model of interacting than a GUI, and that 
+The Shell is a different than interacting than a GUI, and that 
 will take some effort - and some time - to learn. A GUI 
-presents you with choices and you select one. With a **command line interface** (CLI) the choices are combinations 
+presents you with choices and you select one. With a **command line interface** (CLI) 
+the choices are combinations 
 of commands and parameters, more like words in a language than buttons on a screen. They
 are not presented to you so
 you must learn a few, like learning some vocabulary in a new language. But a small 
-number of commands gets you a long way, and we'll cover those essential few today.
+number of commands gets you a long way, and we'll cover an essential few today.
 
-### Flexibility and automation 
+### The Shell provides flexibility and automation 
 
 The grammar of a shell allows you to combine existing tools into powerful
 pipelines and handle large volumes of data automatically. Sequences of
@@ -167,14 +178,15 @@ commands can be written into a *script*, improving the reproducibility of
 workflows and allowing you to repeat them easily.
 
 In addition, the command line is often the easiest way to interact with remote machines and supercomputers.
-Familiarity with the shell is near essential to run a variety of specialized tools and resources
+Familiarity with the shell is pretty much essential to run a variety 
+of specialized tools and resources
 including high-performance computing systems.
 As clusters and cloud computing systems become more popular for scientific data crunching,
 being able to interact with the shell is becoming a necessary skill.
 We can build on the command-line skills covered here
 to tackle a wide range of scientific questions and computational challenges.
 
-## Nelle's Pipeline: Starting Point
+## Nelle's Pipeline: A Starting Point
 
 Nelle Nemo, a marine biologist,
 has just returned from a six-month survey of the
@@ -213,7 +225,7 @@ Missing that paper deadline is looking increasingly likely.
 The next few lessons will explore what she should do instead.
 More specifically,
 they explain how she can use a command shell to run the `goostats` program,
-using loops to automate the repetitive steps e.g. entering file names,
+and use **loops** to automate the repetitive steps e.g. entering file names,
 so that her computer can work 24 hours a day while she writes her paper.
 
 As a bonus,

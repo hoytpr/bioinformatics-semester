@@ -74,7 +74,7 @@ Since it's too late to get the information any other way,
 she must exclude those two files from her analysis.
 She could just delete them using `rm`,
 but there are actually some analyses she might do later where depth doesn't matter,
-so instead, she'll just be careful later on to select files using the wildcard expression `*[AB].txt`.
+so instead, she'll just be careful to select files using the wildcard expression `*[AB].txt`.
 As always,
 the `*` matches any number of characters;
 the expression `[AB]` matches either an 'A' or a 'B',
@@ -111,7 +111,6 @@ this.
 > 2. The output from the new commands is separated because there are two commands.
 > 3. When there are no files ending in `A.txt`, or there are no files ending in
 > `B.txt`.
-> 
 
 ### Removing Unneeded Files
 
@@ -134,5 +133,5 @@ The raw files end in `.dat` and the processed files end in `.txt`.
 > so the command would try to remove all matched files and an additional
 > file called `.txt`
 > 4. (No!) The shell would expand `*.*` to match all files with any extension,
-> so this command would delete all files
+> so this command would delete **all** files
 

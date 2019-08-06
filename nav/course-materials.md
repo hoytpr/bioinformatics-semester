@@ -17,3 +17,6 @@ title: Course Materials
 
 <a href="{{ site.baseurl}}/exercises">
 <i class="fa fa-magic fa-fw"></i> Exercises</a>: Collection of modular exercises
+
+<a href="{{ site.baseurl}}/materials/datasets">
+<i class="fa fa-download fa-fw"></i> Datasets</a>: Links to external datasets used

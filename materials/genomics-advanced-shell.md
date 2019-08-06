@@ -81,7 +81,7 @@ CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ~~~
 
-> ## Exercise
+> #### Exercise
 >
 > 1. Search for the sequence `GNATNACCACTTCC` in the `SRR098026.fastq` file.
 > Have your search return all matching lines and the name (or identifier) for each sequence
@@ -91,13 +91,13 @@ CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
 > Have your search return all matching lines and the name (or identifier) for each sequence
 > that contains a match.
 > 
-> > ## Solution  
+> > #### Solution  
 > > 1. `grep -B1 GNATNACCACTTCC SRR098026.fastq`  
 > > 2. `grep -B1 AAGTT *.fastq`
 > >
 > 
 
-## Redirecting output
+### Redirecting output
 
 `grep` allowed us to identify sequences in our FASTQ files that match a particular pattern. 
 All of these sequences were printed to our terminal screen, but in order to work with these 
@@ -119,7 +119,7 @@ in our FASTQ files that contain
 $ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq > bad_reads.txt
 ~~~
 
-> ## File extensions
+> ### File extensions
 > 
 > You might be confused about why we're naming our output file with a `.txt` extension. After all,
 > it will be holding FASTQ formatted data that we're extracting from our FASTQ files. Won't it 
@@ -152,11 +152,11 @@ $ wc -l bad_reads.txt
 Because we asked `grep` for all four lines of each FASTQ record, we need to divide the output by
 four to get the number of sequences that match our search pattern.
 
-> ## Exercise
+> ### Exercise
 >
 > How many sequences in `SRR098026.fastq` contain at least 3 consecutive Ns?
 >
->> ## Solution
+>> #### Solution
 >>  
 >>
 >> ~~~
@@ -207,7 +207,7 @@ $ wc -l bad_reads.txt
   537 bad_reads.txt
 ~~~
 
-> ## File extensions - part 2
+> ### File extensions - part 2
 > 
 > This is where we would have trouble if we were naming our output file with a `.fastq` extension. 
 > If we already had a file called `bad_reads.fastq` (from our previous `grep` practice) 
@@ -256,11 +256,11 @@ them together, you can do some really powerful things very
 efficiently. 
 
 
-> ## Exercise
+> #### Exercise
 >
 > Print the file prefix of all of the `.txt` files in our current directory.
 >
->> ## Solution
+>> #### Solution
 >>  
 >>
 >> ~~~
@@ -283,13 +283,12 @@ $ for filename in *.txt
 ~~~
 
 
-> ## Exercise
+> #### Exercise
 >
 > Remove `_2019` from all of the `.txt` files. 
 >
->> ## Solution
+>> #### Solution
 >>  
->>
 >> ~~~
 >> $ for filename in *_2019.txt
 >> > do
@@ -297,8 +296,7 @@ $ for filename in *.txt
 >> > mv ${filename} ${name}.txt
 >> > done
 >> ~~~
->> 
->>
+
 
 ### Keypoints:
 - "`grep` is a powerful search tool with many options for customization."

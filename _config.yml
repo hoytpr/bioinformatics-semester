@@ -10,7 +10,7 @@ permalink:        pretty
 
 # Setup
 title:            Introduction to Biological Informatics
-description:      'Biology Becomes Genomics'
+description:      'Shell and Genomics'
 url:              https://github.com/hoytpr/bioinformatics-semester
 baseurl:          /bioinformatics-semester
 email:            peter.r.hoyt@okstate.edu

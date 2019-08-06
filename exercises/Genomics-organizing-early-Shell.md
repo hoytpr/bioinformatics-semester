@@ -5,6 +5,7 @@ title: Organizing Early
 language: Shell
 ---
 Uncomment below to work on exercise
+include tidy spreadsheets and organization
 
 exercises/Genomics-organizing-early-Shell.md
 
@@ -14,5 +15,3 @@ exercises/Genomics-organizing-early-Shell.md
 Organizing Early
 
 -->
-
-End of bad data

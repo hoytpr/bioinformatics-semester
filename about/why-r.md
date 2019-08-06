@@ -20,12 +20,14 @@ including:
     guarantees that anyone can take advantage of the online resources
     that are being developed.
 4.  It runs on all major operating systems.
-5.  It is used by many scientific programmers and taught in many research
+5.  It provides a brief introduction to Dr. Charles Chen's OMICS curriculum.
+6.  It is used by many scientific programmers and taught in many research
     science departments. This makes collaborating with experts
     on large or complex projects much easier.
-6.  [Data Carpentry](http://datacarpentry.org) 'lecture' materials are available
+7.  [Data Carpentry](http://datacarpentry.org) and [Software Carpentry](http://softwarecarpentry.org) 'lecture' materials are available
     in R, which provides a resource for students to learn more
-    advanced topics on their own and avoids duplicating
-    efforts.  It's also easy to contribute material back to Data 
-    Carpentry.
-7.  [R is the most common statistics platform in Ecology](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/abstract).
+    advanced topics *on their own* and presents these topics in 
+	slightly different 'perspectives' for different types
+	of learners.  It's also easy to contribute material back to Data 
+    Carpentry and Software Carpentry.
+8.  [R is the most common statistics platform in Ecology](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/abstract).

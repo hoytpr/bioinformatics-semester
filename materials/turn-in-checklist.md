@@ -3,13 +3,10 @@ layout: page
 title: Assignment Submission & Checklist
 ---
 
-**(Tentative)** All assignments should be submitted through [email](mailto:peter.r.hoyt@okstate.edu).
+If [Canvas](https://canvas.okstate.edu/courses/51969/quizzes) is available, assignments will be 
+submitted there under the "quizzes" category.
 
-If [Canvas](https://canvas.okstate.edu/courses/39012) is available, assignments will be submitted there.
-
-What files to submit:
- 
-(Too preliminary at this point)
+**(Tentative)** In emergencies, homework can be submitted through [email](mailto:peter.r.hoyt@okstate.edu).
 
 ***When submitting code for grading:***
 * Make sure your code matches the provided answers
@@ -19,6 +16,9 @@ What files to submit:
 
 
 <!--
+
+5930 course link is:
+(https://canvas.okstate.edu/courses/39012) 
 
 **Week 1 - 2** - two text forms, link to a GitHub repository
 
