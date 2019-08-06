@@ -5,6 +5,5 @@ title: Introduction to Loops
 language: Shell
 ---
 
-This link needs updating
-
-[SWC Shell Files and Directories Readings](https://swcarpentry.github.io/shell-novice/03-create/index.html)
+[Loops in Data Carpentry](https://datacarpentry.org/shell-genomics/04-redirection/index.html)
+[Loops in Software Carpentry](https://swcarpentry.github.io/shell-novice/05-loop/index.html)

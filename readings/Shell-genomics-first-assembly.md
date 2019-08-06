@@ -24,4 +24,3 @@ Here's a more recent article which coins the term ["Software collapse"](https://
 - Tons of information at the home site for the [SPAdes assembler](https://isugenomics.github.io/bioinformatics-workbook/dataAnalysis/GenomeAssembly/Assemblers/spades.html)
 - Info on the old but good [Velvet assembler](https://www.ebi.ac.uk/~zerbino/velvet/)
 - [Soapdenovo2](https://github.com/aquaskyline/SOAPdenovo2) is also an older assembler, but it's easy to use and gets the point across.
-- Even more awesomeness to come soon!

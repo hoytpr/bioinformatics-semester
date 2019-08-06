@@ -4,7 +4,6 @@ element: reading
 title: Genomics in RStudio
 language: R
 ---
-
 [Genomics in RStudio](https://datacarpentry.org/genomics-r-intro/)
 
 uncomment to work on  readings

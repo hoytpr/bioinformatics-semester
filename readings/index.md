@@ -9,8 +9,11 @@ title: Readings
 * [Shell Files and Directories](Shell-files-and-directories)
 * [Shell Pipes and Filters](Shell-pipes-and-filters)
 * [Shell Introduction to Loops](Shell-introduction-to-loops)
-* [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
+* [Shell grep and find](Shell-grep-and-find)
 * [Genomics Read Quality Control](Shell-read-quality)
+* [Genomics Shell Intro](Shell-data-wrangling-genomics-intro)
+* [Genomics Starting the Project](Shell-genomics-starting-the-project)
+* [Genomics First Assembly Workshop](Shell-genomics-first-assembly)
 * [Genomics Advanced Shell](Shell-genomics-advanced-shell)
 * [Genomics Read Quality Trimming](Shell-genomics-read-quality-trimming)
 * [Genomics Variant Calling Workflow](Shell-genomics-variant-calling-workflow)
@@ -19,6 +22,7 @@ title: Readings
 ### R
 
 * [Introduction to R and RStudio](R-intro)
+* [Genomics in RStudio](R-genomics-in-rstudio)
 * [Genomics RStudio Coercion](R-genomics-r-studio-coercion)
 * [Working with Data](R-data)
 * [Data Visualization](R-datavis)
