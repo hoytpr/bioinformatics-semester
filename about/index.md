@@ -3,7 +3,7 @@ layout: page
 title: About Us
 ---
 
-* [Acknowledgements]({{ site.baseurl }}/about/acknowledgements)
+* [Acknowledgments]({{ site.baseurl }}/about/acknowledgments)
 * [Audience]({{ site.baseurl }}/about/audience)
 * [The flipped classroom]({{ site.baseurl }}/about/flipped-classes)
 * [Praise for the class]({{ site.baseurl }}/about/praise)
