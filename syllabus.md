@@ -9,7 +9,7 @@ office: Room 110FC in the HBRC Building
 email: peter.r.hoyt@okstate.edu
 phone: 405-744-6206
 schedule: ['TBD']
-location: Self-paced
+location: ['TBD']
 office_hours: Tuesdays 10-11am
 office_hours_location: 110FC HBRC
 ---
@@ -35,7 +35,7 @@ Phone: {{ page.phone }}
 
 ### Location
 
-{{location}}
+{{ page.location }}
 
 
 ### Times
@@ -89,7 +89,7 @@ Knowledge of basic biology.
 ### Purpose of Course
 
 By the end of the course you will be able to use bioinformatic tools to import data 
-into proper formats for genomics, perform analysis on that data, and export the 
+into proper formats for genomics, perform analysis on those data, and export the 
 results to graphs, text files, and potentially databases. 
 
 ### Course Goals and Objectives
@@ -98,8 +98,8 @@ Students completing this course will be able to:
 
 * Write simple computer programs in the BASH shell or R
 * Automate data analysis
-* Create well structured dataframes
-* Extract information from dataframes
+* Create well structured dataframes*
+* Extract information from dataframes*
 * Apply these tools to address biological questions
 
 
@@ -108,24 +108,23 @@ Students completing this course will be able to:
 This course contributes to the interdisciplinary techniques required to generate, 
 analyze, and interpret complex biologically derived datasets as part of genomics
 by providing students the skills and knowledge they need to use bioinformatics tools
-used in research.
+in research.
 
 
 ### Teaching Philosophy
 
 This class is taught using learner-centered approach, because
-learning to program and work with data requires actively working on
+learning to program and working with data requires actually interacting on
 computers. Self-motivation to learn the coding involved is required
 and often produces a better learning outcome. 
 
-
 ## Course Policies
-
 
 ### Attendance Policy
 
-Attendance will not be taken or factor into the grades for this class. However,
-experience suggests that students who postpone exercises tend to struggle 
+Attendance will not be taken or factor into the grades for this class. 
+Assignments will be due at the end of each week regardless of attendance.
+Keeping up with the assignments or exercises will mitigate your struggles 
 to learn the material.
 
 
@@ -167,7 +166,7 @@ one.
 ### University Policy on Accommodating Students with Disabilities
 
 Students requesting accommodation for disabilities must first register with the
-Student Disability ofice (http://sds.okstate.edu/). The Dean of Students
+[Student Disability office](http://sds.okstate.edu/). The Dean of Students
 Office will provide documentation to the student who must then provide this
 documentation to the instructor when requesting accommodation. You must submit
 this documentation prior to submitting assignments or taking the quizzes or
@@ -191,10 +190,11 @@ For guidance please read the [Carpentries Code of Conduct](https://docs.carpentr
 
 ## Getting Help
 
-* Counseling and Wellness resources
-* Disability resources
-* Resources for handling student concerns and complaints
-* Library Help Desk support
+* [Counseling and Wellness resources](https://bct.okstate.edu)
+* [Disability resources](http://sds.okstate.edu/)
+* [Resources for handling student concerns and complaints](https://academicintegrity.okstate.edu/content/academic-integrity-resources)
+* [OSU IT Helpdesk support](http://it.okstate.edu/)
+* [Additional OSU Policies](https://canvas.okstate.edu/courses/51969/pages/osu-policies?module_item_id=1258201)
 
 **Most importantly, if you are struggling for any reason please come talk to me
 and I will do my best to help.**
@@ -202,9 +202,9 @@ and I will do my best to help.**
 
 ## Grading Policies
 
-Grading for this course is tentatively based on 13 equally weighted assignments. 
+Grading for this course is tentatively based on 13 assignments. 
 Some assignments (selected at the instructors discretion after the
-assignments have been submitted) will receive a thorough code review and a
+assignments have been submitted) will receive a thorough review and a
 detailed grade. Other problems will be graded as follows:
 
 * Produces the correct answer using the requested approach: 100%
@@ -240,3 +240,5 @@ The details of the course schedule are available on the course website:
 go through the semester, those plans may need to change to enhance the class
 learning opportunity. Such changes will be communicated clearly both on the
 website and in class.
+
+\* Dataframes in this context includes tabular data
