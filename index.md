@@ -9,7 +9,7 @@ using R-programming with data structures, and
 programming for data manipulation, analysis, and visualization. It is designed
 for self-guided students but can be used to be used as a flipped university course. 
 Instructors are welcome to modify and use the material for your own 
-courses. Many people have contributed to the development of this course (see [Acknowledgements]({{ site.baseurl }}/about/Acknowledgements), [README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages), and 
+courses. Many people have contributed to the development of this course (see [Acknowledgments]({{ site.baseurl }}/about/acknowledgments), [README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages), and 
 we/they encourage collaborative development and contributions by other
 instructors, with the hopes that this will lead to better training and resources 
 for everyone. 
