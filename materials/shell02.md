@@ -109,24 +109,24 @@ because its name begins with `/`.
 >
 > Notice that there are two meanings for the `/` character.
 > When it appears at the front of a file or directory name,
-> it refers to the root directory. When it appears *inside* a name,
-> it's just a separator.
-{: .callout}
+> it refers to the root directory. When it appears *inside or between* 
+> directory names, it's just a separator.
 
 Within (or "below") the `/Users` directory,
-we find one directory for each user with an account on Nelle's computer,
-her colleagues *imhotep* and *larry*.  
+we find one directory for each user with an account on Nelle's computer.
+Nelle has an account, and also her colleagues *imhotep* and *larry* have accounts.  
 
 ![Home Directories]({{ site.baseurl }}/materials/root2guys.png)
 
 The user *imhotep*'s files are stored in `/Users/imhotep`,
 user *larry*'s in `/Users/larry`,
-and Nelle's in `/Users/nelle`.  Because Nelle is the user in our
-examples here, this is why we get `/Users/nelle` as our home directory.  
-Typically, when you open a new command prompt you will be in
-your home directory to start.  
+and Nelle's in `/Users/nelle`.  Nelle is the current user in our
+examples, and this is why we get `/Users/nelle` as our home directory.  
 
-Now let's learn the command that will let us see the contents of our
+Typically, when you open a new command prompt you will be in
+**your** home directory to start.  
+
+Now let's learn a command to let us see the contents of our
 own filesystem.  We can see what's in our home directory by running `ls`,
 which stands for "listing":
 
@@ -137,7 +137,7 @@ Desktop      Downloads    Movies       Pictures
 ~~~
 
 (Again, your results may be slightly different depending on your operating
-system and how you have customized your filesystem.)
+system and how your filesystem is customized.)
 
 `ls` prints the names of the files and directories in the current directory. 
 We can make its output more comprehensible by using the **flag** `-F`
@@ -313,7 +313,7 @@ or available locally via: info '(coreutils) ls invocation'
 ~~~
 
 
-That's a lot of help. We can't go through all this today, just remember you 
+**That's a lot of help!** We can't go through all this today, just remember you 
 should always know that `--help` is there for you. 
 
 But when things go wrong there are also error messages that can be helpful:
@@ -352,39 +352,42 @@ To **quit** the `man` pages, press <kbd>Q</kbd>.
 ### Manual pages on the web
 
 Of course there is a third way to access help for commands:
-searching the internet via your web browser. 
-When using internet search, including the phrase `unix man page` in your search
-query will help to find relevant results (e.g. `unix man page ls`).
+searching the internet *via* your web browser. 
+When using an internet search, including the phrase `unix man page` in your search
+query will help to find relevant results (*e.g.* `unix man page ls`).
 
 GNU provides links to its
 [manuals](http://www.gnu.org/manual/manual.html) including the
 [core GNU utilities](http://www.gnu.org/software/coreutils/manual/coreutils.html),
 which covers many commands introduced within this lesson.
 
-### Looking at our Project directories
+### Looking at our project directories
 
 We can also use `ls` to see the contents of a different directory.  Let's take a
-look at our `Desktop` directory by running `ls -F Desktop`, i.e.,
-the command `ls` with the `-F` **flag** and the **argument**  `Desktop`.
-The argument `Desktop` tells `ls` that
-we want a listing of something other than our current working directory:
+look at our `Desktop` directory by running `ls -F Desktop`. This means we want
+to run the command `ls`, with the `-F` flag, using the **argument** `Desktop`.
+Using an ***argument*** (in this example:`Desktop`) tells `ls` that
+we want a listing of something ***other than our current working directory:***
 
 ~~~
 $ ls -F Desktop
 data-shell/
+(NOTE: all other files and directories will be listed)
 ~~~
 
 Your output should be a list of all the files and sub-directories on your
 Desktop, including the `data-shell` directory you downloaded at
-the [setup for this lesson](/computer-setup).  Take a look at your Desktop to confirm that
-your output is accurate.  
+the [setup for this lesson]({{ site.baseurl }}/computer-setup). You should look at your Desktop 
+in your operating system's graphical user interface (the GUI) to confirm that
+your output is accurate. 
 
-As you may now see, using a bash shell is strongly dependent on the idea that
-your files are organized in a hierarchical file system.
-Organizing things hierarchically in this way helps us keep track of our work:
-it's possible to put hundreds of files in our home directory,
-just as it's possible to pile hundreds of printed papers on our desk,
-but it's a self-defeating strategy.
+It's important to recognize that when using a bash shell the 
+***organization*** of the files in a file system is ***critical***.
+This **hierarchical** organizing helps us keep track of our work.
+Rather than putting hundreds of files in our home directory 
+(which would be like piling hundreds of printed papers on our desk)
+we should use informative names for the directories or files, 
+and place our directories in a meaningful hierarchy. 
 
 Now that we know the `data-shell` directory is located on our Desktop, we
 can do two things.  
@@ -397,18 +400,16 @@ $ ls -F Desktop/data-shell
 creatures/          molecules/          notes.txt          solar.pdf
 data/               north-pacific-gyre/ pizza.cfg          writing/
 ~~~
+(Note that the data-shell directory has both directories and ordinary files.)
 
-(Now we see the data-shell directory has both directories and ordinary files.)
 Second, we can actually change our location to a different directory, so
-we are no longer located in
-our home directory.  
+we are no longer located in our home directory. The command to change 
+locations is **`cd`** followed by a directory name. 
 
-The command to change locations is `cd` followed by a
-directory name to change our working directory.
-`cd` stands for "change directory",
-which is a bit misleading:
-the command doesn't change the directory,
-it changes the shell's idea of what directory we are in.
+> Although `cd` stands for "change directory",
+> it's misleading because the command doesn't change the directory,
+> it changes which directory we are "in" (changes the *working directory*)
+> based on the shell's hierarchical directory structure.
 
 Let's say we want to move to the `data` directory we saw above.  We can
 use the following series of commands to get there:
@@ -419,18 +420,23 @@ $ cd data-shell
 $ cd data
 ~~~
 
-These commands will move us from our home directory onto our Desktop, then into
-the `data-shell` directory, then into the `data` directory.  If you try typing in just `cd` 
-nothing is printed.  This is normal.  Many shell commands will not output anything to the 
-screen when successfully executed.  But if we run `pwd` we can see that we are now
-in `/Users/nelle/Desktop/data-shell/data`. If we run `ls -F` now,
-it lists the contents of `/Users/nelle/Desktop/data-shell/data`,
-because that's where we now are:
+Type these commands to move us from our home directory, onto our Desktop, then into
+the `data-shell` directory, then into the `data` directory.  
+
+> You might notice that after typing each command, nothing is printed to the terminal.
+> This is normal.  Many shell commands will not output anything to the 
+> screen when successfully executed.  
+
+If we run **`pwd`** ("print working directory") we can see where we are;
 
 ~~~
 $ pwd
 /Users/nelle/Desktop/data-shell/data
 ~~~
+
+If we run `ls -F` now,
+it lists only the contents of the working directory: `data`,  
+because... that's where we are!
 
 ~~~
 $ ls -F
@@ -438,8 +444,8 @@ amino-acids.txt   elements/     pdb/	        salmon.txt
 animals.txt       morse.txt     planets.txt     sunspot.txt
 ~~~
 
-We now know how to go down the directory tree, but
-**how do we go up**?  We might try the following:
+We now know how to go **down** the directory tree, but
+***how do we go up***?  We might try the following:
 
 ~~~
 $ cd data-shell
@@ -448,9 +454,9 @@ $ cd data-shell
 
 But we get an error!  Why is this?  
 
-This is because `cd` can only see sub-directories *inside* your 
-current directory.  There are different ways to see directories 
-above your current location; we'll start with the simplest.  
+Because `cd` can only see sub-directories *inside* (or "below") your 
+current working directory.  There are different ways to see directories 
+*above* your current location and we'll start with the simplest.  
 
 There is a shortcut in the shell to move up one directory level
 that looks like this:
@@ -459,20 +465,20 @@ that looks like this:
 $ cd ..
 ~~~
 
-A `..` is a special directory indicator meaning:
+The **`..`** is a special directory indicator meaning:
 "the directory containing this one", or more commonly,
 the **parent** of the current directory.
-Sure enough,
-if we run `pwd` after running `cd ..`, we're back in `/Users/nelle/Desktop/data-shell`:
+After running the `cd ..` command, we can run `pwd`, 
+and we're in `/Users/nelle/Desktop/data-shell`.
 
 ~~~
 $ pwd
 /Users/nelle/Desktop/data-shell
 ~~~
 
-You might have noticed the special directory indicator `..` doesn't 
-show up when we run `ls`.  If we want to display it, we can give `ls` 
-the `-a` flag:
+We haven't seen the special directory indicator `..` before because it doesn't 
+show up when we run `ls`.  But if we ***want*** to display it, we can give `ls` 
+the **`-a`** flag:
 
 ~~~
 $ ls -F -a
@@ -480,46 +486,52 @@ $ ls -F -a
 ../  creatures/     molecules/ notes.txt            solar.pdf  writing/
 ~~~
 
-The flag `-a` stands for "show all". It forces `ls` to show us hidden files 
-and directory names that begin with `.` (more on this later),
-which includes `..` (so, if we're in `/Users/nelle`, the `..` refers to the 
-`/Users` directory). As you can see,
-it also displays another special directory indicator that's just: `.`,
-which is a shortcut for "the current working directory".
-It may seem redundant to have a name for it,
-but we'll see some uses for it soon.
+Let's go through this output carefully. 
+The flag `-a` stands for "show all". It forces `ls` to show us all files 
+and directories, including the parent directory's `..` special indicator. 
+Notice the flag `-a` makes `ls` display ***another*** special directory indicator 
+that's a single "dot" or: **`.`**, which is a shortcut for "the current working directory".
+For example, and to be clear, if we're in the `/Users/nelle` directory, the `..` refers to the 
+`/Users` directory, and a `.` ***by itself*** means the "current working directory"
+or in this example:    
+`/Users/nelle`
 
-Note that in most command line tools, multiple flags can be combined 
-with a single dash `-` and **no spaces** between the flags: For example: `ls -Fa` is 
-equivalent to `ls -F -a`.
+#### About Hidden Files
 
-### Other Hidden Files
+Finally, the bash shell will "hide" any file or 
+directory from the `ls` command if their ***name begins*** with "`.`" 
+This is ***completely different*** than the `.` special directory indicator!
 
-In addition to the hidden directories `..` and `.`, you may also see a hidden file
-called `.bash_profile`. This file usually contains shell configuration
-settings. You may also see other hidden files and directories beginning
-with `.` which are hidden files are usually special files and directories  
+The `ls -F -a` command shows the hidden directories `..` and `.`, 
+plus we also see the hidden file `.bash_profile`. This is a common file 
+and usually contains shell configuration
+settings. If you see other hidden files and directories beginning
+with `.` they are probably special files and directories
 used to configure different programs on your computer. These aren't changed very often.
 The prefix `.` is used to prevent these
-configuration files from cluttering the terminal when a standard `ls` command
-is used.
-{: .callout}
+configuration files from being changed accidently, and to reduce 
+clutter in the terminal when a standard `ls` command is used.
 
 #### Orthogonality
 
-To make memorizing the commands and flags of the BASH shell easier
-The special names `.` and `..` don't belong to **just** the command `cd`;
+To make memorizing commands and flags of the BASH shell easier,
+the special indicators `.` and `..` don't belong to **just** the command `cd`;
 they are interpreted the same way by **every** command program.
-For example, if we are in `/Users/nelle/data`,
-the command `ls ..` will give us a listing of `/Users/nelle`.
-When the meanings of the flags are the same no matter which command uses them,
+For example, if we are in `/Users/nelle`,
+the command `ls ..` will give us a listing of `/Users`
+(without changing our current working directory).
+When meanings of flags are the same no matter which command uses them,
 programmers say they are **orthogonal**. 
-Orthogonal systems tend to be easier for people to learn
-because there are fewer special cases and exceptions to keep track of.
+Orthogonal systems are easier for people to learn
+because there are fewer parts to memorize.
+Also note that in most command line tools, multiple flags can be combined 
+with **no spaces** between the flags and a single dash `-`.
+For example: `ls -Fa` is equivalent to `ls -F -a`.
 
+### Moving on!
 These then, are the basic commands for navigating the filesystem on your computer:
-`pwd`, `ls` and `cd`.  Let's explore some variations on those commands.  Type `cd` 
-on its own, without giving a directory?  
+`pwd`, `ls` and `cd`.  Let's explore some variations on those commands.  
+First, type `cd` on its own, without specifying a directory.
 
 ~~~
 $ cd
@@ -532,11 +544,11 @@ $ pwd
 /Users/nelle
 ~~~
 
-It turns out that `cd` without an argument will return you to your home directory,
+It turns out that `cd` without any argument will return you to your home directory,
 which is great if you've gotten lost in your own filesystem. 
 
-Let's try returning to the `data` directory from before.  Last time, we used
-three commands, but we can actually string together the list of directories
+Let's try returning to the `data` directory.  Last time we used
+three commands, but we can actually string together the directories
 to move to `data` in one step:
 
 ~~~
@@ -547,7 +559,7 @@ Check that we've moved to the right place by running `pwd` and `ls -F`
 
 ### Relative vs. Absolute Paths
 
-If we want to move up one level from the data directory, we could use `cd ..`.  But
+If we want to move up one level from the data directory, we could use the`cd ..` command.  But
 there is another way to move to any directory, regardless of your
 current location.  
 
@@ -562,23 +574,26 @@ leading slash.  The leading `/` tells the computer to
 **follow the path from the root of the file system**, so it always refers to 
 exactly one directory, no matter where we are when we run the command.
 
-This allows us to move to our `data-shell` directory from anywhere on
-the filesystem (including from inside `data`).  To find the absolute path
-we're looking for, we can use `pwd` and then extract the piece we need
-to move to `data-shell`.  
+Probably the best example of an absolute path is when you use the `pwd` 
+command. This always displays your location in the filesystem 
+hierachy starting at the root directory. From within `data` we can type
+`pwd` and it gives us the absolute path to `data-shell`. This absolute path 
+lets us move to our `data-shell` directory from anywhere on
+the filesystem. 
 
 ~~~
 $ pwd
 /Users/nelle/Desktop/data-shell/data
 ~~~
-
+Now we know that we can get to our `data-shell` 
+folder from anywhere in the filesytem by typing:
 ~~~
 $ cd /Users/nelle/Desktop/data-shell
 ~~~
-
-Run `pwd` and `ls -F` to ensure that we're in the directory we expect. 
+Try running the `cd` command without arguments to go to our home folder, 
+then run the `cd` command above. Afterwards run `pwd` and `ls -F` 
+to ensure that we're in the directory we expect.
 (NOTE: This may not work exactly the same depending on your operating system)
-
 
 ### Two More Shortcuts
 
@@ -594,7 +609,6 @@ then type, the full path.  This is a *very* efficient way of moving back
 and forth between directories. The difference between `cd ..` and `cd -` is
 that the former brings you *up*, while the latter brings you *back*. You can
 think of it as the *Last Channel* button on a TV remote.
-{: .callout}
 
 ### Example Exercises 
 
@@ -653,9 +667,9 @@ which is the date she started processing the samples.
 She used to use names like `conference-paper` and `revised-results`,
 but she found them hard to understand after a couple of years.
 (The final straw was when she found herself creating
-a directory called `revised-revised-results-3`.)
+a directory called `revised-revised-results-3`)
 
-### Sorting Output
+#### Using dates in filenames
 
 Nelle names her directories beginning with "year-month-day",
 including leading zeroes for months and days, ("yyyy-mm-dd")
@@ -707,10 +721,10 @@ Bash will add `2012-07-03/` to the command,
 since it's the only possible completion.
 Pressing <kbd>Tab</kbd> again does nothing,
 since there are 19 possibilities;
-pressing <kbd>Tab</kbd> one more time shows the list of all the files,
-and so on.
-This **tab completion**, is an extremely useful tool that you should practice
-and we will see it in many other tools as we go on.
+but pressing <kbd>Tab</kbd> one more time shows the list of all the 
+files to help her choose.
+This **tab completion** is an extremely useful tool that you should practice
+and we will use it with many other tools as we go on.
 
 #### Lesson Keypoints:
 
