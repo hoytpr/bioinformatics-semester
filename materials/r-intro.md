@@ -64,14 +64,14 @@ http://123.45.67.89:8787
 You should now be looking at a page that will allow you to login to the RStudio
 server:
 
-<img src="/fig/rstudio_login_screen.png" alt="rstudio default session" style="width: 1000px;"/>
+![]({{ site.baseurl }}/fig/rstudio_login_screen.png)
 
 Enter your user credentials and click <kbd>Sign In</kbd>. The credentials for
 the genomics Data Carpentry instances will be provided by your instructors. 
 
 You should now see the RStudio interface:
 
-<img src="/fig/rstudio_session_default.png" alt="rstudio default session" style="width:1000px;"/>
+![]({{ site.baseurl }}/fig/rstudio_session_default.png)
 
 
 ### RStudio
@@ -103,7 +103,7 @@ called an **RStudio Project**. An RStudio project allows you to more easily:
 
 1. To create a project, go to the <kbd>File</kbd> menu, and click <kbd>New Project...</kbd>.
 
-    <img src="/fig/new_project_window.png" alt="rstudio default session" style="width: 600px;"/>
+![]({{ site.baseurl }}/fig/new_project_window.png)
 
 2. In the window that opens select **New Directory**, then **New Project**. For
 "Directory name:" enter **dc_genomics_r**. For "Create project as subdirectory of",
@@ -149,7 +149,7 @@ convention, R scripts end with the file extension **.R**.
 Although yours may be arranged differently, Here are the major windows (or panes) of the    
 **RStudio environment:**
 
-<img src="/fig/rstudio_session_4pane_layout.png" alt="rstudio default session" style="width: 1000px;"/>
+![]({{ site.baseurl }}/fig/rstudio_session_4pane_layout.png)
 
 - **Source**: IMPORTANT!!  This pane is where you will write/view R scripts. Some outputs
   (such as if you view a dataset using `View()`) will appear as a tab here.
