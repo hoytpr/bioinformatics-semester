@@ -2,15 +2,22 @@
 layout: default
 ---
 
+### Welcome!
 This website hosts introductory material for teaching biologists how to interact
 with data including: use of the Unix shell, creating scripts, using genomics tools 
 at the command-line, and creating automated genomics scripts. It leads into 
 using R-programming with data structures, and
-programming for data manipulation, analysis, and visualization. It is designed
-for self-guided students but can be used to be used as a flipped university course. 
-Instructors are welcome to modify and use the material for your own 
-courses. Many people have contributed to the development of this course (see [Acknowledgments]({{ site.baseurl }}/about/acknowledgments), [README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages), and 
-we/they encourage collaborative development and contributions by other
+programming for data manipulation, analysis, and visualization. 
+It is offered as a flipped university course where the students read material 
+and they come to class to work through lecture materials in a hands-on
+workshop-style (active learning) environment. 
+
+This course is **open-source**: meaning other instructors are welcome 
+to modify and use the material for your own 
+courses. It's important to acknowlege those who have contributed to the 
+development of this course (see [Acknowledgments]({{ site.baseurl }}/about/acknowledgments), 
+[README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages). 
+We/they strongly encourage collaborative development and contributions by other
 instructors, with the hopes that this will lead to better training and resources 
 for everyone. 
 
@@ -21,12 +28,8 @@ For Students
   <i class="fa fa-calendar fa-fw"></i> Schedule</a>
 : <a href="{{ site.baseurl}}/computer-setup">
   <i class="fa fa-download fa-fw"></i> Setup</a>
-: <a href="{{ site.baseurl }}/materials/turn-in-checklist">
-  <i class="fa fa-check-square fa-fw"></i> Assignment Submission & Checklist</a>
 : <a href="{{ site.baseurl}}/START-for-self-guided-students">
   <i class="fa fa-play-circle fa-fw"></i> Self-Guided Start-Up Guide</a>
-: <a href="{{ site.baseurl}}/materials/datasets">
-  <i class="fa fa-download fa-fw"></i> Datasets</a>
 
 <!--
 

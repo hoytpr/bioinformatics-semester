@@ -13,6 +13,7 @@ details. More recent genomics lessons from the Carpentries were developed thanks
 , [genomics wrangling experts](https://github.com/datacarpentry/wrangling-genomics/graphs/contributors) 
 and [shell experts](https://github.com/datacarpentry/shell-genomics/graphs/contributors)) who should 
 be appreciated. You can cite the material used in this course using the follwing DOI:
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260609.svg)](https://doi.org/10.5281/zenodo.3260609)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260560.svg)](https://doi.org/10.5281/zenodo.3260560)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260317.svg)](https://doi.org/10.5281/zenodo.3260317)
@@ -26,22 +27,30 @@ the [Creative Commons License](http://creativecommons.org/licenses/by/4.0/)
 
 This particular course by Dr. Hoyt emphasizes making the curricula more 
 understandable for a specific target
-audience of Life Scientists, who are    
-**truly beginners**, and who want or need 
+audience of Life Scientists, who are
+**truly beginners**, and who want or need
 to be better. To strive toward this 
 goal Dr. Hoyt will embrace The Carpentries active learning pedagogy and continue to
 improve the course through practices of education experts including 
 [Dr. Rochelle Tractenberg](https://cbpr.georgetown.edu/rochelle_tractenberg/#)
-who developed the [Mastery Rubric for Bioinformatics](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/) (described in an interview by 
-[Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
-[Life Science Trainers website)](https://lifescitrainers.org). Dr. Tractenberg's 
-[manuscript](https://www.biorxiv.org/content/10.1101/655456v1) is 
-currently under peer-review.
+who developed the [Mastery Rubric for Bioinformatics](https://www.biorxiv.org/content/10.1101/655456v1) (under peer review) 
+described in an [interview](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/)
+by [Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
+[Life Science Trainers website](https://lifescitrainers.org).
+ 
+#### Diversity
+Oklahoma State University is proudly committed to promoting diversity and 
+inclusion within higher education. This course follows those proud commitments. 
+For more information inclusion and diversity awards, enrollment, and resources, 
+please read about [OSU's Institutional Diversity Office](https://diversity.okstate.edu/).
+The Vice President for Institutional Diversity and Chief Diversity Officer at OSU 
+is [Dr. Jason F. Kirksey](https://diversity.okstate.edu/dr-jason-f-kirksey). 
 
 #### Funding
 
 Dr. Hoyt is generously supported by the 
-[Department of Biochemistry and Molecular Biology](http://biochemistry.okstate.edu/) at 
+[Department of Biochemistry and Molecular Biology](http://biochemistry.okstate.edu/) and 
+the [Office of the Vice President for Research](https://research.okstate.edu/) at 
 [Oklahoma State University](https://go.okstate.edu/). 
 The initial development of this course, was supported by the Gordon
 and Betty Moore Foundation's Data-Driven Discovery Initiative through grants
@@ -51,14 +60,22 @@ list of all funding sources, but we will try.
 
 #### The Carpentries
 
-Dr. Hoyt participates in The Carpentries community. [The Carpentries](https://carpentries.org/) Are an organization that teaches foundational coding and data science skills to researchers worldwide. The Carpentries teach foundational coding, and data science skills to researchers worldwide. Software Carpentry, Data Carpentry, and Library Carpentry workshops are based on our lessons. Workshop hosts, Instructors, and learners must be prepared to follow the [Code of Conduct](http://docs.carpentries.org/topic_folders/policies/code-of-conduct.html). We are a diverse, global community of volunteers. Our community includes [Instructors](https://carpentries.org/instructors/), helpers, Trainers, [Maintainers](https://carpentries.org/maintainers/), Mentors, community champions, member organisations, supporters, workshop organisers, staff and a whole lot more.
+Dr. Hoyt and [OSU](http://info.library.okstate.edu/c.php?g=902101) participate in The Carpentries community. 
+[The Carpentries](https://carpentries.org/) are an organization that teaches foundational 
+coding and data science skills to researchers worldwide. Software Carpentry, 
+Data Carpentry, and Library Carpentry workshops are based on our lessons. 
+To participate you are expected to follow the [Code of Conduct](http://docs.carpentries.org/topic_folders/policies/code-of-conduct.html). 
+We are a diverse, global community of volunteers. Our community includes 
+[Instructors](https://carpentries.org/instructors/), helpers, Trainers, 
+[Maintainers](https://carpentries.org/maintainers/), Mentors, community champions, 
+member organisations, supporters, workshop organisers, staff and a whole lot more.
 
 #### Data Carpentry
 
-[Data Carpentry](http://datacarpentry.org/) is a web and workshop based organization that is designed to teach 
-basic computing concepts, skills, and tools for working with scientific data. 
-The resources provided on this site are being developed in association with Data 
-Carpentry.
+[Data Carpentry](http://datacarpentry.org/) is a web and workshop based organization 
+that is designed to teach basic computing concepts, skills, and tools for working 
+with scientific data. The resources provided on this site are being developed 
+in association with Data Carpentry.
 
 #### Software Carpentry
 

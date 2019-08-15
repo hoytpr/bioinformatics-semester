@@ -16,10 +16,10 @@ Part of this course is designed to follow the [Data Carpentry Genomics Workshop]
 
 Windows users must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
 
-### Python
 
-Use [Anaconda](https://www.anaconda.com/download/) to install Python (3.5 or greater) and make sure you 
-download the correct version  for your operating system.
+### R
+
+Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
 
 ### GitHub
 
@@ -58,6 +58,12 @@ download the correct version  for your operating system.
     2. File -> New Project -> Version Control -> Git
     3. If you reach a page called `Clone Git Repository` with some fields to fill out everything is working
 
+#### Linux
+
+Git is probably already installed. If it is not already available install it via
+your distro's package manager. For Debian/Ubuntu run `sudo apt-get install git`
+and for Fedora run `sudo yum install git`.
+
 #### Mac OS X
 
 1. Open up the Terminal, type in "git" and press enter.
@@ -95,15 +101,12 @@ result from Step 6), try the following:
    the value in `Git executable` from `/usr/bin/git` to `/usr/local/bin/git`)
 5. Click `OK`
 
-#### Linux
+<!--
 
-Git is probably already installed. If it is not already available install it via
-your distro's package manager. For Debian/Ubuntu run `sudo apt-get install git`
-and for Fedora run `sudo yum install git`.
+### Python
 
-### R
-
-Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
+Use [Anaconda](https://www.anaconda.com/download/) to install Python (3.5 or greater) and make sure you 
+download the correct version  for your operating system.
 
 ### SQL (Optional)
 
@@ -115,3 +118,4 @@ Download and install [DB Browser for SQLite](http://sqlitebrowser.org/)
 are no longer under active development. Tell the instructor
 if you are having problems*
 
+-->

@@ -3,11 +3,12 @@ layout: page
 title: Audience
 ---
 
-The long-term goal of this site is to help two large groups of people:
-1) Students in a classroom at a college or university; and 2) Free-range
-learners, or folks who aren't taking a formal class and are interested
-in learning online on their own time. We are starting with the classroom
-students and then attempting to build on the material generated to make
+The long-term goal of this site is to help both students that thrive
+in a classroom at a college or university; and free-range,
+self-motivated learners, or folks who are interested
+in learning on-line on their own time (except for the homework). 
+Our initial course offering will be written for the classroom
+students. Building on the material generated will make
 it maximally useful to the broader audience of biologists who want to
 learn how to use programming and bioinformatics software. We are
 interested in helping folks who are complete beginners and welcome those who
