@@ -8,6 +8,10 @@ Uncomment below to work on exercise
 
 <!--
 
+Go to [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/107717/edit) and complete the quiz.
+
+
+
 #### Redirecting to the same file is risky
  
 Make sure you have a file `lengths.txt` from the homework,

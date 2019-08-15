@@ -4,12 +4,11 @@ topic: Shell
 title: Scripts With Loops Genomics 
 language: Shell
 ---
-(This advanced loops exercise is under development and content 
-below has been commented out. Or this can be deleted)
+(Advanced loops) 
+below has been commented out.
 
 <!--
 
-## Exercise
 > 
 > This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run
 > it. What output do you see?
@@ -19,7 +18,6 @@ below has been commented out. Or this can be deleted)
 >> ~~~
 >> $ bash run_variant_calling.sh
 >> ~~~
->> {: .bash}
 >> 
 
 >> ~~~
@@ -45,10 +43,6 @@ below has been commented out. Or this can be deleted)
 >> You should see "working with file . . . " for each of the six FASTQ files in our `trimmed_fastq/` directory.
 >> If you don't see this output, then you'll need to troubleshoot your script. A common problem is that your directory might not
 >> be specified correctly. Ask for help if you get stuck here! 
-> {: .solution}
-{: .challenge}
-
-
 
 > ## BWA variations
 > BWA is a software package for mapping low-divergent sequences 
@@ -97,4 +91,4 @@ below has been commented out. Or this can be deleted)
 
 -->
 
-hu
+Shell-scripts-with-loops-genomics-Shell.md

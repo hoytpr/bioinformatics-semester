@@ -8,7 +8,7 @@ Uncomment below to work on exercise
 
 <!--
 
-### Review the `sort` command in more detail
+*Review the `sort` command in more detail*
 
 **What Does `sort -n` Do?**
 
@@ -29,7 +29,7 @@ part of your homework.
 **Question 7**: Run `sort -n` on the same input file and report the output as 
 part of your homework.
 
-**Question 8**: In one sentence, explain breifly what `-n` is doing for the sort command. 
+**Question 8**: In one sentence, explain briefly what `-n` is doing for the sort command. 
 Use the help function if you need it.
 
 Remember, that the `sort` command does **not** change the file!
@@ -109,4 +109,4 @@ ordered from least to greatest,
 the output of `head` ***must*** be the file with the **fewest lines**.
 -->
 
-Shell-Pipes-and-Filters-1-Shell.md
+Shell-Sorting-Shell.md

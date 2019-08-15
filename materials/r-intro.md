@@ -5,14 +5,14 @@ title: Introduction to R and RStudio
 language: R
 ---
 
-> Remind students to install R and RStudio.
-
-> Read "Why R?" on this website
+<!--
 
 ### Getting ready to use R for the first time
 
 In this lesson we will take you through the very first things you need to get
 R working.
+
+-->
 
 ### Advantages of using R
 
@@ -22,44 +22,78 @@ analyzing data in R:
  - **R is [open source](https://en.wikipedia.org/wiki/Open-source_software)**.
    This means R is free - an advantage if you are at an institution where you
    have to pay for your own MATLAB or SAS license. Open source, is important to
-   your colleagues in parts of the world where expensive software in
+   your colleagues in parts of the world where expensive software is
    inaccessible. It also means that R is actively developed by a community (see
    [r-project.org](https://www.r-project.org/)),
    and there are regular updates.
- - **R is widely used**. Ok, maybe programming is a popularity contest. Because,
-   R is used in many areas (not just bioinformatics), you are more likely to
+ - **R is widely used**. Ok, maybe programming is a popularity contest. Because
+   R is used in many disciplines (not just bioinformatics), you are more likely to
    find help online when you need it. Chances are, almost any error message you
    run into, someone else has already experienced.
 - **R is powerful**. R runs on multiple platforms (Windows/MacOS/Linux). It can
    work with much larger datasets than popular spreadsheet programs like
    Microsoft Excel, and because of its scripting capabilities is far more
    reproducible. Also, there are thousands of available software packages for
-   science, including genomics and other areas of life science.
+   science, particulaly statistics, data analyses, genomics
+   and other areas of life science.
 
-### R
+> ## Tip: This lesson works best on the cloud
+>
+> Remember, these lessons assume we are using the pre-configured virtual machine
+> instances provided to you at a genomics workshop. Much of this work could be
+> done on your laptop, but we use instances to simplify workshop setup
+> requirements, and to get you familiar with using the cloud (a common
+> requirement for working with big data).
+> Visit the [Genomics Workshop setup page](http://www.datacarpentry.org/genomics-workshop/setup.html)
+> for details on getting this instance running on your own, or for the info you
+> need to do this on your own computer.
 
-* Programming language
-* Statistics and data analysis environment
+### Log on to RStudio Server
+
+Open a web browser and enter the IP address of your instance 
+(provided by your instructors), followed by
+`:8787`. For example, if your IP address was 123.45.67.89 your URL would be
+
+```
+http://123.45.67.89:8787
+```
+
+> #### Tip: Make sure there are no spaces before or after your URL or
+> your web browser may interpret it as a search query.
+
+You should now be looking at a page that will allow you to login to the RStudio
+server:
+
+<img src="/fig/rstudio_login_screen.png" alt="rstudio default session" style="width: 1000px;"/>
+
+Enter your user credentials and click <kbd>Sign In</kbd>. The credentials for
+the genomics Data Carpentry instances will be provided by your instructors. 
+
+You should now see the RStudio interface:
+
+<img src="/fig/rstudio_session_default.png" alt="rstudio default session" style="width:1000px;"/>
+
 
 ### RStudio
 
-In these lessons, we will be making use of a software called [RStudio](https://www.rstudio.com/products/RStudio/)
+In these lessons, we will be making use of a software called [RStudio](https://www.rstudio.com/products/RStudio/) that runs R inside an IDE (an
+Integrated Development Environment), which operates a little like a GUI.
 
-* IDE - Integrated Development Environment
-* Advantages
-    * Interpreter/Console has multiple visualization panes
-    * Text editor
-        * object-specific highlighting 
-        * provides __information__ about problems with code
-        * `tab` key __autocompletes__
+* Advantages:
+    * The Interpreter/Console has multiple visualization panes
+    * There is a Text editor that includes:
+        * object-specific highlighting (easier to read)
+        * provides __information__ about problems with code (easier to understand)
+        * `tab` key __autocompletes__ (easy to work with)
             * Let the computer do repetitious work. 
-            * It's easier and with fewer mistakes.
-    * Environment/History to reproduce/troubleshoot something done before
-    * Project management keeps things separate and transferable
+            * It makes fewer mistakes.
+    * The Environment/History functions allow you to reproduce/troubleshoot something done before
+    * The Project management functions keep things separate and **transferable**
 	
-## Create an RStudio project
+### Create an RStudio project
 
-One of the first benefits we will take advantage of in RStudio is something
+One of the first benefits we will take advantage of in RStudio is the
+Project management, by creating something
 called an **RStudio Project**. An RStudio project allows you to more easily:
 
 - Save data, files, variables, packages, etc. related to a specific
@@ -80,18 +114,20 @@ installation instructions. See the **Tip** below.
 
 4. Finally click <kbd>Create Project</kbd>. In the "Files" tab of your output
 pane (more about the RStudio layout in a moment), you should see an RStudio
- project file, **dc_genomics_r.Rroj**. All RStudio projects end with the
+ project file, **dc_genomics_r.Rproj**. All RStudio projects end with the
  "**.Rproj**" file extension.
 
 >### Tip: Make your project more reproducible with Packrat
 > One of the most wonderful and also frustrating aspects of working with R is
-> managing packages. We will talk more about them, but packages (e.g. ggplot2)
-> are add-ons that extend what you can do with R. Unfortunately it is very
-> common that you may run into versions of R and/or R packages that are not
-> compatible. This may make it difficult for someone to run your R script using
-> their version of R or a given R package, and/or make it more difficult to run
+> managing **packages**. We will talk more about them, but packages (e.g. ggplot2)
+> are ***add-ons that extend what you can do with R***. Unfortunately it is very
+> common to encounter versions of R and/or R packages that are not
+> compatible. This makes it difficult for someone to with a different 
+> version of R or the R Packakge to run your R scripts. 
+> it's likewise more difficult to run
 > their scripts on your machine. [Packrat](https://rstudio.github.io/packrat/)
-> is an RStudio add-on that will associate your packages and project so that
+> is an RStudio add-on (like a package) that will associate your packages 
+> with your project so that
 > your work is more portable and reproducible. To turn on Packrat click on
 > the <KBD>Tools</KBD> menu and select <KBD>Project Options</KBD>.
 
@@ -143,6 +179,11 @@ pane layout are in the <KBD>View</KBD> menu. Other options such as font sizes,
 colors/themes, and more are in the <KBD>Tools</KBD> menu under
 <KBD>Global Options</KBD>.
 
+>### Tip: Uploads and downloads in the cloud
+> In the "Files" tab you can select a file and download it from your cloud
+> instance (click the "more" button) to your local computer.
+> Uploads are also possible.
+
 >### Yes, this is R. You are working with R!
 > Although we won't be working with R at the terminal, there are lots of reasons
 > to. For example, once you have written an RScript, you can run it in any Linux
@@ -157,7 +198,7 @@ colors/themes, and more are in the <KBD>Tools</KBD> menu under
 Now that we have covered the more aesthetic aspects of RStudio, we can get to
 work using some commands. We will write, execute, and save the commands we
 learn in our **genomics_r_basics.R** script that we loaded in the Source pane.
-First, lets see what directory we are in. To do so, click inside the Console
+First, lets see what directory we are in. To do so, click inside the Source
 window, and type the following command into the script:
 
 ```
@@ -169,11 +210,14 @@ is written. Then click the <KBD>Run</KBD> button that is just above the first
 line of your script in the header of the Source pane.
 
 
-In the console, we expect to see the following output*:
+In the Console window, we expect to see the following output*:
 
 ~~~
 [1] "/home/dcuser/dc_genomics_r"
 ~~~
+
+\* Notice, at the Console, you will also see the instruction you executed
+above the output in blue.
 
 We can predict this output when we are working on a defined system or instance 
 such as AWS. If you are on a different machine, you might get a different directory as 
@@ -183,12 +227,10 @@ the default directory. For example:
 [1] "C:/Users/Buddy/Desktop/R-testing/dc_genomics_r"
 ```
 
-\* Notice, at the Console, you will also see the instruction you executed
-above the output in blue.
 
 Since we will be learning several commands, we will want to keep some
-short notesor "comments" in our script to explain the purpose of the 
-command. Entering a `#` before any line in an R script turns that line 
+short notes or "comments" in our script to explain the purpose of the 
+command. Putting a `#` before any line in an R script turns that line 
 into a comment, which R will not try to interpret as code. To get started, 
 edit your script to include a comment on the purpose of commands you 
 are learning, e.g.:

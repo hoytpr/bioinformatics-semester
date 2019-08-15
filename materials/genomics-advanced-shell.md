@@ -255,6 +255,58 @@ do anything all that impressive on their own, but when you start chaining
 them together, you can do some really powerful things very
 efficiently. 
 
+### Using Basename in 'for' loops
+`basename` is a function in UNIX that is helpful for removing a uniform 
+part of a name from a list of files. In this case, we will use `basename` 
+to remove the `.pdb` extension from the files that we’ve been working with. 
+
+~~~
+$ basename aldrin.pdb .pdb
+~~~
+
+We see that this returns just the metabolite name, and no longer has the .pdb 
+file extension on it.
+
+~~~
+aldrin
+~~~
+
+If we try the same thing but use `.pdf` as the file extension instead, nothing happens. This is because basename only works when it exactly matches a string in the file.
+
+~~~
+$ basename aldrin.pdb .pdf
+aldrin.pdb
+~~~
+
+Basename is really powerful when used in a `for` loop. It allows 
+us to access just the file prefix, which you can use to name things. 
+Let's try this.
+
+Inside our `for` loop, we create a new variable name. We call 
+the `basename` function inside the parenthesis, then submit our variable 
+name from the for loop, in this example `${filename}`, and finally indicate 
+that `.pdb` should be removed from the file name. It’s important to note 
+that **we’re not changing the actual files**, we’re creating a new variable 
+called `name`. The line `> echo ${name}` will print to the terminal 
+the variable name each time the for loop runs. Because we are iterating 
+over 48 files, we expect to see 48 lines of output.
+
+~~~
+$ for filename in *.pdb
+> do
+> name=$(basename ${filename} .pdb)
+> echo ${name}
+> done
+
+aldrin
+ammonia
+ascorbic-acid
+benzaldehyde
+camphene
+cholesterol
+cinnamaldehyde
+etc...
+~~~
 
 > #### Exercise
 >
@@ -299,11 +351,11 @@ $ for filename in *.txt
 
 
 ### Keypoints:
-- "`grep` is a powerful search tool with many options for customization."
-- "`>`, `>>`, and `|` are different ways of redirecting output."
-- "`command > file` redirects a command's output to a file."
-- "`command >> file` redirects a command's output to a file without overwriting the existing contents of the file."
-- "`command_1 | command_2` redirects the output of the first command as input to the second command."
-- "for loops are used for iteration"
-- "`basename` gets rid of repetitive parts of names"
+- `grep` is a powerful search tool with many options for customization.
+- `>`, `>>`, and `|` are different ways of redirecting output.
+- `command > file` redirects a command's output to a file.
+- `command >> file` redirects a command's output to a file without overwriting the existing contents of the file.
+- `command_1 | command_2` redirects the output of the first command as input to the second command.
+- `for` loops are used for iteration
+- `basename` handles repetitive parts of names
 

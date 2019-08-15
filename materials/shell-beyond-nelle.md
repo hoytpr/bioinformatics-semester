@@ -5,9 +5,10 @@ title: Shell Beyond Nelle
 language: Shell
 ---
 
-Questions:
+**Questions:**
 - How can I save and re-use commands?
-Objectives:
+
+**Objectives:**
 - Write a shell script that runs a command or series of commands for a fixed set of files.
 - Run a shell script from the command line.
 - Write a shell script that operates on a set of files defined by the user on the command line.
@@ -15,20 +16,23 @@ Objectives:
 
 ### Nelle's Shell Works Well!
 
-Nelle has graduated and moved on to a new position. She is continuing similar studies
-with a group of scientists in Antarctica, and has continued to improve her coding skills. 
-She is ready to use the shell as a powerful programming environment.
-We are going to follow along as she takes the commands we repeat 
-frequently and saves them in files
-so that we can re-run all those operations again later by typing a single command.
+Nelle finished her analyses in plenty of time, and wrote het manuscript.
+She continues to use her scripting skills, even after 
+she has graduated and moved on to a new position. Her new colleagues 
+are a group of scientists in Antarctica, who perform similar studies
+with gelatinous marine life, and Nelle has improved her coding skills. 
+Now she's ready to use the shell as a powerful programming environment.
+We want to follow along with Nelle as she takes commands we repeat 
+frequently, and saves them in **script** files which 
+can re-run all those analyses by typing a single command.
 
-For historical reasons,
-a bunch of commands saved in a file is usually called a **shell script**,
-but make no mistake:
+For historical reasons, a bunch of commands saved in a file is 
+usually called a **shell script**, but make no mistake:
 these are actually small **programs**.
 
-Let's start by going back to `molecules/` and use the command `nano middle.sh` 
-to open a file, `middle.sh` which will become our shell script:
+To catch up with Nelle, we will start by going back to Nelle's `molecules/` 
+directory and use the command `nano middle.sh` to open a new file, `middle.sh` which 
+will become our shell script:
 
 ~~~
 $ cd molecules
@@ -46,11 +50,11 @@ it selects lines 11-15 of the file `octane.pdb`.
 Remember, we are *not* running it as a command just yet:
 we are putting the commands in a file.
 
-Then we save the file (`Ctrl-O` in nano),
- and exit the text editor (`Ctrl-X` in nano).
+Then we save the file (`Ctrl-O` in `nano`),
+and exit the text editor (`Ctrl-X` in `nano`).
 Check that the directory `molecules` now contains a file called `middle.sh`.
 
-Once we have saved the file,
+Once we have saved the script file,
 we can ask the shell to execute the commands it contains.
 Our shell is called `bash`, so we run the following command:
 
@@ -66,24 +70,25 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 Sure enough,
 our script's output is exactly what we would get if we ran that pipeline directly.
 
-What if we want to select lines from an arbitrary file?
+**But** we want to select lines from any file in the directory, not just `octane.pdb`.
 We could edit `middle.sh` each time to change the filename,
 but that would probably take longer than just retyping the command.
-Instead, let's edit `middle.sh` and make it more versatile:
+Instead, let's edit `middle.sh` and make it more ***versatile***:
 
 ~~~
 $ nano middle.sh
 ~~~
 
-Now, within `nano`, replace the text `octane.pdb` with the special variable called `$1`:
+Now, within `nano`, replace the text `octane.pdb` with the **special variable** called `$1`:
 
 ~~~
 head -n 15 "$1" | tail -n 5
 ~~~
 
 Inside a shell script,
-`$1` means "the first filename (or value, or input) on the command line".
-We can now run our script like this:
+**`$1` means "the first filename (or value, or input) on the command line"**.
+We can now run our script with any file in the directory. Here
+is `octane.pdb` again:
 
 ~~~
 $ bash middle.sh octane.pdb
@@ -94,7 +99,7 @@ ATOM     12  H           1      -3.009  -0.741  -1.467  1.00  0.00
 ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 ~~~
 
-or on a different file like this:
+and here's a different file:
 
 ~~~
 $ bash middle.sh pentane.pdb
@@ -105,17 +110,22 @@ ATOM     12  H           1      -0.048  -1.362  -0.205  1.00  0.00
 ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 ~~~
 
-> ### Double-Quotes Around Arguments
+Pretty sweet. But before we move on, there's an important cautionary 
+note we need to make right away regarding the use of *spaces in filenames*:
+
+> #### Use Double-Quotes Around Arguments 
 >
-> For the same reason that we put the loop variable inside double-quotes,
+> We aren't doing it now, but it's very common practice
+> to use double-quotes all the time for arguments. 
+> Earlier, we put the **loop variable** inside double-quotes,
 > in case the filename happens to contain any spaces,
-> we surround `$1` with double-quotes.
+> For the SAME reason, we will often surround **special variables**
+> like `$1` with double-quotes.
 
-
-THis script is great if we always want lines 11 through 15 of each file, but 
+So this script is great if we always want lines 11 through 15 of each file, but 
 if we want to change the lines that are output, we would still need to 
 edit `middle.sh` each time.
-Let's fix that by using more special variables like `$2` and `$3` for the
+Let's fix that by using **more** special variables like `$2` and `$3` for the
 number of lines to be passed to `head` and `tail` respectively:
 
 ~~~
@@ -146,6 +156,14 @@ ATOM     17  H           1      -3.393   0.254  -0.321  1.00  0.00
 TER      18              1
 ~~~
 
+Always remember that these special variables are numbered 
+*based on where you place them in the argument list*. Which is why
+they are sometimes called the argument's "positional parameters". 
+
+Just a quick refresher, to make sure everyone understands:
+
+![script-image]({{ site.baseurl }}/fig/script1.png)
+
 This works,
 but it may take the next person who reads `middle.sh` a moment to figure out what it does.
 We can improve our script by adding some **comments** at the top:
@@ -165,29 +183,35 @@ The only caveat is that each time you modify the script,
 you should check that the comment is still accurate!
 An explanation that sends the reader in the wrong direction is worse than none at all.
 
+#### Script Magic
+
 *What if we want to process many files in a single pipeline?*
 
-For example, if we want to sort our `.pdb` files by length, we would type:
+Let's start by deciding we want to sort all our `.pdb` files by length. We would type:
 
 ~~~
 $ wc -l *.pdb | sort -n
 ~~~
 
 because `wc -l` lists the number of lines in the files
-(recall that `wc` stands for 'word count', adding the `-l` flag means 'count lines' instead)
 and `sort -n` sorts things numerically.
-We could put this in a file,
+We could put this command in a script file,
 but then it would only ever sort a list of `.pdb` files in the current directory.
-If we want to be able to get a sorted list of other kinds of files,
-we need a way to get all those names into the script.
-BUT, we can't use `$1`, `$2`, and so on
-because we don't know how many files there are.
-Instead, we use the special variable **`$@`**,
+If we want to be able to get a sorted list of ***other*** kinds of files,
+we need a way to get all kinds of names into the script.
+
+**BUT**, we can't use special variables like `$1`, `$2`, and so on
+because we don't know how many files there are (and don't 
+want to type in a special variable for each file anyway)!
+Instead, we use a different special variable **`$@`**,
 which means,
-***"All of the command-line arguments to the shell script."***
-We also should put `$@` inside double-quotes
-to handle the case of arguments containing spaces
-(`"$@"` is equivalent to `"$1"` `"$2"` ...)
+
+**"*All* the command-line arguments of the shell script."**
+
+`"$@"` is equivalent to `"$1" "$2" ...`
+
+We ALWAYS put `"$@"` inside double-quotes
+to handle the case of arguments containing spaces.
 Here's an example using a script we name "sorted.sh":
 
 ~~~
@@ -197,7 +221,7 @@ $ nano sorted.sh
 wc -l "$@" | sort -n
 ~~~
 Now we can not only sort by lines all the *.pdb files in the `molecules` directory, 
-we can add more files to sort, for example in the `creatures` directory. 
+we can add more files to sort, for example, in the `creatures` directory. 
 All we have to do is enter the correct path to the files we want to sort!
 ~~~
 $ bash sorted.sh *.pdb ../creatures/*.dat
@@ -236,22 +260,33 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 > those files separately.
 >
 > > ## Solution
-> >
+> > In `nano` type:
 > > ```
-> > # Script to find unique species in csv files where species is the second data field
-> > # This script accepts any number of file names as command line arguments
+> > # Script to find unique species in csv files 
+> > # where species is the second data field
+> > # This script accepts any number of file names 
+> > # as command line arguments
 > >
 > > # First it loops over all files
 > > for file in $@ 
 > > do
 > > 	echo "Unique species in $file:"
-> > 	# Inside the loop it extracts species names
+> > 	# In the loop it extracts species names
+> >		# just like we did before
 > > 	cut -d , -f 2 $file | sort | uniq
 > > done
 > > ```
-> > 
 
-### Special variables need inputs!
+By now, you should be feeling proud of yourself!
+(It probably took Nelle years to learn this stuff!)
+
+#### Special Variables Table
+
+Here's a [Table]({{ site.baseurl }}/assignments/special-variables-in-bash)
+of Special Variables for reference purposes
+
+#### All Special Variables need inputs!
+**(When we make mistakes)**
 
 What happens if a script is supposed to process a bunch of files, but we
 don't give it any filenames? For example, what if we type:
@@ -269,14 +304,22 @@ $ wc -l | sort -n
 
 Since it doesn't have any filenames, `wc` assumes it is supposed to
 process standard input, so it just sits there and waits for us to give
-it some data interactively. From the outside, though, all we see is it
-sitting there: the script doesn't appear to do anything.
+it some data interactively. From the terminal however, all we see is it
+sitting there: *The script doesn't appear to do anything*. 
+If this happens, you probably need to use `Control-c` (or 
+`Command-c` on a Mac) to exit 
+the script and return to your prompt to start over.  
 
 ### Future Nelle's Pipeline: Creating a Script
 
-**Nelle has moved on**, but never forgot how the supervisor insisted that 
-all her analytics must be reproducible. The easiest way to capture 
-all the steps is in a script. Nelle is much better at scripting now, 
+We are almost caught up with Nelle's scripting skills at this point. 
+When we find Nelle, we discover that **Nelle has moved on**, 
+to a new position, still working with her gooey marine life. 
+But Nelle never forgot how the supervisor insisted that 
+**all** her analytics must be ***reproducible***. 
+
+The easiest way to capture all the steps in her analyses is in a script. 
+Nelle is much better at scripting now, 
 and wants to rewrite some scripts for analyzing her new data
 from Antarctica.
 
@@ -290,7 +333,7 @@ $ for datafile in NENE*[AB].txt; do echo $datafile; bash goostats $datafile stat
 ~~~
 
 She smiles as she realizes that her past self didn't make this loop into 
-a script, with information about how it was used. So Nelle runs 
+a script, with informational comments about how it was used. So Nelle runs 
 the editor and writes the following:
 
 ~~~
@@ -318,11 +361,11 @@ $ bash do-stats.sh NENE*[AB].txt | wc -l
 so that the output is just the **number** of files processed
 rather than the names of the files that were processed.
 Nelle then emails the script to her former supervisor, who is planning to 
-do more analyses on gelatinous marine life. 
+write another manuscript on gelatinous marine life. 
 
 One thing to note about Nelle's script is that
 it lets the person running it decide what files to process.
-She could have written it as:
+What if she wrote the new script like this?
 
 ~~~
 # Calculate stats for Site A and Site B data files.
@@ -333,23 +376,24 @@ do
 done
 ~~~
 
-This latter script is good because it always selects the right files:
-Nelle doesn't have to remember to exclude the 'Z' files.
+This latter script is good because it always selects the right files
+(For example, Nelle doesn't have to remember to exclude the 'Z' files).
 The disadvantage is that it *always* selects *just* those 
 files --- she can't run it on all files
-(including the 'Z' files),
-or on the 'G' or 'H' files her former supervisor is creating. Also,
-the larger files her new colleagues in Antarctica are producing
-use a different filename convention. But her script is flexible!
+or on the 'G' or 'H' files her former supervisor is creating. 
+With the former script, by using `@$`, 
+Nelle knows her future self will be able to handle the larger files 
+her new colleagues in Antarctica are producing even though they 
+use a different filename convention. Her script is flexible!
 
-### History for Nelle's Figure-3
+### The History of Nelle's Figure-3
 
 One thing Nelle learned long ago was that her `history` could be
 very useful for remembering and writing good scripts.
 She remembers creating Figure-3, and then while trying to 
 make it better, she forgot how she started formatting the data! 
 To re-create the graph all she had to do was output her 
-`history` to a file, then edit it to create the graph again.
+`history` to a file, then edit that file to create the graph again.
 The other advantage of using `history` is she doesn't need to
 type the commands in again(and potentially getting them wrong).
 She does this:
@@ -372,7 +416,10 @@ After a moment's work in an editor to remove the serial numbers on the commands,
 and to remove the final line where she called the `history` command,
 she has a completely accurate record of how she created that figure.
 
-In practice, most people develop shell scripts by running commands at the shell prompt a few times
+There is a lot of code we haven't covered in 
+Nelle's Figure-3, and we can ignore that for now. 
+In practice, most people develop shell scripts by 
+running commands at the shell prompt a few times
 to make sure they're doing the right thing,
 then saving them in a file for re-use.
 This style of work allows people to recycle
@@ -424,4 +471,4 @@ and save it as a shell script.
 - `$@` refers to all of a shell script's command-line arguments.
 - `$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc.
 - Place variables in quotes if the values might have spaces in them.
-- Letting users decide what files to process is more flexible and more consistent with built-in Unix commands.
+- Scripts that let users decide what files to process are more flexible and more consistent with built-in Unix commands.

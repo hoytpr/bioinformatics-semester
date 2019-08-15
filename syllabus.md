@@ -147,7 +147,7 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 Assignments are due Friday night by 11:59 pm Central Time. This allows you to be 
 finished with one week's material before starting the next week's material.
 Assignments should be submitted via [Canvas](https://canvas.okstate.edu/courses/51969/quizzes)
-using the "quizzes" category. In emergencies, assignments can be submitted by [email](mailto:peter.r.hoyt@okstate.edu). 
+using the ["quizzes" category](https://canvas.okstate.edu/courses/51969/quizzes). In emergencies, assignments can be submitted by [email](mailto:peter.r.hoyt@okstate.edu). 
 
 
 ### Course Technology

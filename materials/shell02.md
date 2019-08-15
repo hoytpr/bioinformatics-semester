@@ -10,78 +10,84 @@ language: Shell
 - How can I see what files and directories I have?
 - How can I specify the location of a file or directory on my computer?
 #### Objectives:
-- Explain the similarities and differences between a file and a directory.
-- Translate an absolute path into a relative path and vice versa.
-- Construct absolute and relative paths that identify specific files and directories.
+- Learn the basic shell commands for files and directories
+- Understand absolute paths vs. relative paths.
 - Demonstrate the use of tab completion, and explain its advantages.
 
+### Nelle learned about "home" first
 
-The part of the operating system responsible for managing files and directories 
+Nelle has taken a workshop that taught her the basics of setting up her 
+computer using the BASH shell. She learned that the part of the operating 
+system responsible for managing files and directories 
 is called the **file system**.
-It organizes our data into files,
-which hold information,
-and directories (also called "folders"),
-which hold files or other directories.
+It organizes our data into files (which hold information), and directories 
+(also called "folders" which hold files or other directories).
 
-Several commands are frequently used to create, inspect, rename, and delete files and directories.
-To start exploring them, we'll use our shell window.
+Several commands are frequently used to create, inspect, rename, and 
+delete files and directories. To understand what Nelle is doing 
+(and why) as she is setting up for her first anaalyses, 
+we'll need to use our BASH shell on our computers.
 
-Let's find out where we are by running a command called `pwd`
-(which stands for "print working directory"). Directories are like *places* - at any time
-while we are using the shell we are in exactly one place, called
-our **current working directory**. Commands mostly read and write files in the 
+After opening our terminal window, let's find out "where we are" by 
+running a command called `pwd` (which stands for "print working directory"). 
+Directories are like *places* - at any time while we are using the 
+shell we are in exactly one place, called our **current working directory**. 
+Commands mostly read and write files in the 
 current working directory, so knowing where you are before running
-a command is important. `pwd` shows you where you are:
+a command is **important**. `pwd` shows you where you are:
 
 ~~~
 $ pwd
 /Users/nelle
 ~~~
 
-Here,
-the computer's response is `/Users/nelle`. This important directory is not just
-the current working directory, it is Nelle's **home directory**. 
+Here, the computer's response is `/Users/nelle`. This important 
+directory is not just the current working directory, it 
+is Nelle's **home directory**. 
 
-So let's go over that again... We
-can be any place in the file structure, and `pwd` will tell us where we are, i.e.  
-the current working directory. BUT there is only ONE home directory per user.
+So let's go over that again... We can be any place in the file structure, 
+and `pwd` will tell us where we are, *i.e.* the current working directory. 
+BUT there is only ONE home directory per user.
 
-> ### Home Directory Variation
+> ### Home Directory Variations
 >
-> After installing GitBash we are just going to have to understand that different
+> After installing GitBash we have to understand and accept that different
 > operating systems have different places for the scientists' home directory. 
-> for Windows my home directory is on hard drive "C" and 
+> for Windows the home directory is on hard drive "C" and 
 > the output of `pwd` is:
 > ~~~
 > $ pwd
-> /c/Users/Hoyt
+> /c/Users/<username>
 > ~~~
+> NOTE that whenever you see this format: `"<username>"`, it is referring to 
+> **ANY** username like yours or mine. For any commands using this format, You 
+> would type in your username rather than the actual `"<username>"` letters. 
+> Mine would be `/c/Users/hoyt`, but on a Mac mine would be `/Users/hoyt`   
 
 The home directory path will look different on different operating systems.
 On Linux it may look like `/home/nelle`,
-and on Windows it could be also look like `C:\Documents and Settings\nelle` 
-if you are using an older version of Windows.  
+and on older Windows versions it could look like `C:\Documents and Settings\nelle`.  
 A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
 the "root" directory (more on that later), but our setup instructions should
-**start** you in your `Users` directory (e.g. `Users/yourname`), 
-with at least a `Desktop` directory inside `Users/yourname/`. There might be
+**start** you in your `Users` directory (e.g. `Users/<username>`), 
+with at least a `Desktop` directory inside `Users/<username>/`. There might be
 lots of files in your `Desktop` directory, but we'll only use the `data-shell`
 directory for this lesson. The differences may be confusing but   
-the GitBash window will show you similar outputs to start our lesson about
-moving through files and directories. 
+the GitBash window will show you similar outputs once we start 
+our lesson about moving through files and directories. 
 
 ![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
 
-**Remember**, In future examples, we've used an Apple Macintosh output as the 
-default - if you are on a Linux or Windows computer, the
+**One more reminder**: In future examples, we've used an Apple Macintosh 
+output as the default - if you are on a Linux or Windows computer, the
 output may differ slightly, but should be generally similar.  
 
 To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.  For the
 sake of this example, we'll be
 illustrating the filesystem on **our scientist Nelle's computer**.  After this
-illustration, you'll be learning commands to explore your **own filesystem**,
-which will be constructed in a similar way, but not be exactly identical.  
+illustration, you should have learned commands to explore your **own filesystem**,
+which will be constructed in a similar way.  
 
 On ***Nelle's*** computer, the filesystem looks like this:
 
@@ -89,20 +95,19 @@ On ***Nelle's*** computer, the filesystem looks like this:
 
 At the top is the **root directory**
 that holds everything else.
-We refer to it using a slash character, `/`, on its own
+We refer to it using a slash character, `/`, and 
 this is the leading slash in `/Users/nelle`.
 
-Inside the `root` directory are several other directories:
+Inside the `root` directory are several other directories like:
 - `bin` (which is where some built-in programs are stored),
 - `data` (for miscellaneous data files),
 - `Users` (where users' personal directories are located),
 - `tmp` (for temporary files that don't need to be stored long-term),
-and so on.  
+-  and more.  
 
-We know that our **current working directory** `/Users/nelle` is stored inside `/Users`
-because `/Users` is the first part of its name.
-Similarly,
-we know that `/Users` is stored inside the root directory `/`
+We know that our **current working directory** `/Users/nelle` is stored 
+inside `/Users` because `/Users` is the first part of its name.
+Similarly, we know that `/Users` is stored inside the root directory `/`
 because its name begins with `/`.
 
 > ### Slashes
@@ -110,23 +115,25 @@ because its name begins with `/`.
 > Notice that there are two meanings for the `/` character.
 > When it appears at the front of a file or directory name,
 > it refers to the root directory. When it appears *inside or between* 
-> directory names, it's just a separator.
+> directory or file names, it's just a separator.
 
-Within (or "below") the `/Users` directory,
+Inside (or "below") the `/Users` directory,
 we find one directory for each user with an account on Nelle's computer.
-Nelle has an account, and also her colleagues *imhotep* and *larry* have accounts.  
+We know Nelle has an account with the directory `nelle`, and 
+also her colleagues *imhotep* and *larry* have accounts.  
 
 ![Home Directories]({{ site.baseurl }}/materials/root2guys.png)
 
 The user *imhotep*'s files are stored in `/Users/imhotep`,
 user *larry*'s in `/Users/larry`,
-and Nelle's in `/Users/nelle`.  Nelle is the current user in our
-examples, and this is why we get `/Users/nelle` as our home directory.  
+and Nelle's in `/Users/nelle`.  Nelle is the current user logged in to 
+the computer in our examples, and this is why we get `/Users/nelle` 
+as our home directory.  
 
 Typically, when you open a new command prompt you will be in
-**your** home directory to start.  
+**your** home directory to start.
 
-Now let's learn a command to let us see the contents of our
+Now let's learn a command to see the contents of our
 own filesystem.  We can see what's in our home directory by running `ls`,
 which stands for "listing":
 
@@ -141,8 +148,8 @@ system and how your filesystem is customized.)
 
 `ls` prints the names of the files and directories in the current directory. 
 We can make its output more comprehensible by using the **flag** `-F`
-(also known as a **switch** or an **option**) ,
-which tells `ls` to add a marker (specifically, a trailing `/`) indicating if 
+(also known as a **switch** or an **option**),
+which tells `ls` to add a marker (specifically, a trailing **`/`**) indicating if 
 the items in the directory are files, or directories. Any item name with a `/` 
 at the end is a **directory**. 
 Depending on your settings, the `ls` command might also use colors to indicate 
@@ -155,14 +162,14 @@ Desktop/      Downloads/    Movies/       Pictures/
 ~~~
 
 Here,
-we can see our home directory contains mostly **sub-directories**.
+we can see our home directory contains mostly other directories 
+(or more commonly: **sub-directories**).
 If you see any names in your output that don't have trailing slashes,
-those are plain old **files**.
+those must be **files**.
 
 **Note** that there is a space between `ls` and `-F`:
-without it,
-the shell thinks we're trying to run a command called `ls-F`,
-which doesn't exist.
+without it, the shell thinks we're trying to run a command 
+called `ls-F`, which doesn't exist.
 
 ### Getting help
 
@@ -183,14 +190,13 @@ to use a command and what flags it accepts:
 (either `man` or `--help`).**
 We'll describe both ways below.
 
-
 #### The `--help` flag
 
 Many bash commands, and programs that people have written that can be
 run from within bash, support a `--help` flag to display more
 information on how to use the command or program.
 
-<small>
+
 ~~~
 $ ls --help
 
@@ -311,7 +317,6 @@ GNU coreutils online help: <http://www.gnu.org/software/coreutils/>
 Full documentation at: <http://www.gnu.org/software/coreutils/ls>
 or available locally via: info '(coreutils) ls invocation'
 ~~~
-
 
 **That's a lot of help!** We can't go through all this today, just remember you 
 should always know that `--help` is there for you. 
@@ -728,14 +733,12 @@ and we will use it with many other tools as we go on.
 
 #### Lesson Keypoints:
 
-- The file system is responsible for managing information on the disk.
 - Information is stored in files, which are stored in directories (folders).
-- Directories can also store other directories, which forms a directory tree.
+- Directories can also store other directories, which forms a hieerarchical directory tree.
 - `cd <path>` changes the current working directory.
 - `ls <path>` prints a listing of a specific file or directory; `ls` on its own lists the current working directory.
 - `pwd` prints the user's current working directory.
 - `/` on its own is the root directory of the whole file system.
-- A relative path specifies a location starting from the current location.
+- A relative path specifies a location starting from the current working directory.
 - An absolute path specifies a location from the root of the file system.
-- Directory names in a path are separated with `/` on Unix, but `\` on Windows.
-- `..` means 'the directory above the current one'; `.` on its own means 'the current directory'.
+- `..` means 'the directory above the current one'; `.` by itself means 'the current directory'.

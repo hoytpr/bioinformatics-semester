@@ -3,7 +3,7 @@ layout: page
 element: assignment
 title: Shell Introduction
 language: Shell
-exercises: ['Getting Started', 'Sorting']
+exercises: ['Getting Started', 'Finding Things']
 ---
 
 

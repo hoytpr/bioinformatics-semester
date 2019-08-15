@@ -7,11 +7,11 @@ language: Shell
 
 ### Introduction to Shell Loops
 
-Loops are key to productivity improvements through automation as 
-they allow us to execute commands repeatedly. 
+Loops are key to productivity improvements!  
+They allow us to *automate the execution of repetitive commands*. 
 Similar to wildcards and tab completion, using loops also reduces 
 the amount of typing (and typing mistakes). 
-Loops are helpful when performing operations on groups of sequencing 
+In Genomics, loops are helpful when performing operations on groups of sequencing 
 files, such as unzipping or trimming multiple
 files. We will use loops for these purposes in subsequent analyses, but 
 will cover the basics of them for now.
@@ -113,26 +113,30 @@ of each file using a loop. We could do this
 a different way, but this prepares us for later lessons where we will use much bigger files.  
 
 The image below gives the basic anatomy of a simple "loop"
+
 ![loop1]({{ site.baseurl }}/fig/loop1.png)
 
-Now let's type this in ourselves:
+Now let's type this in ourselves (remember don't type in the "$" sign, that's the prompt):
 
 ```
-? for filename in *.pdb
+$ for filename in *.pdb
 > do
 > head -n 5 ${filename}
 > done
 ```
 
-The for loop begins with the formula `for <variable> in <file group to iterate over>`. 
+You should see the first five lines of each `.pdb` file in the directory. 
+
+The `for` loop begins with the command (sometimes called a "formula"): 
+`for <variable> in <file/group to iterate over>`. 
 In this case, the word `filename` is designated 
-as the variable to be used over each iteration. In our case `aldrin.pdb` and `ammonia.pdb` 
-(and so on) will be substituted for `filename` 
-because they fit the pattern of ending with `.pdb` in the directory we've specified. 
-The next line of the for loop is `do`. The next line is 
-the code that we want to execute. We are telling the loop to print the first 
-five lines of each variable we iterate over. Finally, the
-word `done` ends the loop.
+as the variable to be used over each iteration. In our case all 
+files ending with `.pdb` in the current working directory (*e.g.* `aldrin.pdb`, `ammonia.pdb`) 
+will be substituted for `filename`.  The next line of the `for` loop is `do` 
+(meaning "do" *something*). The next line is what we want to execute (*i.e.* what to "do"). 
+We are telling the loop to print the first 
+five lines of each variable (`head -n 5 ${filename}`) as we iterate over all the files. 
+Finally, the word `done` ends the loop.
 
 After executing the loop, you should see the first five lines of all `.pdb` files printed 
 to the terminal. Let's create a loop that 
@@ -145,66 +149,14 @@ $ for filename in *.pdb
 > done
 ~~~
 
-Note that we are using `>>` to **append** the text to our `pdb_info.txt` file. 
-If we used `>`, the `pdb_info.txt` file would be rewritten
+Note that we are using **`>>`** to **append** the text to our `pdb_info.txt` file. 
+If we used **`>`**, the `pdb_info.txt` file would be rewritten
 every time the loop iterates, so it would only have text from the last 
 variable used. Instead, `>>` continuously adds to the end of the file.
 
 Use `cat` to verify the `pdb_info.txt` file looks like the screen output 
 you observed when running the loop without any redirection. 
 
-### Using Basename in 'for' loops
-`basename` is a function in UNIX that is helpful for removing a uniform 
-part of a name from a list of files. In this case, we will use `basename` 
-to remove the `.pdb` extension from the files that we’ve been working with. 
-
-~~~
-$ basename aldrin.pdb .pdb
-~~~
-
-We see that this returns just the metabolite name, and no longer has the .pdb 
-file extension on it.
-
-~~~
-aldrin
-~~~
-
-If we try the same thing but use `.pdf` as the file extension instead, nothing happens. This is because basename only works when it exactly matches a string in the file.
-
-~~~
-$ basename aldrin.pdb .pdf
-aldrin.pdb
-~~~
-
-Basename is really powerful when used in a `for` loop. It allows 
-us to access just the file prefix, which you can use to name things. 
-Let's try this.
-
-Inside our `for` loop, we create a new variable name. We call 
-the `basename` function inside the parenthesis, then submit our variable 
-name from the for loop, in this example `${filename}`, and finally indicate 
-that `.pdb` should be removed from the file name. It’s important to note 
-that **we’re not changing the actual files**, we’re creating a new variable 
-called `name`. The line `> echo ${name}` will print to the terminal 
-the variable name each time the for loop runs. Because we are iterating 
-over 48 files, we expect to see 48 lines of output.
-
-~~~
-$ for filename in *.pdb
-> do
-> name=$(basename ${filename} .pdb)
-> echo ${name}
-> done
-
-aldrin
-ammonia
-ascorbic-acid
-benzaldehyde
-camphene
-cholesterol
-cinnamaldehyde
-etc...
-~~~
-
 This lesson is very similar to the one we will use for manipulating files in 
-the genomics part of the course. 
+the genomics part of the course. For now, let's see what [Nelle 
+is going to do with loops]({{ site.baseurl }}/materials/nelles-last-bash).
