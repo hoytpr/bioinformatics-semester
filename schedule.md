@@ -6,12 +6,14 @@ assignments: ['Shell Introduction', 'Shell Files and Directories', 'Shell Pipes 
 'Genomics Reads Quality Control', 'Genomics Starting the Project', 'Genomics First Assembly', 'Genomics Advanced Shell', 'Genomics Read Quality Trimming', 'Genomics Variant Calling Workflow', 'Genomics Scripting Variant Calling', 'Introduction to R and RStudio', 'Genomics in RStudio']
 ---
 
-[Assignment submission & checklist]({{ site.baseurl }}/materials/turn-in-checklist)
-
 {% include assignments.html %}
 
 
-<!-- Schedule Management
+<!-- 
+
+[Assignment submission & checklist]({{ site.baseurl }}/materials/turn-in-checklist)
+
+Schedule Management
 - Update the `assignments:` list with `title:` from `assignments/` files. 
 - Add 'Template' to `assignments:` to view the course template from `docs/`. 
 - The remaining content should be left AS IS.
