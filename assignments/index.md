@@ -46,6 +46,8 @@ title: Assignments
 ### Git
 * [Git with R](r-git)
 
+<!--
+
 ### Python
 
 *Python assignments were used in [previous iterations](http://www.programmingforbiologists.org/) of the course at Utah State University, but
@@ -60,3 +62,5 @@ are no longer under active development.*
 * [Assignment 7](python-7)
 * [Assignment 8](python-8)
 * [Assignment 9](python-9)
+
+-->
