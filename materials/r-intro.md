@@ -172,6 +172,12 @@ Although yours may be arranged differently, Here are the major windows (or panes
   for R functions and packages. RStudio includes a Viewer pane that can be used 
   to view local web content.
 
+If your panes are arranged differently, you should probably go to the <KBD>View</KBD> menu, 
+click on "Panes", and then make sure "Show All Panes" and "Console on Left" are 
+checked. 
+
+![Panes]({{ base.siteurl }}/fig/panes.png)
+
 All of the panes in RStudio have configuration options. For example, you can
 minimize/maximize a pane, or by moving your mouse in the space between
 panes you can resize as needed. The most important customization options for
@@ -179,18 +185,17 @@ pane layout are in the <KBD>View</KBD> menu. Other options such as font sizes,
 colors/themes, and more are in the <KBD>Tools</KBD> menu under
 <KBD>Global Options</KBD>.
 
->### Tip: Uploads and downloads in the cloud
-> In the "Files" tab you can select a file and download it from your cloud
+> ### Tip: Uploads and downloads in the cloud
+> In the "Files" tab you can *select* a file and download it from your cloud
 > instance (click the "more" button) to your local computer.
 > Uploads are also possible.
 
->### Yes, this is R. You are working with R!
-> Although we won't be working with R at the terminal, there are lots of reasons
-> to. For example, once you have written an RScript, you can run it in any Linux
-> or Windows terminal without the need to start up RStudio. 
+> ### Yes, you are working with R!
+> Although we won't be working with R at the *terminal*, you'll want to use only 
+> the terminal eventually. For example, once you have written an RScript, you can run 
+> it in any Linux, Mac or Windows terminal without the need to start up RStudio. 
 > 
-> So let's be clear: We don't want you to get confused - RStudio runs R, 
-> but R is not RStudio. For more on
+> So let's be clear: RStudio ***runs*** R, but R is not RStudio. For more on
 > running an R Script at the terminal see this [Software Carpentry lesson](https://swcarpentry.github.io/r-novice-inflammation/05-cmdline/).
 
 
@@ -217,7 +222,7 @@ In the Console window, we expect to see the following output*:
 ~~~
 
 \* Notice, at the Console, you will also see the instruction you executed
-above the output in blue.
+above the output in [blue]({{ site.baseurl}}/materials/r-intro/#blue)<a name="blue"></a>
 
 We can predict this output when we are working on a defined system or instance 
 such as AWS. If you are on a different machine, you might get a different directory as 
@@ -292,7 +297,7 @@ You have hopefully noticed a pattern - an R
 function has three key properties:
 - Functions have a **name** (e.g. `dir`, `getwd`); note that functions are case
   sensitive!
-- Following the name, functions have a pair of **parentheses** `()`
+- Following the name, functions have a pair of **parentheses** **`()`**
 - Inside the parentheses, a function may take 0 or more **arguments**
 
 An **argument** may be a specific input for your function and/or may modify the
@@ -309,19 +314,21 @@ round(3.14)
 
 What if you wanted to round to one significant digit? `round()` can
 do this, but you may first need to read the help to find out how. To see the help
-(In R sometimes also called a "vignette") enter a `?` in front of the function
+(In R sometimes also called a "vignette") enter a **`?`** in front of the function
 name:
 
 ```
 ?round()
 ```
 
-The "Help" tab will show you information (often, too much information) 
+The "Help" tab (in the RStudio "Files/Plots/Packages/Help/Viewer" window) 
+will show you information (often, too much information) 
 on "Rounding of Numbers". You will slowly learn how to read and make 
 sense of help files. The "Usage" or "Examples"
-headings are often a good place to look first. If you look under "Arguments" you
-also see what arguments can be passed to this function to modify its behavior.
-You can also see the arguments for a function using the `args()` function:
+headings are often a good place to look first. If you look under the 
+"Arguments" heading you also see what arguments can be passed to this 
+function to modify its behavior. Alternately, 
+you can also see the arguments for any function using the `args()` function:
 
 ```
 args(round)
@@ -329,14 +336,14 @@ function (x, digits = 0)
 NULL
 ```
 
-Now we see that `round()` takes two arguments; `x`, which is the number 
+Using `args()` we see that `round()` takes two arguments; `x`, which is the number 
 to be rounded, and a `digits` argument. Something to remember is that when 
 the `args()` function gives you an `=` sign it indicates that a default 
 (in this case 0) is already set. R will use the default value 0 unless you 
-explicitly provide a different value. Since there is no default for `x`, `round()` 
-requires we provide it (which is why "NULL" was also returned, but ignore that 
-or now). After providing `x`, we can explicitly set the `digits` 
-parameter when we call the `round()` function:
+explicitly provide a different value. *(We can ignore the NULL for now. It 
+is returned because `x` doesn't "officially" have a default value.)* 
+But it will use `digits = 0` as a default. After providing `x`, we can 
+explicitly set the `digits` parameter when we call the `round()` function:
 
 ```
 round(3.14159, digits = 2)
@@ -344,7 +351,7 @@ round(3.14159, digits = 2)
 ```
 
 To make things easier, R accepts what are called **"positional arguments"**. If you 
-give arguments separated by commas, R assumes the arguments are in the same 
+give arguments **separated by commas**, R assumes the arguments are in the same 
 order as when you used `args()`. In the case below that means that `x` is 3.14159 and
 digits is 2 (the same as if you used `digits = 2`).
 
@@ -389,14 +396,19 @@ remember all of the arguments and definitions associated with a given function.
 When you start typing the name of a function and hit the <KBD>Tab</KBD> key,
 RStudio will display functions and associated help:
 
-<img src="/fig/studio_contexthelp1.png" alt="rstudio default session" style="width: 600px;"/>
+![]({{ site.baseurl }}/fig/studio_contexthelp1.png)
 
 Once you type a function, hitting the <KBD>Tab</KBD> while the cursor is 
 inside the parentheses will show you the function's arguments and 
 use the arrow keys to provide additional help for each of the arguments.
 
-<img src="/fig/studio_contexthelp2.png" alt="rstudio default session" style="width: 600px;"/>
+![]({{ site.baseurl }}/fig/studio_contexthelp2.png)
 
+-----
+
+### On to R Genomics
+Now that we have our RStudio script running, we can begin the process of 
+manipulating data using R. The semester is getting old, but our [next lesson]({{ site.baseurl }}/lectures/R-basics-R/) will be very new!
 
 <!--
 

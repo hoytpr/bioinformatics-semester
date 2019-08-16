@@ -11,7 +11,7 @@ language: R
 
 ### Objectives
 - Be able to create the most common R objects including vectors
-- Understand that vectors have modes, which correspond to the type of data they
+- Understand that vectors have **modes**, which correspond to the type of data they
   contain
 - Be able to use arithmetic operators on R objects
 - Understand that lists can hold data of more than one mode and can be indexed
@@ -22,45 +22,44 @@ source("../bin/chunk-options.R")
 knitr_fig_path("02-")
 ```
 
-#### "The fantastic world of R awaits you" OR "Nobody wants to learn how to use R"
+#### Gaining R Competency
 
 Before we begin this lesson, we want you to be clear on the goal of the workshop
 and these lessons. This is not a course that will "teach you R". Instead this course is to "teach you enough to ***use*** R".  We believe that every learner can achieve ***competency***
 with R. You reach competency when you find that you are able to
 **use R to handle common analysis challenges in a reasonable amount of time**
 (which includes time needed to look at learning materials, search for answers
-online, and ask colleagues for help). As you spend more time using R (there is
+online, and asking colleagues for help). As you spend more time using R (there is
 no substitute for regular use and practice) you will find yourself gaining
 competency and even expertise. The more familiar you get, the more
 complex the analyses you will be able to carry out, with less frustration, and
 in less time - the fantastic world of R awaits you!
 
-#### What these lessons will not teach you
-
-Nobody wants to learn how to use R. People want to learn how to use R to analyze
+But, nobody *JUST* wants to learn R. People want to learn *how to use R* to analyze
 their own research questions! Ok, maybe some folks learn R for R's sake, but
 these lessons assume that you want to start analyzing genomic data as soon as
-possible. Given this, there are many valuable pieces of information about R
-that we simply won't have time to cover. Hopefully, we will clear the hurdle of
-giving you just enough knowledge to be dangerous, which can be a high bar
+possible. Given this, we simply won't have time to cover many valuable 
+R capabilities. But hopefully, we will be giving you just
+enough knowledge to be dangerous in **genomics**, which is pretty good
 in R! We suggest you look into the additional learning materials in the tip box
 below.
 
-**Here are some R skills we will *not* cover in these lessons**
+**Here are some R skills we will *not* cover in genomics lessons**
 
-- How to create and work with R matrices and R lists
-- How to create and work with loops and conditional statements, and the "apply"
-  family of functions (which are super useful, read more [here](https://www.r-bloggers.com/r-tutorial-on-the-apply-family-of-functions/))
-- How to do basic string manipulations (e.g. finding patterns in text using grep, replacing text)
-- How to plot using the default R graphic tools (we *will* cover plot creation, but will do so using the popular plotting package `ggplot2`)
-- How to use advanced R statistical functions
+- R matrices and R lists
+- Loops and conditional statements 
+- The "apply" family of functions (which are super useful, read more [here](https://www.r-bloggers.com/r-tutorial-on-the-apply-family-of-functions/))
+- Basic string manipulations (*e.g.* finding patterns in text using grep, replacing text)
+- Plotting using the **default** R graphic tools (we *will* cover plot creation, 
+  but will do so using the popular plotting package `ggplot2`)
+- Advanced R statistical functions
 
 > #### Tip: Where to learn more
 > The following are good resources for learning more about R. Some of them
-> can be quite technical, but if you are a regular R user you may ultimately
+> can be quite technical, but if you become a regular R user you may ultimately
 > need this technical knowledge.
 > - [R for Beginners](https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf):
-    By Emmanuel Paradis and a great starting point
+    By Emmanuel Paradis and a ***great*** starting point
 > - [The R Manuals](https://cran.r-project.org/manuals.html): Maintained by the
     R project
 > - [R contributed documentation](https://cran.r-project.org/other-docs.html):
@@ -77,28 +76,27 @@ below.
 
 #### Creating objects in R
 
-> #### Reminder
+> #### Reminders
 >
 > At this point you should be coding along in R-studio, using the "**genomics_r_basics.R**"
-> script we created in the last episode. Writing your commands in the script
-> (and commenting it) will make it easier to record what you did and why.
+> script we created in the last lesson. Writing your commands in the script
+> (and commenting them) will make it easier to record what you did and why.
 >
 > What might be called a ***variable*** in other computer languages is called an **object**
 > in R.
-{: .prereq}
 
 **To create an object you need:**
 
-- a name (e.g. 'a')
-- a value (e.g. '1')
-- the assignment operator ('<-')
+- a **name** (e.g. "a")
+- a **value** (e.g. "1")
+- the assignment **operator** ("<-")
 
-In your script, "**genomics_r_basics.R**", using the R assignment operator '<-',
-assign '1' to the object 'a' as shown. Remember to leave a comment in the line
-above (using the '#') to explain what you are doing:
+In your script, "**genomics_r_basics.R**", using the R assignment operator "`<-`",
+assign "`1`" to the object "`a`" as shown. Remember to leave a comment in the line
+above (using the `#`) to explain what you are doing:
 
 ```
-# this line creates the object 'a' and assigns it the value '1'
+# this line creates the object "a" and assigns it the value "1"
 
 a <- 1
 ```
@@ -107,7 +105,7 @@ Next, run this line of code in your script. You can run a line of code
 by hitting the <KBD>Run</KBD> button that is just above the first line of your
 script in the header of the Source pane or you can use the appropriate shortcut:
 
-<img src="/fig/Rstudio-runbutton.png" alt="rstudio run button" style="width: 600px;"/>
+![]({{ site.baseurl }}/fig/Rstudio-runbutton.png)
 
 - **Windows execution shortcut: <KBD>Ctrl</KBD>+<KBD>Enter</KBD>**
 - **Mac execution shortcut: <KBD>Cmd(⌘)</KBD>+<KBD>Enter</KBD>**
@@ -176,8 +174,7 @@ have advice, and one to start with is the [tidyverse R style guide](http://style
 > about how to assign the name to "human_  chr_number" when the object name we
 > want is "human_chr_number".
 >
-> <img src="/fig/rstudio_script_warning.png" alt="rstudio script warning" style="width: 600px;"/>
-{: .callout}
+> ![]({{ site.baseurl }}/fig/rstudio_script_warning.png)
 
 #### Reassigning object names or deleting objects
 
@@ -464,59 +461,65 @@ In the square brackets you place the name of the vector followed by the comparis
 
 -->
 
-> #### The *magic* of programming
->
-> To understand **why** the expression 
-> `snp_positions[snp_positions > 100000000]` 
-> works you need to examine **how** R evaluates the expression 
-> "snp_positions > 100000000". 
->
-> ```
-> snp_positions
-> [1]   8762685  66560624  67545785 154039662
-> snp_positions > 100000000
-> [1] FALSE FALSE FALSE  TRUE
-> ```
->
-> The output above is a **logical** vector, the 4th element of which is TRUE. When
-> you pass a logical vector as an index, R will return the all TRUE values. 
-> You can even tell R to return **any** value, if you assign it a logical value
-> of "TRUE":
->
-> ```
-> snp_positions[c(FALSE, FALSE, FALSE, TRUE)]
-> [1] 154039662
-> snp_positions[c(FALSE, FALSE, TRUE, FALSE)]
-> [1] 67545785
-> ```
->
-> If you have never coded before, this example starts to expose the
-> "magic" of programming. We mentioned before that with bracket notation you
-> use a **named vector** followed by brackets which contain an **index**:
-> **`named_vector[index]`**. The "magic" is that indexes ***evaluate to***
-> a number. So, even if the indexed values are not integers, when R can evaluate 
-> the vector indexes then we will get a result! 
+### The *magic* of programming
+
+To understand **why** the expression 
+`snp_positions[snp_positions > 100000000]` 
+works you need to examine **how** R evaluates the expression 
+`snp_positions > 100000000`. 
+
+```
+snp_positions
+[1]   8762685  66560624  67545785 154039662
+snp_positions > 100000000
+[1] FALSE FALSE FALSE  TRUE
+```
+
+The output above is a **logical** vector, the 4th element of which is TRUE. When
+you pass a logical vector as an index, R will return the all TRUE values. 
+You can even tell R to return **any** value, if you assign it a logical value
+of "TRUE":
+
+```
+snp_positions[c(FALSE, FALSE, FALSE, TRUE)]
+[1] 154039662
+snp_positions[c(FALSE, FALSE, TRUE, FALSE)]
+[1] 67545785
+```
+
+If you have never coded before, this example starts to expose the
+"magic" of programming. We mentioned before that with bracket notation you
+use a **named vector** followed by brackets which contain an **index**:
+
+**`named_vector[index]`** 
+
+The "magic" is that indexes ***evaluate to***
+a number. So, even if the indexed values are not integers, R can evaluate 
+the vector indexes and that allows us to get a result! 
+
+**One more example:**  
+
+To show that our expression
+`snp_positions[snp_positions > 100000000]` evaluates to a number. 
+If you wanted to know which **index** 
+(1, 2, 3, or 4) in our vector of SNP positions is the one greater than
+100,000,000 we can use the `which()` function to return the indices 
+of any item that evaluates as "TRUE" in our comparison:
+
+```
+which(snp_positions > 100000000)
+[1] 4
+```
+
+> ## Why this is important
 > 
-> **One more example:**  To show that our expression
-> `snp_positions[snp_positions > 100000000]` evaluates to a number. 
-> If you wanted to know which **index** 
-> (1, 2, 3, or 4) in our vector of SNP positions is the one greater than
-> 100,000,000 we can use the `which()` function to return the indices 
-> of any item that evaluates as TRUE in our comparison:
->
-> ```
-> which(snp_positions > 100000000)
-> [1] 4
-> ```
->
-> **Why this is important**
->
-> Often in programming we are working with values, but do not know what inputs
-> and values will be used in the next step when our code is executed. 
+> Often in programming we are working with values, but for our code to be ***flexible***, 
+> it needs to be able to accept whatever value is input, or output, 
+> when executing the next piece of code.
 > Rather than always putting in a pre-determined value (e.g 100000000) 
 > we can use an **object** that can take on
 > whatever value the code needs. So for example:
->
+> 
 > ```
 > snp_marker_cutoff <- 100000000
 > snp_positions[snp_positions > snp_marker_cutoff]
@@ -524,7 +527,7 @@ In the square brackets you place the name of the vector followed by the comparis
 > # Now ANY SNP positions greater than 100000000 are 
 > # the returned value!!!!!
 > ```
->
+> 
 > Now you can begin to see that when the value for `snp_marker_cutoff` 
 > changes, it changes throughout the lines of code.  
 > Ultimately, putting together flexible, reusable code 
@@ -536,7 +539,7 @@ In the square brackets you place the name of the vector followed by the comparis
 Finally, there are a few other common retrieve or replace operations you may
 want to know about. First, you can check to see if any of the values of your
 vector are missing (i.e. are `NA`). Missing data will get a more detailed treatment later,
-but the `is.NA()` function will return a logical vector, with TRUE for any NA
+but the `is.NA()` function will return a logical vector, with "TRUE" for any `NA`
 value:
 
 ```
@@ -549,8 +552,8 @@ is.na(snp_genes)
 ```
 
 Sometimes, you may wish to find out if a specific value (or several values) is
-present a vector. You can do this using the comparison operator `%in%`, which
-will return TRUE for any value in your collection that is in
+present in a vector. You can do this using the **comparison operator** **`%in%`**, which
+will return "TRUE" for any value in your collection that is in
 the vector you are searching:
 
 ```
@@ -566,8 +569,8 @@ c("ACTN3","APOA5") %in% snp_genes
 ```
 
 ### Keypoints
-- **"Effectively using R is a journey of months or years."**__\*__    
-  Still *you don't have to be an expert to use R* and you can start using 
+- **"Effectively using R is a journey of months or years."** __\*__    
+  *You don't have to be an expert to use R* and you can start using 
   and analyzing your data with about a day's worth of training. 
   Review this lesson whenever starting an R analysis.
 - It is important to understand how data are organized by R in a given object
