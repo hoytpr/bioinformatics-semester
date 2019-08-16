@@ -270,7 +270,7 @@ Error: object 'Earhart' not found
 > mode(pilot)
 [1] "character"
 ```
-Did you notice what the object "pilot" represents now?
+Did you notice what the object `pilot` represents now?
 
 #### Mathematical and functional operations on objects in genomics
 
@@ -294,8 +294,8 @@ These can be used with literal numbers:
 (1 + (5 ** 0.5))/2
 ```
 
-and importantly, can be used on any object that evaluates to (i.e. interpreted
-by R) a numeric object:
+and importantly, can be used on *any* object that evaluates to (*i.e.* 
+can be interpreted by R) as a numeric object:
 
 ```
 human_chr_number <- 23
