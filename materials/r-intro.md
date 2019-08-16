@@ -380,7 +380,7 @@ you have installed on your computer. Finally, if you think there
 should be a function, for example a statistical test, but you aren't
 sure what it is called in R, use the "Help" tab search box.
 
-<img src="/fig/search-tab-r.png" alt="rstudio search" style="width: 656px;"/>
+![]({{ site.baseurl }}/fig/search-tab-r.png)
 
 #### More on finding things later
 We will discuss more on where to look for the libraries and packages that 
