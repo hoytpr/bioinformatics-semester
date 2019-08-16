@@ -119,7 +119,6 @@ In the RStudio 'Console' you should see:
 a <- 1
 >
 ~~~
-{: .output}
 
 The 'Console' will display lines of code run from a script and any outputs or
 status/warning/error messages (usually in red).
@@ -133,55 +132,55 @@ In the 'Environment' window you will also get a table:
 The 'Environment' window allows you to keep track of the objects you have
 created in R. This is very helpful!!!!!
 
-#### Naming objects in R
+### Naming objects in R
 
 Here are some important details about naming objects in R.
 
 - **Avoid spaces and special characters**: Object names cannot contain spaces 
-  or the minus sign (`-`). You can use '_' to make names more readable. You should avoid
-  using special characters in your object name (e.g. ! @ # . , etc.). Also,
+  or the minus sign (`-`). You can use and underscore (`_`) to 
+  make names more readable. You should avoid
+  using special characters in your object name (e.g. `! @ # . ,` etc.). Also,
   object names cannot begin with a number.
 - **Use short, easy-to-understand names**: You should avoid naming your objects
-  using single letters (e.g. 'n', 'p', etc.). This is mostly to encourage you
+  using single letters (e.g. 'n', 'p', 'x', etc.). This is mostly to encourage you
   to use names that would make sense to anyone reading your code (a colleague,
   or even yourself a year from now). Also, avoiding excessively long names will
   make your code more readable.
 - **Avoid commonly used names**: There are several names that may already have a
-  definition in the R language (e.g. 'mean', 'min', 'max'). One clue that a name
-  already has meaning is that if you start typing a name in RStudio and it gets
-  a colored highlight or RStudio gives you a suggested autocompletion you have
-  chosen a name that has a reserved meaning.
-- **Use the recommended assignment operator**: In R, we use '<- ' as the
-  preferred assignment operator. '=' works too, but is most commonly used in
+  definition in the R language (*e.g.* 'mean', 'min', 'max') and these names are
+  *reserved*. One clue that a name already has meaning (is reserved) is that 
+  if you start typing a name, RStudio pops up
+  a colored highlight or RStudio gives you a suggested autocompletion. 
+- **Use the recommended assignment operator**: In R, we use **`<-`** as the
+  preferred assignment operator. **`=`** works too, but is most commonly used in
   passing arguments to functions (more on functions later). There is a shortcut
   for the R assignment operator:
-  - Windows execution shortcut: <KBD>Alt</KBD>+<KBD>-</KBD>
-  - Mac execution shortcut: <KBD>Option</KBD>+<KBD>-</KBD>
+  - Windows execution shortcut: <KBD>Alt</KBD> +<KBD> -</KBD>
+  - Mac execution shortcut: <KBD>Option</KBD> +<KBD> -</KBD>
 
 There are a few more suggestions about naming and style you may want to learn
-more about as you write more R code. There are several "style guides" that
+about as you write more R code. There are several "style guides" that
 have advice, and one to start with is the [tidyverse R style guide](http://style.tidyverse.org/index.html).
 
 > #### Tip: Pay attention to warnings in the script console
 >
 > If you enter a line of code in your script that contains an error, RStudio
-> may give you an error message and underline this mistake. Sometimes these
-> messages are easy to understand, but often the messages may need some figuring
-> out. Paying attention to these warnings will help you avoid mistakes. 
+> may give you an error message and underline the mistake. Sometimes these
+> messages are easy to understand, but not always. Learning how to 
+> properly interpret these warnings will help you find and avoid mistakes. 
 > In the example below, our object name includes a 'space' character, which
 > is not allowed in R. The error message does not say this directly,
-> but R is "not sure"
-> about how to assign the name to "human_  chr_number" when the object name we
-> want is "human_chr_number".
+> but R is telling us something is wrong ***near*** `chr_number` or `<-`.
+> We need to change `human_   chr_number` to what we wanted:
+> `human_chr_number`.
 >
 > ![]({{ site.baseurl }}/fig/rstudio_script_warning.png)
 
 #### Reassigning object names or deleting objects
 
 Once an object has a value, you can change that value by overwriting it. R will
-not give you a warning or error if you overwriting an object, which
-may or may not be a good thing
-depending on how you look at it.
+**not** give you a warning or error if you are overwriting an object, which
+may or may not be a good thing, depending on how you look at it:
 
 ```
 # gene_name has the value 'pten' or the value used in the exercise.
@@ -189,7 +188,9 @@ depending on how you look at it.
 gene_name <- 'tp53'
 ```
 
-Now you can see we have 
+Now you can see we have changed the value of `gene_name` by looking at the 
+"Files/Plots/Packages/Help/Viewer" window of RStudio. Or we could just type
+`gene_name` at the prompt in the consloe window and hit "run". 
 You can also remove an object from R's memory entirely. The `rm()` function
 will delete the object.
 
@@ -198,72 +199,74 @@ will delete the object.
 rm(gene_name)
 ```
 
-If you run a line of code that has only an object name, R will normally display
-the contents of that object. In this case, we are told the object no
+If you then run `gene_name`, we are told the object no
 longer exists.
 
 ~~~
 Error: object 'gene_name' not found
 ~~~
-{: .error}
 
-#### Understanding object data types
+### Understanding object data types
 
 In R, **every object has two properties**:
 
-- **Length**: How many distinct values are held in that object
-- **Mode**: What is the classification (type) of that object.
+1. **Length**: How many distinct values are found in that object
+2. **Mode**: What is the classification (type) of that object.
 
-### Mode
+#### Mode
 
 We will get to the "length" property later in the lesson. The **"mode" property**
-**corresponds to the type of data an object represents**. The most common modes
+**corresponds to the *type* of data an object represents**. The most common modes
 you will encounter in R are:
 
 |Mode (abbreviation)|Type of data|
 |----|------------|
-|Numeric (num)| Numbers such floating point/decimals (1.0, 0.5, 3.14), there are also more specific numeric (sub)types (e.g. dbl - Double, int - Integer). These differences are not relevant for most beginners and pertain to how these values are stored in memory |
-|Character (chr)|A sequence of letters/numbers in single '' or double " " quotes|
+|Numeric (num)| Numbers such floating point/decimals (1.0, 0.5, 3.14), there are also more specific numeric (sub)types (*e.g.* dbl - Double, int - Integer). These differences are not relevant for most beginners and pertain to how these values are stored in memory |
+|Character (chr)|A sequence of letters/numbers in single ' ' or double "  " quotes|
 |Logical| Boolean values - TRUE or FALSE|
 
-There are a few other modes (i.e. "complex", "raw" etc.) but "num", "chr", 
-and "boolean" are the three we will work with in this lesson.
+> There are a few other modes (*e.g.* "complex", "raw" etc.) but "num", "chr", 
+> and "boolean" are the three we will work with in this lesson.
 
-Data types are common in many programming languages, but also in natural
-language where we refer to them as the **parts of speech**, e.g. nouns, verbs,
+Data types/modes are common in many programming languages, but also in natural
+language where we refer to them as the **parts of speech**, *e.g.* nouns, verbs,
 adverbs, etc. Once you know if a word - perhaps an unfamiliar one - is a noun,
 you can probably make it plural if there is more than
-one (e.g. 1 [Tuatara](https://en.wikipedia.org/wiki/Tuatara), or 2 Tuataras). If
+one (*e.g.* 1 [Tuatara](https://en.wikipedia.org/wiki/Tuatara), or 2 Tuataras). If
 something is a adjective, you can usually change it into an adverb by adding
-"-ly" (e.g. [jejune](https://www.merriam-webster.com/dictionary/jejune) vs.
-jejunely). But **context matters**, you may need to decide if a word is in one
-category or another (e.g "cut" may be a noun when it's on your finger, or a verb
+"-ly" (*e.g.* [jejune](https://www.merriam-webster.com/dictionary/jejune) vs.
+jejunely). But **context matters**; you may need to *decide* if a word is in one
+category or another (*e.g.* "cut" may be a noun when it's on your finger, or a verb
 when you are preparing vegetables). **These concepts have important analogies when
 working with R objects**.
 
-Importantly, even if a series of numbers are given as a value
-R will consider them to be in the "character" mode if they are enclosed as
-single or double quotes. Also, notice that you cannot take a string of alphanumeric
-characters (e.g. Earhart) and assign as a value for an object. If you try to assign
-characters as a value (e.g. pilot <- Earnhart), it creates an error because
-R looks for an **object** named `Earnhart` but since there isn't an object
-currently called `Earnhart`, no assignment can
-be made. If an object called `Earnhart` did exist, then the mode of `pilot` would 
-become the same mode as the object `Earnhart`. If we want to create an object
-called `pilot` that has the **name** "Earnhart", we need to enclose
-`Earnhart` in quotation marks. 
+Here are rules you need to understand about modes in R: 
+* If you try to assign a series of numbers are given as a value, but *they 
+are enclosed in single or double quotes*, R will consider them to be in 
+the "character" mode. 
+* You cannot take a string of alphanumeric characters (*e.g.* Earhart) 
+and assign them as a *value* for an object. 
+	* If you try to assign characters as a value (*e.g.:* `pilot <- Earhart`), 
+	it creates an error because R looks for an **object** named `Earhart`
+	(remember that objects have a name AND a value). 
+	* Because there isn't an object currently called `Earhart`, no assignment can
+	be made. 
+* If we want to create an object called `pilot` that **contains the name** 
+"Earhart", we need to enclose `Earhart` in quotation marks. 
+* If an object called `Earhart` already existed, then the mode 
+of `pilot` would become the same mode as the object `Earhart`. 
 
 Try this yourself before we move on:
 ```
-> pilot <- Earnhart
-Error: object 'Earnhart' not found
-> Earnhart <- "Ameleia"
-> mode (Earnhart)
+> pilot <- Earhart
+Error: object 'Earhart' not found
+> Earhart <- "Amelia"
+> mode (Earhart)
 [1] "character"
-> pilot <- Earnhart
+> pilot <- Earhart
 > mode(pilot)
 [1] "character"
-> pilot <- "Earnhart"
+> pilot <- "Earhart"
 > mode(pilot)
 [1] "character"
 ```
