@@ -56,7 +56,6 @@ loops back and waits for you to enter another command.
  
 ### The Shell
 
-
 The Shell is a program which runs other programs rather than doing calculations itself.
 The most common Unix shell is Bash, (the Bourne Again SHell --- so-called because 
 it's derived from a shell written by Stephen Bourne).
@@ -84,7 +83,7 @@ Most importantly:
 when typing commands, either from these lessons or from other sources,
 *do not type the prompt*, only the commands that follow it.
 
-IN the above example, the part that you type in the second 
+In the above example, the part that you type in the second 
 line of the example is,
 `ls -F /`,
 This typically has the following structure: a **command**,
@@ -101,10 +100,12 @@ Sometimes flags and arguments are referred to as ***parameters***.
 A command can be called with more than one flag and more than one argument: or, a
 command may not require an argument or a flag.
 
-In the second line of the example above, our **command** is `ls`, with a **flag** `-F` and an
+In the second line of the example above, our **command** is `ls`, with a <kbd>SPACE</kbd> followed by the **flag** `-F` and (sometimes optional) an
 **argument** `/`. Each part is separated by spaces: if you omit the space 
 between `ls` and `-F` the shell will look for a command called `ls-F`, which 
-doesn't exist. Also, ***capitalization matters***: `LS` is different from `ls`. 
+doesn't exist. Also, ***capitalization matters***: `ls -f` is different from `ls -F` 
+(NOTE: Windows systems, and therefore GitBash, don't always care about 
+capitalization of the **command** but the flags must be capatilized correctly). 
 
 On the next line we see the output that our command produced. In this case it is a listing 
 of files and folders in a location called `/` - we'll cover what all these mean 
@@ -148,21 +149,16 @@ So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that
 > 
 > ~~~
 > $ ls-F
-> ~~~
-> {: .language-bash}
-> ~~~
 > -bash: ls-F: command not found
 > ~~~
-> {: .output}
 > 
-> Usually this means that you have mis-typed the command - in this case we omitted
+> Usually this means that you have mis-typed the command. In this case we omitted
 > the space between `ls` and `-F`. 
-{: .callout}
 
 ### Is the Shell difficult?
 
 The Shell is a different than interacting than a GUI, and that 
-will take some effort - and some time - to learn. A GUI 
+will take some effort and time to learn. A GUI 
 presents you with choices and you select one. With a **command line interface** (CLI) 
 the choices are combinations 
 of commands and parameters, more like words in a language than buttons on a screen. They
@@ -186,7 +182,15 @@ being able to interact with the shell is becoming a necessary skill.
 We can build on the command-line skills covered here
 to tackle a wide range of scientific questions and computational challenges.
 
-## Nelle's Pipeline: A Starting Point
+### Download our lesson data
+
+Make sure you've downloaded and installed the files and directories for 
+the [setup for this lesson]({{ site.baseurl }}/computer-setup).
+If not, download the ["data-shell.zip" file from Canvas](https://canvas.okstate.edu/files/4006292/download?download_frd=1) and place the 
+file on your desktop. Then unzip the file, and you should have a folder 
+named "data-shell" on your Desktop. This is where we begin exploring the BASH shell.
+
+### Nelle's Pipeline: A Starting Point
 
 Nelle Nemo, a marine biologist,
 has just returned from a six-month survey of the
@@ -217,9 +221,8 @@ At 30 seconds per sample,
 the whole process will take more than 12 hours
 (and that's assuming the best-case scenario where she is ready to select the next file
 as soon as the previous sample analysis has finished).
-This zero-breaks always-ready scenario is only achievable by a machine so it would
-likely take much longer than 12 hours, not to mention that
-the chances of her selecting all of those files correctly are practically zero.
+Only a machine could do this without taking breaks, so it'll probaly take much longer than 12 hours, not to mention that
+the chances of her selecting all 1520 files correctly are practically zero.
 Missing that paper deadline is looking increasingly likely.
 
 The next few lessons will explore what she should do instead.

@@ -311,7 +311,7 @@ human_chr_number * 2
 
 Vectors are probably the
 most used commonly used object type in R. 
-**A vector is a collection of values that are all of the same type (numbers, characters, etc.)**. 
+**A vector is a collection of values that are all the same mode (numbers, characters, etc.)**. 
 One of the most common
 ways to create a vector is to use the `c()` function - the "concatenate" or
 "combine" function. Inside the function you may enter one or more values; for

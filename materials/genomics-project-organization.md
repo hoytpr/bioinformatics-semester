@@ -82,7 +82,7 @@ Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to g
 is a great possibility, if the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
 cloud instance remains available.
 
-### OptionA eventually leads back here
+### Option A using AWS
 
 ***AWS:*** Follow the instructions on the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html). 
 

@@ -41,32 +41,35 @@ $ pwd
 /Users/nelle
 ~~~
 
-Here, the computer's response is `/Users/nelle`. This important 
-directory is not just the current working directory, it 
+Here, the computer's response is `/Users/nelle`. This ***important*** 
+directory is not just the ***current working directory***, it 
 is Nelle's **home directory**. 
 
 So let's go over that again... We can be any place in the file structure, 
-and `pwd` will tell us where we are, *i.e.* the current working directory. 
+and `pwd` will tell us where we are, *i.e.* the ***current working directory***. 
 BUT there is only ONE home directory per user.
 
 > ### Home Directory Variations
 >
-> After installing GitBash we have to understand and accept that different
+> We have to understand and accept that different
 > operating systems have different places for the scientists' home directory. 
 > for Windows the home directory is on hard drive "C" and 
-> the output of `pwd` is:
+> the output of `pwd` is usually:
 > ~~~
 > $ pwd
 > /c/Users/<username>
 > ~~~
-> NOTE that whenever you see this format: `"<username>"`, it is referring to 
-> **ANY** username like yours or mine. For any commands using this format, You 
-> would type in your username rather than the actual `"<username>"` letters. 
-> Mine would be `/c/Users/hoyt`, but on a Mac mine would be `/Users/hoyt`   
-
-The home directory path will look different on different operating systems.
-On Linux it may look like `/home/nelle`,
-and on older Windows versions it could look like `C:\Documents and Settings\nelle`.  
+> On a Mac it would be:
+> ```
+> $ pwd
+> /Users/<username>
+> ```
+> > NOTE that whenever you see this format: `"<username>"`, it is referring to 
+> > **ANY** username and subtitutes for yours or mine. For any commands using this format, You 
+> > would type in **your username** rather than the actual `"<username>"` letters. 
+> > Mine would be `/c/Users/hoyt`, but on a Mac mine would be `/Users/hoyt` and on a Linux/Unix system it would be:
+> > `/home/hoyt`. 
+  
 A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
 the "root" directory (more on that later), but our setup instructions should
 **start** you in your `Users` directory (e.g. `Users/<username>`), 
@@ -76,7 +79,7 @@ directory for this lesson. The differences may be confusing but
 the GitBash window will show you similar outputs once we start 
 our lesson about moving through files and directories. 
 
-![The Actual File System]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
+![The General File Structure]({{ site.baseurl }}/materials/Nelles_directory_structure.png)
 
 **One more reminder**: In future examples, we've used an Apple Macintosh 
 output as the default - if you are on a Linux or Windows computer, the
@@ -86,7 +89,7 @@ To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.  For the
 sake of this example, we'll be
 illustrating the filesystem on **our scientist Nelle's computer**.  After this
-illustration, you should have learned commands to explore your **own filesystem**,
+lesson, you will have learned commands to explore your **own filesystem**,
 which will be constructed in a similar way.  
 
 On ***Nelle's*** computer, the filesystem looks like this:
@@ -133,6 +136,7 @@ as our home directory.
 Typically, when you open a new command prompt you will be in
 **your** home directory to start.
 
+#### The ls command
 Now let's learn a command to see the contents of our
 own filesystem.  We can see what's in our home directory by running `ls`,
 which stands for "listing":
@@ -149,8 +153,8 @@ system and how your filesystem is customized.)
 `ls` prints the names of the files and directories in the current directory. 
 We can make its output more comprehensible by using the **flag** `-F`
 (also known as a **switch** or an **option**),
-which tells `ls` to add a marker (specifically, a trailing **`/`**) indicating if 
-the items in the directory are files, or directories. Any item name with a `/` 
+which tells `ls` to add a trailing **`/`** indicating if 
+the items are files, or directories. Any item name with a `/` 
 at the end is a **directory**. 
 Depending on your settings, the `ls` command might also use colors to indicate 
 whether each entry is a file or directory. 
@@ -161,15 +165,11 @@ Applications/ Documents/    Library/      Music/        Public/
 Desktop/      Downloads/    Movies/       Pictures/
 ~~~
 
-Here,
+In our example (typically a Mac output),
 we can see our home directory contains mostly other directories 
 (or more commonly: **sub-directories**).
 If you see any names in your output that don't have trailing slashes,
 those must be **files**.
-
-**Note** that there is a space between `ls` and `-F`:
-without it, the shell thinks we're trying to run a command 
-called `ls-F`, which doesn't exist.
 
 ### Getting help
 
@@ -186,9 +186,9 @@ to use a command and what flags it accepts:
     $ man ls 
     ~~~
 
-**Depending on your environment you might find that only one of these works
-(either `man` or `--help`).**
-We'll describe both ways below.
+**Depending on your operating system you might find that only one of these works
+(On Macs, usually `man`, but on Windows, usually `--help`).** 
+The outputs however are very similar.
 
 #### The `--help` flag
 
@@ -323,16 +323,6 @@ should always know that `--help` is there for you.
 
 But when things go wrong there are also error messages that can be helpful:
 
-#### Unsupported command-line options
-If you try to use an option (flag) that is not supported, `ls` and other commands
-will usually print an error message similar to:
-
-~~~
-$ ls -j
-ls: invalid option -- 'j'
-Try 'ls --help' for more information.
-~~~
-
 ### The `man` command
 
 The other way to learn about `ls` is to type: 
@@ -366,12 +356,22 @@ GNU provides links to its
 [core GNU utilities](http://www.gnu.org/software/coreutils/manual/coreutils.html),
 which covers many commands introduced within this lesson.
 
+#### Unsupported command-line options
+If you try to use an option (flag) that is not supported, `ls` and other commands
+will usually print an error message similar to:
+
+~~~
+$ ls -j
+ls: invalid option -- 'j'
+Try 'ls --help' for more information.
+~~~
+
 ### Looking at our project directories
 
-We can also use `ls` to see the contents of a different directory.  Let's take a
+We can also use `ls` to see the contents of a **different** directory.  Let's take a
 look at our `Desktop` directory by running `ls -F Desktop`. This means we want
 to run the command `ls`, with the `-F` flag, using the **argument** `Desktop`.
-Using an ***argument*** (in this example:`Desktop`) tells `ls` that
+Using the argument `Desktop` tells `ls` that
 we want a listing of something ***other than our current working directory:***
 
 ~~~
@@ -397,8 +397,7 @@ and place our directories in a meaningful hierarchy.
 Now that we know the `data-shell` directory is located on our Desktop, we
 can do two things.  
 
-First, we can look at its contents, using the same strategy as before, passing
-a directory name to `ls`:
+First, we can look at its contents, using the `ls` command just as before.
 
 ~~~
 $ ls -F Desktop/data-shell
@@ -430,7 +429,7 @@ the `data-shell` directory, then into the `data` directory.
 
 > You might notice that after typing each command, nothing is printed to the terminal.
 > This is normal.  Many shell commands will not output anything to the 
-> screen when successfully executed.  
+> screen when **successfully** executed.  
 
 If we run **`pwd`** ("print working directory") we can see where we are;
 
@@ -463,14 +462,14 @@ Because `cd` can only see sub-directories *inside* (or "below") your
 current working directory.  There are different ways to see directories 
 *above* your current location and we'll start with the simplest.  
 
-There is a shortcut in the shell to move up one directory level
+There is a **shortcut** in the shell to move up one directory level
 that looks like this:
 
 ~~~
 $ cd ..
 ~~~
 
-The **`..`** is a special directory indicator meaning:
+The **`..`** is a ***special directory indicator*** meaning:
 "the directory containing this one", or more commonly,
 the **parent** of the current directory.
 After running the `cd ..` command, we can run `pwd`, 
