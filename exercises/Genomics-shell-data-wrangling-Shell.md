@@ -4,7 +4,10 @@ topic: Genomics
 title: Genomics Shell Data Wrangling
 language: Shell
 ---
-Uncomment below to work on exercise
+
+Exercise not used in Fall 2019.
+
+Use Canvas instead.
 
 <!--
 
@@ -14,15 +17,13 @@ Uncomment below to work on exercise
 
 2. BWA is a software package that uses kmers. What are the optimal kmers?
 
-
 Insert two questions as set up with two solutions
 
 Create solutions giving them the same name as this file except 
 with .txt suffix, and numbers 1. 2. etc. to match the exercise numbers
 Have to capitalize the "language" !!!!! tested !!!
 
--->
-
 Genomics-shell-data-wrangling-shell-1.txt
 Genomics-shell-data-wrangling-Shell-2.txt   etc.
 
+-->

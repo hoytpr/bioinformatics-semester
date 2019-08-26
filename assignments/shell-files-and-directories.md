@@ -7,4 +7,9 @@ exercises: ['Files and Directories', 'Finding Things']
 ---
 Find the Exercises on [Canvas at this link](https://canvas.okstate.edu/courses/51969/quizzes/107715)
 
-{% include assignment.html %}
+<!--
+
+% include assignment.html %}
+Had to remove the front curly bracket
+
+-->

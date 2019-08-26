@@ -1,4 +1,0 @@
-## Solution no header
-> 
-> This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run
-> it. What output do you see?
