@@ -440,7 +440,7 @@ themselves. It is the shell, not the other programs, that deals with
 expanding wildcards, and this is another example of orthogonal design.
 {: .callout}
 
->
+<!--
 
 > ## More on Wildcards
 >
@@ -582,8 +582,9 @@ expanding wildcards, and this is another example of orthogonal design.
 > {: .solution}
 {: .challenge}
 
+-->
 
-## Keypoints to Remember
+### Keypoints to Remember
 - "`cp old new` copies a file."
 - "`mkdir path` creates a new directory."
 - "`mv old new` moves (renames) a file or directory."
