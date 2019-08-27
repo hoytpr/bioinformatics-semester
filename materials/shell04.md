@@ -28,21 +28,23 @@ that contains six files describing some simple organic molecules.
 The `.pdb` extension indicates that these files are in Protein Data Bank format,
 a simple text format that specifies the type and position of each atom in the molecule.
 
-~~~
+```
 $ ls molecules
 cubane.pdb    ethane.pdb    methane.pdb
 octane.pdb    pentane.pdb   propane.pdb
-~~~
+```
 
-
-Let's go into that directory with `cd` and run the command `wc *.pdb`.
+Let's go into that directory with `cd molecules` and run the 
+command `wc *.pdb`.
 `wc` is the "word count" command:
-it counts the number of lines, words, and characters in files (from left to right, in that order).
+it counts the number of lines, words, and characters in files 
+(from left to right, in that order). It then prints them out 
+with **totals** at the end.
 
 The `*` in `*.pdb` matches zero or more characters,
 so the shell turns `*.pdb` into a list of all `.pdb` files in the current directory:
 
-~~~
+```
 $ cd molecules
 $ wc *.pdb
   20  156  1158  cubane.pdb
@@ -52,7 +54,7 @@ $ wc *.pdb
   21  165  1226  pentane.pdb
   15  111  825   propane.pdb
  107  819  6081  total
-~~~
+```
 
 If we run `wc -l` instead of just `wc`,
 the output shows only the number of lines per file:
@@ -80,6 +82,8 @@ Our first step toward a solution is to run the command:
 $ wc -l *.pdb > lengths.txt
 ~~~
 
+#### Using redirects
+
 The greater than symbol, `>`, tells the shell to **redirect** the command's output
 to a file instead of printing it to the screen. (This is why there is no screen output:
 everything that `wc` would have printed has gone into the
@@ -93,6 +97,8 @@ The command `ls lengths.txt` confirms that the file exists:
 $ ls lengths.txt
 lengths.txt
 ~~~
+
+#### Using `cat` to view file contents
 
 We can now send the content of `lengths.txt` to the screen using `cat lengths.txt`.
 `cat` stands for "concatenate" and
@@ -111,21 +117,33 @@ $ cat lengths.txt
  107  total
 ~~~
 
+**Note** that the `total` line is included in the file, 
+because it was output by the `wc -l` command!
+
 ### Using `less` for Page by Page Output
 
 We'll continue to use `cat` in this lesson, for convenience and consistency,
 but it has the disadvantage that it always dumps the whole file onto your screen.
-More useful in practice is the command **`less`**,
+If we had 50,000 `.pdb` files, and counted all their lengths, the 
+`lengths.txt` file would be very long! More useful in practice 
+is the command **`less`**,
 which is used like: `less lengths.txt`.
 This displays one screenful of the file, and then stops.
-You can go forward one screenful by pressing the spacebar,
-or back one by pressing `b`.  Press `q` to quit.
+But you will notice that you are still running inside the `less` command!
+While running `less` there are lots of things you can do that we 
+won't cover right now, but remember it's very useful for big 
+text-based files. You can go forward one screenful by pressing the 
+<kbd>spacebar</kbd>,
+or back one by pressing `b`.  To exit the `less` command you 
+must press `q` to quit.
 
 ### Using `sort`
+
 Not surprisingly, the `sort` command sorts elements in a file. 
 The default for `sort` is to use **alphanumerical** order. 
 This is important to know when working with numbers.
-If we run `sort` on a file containing the following lines:
+While we are still in the `molecules` directory, 
+create a file `numbers.txt` and enter the following numbers:
 
 ~~~
 10
@@ -135,6 +153,7 @@ If we run `sort` on a file containing the following lines:
 6
 ~~~
 
+If we run `sort` on this file
 the output is slightly different because it's sorted in *alphanumerical* order:
 
 ~~~
@@ -173,7 +192,7 @@ $ sort -n lengths.txt
 ~~~
 
 We can put a permanent sorted list of lines in another file called `sorted-lengths.txt`
-by redirecting the output using `> sorted-lengths.txt` after the command,
+by redirecting the output using `> sorted-lengths.txt` after `sort`,
 just as we used `> lengths.txt` to put the output of `wc` into `lengths.txt`.
 Once we've done that,
 we can run the `head` command to output the first few lines of `sorted-lengths.txt`. Let's just look at the top line using `head -n 1`:
@@ -187,7 +206,7 @@ $ head -n 1 sorted-lengths.txt
   9  methane.pdb
 ~~~
 
-Remember that using `-n 1` telss the `head` command
+Remember that using `-n 1` tells the `head` command
 we only want the first line of the file;
 `-n 20` would get the first 20,
 and so on.
@@ -211,11 +230,27 @@ the ***same*** filename, it will overwrite (the same as deleting)
 the original contents of `lengths.txt`! Little things like this
 may cause incorrect results later. 
 
+### Using `echo` and Another Redirect: `>>` to Append
+We have seen the use of `>`, but there is a similar operator `>>` 
+which works slightly differently.
+We'll use the `echo` command to help understand the difference between `>` and `>>`.
+The `echo` command outputs what you give it. For example:
+```
+$ echo hello
+hello
+$ echo what a crazy command!
+what a crazy command!
+```
+You can also redirect the output of echo to a file:
 
-### Another redirect: `>>` to append
-We have seen the use of `>`, but there is a similar operator `>>` which works slightly differently.
-By using the `echo` command to output some text, test the commands below 
-to reveal the difference between the two operators `>` and `>>`:
+```
+$ echo hello > hello.txt
+$ cat hello.txt
+hello
+```
+
+By using the `echo` command to output some text, run each of the commands below 
+twice (consecutively) to reveal the difference between the two operators `>` and `>>`:
 
 ~~~
 $ echo hello > testfile01.txt
@@ -227,7 +262,7 @@ and:
 $ echo hello >> testfile02.txt
 ~~~
 
-Hint: Try executing each command twice in a row and then examining the output files.
+Hint: After executing each command twice in a row, examine the output files.
 
 In the first example with `>`, the string "hello" is written to `testfile01.txt`,
 but the file gets overwritten each time we run the command.
@@ -235,7 +270,6 @@ but the file gets overwritten each time we run the command.
 We see from the second example that the `>>` operator also writes "hello" to a file
 (in this case`testfile02.txt`),
 but **appends** the string to the file when the file already exists (*i.e.* when we run it for the second time).
-
 
 ### Appending Data
 
@@ -246,8 +280,9 @@ So `tail` is very useful when working with "appending" outputs to a new file.
 Consider the file `data-shell/data/animals.txt`. First we can check how 
 many lines are in the file:
 ```
+cd data
 wc -l animals.txt
-8
+8 animals.txt
 ```
 After the following commands, select the answer that
 corresponds to the file `animalsUpd.txt`:
@@ -266,33 +301,36 @@ $ tail -n 2 animals.txt >> animalsUpd.txt
 Option 3 is correct. 
 For option 1 to be correct we would only run the `head` command.
 For option 2 to be correct we would only run the `tail` command.
-For option 4 to be correct we would have to pipe the output of `head` into `tail` by doing `head -n 3 animals.txt | tail -n 2 > animalsUpd.txt`
+For option 4 to be correct we would have to pipe the output of 
+`head` into `tail` by doing `head -n 3 animals.txt | tail -n 2 > animalsUpd.txt`
 
-If you think this is confusing,
-you're in good company:
-even once you understand what `wc`, `sort`, and `head` do,
+*If you think this is confusing, it's okay at this point*!
+Even once you understand what `wc`, `sort`, and `head` do,
 all those intermediate files make it hard to follow what's going on.
-We can make it easier to understand by running `sort` and `head` together
+
+### Using Pipes `|`
+
+We can make working with these commands and files a little 
+easier to understand by (for example) running `sort` and `head` together
 using a **"pipe"** (a vertical bar symbol **"|"**):
+**First**, change back into the `molecules` directory:
 
 ~~~
+$ cd ../molecules
 $ sort -n lengths.txt | head -n 1
   9  methane.pdb
 ~~~
 
-The vertical bar, `|`, between the two commands is called a **pipe**
- and it tells the shell that we want to use
-the output of the command on the left
-as the input to the command on the right.
-The computer might create a temporary file if it needs to,
-or copy data from one program to the other in memory,
-or something else entirely;
-***we don't have to know or care***.
+The vertical bar, `|`, or **pipe** between the two commands
+tells the shell that we want to use
+the ***output of the command on the left***
+as the ***input to the command on the right***.
 
-AND, nothing prevents us from chaining pipes together consecutively.
-That is, we can send the output of `wc` directly to `sort`,
+AND, *nothing prevents us from chaining more pipes together*.
+For example, we can send the output of `wc` directly to `sort`,
 and then the resulting output to `head`.
-For example: First use a pipe to send the output of `wc` to `sort`:
+
+First use a pipe to send the output of `wc` to `sort`:
 
 ~~~
 $ wc -l *.pdb | sort -n
@@ -305,7 +343,7 @@ $ wc -l *.pdb | sort -n
  107 total
 ~~~
 
-And now we send the output of this pipe, by adding another pipe, to `head`, 
+Then add another pipe, to the`head` command, 
 so that the full pipeline becomes:
 
 ~~~
@@ -314,33 +352,20 @@ $ wc -l *.pdb | sort -n | head -n 1
 ~~~
 
 This is similar to nesting functions in math like *log(3x)*
-and saying "the log of three times *x*". First you calculate the 
-3*x*, then you calculate the log of 3*x*. 
-In our case,
-the calculation is "top line of head, of the sorted line counts, of `*.pdb`".
+First you calculate the 
+3 times *x*, then you calculate the log of 3*x*. 
+In our case, the calculation is "sort the line counts 
+of `*.pdb`", and show the top line" (the **smallest** file). 
 
 Also, note that we haven't changed any files at all... we have
-pulled out exactly the information we wanted!!
-
-> ### Example piping exercise
->
-> In our current `data-shell/molecules` directory, we want to find the 
-> 3 files which have the least number of
-> lines. Which command listed below would work?
->
-> 1. `wc -l * > sort -n > head -n 3`
-> 2. `wc -l * | sort -n | head -n 1-3`
-> 3. `wc -l * | head -n 3 | sort -n`
-> 4. `wc -l * | sort -n | head -n 3`
->
-> #### Solution
-> Option 4 is the solution.
+pulled out exactly the information we wanted!! 
+Thought Question: How can we get the **biggest** file?
 
 The pipe character `|` is **very important** in Bash scripting, and 
 we will use pipes often to feed the standard output from one process to
 the standard input of another.
 
-#### stdin, stdout, stderr
+#### Computational vocabulary: stdin, stdout, stderr
 
 Pipes take advantage of how computers work. 
 When a computer runs a program --- any program --- it "loads the software" 
@@ -350,23 +375,23 @@ and a default output called **standard output**
 (or "stdout"). There is a second available output called **standard error** ("stderr")
 that is typically used for error or diagnostic messages. 
 
-The shell is a program that normally
+**The shell** is a program that normally
 takes what we type on the keyboard as its standard input,
 and whatever it produces as standard output is displayed on our screen.
 
-We redirect the standard output when we use the ">" symbol
+We ***redirect the standard output*** when we use the **`>`** symbol
 for example: `wc -l *.pdb > lengths.txt`.
 The shell creates a process for the `wc` program, and 
-uses the filenames as arguments for standard input, 
-then uses `>` to redirect standard output to a specified file.
+uses the filenames as arguments for *standard input*, 
+then uses `>` to *redirect standard output* to a specified file.
 
 If we run `wc -l *.pdb | sort -n` instead,
-the shell creates two processes
+the shell creates **two** processes
 (one for each process in the pipe).
-The standard output of `wc` is fed directly to the standard input of `sort`;
-and `sort`'s output goes to the screen.
+The *standard output* of `wc` is fed directly to the *standard input* of `sort`;
+and `sort`'s *output* goes to the screen.
 And if we run `wc -l *.pdb | sort -n | head -n 1`,
-we get three processes with data flowing from the files,
+we get ***three*** processes with data flowing from the files,
 through `wc` to `sort`,
 and from `sort` through `head` to the screen.
 
@@ -386,19 +411,21 @@ Almost all of the standard Unix tools can work this way.
 ### Redirecting Input
 
 As well as using `>` to redirect a program's **output**, we can use `<` to
-redirect its **input**, i.e., to read from a file instead of from standard
-input. For example, instead of writing `wc ammonia.pdb`, we could write
-`wc < ammonia.pdb`. In the first case, `wc` gets a command line
-argument telling it what file to open. In the second, `wc` doesn't have
+redirect its **input**, *i.e.*, to ***read from a file instead 
+of from standard input***. For example, instead of writing 
+`wc ammonia.pdb`, we could write
+**`wc < ammonia.pdb`**. In the first case, `wc` gets a command line
+argument telling it what ***file*** to open. In the second, `wc` doesn't have
 any command line arguments, so it reads from standard input, but we
-have told the shell to send the contents of `ammonia.pdb` to `wc`'s
+have told the shell to send the ***contents*** of `ammonia.pdb` to `wc`'s
 standard input.
 
-> ### What Does `<` Mean?
+> ### Clarifying: What Does `<` Mean?
 >
-> Change directory to `data-shell` (the top level of our downloaded example data).
+> Change directory to `data-shell` (the top level of our downloaded 
+> example data). Remember you ca always use: `cd ~/Desktop/data-shell`
 >
-> What is the difference between:
+> Let's examine the difference between:
 >
 > ~~~
 > $ wc -l notes.txt
@@ -411,16 +438,18 @@ standard input.
 > ~~~
 >
 > #### Solution
-> `<` is used to redirect input to a command. 
+> `<` is used "to redirect input to a command". 
 >
 > Notice that in both examples, the shell returns the number of lines 
-> from the input to the `wc` command. but
-> in the first example, the **input** is the **file** `notes.txt` and the file name is
+> from the input to the `wc` command. However
+> in the first example, the **input** is the **file** `notes.txt` 
+> and so the ***file name*** is
 > given in the output from the `wc` command.
 > In the second example, the only the **contents** of the file `notes.txt` 
 > are redirected to standard input. Hence the file name is not given in 
-> the output - just the number of lines.
-> This is simlar to entering the contents of a file by typing at the prompt.
+> the output - *just the number of lines*.
+> 
+> This is similar to entering the contents of a file by typing at the prompt.
 > Try this for yourself:
 >
 > ```
@@ -429,13 +458,13 @@ standard input.
 > is
 > a test
 > ```
-> <kbd>Ctrl-D</kbd> # This lets the shell know you have finished typing the input
-> and the shell executes the `wc -l` command using your input.
+> <kbd>Ctrl-D</kbd>  (This tells the shell you finished typing the input)
+> The shell then executes the `wc -l` command using your 
+> input lines (no file needed!).
 >
 > ```
 > 3
 > ```
-
 
 ### The `uniq` Command Removes Adjacent Duplicates
 
@@ -462,8 +491,10 @@ coho
 steelhead
 ~~~
 
-Why do you think `uniq` only removes **adjacent** duplicated lines?
-(Hint: think about very large data sets.) What other command could
+`uniq` only removes **adjacent** duplicated lines because in 
+very large data sets, it would not be uncommon to have a line
+entered twice. This would be hard to find without `uniq`. 
+What other command could
 you combine with it in a pipe to remove all duplicated lines?
 
 #### Solution Hint
@@ -478,7 +509,7 @@ Solution: The `head` command extracts the first 5 lines from `animals.txt`. Then
 
 -->
 
-### Pipe Construction and `cut`
+### Pipe Construction and the `cut` command
 
 Look at the file `animals.txt` in the `data-shell/data` folder, 
 ```
@@ -499,9 +530,10 @@ Type in the following command:
 $ cut -d , -f 2 animals.txt
 ~~~
 
-The `cut` command separates columns of data, and the `-d` flag designates the column
-delimiter for each line to be a comma, and the `-f 2` flag tells
-`cut` to print the second field in each line, to give the following output:
+The `cut` command separates columns of data, and the `-d` flag 
+designates the column ***delimiter*** for each line to be a 
+"comma" `,`, and the `-f 2` flag tells `cut` to print the 
+***second field*** in each line, to give the following output:
 
 ~~~
 deer
@@ -514,34 +546,15 @@ rabbit
 bear
 ~~~
 
-> What other command(s) could be added to this in a pipeline to find
-> out what animals the file contains (without any duplicates in their
-> names)?
->
-> #### Solution
-> ```
-> $ cut -d , -f 2 animals.txt | sort | uniq
-> ```
-
 <a name="pipes"></a>
-### Build a Pipe
+### Build a Pipeline
 
-The file `animals.txt` contains 8 lines of data formatted as follows:
-
-~~~
-2012-11-05,deer
-2012-11-05,rabbit
-2012-11-05,raccoon
-2012-11-06,rabbit
-...
-~~~
-
-Assuming your current directory is `data-shell/data/`
+While your current directory is `data-shell/data/`
 build a pipeline to produce a table that shows
 the total count of each type of animal in the file?
 
 ```
-$ cut -d, -f 2 animals.txt
+$ cut -d , -f 2 animals.txt
 deer
 rabbit
 raccoon
@@ -553,7 +566,7 @@ bear
 ```
 
 ```
-$ cut -d, -f 2 animals.txt | sort
+$ cut -d , -f 2 animals.txt | sort
 bear
 deer
 deer
@@ -565,7 +578,7 @@ raccoon
 ```
 
 ```
-$ cut -d, -f 2 animals.txt | sort | uniq -c
+$ cut -d , -f 2 animals.txt | sort | uniq -c
       1 bear
       2 deer
       1 fox

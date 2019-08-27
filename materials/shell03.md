@@ -4,17 +4,16 @@ element: notes
 title: Working With Files and Directories
 language: Shell
 ---
-(exercises at bottom to be removed)
 ### Questions:
 
-- "How can I create, copy, and delete files and directories?"
-- "How can I edit files?"
+- How can I create, copy, and delete files and directories?
+- How can I edit files?
 
 ### Important Objectives to Learn
 
-- "Create a directory hierarchy that matches a given diagram."
-- "Create files in that hierarchy using an editor or by copying and renaming existing files."
-- "Delete, copy and move specified files and/or directories."
+- Understand you location in a directory hierarchy that matches a given diagram.
+- Create files in that hierarchy using an editor or by copying and renaming existing files.
+- Delete, copy and move specified files and/or directories.
 
 `___________________________________________________________________________________________________`
 
@@ -45,7 +44,7 @@ $ mkdir thesis
 As you might guess from its name,
 `mkdir` means "make directory". 
 Since `thesis` is a relative path
-(i.e., does not have a leading slash, like `/what/ever/thesis`),
+(*i.e.*, does not have a leading slash, like `/what/ever/thesis`),
 the new directory is created within the current working directory:
 
 ~~~
@@ -54,12 +53,11 @@ creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.
 ~~~
 
 ## Two ways of doing the same thing
-Using the shell to create a directory is no different than using a file explorer.
-If you open the current directory using your operating system's graphical file explorer,
-the `thesis` directory will appear there too.
+We just want to mention that using the shell to create a directory is no different than using a GUI.
+In fact, you can open the current shell directory `Desktop/data-shell` using your operating system's graphical file explorer
+and the `thesis` directory will appear there too.
 While the shell and the file explorer are two different ways of interacting with the files,
 the files and directories themselves are the same.
-{: .callout}
 
 ## Good names for files and directories
 
@@ -79,7 +77,7 @@ tips for the names of your files.
    Commands treat names starting with `-` as options or flags!
    Files with names beginning with a `.` are automatically "hidden".
 
-3. Stick with letters, numbers, `.` (period or 'full stop'), `-` (dash) and `_` (underscore).
+3. Inside the name, stick with letters, numbers, `.` (period or 'full stop'), `-` (dash) and `_` (underscore).
 
    Many other characters have special meanings on the command line.
    We will learn about some of these during this lesson.
@@ -93,11 +91,12 @@ Since we've just created the `thesis` directory, there's nothing in it yet:
 
 ~~~
 $ ls -F thesis
+			<-- (nothing is returned)
 ~~~
 
 ### Create a text file
 Let's change our working directory to `thesis` using `cd`,
-then run a text editor called Nano to create a file called `draft.txt`:
+then run a text editor called `nano` to create a file called `draft.txt`:
 
 ~~~
 $ cd thesis
@@ -109,48 +108,46 @@ $ nano draft.txt
 > We usually call programs like Microsoft Word or LibreOffice Writer "text
 > editors", but we need to be a bit more careful when it comes to
 > programming. By default, Microsoft Word uses `.docx` files to store not
-> only text, but also formatting information about fonts, headings, and so
-> on. This extra information isn't stored as characters, and doesn't mean
+> only text, but also formatting information (fonts, headings, and so
+> on). This extra information isn't stored as text, and doesn't mean
 > anything to many shell tools. They expect input files to contain
-> nothing but the letters, digits, and punctuation on a standard computer
-> keyboard. When editing programs, therefore, you must either use a plain
-> text editor, or be careful to save files as plain text.
+> nothing but the letters, digits, and punctuation from a standard computer
+> keyboard. When editing programs, therefore, you must use a plain
+> text editor (or be very careful to save files as plain text).
 
-> ### Which Editor?
+> ### Which Text Editor?
 >
 > We use `nano` in examples because it is one of the 
-> least complex text editors. However, because of this trait, it may 
-> not be powerful enough or flexible enough for the work you need to do
+> least complex text editors. However, it may 
+> not be powerful enough, or flexible enough, for all your work
 > after this workshop. On Unix systems (such as Linux and Mac OS X),
 > many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
 > [Vim](http://www.vim.org/) (both of which require more time to learn), 
 > or a graphical editor such as
 > [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
 > use [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
-> editor called `notepad` that can be run from the command line in the same
+> text editor called `notepad` that can be run from the command line in the same
 > way as `nano` for the purposes of this lesson.  
 >
 > No matter what editor you use, you will need to know where it searches
 > for and saves files. If you start it from the shell, it will (probably)
-> use your current working directory as its default location. If you use
-> your computer's start menu, it may want to save files in your desktop or
-> documents directory instead. You can change this by navigating to
-> another directory the first time you "Save As..."
+> use your *current working directory* as its default location. 
 
 Let's type in a few lines of text.
+
+![Nano in Action]({{ site.baseurl }}/fig/nano-screenshot.png)
+
 Once we're happy with our text, we can press <kbd>Ctrl</kbd>+<kbd>O</kbd> (press the Ctrl or Control key and, while
 holding it down, press the O key) to write our data to disk
 (we'll be asked what file we want to save this to:
 press <kbd>Return</kbd> to accept the suggested default of `draft.txt`).
-
-![Nano in Action]({{ site.baseurl }}/fig/nano-screenshot.png)
-
-Once our file is saved, we can use `Ctrl-X` to quit the editor and
+Now our file is saved, and we can use `Ctrl-X` to quit the editor and
 return to the shell.
 
-> ## Control, Ctrl, or ^ Key
+> ### Control, Ctrl, or ^ Key
 >
-> The __<kbd>Control</kbd>__ key (referred to as the "Command Key" on a Mac) is also called the "Ctrl" key. There are various ways
+> The __<kbd>Control</kbd>__ key (sometimes referred to as the "Command Key" 
+> on a Mac) is also called the "Ctrl" key. There are various ways
 > in which using the <kbd>Control</kbd> key may be described. For example, you may
 > see an instruction to press the <kbd>Control</kbd> key and, while holding it down,
 > press the <kbd>X</kbd> key, described as any of:
@@ -165,7 +162,6 @@ return to the shell.
 > In nano, along the bottom of the screen you'll see `^G Get Help ^O WriteOut`.
 > This means that you can use `Control-G` to get help and `Control-O` to save your
 > file.
-{: .callout}
 
 nano doesn't leave any output on the screen after it exits,
 but `ls` now shows that we have created a file called `draft.txt`:
@@ -174,37 +170,35 @@ but `ls` now shows that we have created a file called `draft.txt`:
 $ ls
 draft.txt
 ~~~
-{: .output}
 
-## Creating Files a Different Way
+### Creating Files a Different Way
 
 We have seen how to create text files using the `nano` editor.
-Now, try the following command in your home directory:
+Now, try the following command in your **home** directory:
 
 ~~~
-$ cd                  # go to your home directory
+$ cd      # go to your home directory
 $ touch my_file.txt
 ~~~
-{: .language-bash}
 
-Now use `ls -l` to inspect the files in your home directory (or using the GUI file explorer),
-and you should see a new file named `my_file.txt`. When you inspect the file with `ls -l`, 
-note that the size of 'my_file.txt' is 0kb.  In other words, it contains no data.
-If you open 'my_file.txt' using your text editor it is blank.
+Now use `ls` to inspect the files in your home directory (or using the GUI file explorer),
+and you should see a new file named `my_file.txt`. When you inspect the file 
+with `ls -s` (the `-s` flag stands for "size"), 
+note that the size of `my_file.txt` is `0`(kilobytes).  In other words, it contains no data.
+If you open `my_file.txt` using your text editor it is blank.
 
 Some programs do not generate output files themselves, but instead require that empty files 
 have already been generated. That's when `touch` becomes very valuable. 
 
 ## Removing files and directories
 
-Returning to the `data-shell` directory,
-let's tidy up the `thesis` directory by removing the draft we created:
+Return to the `data-shell` directory using `cd Desktop/data-shell`.
+Let's tidy up the `thesis` directory by removing the draft we created:
 
 ~~~
 $ cd thesis
 $ rm draft.txt
 ~~~
-{: .language-bash}
 
 The `rm` is short for "remove" and this command removes (deletes) files.
 If we run `ls` again,
@@ -213,20 +207,18 @@ which tells us that our file is gone:
 
 ~~~
 $ ls
+
 ~~~
-{: .language-bash}
 
 > ## Deleting Is Forever!
 >
 > ***The Unix shell doesn't have a trash bin that we can recover deleted***
-> ***files from*** (though most graphical interfaces allow this including those for Linux).  Instead,
-> when we delete files using the command-line, they are unhooked from the file system so that
-> their storage space on disk can be recycled. Tools for finding and
-> recovering deleted files do exist, but there's no guarantee they'll
-> work in any particular situation, since the computer may recycle the
-> file's disk space right away.
+> ***files from*** (though most graphical interfaces allow this 
+> including those for Linux).  Instead,
+> when we delete files using the command-line
+> their storage space on disk can be recycled. 
 
-Let's re-create `draft.txt`
+Now, let's *re-create* `draft.txt`
 
 ~~~
 $ pwd
@@ -250,10 +242,10 @@ $ rm thesis
 rm: cannot remove `thesis': Is a directory
 ~~~
 
-This happens because `rm` by default only works on files, not directories. However, It can remove directories if they are completely empty.
+This happens because `rm` by default *only works on files, not directories*. However, It *can* remove directories if they are completely empty.
 
 To really get rid of `thesis` we must also delete the file `draft.txt`.
-We can do this with the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`
+We can do this with `-r` or the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`
 
 ~~~
 $ rm -r thesis
@@ -274,13 +266,14 @@ rm: remove regular file ‘thesis/draft.txt’? y
 rm: remove directory ‘thesis’? y
 ~~~
 
-This removes everything in the directory, then the directory itself, asking
+This goes into the directory, removes everything in the directory, then 
+removes the directory itself, asking
 at each step for you to confirm the deletion.
 
 ## Moving files and directories
 Let's create that directory and file one more time.
-Note that this time we're running `nano` from the `data-shell` directory using 
-the path `thesis/draft.txt`, rather than going into the `thesis` directory 
+Note that this time we're running `nano` *from* the `data-shell` directory using 
+the path `thesis/draft.txt`, rather than going *into* the `thesis` directory 
 and running `nano` on `draft.txt` there.
 
 ~~~
@@ -301,7 +294,7 @@ $ mv thesis/draft.txt thesis/quotes.txt
 ~~~
 
 The first argument tells `mv` what we're "moving",
-while the second is where it's to go.
+while the second argument tells `mv` where it should go.
 In this case, we're moving `thesis/draft.txt` to `thesis/quotes.txt`,
 which has the same effect as renaming the file.
 Sure enough, `ls` shows us that `thesis` now contains one file called `quotes.txt`:
@@ -332,7 +325,7 @@ the directory name we use is the special directory name `.` that we mentioned ea
 $ mv thesis/quotes.txt .
 ~~~
 
-The effect is to move the file from the directory it was in to the current working directory.
+The effect is to move the file from the directory it was in to the *current working directory*.
 `ls` now shows us that the `thesis` directory is empty:
 
 ~~~
@@ -340,7 +333,7 @@ $ ls thesis
 ~~~
 
 Further (and we will use this often),
-`ls` with a filename or directory name as an argument only lists that file or directory.
+`ls` with a *filename* as an argument only lists that file.
 We can use this to see that `quotes.txt` is still in our current directory:
 
 ~~~
@@ -348,11 +341,12 @@ $ ls quotes.txt
 quotes.txt
 ~~~
 
-## Copying files and directories
+### Copying files and directories
 
 The `cp` (copy) command works very much like `mv`,
 except it copies a file instead of moving it.
-We can check that it did the right thing using `ls`
+But `cp` can make a copy with a new name also! 
+Try this, and then check that `cp` worked as expected using `ls`
 with ***two paths*** as arguments --- like most Unix commands,
 `ls` can be given multiple paths at once:
 
@@ -374,7 +368,7 @@ thesis/quotations.txt
 ~~~
 
 This time the shell tells us that it can't find `quotes.txt` in the current directory,
-but it does find the copy in `thesis` that we didn't delete.
+but it does find the copy named `quotations.txt` in `thesis` that we didn't delete.
 
 > ## What's In A Name?
 >
@@ -389,58 +383,70 @@ but it does find the copy in `thesis` that we didn't delete.
 > indicates a PDF document, `.cfg` is a configuration file full of parameters
 > for some program or other, `.png` is a PNG image, and so on.
 >
-> This is just a convention, albeit an important one ([for you word geeks, "albeit" is and interesting word](https://en.wiktionary.org/wiki/albeit)). All computer files contain
+> These are just a conventions, albeit important ones ([and for you word geeks, "albeit" is an interesting word](https://en.wiktionary.org/wiki/albeit)). All computer files contain
 > bytes: it's up to us and our programs to interpret those bytes
 > according to the rules for plain text files, PDF documents, configuration
 > files, images, and so on.
 >
-> Naming a PNG image of a whale as `whale.mp3` doesn't somehow
+> To be clear: Naming a PNG image of a whale as `whale.mp3` doesn't somehow
 > magically turn it into a recording of whalesong, though it *might*
-> cause the operating system to try to open it with a music player
-> when someone double-clicks it.
+> cause trouble (for example if the operating system tries to open it with a music player)
 
-### Exercises
+### Exercises: Using wildcards for accessing multiple files at once
 
-## Operations with multiple files and directories
-
-Oftentimes one needs to copy or move several files at once. This can be done by providing a list of individual filenames, or specifying a naming pattern using wildcards.  
-
-### Using wildcards for accessing multiple files at once
+Often one needs to copy or move several files at once. This can be done by providing a list of individual filenames, or specifying a naming *pattern* using wildcards.  
 
 ## Wildcards
 
-`*` is a **wildcard**. It matches zero or more
-characters, so `*.pdb` matches `ethane.pdb`, `propane.pdb`, and every
-file that ends with '.pdb'. On the other hand, `p*.pdb` only matches
-`pentane.pdb` and `propane.pdb`, because the 'p' at the front only
-matches filenames that begin with the letter 'p'.
->
-`?` is also a wildcard, but it only matches a single character. This
+*Make sure you are in the `Desktop\data-shell\molecules` directory.* 
+Type `ls -F`
+
+**`*`** is a **wildcard**. It matches ***zero or more
+characters***, so `*.pdb` matches `ethane.pdb`, `propane.pdb`, and every
+file that ends with ".pdb". On the other hand, `p*.pdb` only matches
+`pentane.pdb` and `propane.pdb`, because the "p" at the front only
+matches filenames that begin with the letter "p".
+
+```
+ls p*.pdb
+pentane.pdb  propane.pdb
+```
+
+**`?`** is also a wildcard, but it only matches a ***single character***. This
 means that `p?.pdb` would match `pi.pdb` or `p5.pdb` (if we had these two
 files in the `molecules` directory), but not `propane.pdb`.
+
 We can use any number of wildcards at a time: for example, `p*.p?*`
-matches anything that starts with a 'p' and ends with '.', 'p', and at
-least one more character (since the `?` has to match one character, and
+matches anything that starts with a "p" and ends with " . " then "p", and at
+least one more character (since the `?` ***MUST match one character***), and
 the final `*` can match any number of characters). Thus, `p*.p?*` would
 match `preferred.practice`, and even `p.pi` (since the first `*` can
 match no characters at all), but not `quality.practice` (doesn't start
-with 'p') or `preferred.p` (there isn't at least one character after the
-'.p').
+with "p") or `preferred.p` (there isn't at least one character after the
+" .p").
 
-When the shell sees a wildcard, it expands the wildcard to create a
-list of matching filenames *before* running the command that was
-asked for. As an exception, if a wildcard expression does not match
-any file, Bash will pass the expression as an argument to the command
-as it is. For example typing `ls *.pdf` in the `molecules` directory
-(which contains only files with names ending with `.pdb`) results in
-an error message that there is no file called `*.pdf`.
+```
+ls p*.p?*
+pentane.pdb  propane.pdb
+```
+
+If a wildcard expression does not match
+any file, Bash will pass the expression as an argument to the command.
+For example; typing `ls *.pdf` in the `molecules` directory
+(which has no files with names ending with `.pdf`) results in
+an error message.
+
+```
+ls *.pdf
+ls: cannot access '*.pdf': No such file or directory
+```
+
+<!--
+
 However, generally commands like `wc` and `ls` see the lists of
 file names matching these expressions, but not the wildcards
 themselves. It is the shell, not the other programs, that deals with
 expanding wildcards, and this is another example of orthogonal design.
-{: .callout}
-
-<!--
 
 > ## More on Wildcards
 >
@@ -499,7 +505,6 @@ expanding wildcards, and this is another example of orthogonal design.
 > ~~~
 > analyzed/  fructose.dat    raw/   sucrose.dat
 > ~~~
-> {: .output}
 >
 > The `fructose.dat` and `sucrose.dat` files contain output from her data
 > analysis. What command(s) covered in this lesson does she need to run so that the commands below will
@@ -526,12 +531,10 @@ expanding wildcards, and this is another example of orthogonal design.
 > > ```
 > > mv *.dat analyzed
 > > ```
-> > {: .language-bash}
+> > 
 > > Jamie needs to move her files `fructose.dat` and `sucrose.dat` to the `analyzed` directory.
 > > The shell will expand *.dat to match all .dat files in the current directory.
 > > The `mv` command then moves the list of .dat files to the "analyzed" directory.
-> {: .solution}
-{: .challenge}
 
 > ## Copy a folder structure but not the files
 >
@@ -585,12 +588,13 @@ expanding wildcards, and this is another example of orthogonal design.
 -->
 
 ### Keypoints to Remember
-- "`cp old new` copies a file."
-- "`mkdir path` creates a new directory."
-- "`mv old new` moves (renames) a file or directory."
-- "`rm path` removes (deletes) a file."
-- "`*` matches zero or more characters in a filename, so `*.txt` matches all files ending in `.txt`."
-- "`?` matches any single character in a filename, so `?.txt` matches `a.txt` but not `any.txt`."
-- "Use of the Control key may be described in many ways, including `Ctrl-X`, `Control-X`, and `^X`."
-- "The shell does not have a trash bin: once something is deleted, it's really gone."
-- "Depending on the type of work you do, you may need a more powerful text editor than Nano."
+- `touch <filename>` creates a blank (empty) file for text.
+- `cp <old> <new>` copies a file.
+- `mkdir <path>` creates a new directory.
+- `mv <old> <new>` moves (or renames) a file *or* directory.
+- `rm <path>` removes (deletes) a file. `rm -r <path>` removes a folder and all files.
+- `*` matches zero or more characters in a filename, so `*.txt` matches all files ending in `.txt`.
+- `?` matches any single character in a filename (but can't match nothing), so `?.txt` matches `a.txt` but *not* `any.txt` or `.txt`.
+- Use of the Control key may be described in many ways, including `Ctrl-X`, `Control-X`, and `^X`.
+- The shell does not have a trash bin: once something is deleted, it's really gone.
+- Depending on the type of work you do, you may need a more powerful text editor than `nano`.
