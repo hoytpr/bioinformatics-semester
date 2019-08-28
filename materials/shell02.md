@@ -25,29 +25,30 @@ It organizes our data into files (which hold information), and directories
 
 Several commands are frequently used to create, inspect, rename, and 
 delete files and directories. To understand what Nelle is doing 
-(and why) as she is setting up for her first anaalyses, 
+(and why) as she is setting up for her first analyses, 
 we'll need to use our BASH shell on our computers.
 
-After opening our terminal window, let's find out "where we are" by 
-running a command called `pwd` (which stands for "print working directory"). 
-Directories are like *places* - at any time while we are using the 
-shell we are in exactly one place, called our **current working directory**. 
+After opening our terminal window, let's find out "where we are" 
+in the file system by 
+running a command `pwd` (which stands for "print working directory"). 
+Directories are like *places* - **at any time while we are using the 
+shell we are in exactly one place, called our *current working directory***. 
 Commands mostly read and write files in the 
-current working directory, so knowing where you are before running
-a command is **important**. `pwd` shows you where you are:
+current working directory, so knowing where you are in the file system 
+before running a command is **important**. `pwd` shows you where you are:
 
 ~~~
 $ pwd
 /Users/nelle
 ~~~
 
-Here, the computer's response is `/Users/nelle`. This ***important*** 
-directory is not just the ***current working directory***, it 
-is Nelle's **home directory**. 
+Here, the computer's response is `/Users/nelle`. This **important** 
+directory is not ***only*** the *current working directory*, it 
+is Nelle's **home** directory. 
 
-So let's go over that again... We can be any place in the file structure, 
+So let's go over that again... We can be at any place in the file structure, 
 and `pwd` will tell us where we are, *i.e.* the ***current working directory***. 
-BUT there is only ONE home directory per user.
+BUT there is only **ONE *home* directory per user**.
 
 > ### Home Directory Variations
 >
@@ -136,9 +137,9 @@ as our home directory.
 Typically, when you open a new command prompt you will be in
 **your** home directory to start.
 
-#### The ls command
+#### The `ls` command
 Now let's learn a command to see the contents of our
-own filesystem.  We can see what's in our home directory by running `ls`,
+own filesystem.  We can see what's in our home directory by running `ls`
 which stands for "listing":
 
 ~~~
@@ -350,7 +351,9 @@ Of course there is a third way to access help for commands:
 searching the internet *via* your web browser. 
 When using an internet search, including the phrase `unix man page` in your search
 query will help to find relevant results (*e.g.* `unix man page ls`).
-
+Many manual pages will take you to the [GNU/Linux operating system](http://www.gnu.org/gnu/linux-and-gnu.html) pages,
+because GNU is a Unix-like operating system that produced much of 
+the original code used in the shell. 
 GNU provides links to its
 [manuals](http://www.gnu.org/manual/manual.html) including the
 [core GNU utilities](http://www.gnu.org/software/coreutils/manual/coreutils.html),

@@ -355,7 +355,7 @@ This is similar to nesting functions in math like *log(3x)*
 First you calculate the 
 3 times *x*, then you calculate the log of 3*x*. 
 In our case, the calculation is "sort the line counts 
-of `*.pdb`", and show the top line" (the **smallest** file). 
+of `*.pdb`, and show the top line" (the **smallest** file). 
 
 Also, note that we haven't changed any files at all... we have
 pulled out exactly the information we wanted!! 
@@ -423,7 +423,7 @@ standard input.
 > ### Clarifying: What Does `<` Mean?
 >
 > Change directory to `data-shell` (the top level of our downloaded 
-> example data). Remember you ca always use: `cd ~/Desktop/data-shell`
+> example data). Remember you can always use: `cd ~/Desktop/data-shell`
 >
 > Let's examine the difference between:
 >
@@ -532,7 +532,7 @@ $ cut -d , -f 2 animals.txt
 
 The `cut` command separates columns of data, and the `-d` flag 
 designates the column ***delimiter*** for each line to be a 
-"comma" `,`, and the `-f 2` flag tells `cut` to print the 
+"comma" `,` and the `-f 2` flag tells `cut` to print the 
 ***second field*** in each line, to give the following output:
 
 ~~~
