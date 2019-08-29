@@ -163,7 +163,7 @@ Finally, the word `done` tells the shell we have finished the loop.
 After executing the loop, you should see the first five lines of 
 all `.pdb` files printed to the terminal.
  
-![loop worked!](/fig/loop-works.png)
+![loop worked!]({{ site.baseurl }}/fig/loop-works.png)
 
 Let's create a loop that 
 will save this information to a file.
