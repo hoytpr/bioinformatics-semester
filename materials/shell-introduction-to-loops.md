@@ -156,8 +156,16 @@ The next line of the `for` loop is `do`
 (meaning "do" *something*). This is followed by a line describing 
 what we want to execute (*i.e.* what to "do"). 
 We are telling the loop to print the first 
-five lines of each variable (`head -n 5 ${filename}`) as we iterate over all the files. 
-
+five lines of each variable (`head -n 5 ${filename}`) as we iterate 
+over all the files. To be clear, the ***value*** of the 
+variable `$[filename}` is the ***actual name*** of each `*.pdb` file.
+The loop generates the commands: 
+```
+head -n 5 aldrin.pdb
+head -n 5 ammonia.pdb
+head -n 5 ascorbic-acid.pdb
+(etc.)
+```
 Finally, the word `done` tells the shell we have finished the loop.
 
 After executing the loop, you should see the first five lines of 
@@ -165,8 +173,8 @@ all `.pdb` files printed to the terminal.
  
 ![loop worked!]({{ site.baseurl }}/fig/loop-works.png)
 
-Let's create a loop that 
-will save this information to a file.
+But again, what if there are 6000 files? Let's create a loop that 
+will save this information to a file we can look at later.
 
 ~~~
 ? for filename in *.pdb
@@ -184,5 +192,5 @@ Use `cat` to verify the `pdb_info.txt` file looks like the screen output
 you observed when running the loop without any redirection. 
 
 This lesson is very similar to the one we will use for manipulating files in 
-the genomics part of the course. For now, let's see what [Nelle 
-is going to do with loops]({{ site.baseurl }}/materials/nelles-last-bash).
+the genomics part of the course. For now, let's see what 
+[Nelle is going to do with loops]({{ site.baseurl }}/materials/nelles-last-bash).
