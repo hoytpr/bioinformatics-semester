@@ -391,6 +391,7 @@ $ bash do-stats.sh NENE*[AB].txt
 ~~~
 
 There several very notable things about this script.
+
 1\. Because the special variable `$@` makes her script **flexible**
 it will take everything in the command line as input, so Nelle can also 
 used piped commands!
@@ -399,7 +400,7 @@ used piped commands!
 $ bash do-stats.sh NENE*[AB].txt | wc -l
 ~~~
 
-> Although there is no echo output (`echo` is piped to `wc` rather than the terminal) 
+> Although there is no `echo` output (`echo` is piped to `wc` rather than the terminal) 
 > the output is just the **number** of files processed
 > rather than the names of the files that were processed.
 
@@ -416,9 +417,9 @@ badly named files, and still work!
 4\. We did not have to 
 delete the output files from our previous run of `do-stats.sh`. The 
 `do-stats.sh` script only recognizes files that begin with `NENE` 
-so it did not process those files either!
+so it did not process those files either! (But it did overwrite them!)
 
-Nelle could have written the new script so it's simpler to run (use `bash do-stats.sh`):
+Nelle could have written the new script so it's simpler to run (using `bash do-stats.sh`):
 
 ~~~
 # Calculate stats for Site A and Site B data files.
@@ -433,9 +434,9 @@ This latter script is good because: It **always selects the right files**
 (For example, Nelle doesn't have to remember to exclude the 'Z' files). 
 
 The disadvantage is that it ***always*** selects ***just*** those 
-files --- Nelle can't run it on all files, 
-or the 'NENE*[GH].txt' files her former supervisor is creating now.
-(without editing the script) 
+files --- Nelle can't run it on **all** files, 
+for example, the `NENE*[GH].txt` files her former supervisor is creating 
+now. (Unless someone edits the script)
 
 When Nelle uses `@$` in `do-stats.sh`, 
 she knows her *future self* will be able to handle the larger files 
@@ -455,7 +456,7 @@ make tweak the formatting, she forgot how she started the data analyses!
 To re-create the graph all she had to do was output her 
 `history` to a file, then edit that file to create the graph again.
 The other advantage of using `history` is she doesn't need to
-type the commands in again(and potentially getting them wrong).
+type the commands in again (and potentially getting them wrong).
 For example:
 
 ~~~
@@ -472,9 +473,9 @@ The file `redo-figure-3.sh` might now contain:
 301 history | tail -n 5 > redo-figure-3.sh
 ~~~
 
-After a moment's work in an editor to remove the line numbers on the commands,
-and remove the final line where she called the `history` command,
-she has a completely accurate record of how she created that figure.
+Some quick work in an editor can remove the line numbers on the commands,
+and remove the final line of the `history` command.
+Nelle has a completely accurate record of how she created that figure.
 There is a lot of code we haven't covered in 
 Nelle's Figure-3, and we can ignore that for now.
 We will use this method later in the genomics lessons. 
