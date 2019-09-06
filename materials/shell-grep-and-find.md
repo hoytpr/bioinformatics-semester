@@ -321,6 +321,16 @@ do
 grep -ow $sis LittleWomen.txt | wc -l
 done
 ```
+```
+Jo:
+1355
+Meg:
+683
+Beth:
+459
+Amy:
+645
+```
 
 #### Solution2
 ```
@@ -330,17 +340,53 @@ do
 grep -ocw $sis LittleWomen.txt
 done
 ```
+```
+Jo:
+1347
+Meg:
+683
+Beth:
+457
+Amy:
+643
+```
 
-The second solution is not quite as good because `grep -c` only reports 
-the number of lines matched. The total number of matches reported by 
-this method will be lower if there is *more than one match per line*.
-By using `grep -ow` and piping the output to `wc -l` all possible mentions of 
-the names are collected and counted. 
+The second solution is not quite as good! Let's break this down:
+
+The `-o` flag **SHOWS** "only the part of a line matching `$sis`". 
+This means rather than lines, ALL of the instances of "Jo", "Meg", "Beth", or 
+"Amy" are output (but this could include things like "John" or "Bethy"). 
+The `-w` flag makes sure that only **complete words** are matched. 
+This means only *exactly* "Jo", "Meg", "Beth", or "Amy" will be 
+matched and output. *If you output `grep -ow` to the terminal, 
+each time a name is found, it ends up on a different terminal
+line*. When you instead pipe those to `wc -l` you get a 
+count of all exact matches to the sisters' names. 
+
+With the second solution, `grep -c` reports 
+the number of **lines** matched. So even though all the instances 
+of `$sis` are found correctly, `grep` only reports the number of 
+***lines*** where they are found. The total number of matches 
+reported *by lines*, will be always lower if there is *more than one 
+match per line*.
+
+If this is still confusing, try breaking down the loops into 
+single commands, or try running these commands looking for 
+only "Jo" and carefully study the difference in the outputs:
+
+```
+$ for sis in Jo; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
+$ for sis in Jo; do echo $sis:; grep -ow $sis LittleWomen.txt | wc -l; done
+$ for sis in Jo; do echo $sis:; grep -w $sis LittleWomen.txt | wc -l; done
+$ for sis in Jo; do echo $sis:; grep -c $sis LittleWomen.txt; done
+$ for sis in Jo; do echo $sis:; grep -cw $sis LittleWomen.txt; done
+$ for sis in Jo; do echo $sis:; grep -oc $sis LittleWomen.txt; done
+```
 
 ### Using `find`
-While `grep` finds lines in files, the `find` command finds files themselves.
-Again, it has a lot of options;
-to show how the simplest ones work, we'll use the directory tree shown below.
+While `grep` finds lines in files, the `find` command finds ***files*** themselves. It has a too many options to cover in this lesson, 
+so we will discuss a few options for `find` using the directory file 
+structure shown below.
 
 ![File Tree for Find Example]({{ site.baseurl }}/fig/find-file-tree.png)
 
@@ -372,10 +418,11 @@ $ find .
 
 As always,
 the `.` on its own means the current working directory,
-which is where we want our search to start.
-`find`'s output is the names of every file **and** directory
+which is where we want our search to start. After that, the objects 
+`find` finds are not listed in any particular order.
+`find`'s output includes the names of every file **and** directory
 under the current working directory.
-This can seem useless at first but `find` has many options
+This seems useful but `find` has many other options
 to filter the output and in this lesson we will discover some 
 of them.
 
@@ -394,7 +441,6 @@ $ find . -type d
 ./tools/old
 ~~~
 
-Notice that the objects `find` finds are not listed in any particular order.
 If we change `-type d` to `-type f`,
 we get a listing of all the files instead:
 
@@ -417,23 +463,25 @@ $ find . -name *.txt
 ./haiku.txt
 ~~~
 
-We expected it to find all the text files,
+This is different! We might have expected it to find **all** the text files,
 but it only prints out `./haiku.txt`.
-The problem is that **the shell expands wildcard characters like `*` *before* commands run**.
-Since `*.txt` in the current directory expands to `haiku.txt`,
-the command we actually ran was:
+The problem is that **the shell expands wildcard characters 
+like `*` *before* commands run**. 
+When the shell saw `*.txt` it ***immediately*** expanded it in the 
+current directory to `haiku.txt` before anything else. So the command 
+we actually ran was:
 
 ~~~
 $ find . -name haiku.txt
 ~~~
 
-`find` did what we asked; we just asked for the wrong thing.
+`find` did what we asked, but it found a `*.txt` file in the 
+current working directory and it was finished! 
 
-To get what we want,
-let's do what we did with `grep`:
-put `*.txt` in single quotes to prevent the shell from expanding the `*` wildcard.
-This way,
-`find` actually gets the pattern `*.txt`, not the expanded filename `haiku.txt`:
+To get all the text files,
+let's do what we did with `grep` and
+put `*.txt` in quotes to *prevent the shell from expanding the `*` wildcard*.
+This way, `find` actually gets the pattern `*.txt`!
 
 ~~~
 $ find . -name '*.txt'
@@ -443,22 +491,35 @@ $ find . -name '*.txt'
 ./haiku.txt
 ~~~
 
-> ### Listing vs. Finding
->
+### Listing vs. Finding
+
+Understand that in these examples the `find` command works harder 
+than commands we've seen in other lessons! 
+Remeber that the shell expands the wildcard before anything else 
+happens, so if a file matching the pattern (ending in `.txt`) 
+is present in the *current working directory*  
+(`haiku.txt` in this example), the command `find . -name *.txt` **stops** 
+(because it is **done**). To be clear, the command completes  
+because everything expands specifically as *"find a `*.txt` file HERE"*  
+(`.`, in the current working directory).
+However, if no `.txt` file is present (if no filename matches the pattern in the current working directory), **`find` will begin at `.` 
+and continue finding `.txt` files**! We won't worry about this process for
+now, because we'll be using quotes around our arguments with wildcards. 
+Just be aware that it can happen 
+
 > `ls` and `find` can be made to do similar things given the right options,
-> but under normal circumstances,
-> `ls` lists everything it can,
-> while `find` searches for things with certain properties and shows them.
+> but under normal circumstances, `ls` lists everything it can,
+> while `find` ***searches*** for things with certain properties and shows them.
 
-As we said earlier,
-the command line's power lies in combining tools.
+As we said earlier, the command line's power lies in combining tools.
 We've seen how to do that with pipes;
-let's look at another technique.
-As we just saw,
-`find . -name '*.txt'` gives us a list of all text files in or below the current directory.
-How can we combine that with `wc -l` to count the lines in all those files?
+Now let's look at another technique.
 
-The simplest way is to put the `find` command inside `$()`:
+We now know that `find . -name '*.txt'` gives us a list of all 
+text files in or below the current directory.
+Now we'll learn how to combine that with `wc -l` to count the lines in all those files.
+
+The simplest way is to put the `find` command inside **`$()`**:
 
 ~~~
 $ wc -l $(find . -name '*.txt')
@@ -469,85 +530,89 @@ $ wc -l $(find . -name '*.txt')
 21403 total
 ~~~
 
-When the shell executes this command,
+This is kind of like Math again! When the shell executes this command,
 the first thing it does is run whatever is inside the `$()`.
-It then replaces the `$()` expression with that command's output.
-Since the output of `find` is the four filenames `./data/one.txt`, `./data/LittleWomen.txt`, `./data/two.txt`, and `./haiku.txt`,
-the shell constructs the command:
+Then the `$()` expression is used to generate the command's output.
+In this case, the outputs of `find` use the four filenames `./data/one.txt`, `./data/LittleWomen.txt`, `./data/two.txt`, and `./haiku.txt`,
+and the shell puts all these together into the command:
 
 ~~~
 $ wc -l ./data/one.txt ./data/LittleWomen.txt ./data/two.txt ./haiku.txt
 ~~~
 
-which is what we wanted.
-This expansion is exactly what the shell does when it expands wildcards like `*` and `?`,
-but lets us use any command we want as our own "wildcard".
+This is what we wanted! When you think about it, this expansion is 
+exactly what the shell does when it expands wildcards like `*` and `?`,
+but using `$()` lets us use any command we want as our own "wildcard".
 
-It's very common to use `find` and `grep` together.
-The first finds files that match a pattern;
-the second looks for lines inside those files that match another pattern.
-Here, for example, we can find PDB files that contain iron atoms
-by looking for the string "FE" in all the `.pdb` files above the current directory:
+**It's very common to use `find` and `grep` together**
+because `find` can locate files that match a pattern;
+`grep` identifies lines inside those files that match another pattern.
 
-~~~
-$ grep "FE" $(find .. -name '*.pdb')
+To demonstrate how this works, let's find `.pdb` files that contain iron atoms
+by looking for the string "FE" in all the `.pdb` files 
+in Nelles `data-shell/data/pdb` directory (we don't even have to 
+change our current working directory!):
+
+```
+$ grep "FE" $(find ../data/pdb/ -name '*.pdb')
 ../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518
-~~~
+```
 
-> ### Matching and Subtracting
->
-> The `-v` flag to `grep` inverts pattern matching, so that only lines
-> which do *not* match the pattern are printed. Given that, which of
-> the following commands will find all files in `/data` whose names
-> end in `s.txt` (e.g., `animals.txt` or `planets.txt`), but do
-> *not* contain the word `net`?
-> Once you have thought about your answer, you can test the commands in the `data-shell`
-> directory.
->
-> 1.  `find data -name '*s.txt' | grep -v net`
-> 2.  `find data -name *s.txt | grep -v net`
-> 3.  `grep -v "temp" $(find data -name '*s.txt')`
-> 4.  None of the above.
->
-> > #### Solution
-> > The correct answer is 1. Putting the match expression in quotes prevents the shell
-> > expanding it, so it gets passed to the `find` command.
-> >
-> > Option 2 is incorrect because the shell expands `*s.txt` instead of passing the wildcard
-> > expression to `find`.
-> >
-> > Option 3 is incorrect because it searches the contents of the files for lines which
-> > do not match "temp", rather than searching the file names.
-> {: .solution}
-{: .challenge}
+### Matching and Subtracting
 
-The Unix shell is older than most of the people who use it. It has
-survived so long because it is one of the most productive programming
-environments ever created --- maybe even *the* most productive. Its syntax
-may be cryptic, but people who have mastered it can experiment with
-different commands interactively, then use what they have learned to
-automate their work. Graphical user interfaces may be better at the
-first, but the shell is still unbeaten at the second. And as Alfred
-North Whitehead wrote in 1911, "Civilization advances by extending the
-number of important operations which we can perform without thinking
-about them."
+The `-v` flag to `grep` inverts pattern matching, so that only lines
+which do ***not*** match the pattern are printed. 
+For example, while we are still in the `datashell/writing` directory, 
+we can use grep to look for lines in `haiku.txt` that do NOT
+contain the word `is`:
+```
+$ grep -vw 'is' haiku.txt
+Is not the true Tao, until
+You bring fresh toner.
+
+With searching comes loss
+and the presence of absence:
+"My Thesis" not found.
+
+Yesterday it worked
+```
+
+Knowing this about `grep`, **first change into the `data-shell/data/pdb`** 
+directory, then answer which of the following commands will find all files 
+whose names end in `l.pdb` (e.g., `nerol.pdb`), but do
+*not* contain the word `meth`?
+Once you have thought about your answer, you can test the commands below:
+
+1.  `find . -name '*l.pdb' | grep -v meth`
+2.  `find . -name *l.pdb | grep -v meth`
+3.  `grep -v "temp" $(find . -name *l.pdb)`
+4.  None of the above.
+
+#### Solution
+* The correct answer is 1. Putting the match expression in quotes prevents the shell
+expanding it, so it gets passed to the `find` command.
+
+* Option 2 is incorrect because the shell expands `*l.pdb` *first* instead of 
+passing the wildcard expression to `find`.
+
+* Option 3 is incorrect because it searches the contents of the files for lines which
+do not match "temp", rather than searching the file names.
+
 
 > ### `find` Pipeline Reading Comprehension
 >
-> Write a short explanatory comment for the following shell script:
+> Provide a short explanatory comment for the following shell script:
 >
 > ~~~
 > wc -l $(find . -name '*.dat') | sort -n
 > ~~~
-> {: .language-bash}
 >
-> > #### Solution
-> > 1. Find all files with a `.dat` extension in the current directory
-> > 2. Count the number of lines each of these files contains
-> > 3. Sort the output from step 2. numerically
-> 
+> #### Solution
+> 1. Find all files with a `.dat` extension in the current directory
+> 2. Count the number of lines each of these files contains
+> 3. Sort the output from step 2. numerically
 
-> ### Finding Files With Different Properties
+> ### Advanced: Finding Files With Different Properties
 > 
 > The `find` command can be given several other criteria known as "tests"
 > to locate files with specific attributes, such as creation time, size,
