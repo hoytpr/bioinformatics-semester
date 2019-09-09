@@ -211,7 +211,7 @@ replace SRR097977_fastqc/Icons/fastqc_icon.png? [y]es, [n]o, [A]ll, [N]one, [r]e
 ~~~
 {: .output}
 
-# Automating the Rest of our Variant Calling Workflow
+### Automating the Rest of our Variant Calling Workflow
 
 Now we will create a second shell script to complete the other steps of our variant calling
 workflow. To do this, we will take all of the individual commands that we wrote before, put them into a single file, 
@@ -270,7 +270,7 @@ genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 ~~~
 {: .output}
 
-> ## Creating Variables
+> #### Creating Variables
 > Within the Bash shell you can create variables at any time (as we did
 > above, and during the 'for' loop lesson). Assign any name and the 
 > value using the assignment operator: '='. You can check the current
@@ -307,7 +307,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 {: .bash}
 
 
-> ## Indentation
+> #### Indentation
 > 
 > All of the statements within your `for` loop (i.e. everything after the `for` line and including the `done` line) 
 > need to be indented. This indicates to the shell interpretor that these statements are all part of the `for` loop
@@ -316,7 +316,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 {: .callout}
 
 
-> ## Exercise
+> ### Exercise
 > 
 > This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run
 > it. What output do you see?
@@ -506,7 +506,7 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 ~~~
 {: .output}
 
-> ## Exercise
+> ### Exercise
 > It's a good idea to add comments to your code so that you (or a collaborator) can make sense of what you did later. 
 > Look through your existing script. Discuss with a neighbor where you should add comments. Add comments (anything following
 > a `#` character will be interpreted as a comment, bash will not try to run these comments as code). 
@@ -519,7 +519,7 @@ $ bash run_variant_calling.sh
 ~~~
 {: .bash}
 
-> ## BWA variations
+> #### BWA variations
 > BWA is a software package for mapping low-divergent sequences 
 > against a large reference genome, such as the human genome, and 
 > it's freely available [here](http://bio-bwa.sourceforge.net). It 
