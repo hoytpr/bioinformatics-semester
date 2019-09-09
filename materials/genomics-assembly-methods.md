@@ -36,7 +36,7 @@ particular the [Galaxy Project](https://galaxyproject.org/) is a great place to 
 For an interesting discussion about scientists using outdated software see this 
 2018 article [Scientists Continue to Use Outdated Methods](https://www.the-scientist.com/news-opinion/scientists-continue-to-use-outdated-methods-30438), 
 and here's a 2019 article which coins the term ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) meaning that open source software 
-stops working eventually if is not actively maintained. The software used in this beginners introduction are already suffering from software collapse. 
+stops working eventually if is not actively maintained. The software used in this beginner's introduction are already suffering from software collapse. 
 
 ### Assembly
 
@@ -143,16 +143,17 @@ SOAPdenovo is different as it uses a configuration file `soap.config`, where we 
 
 #### SOAPdenovo options and arguments
 
-`[LIB]`	Calls the soap denovo command library into action
+`[LIB]`:	Calls the soap denovo command library into action
 
-`avg_ins=350`	This value indicates the average insert size of this library or the peak value position in the insert size distribution figure.
+`avg_ins=350`:	This value indicates the average insert size of this library or the peak value position in the insert size distribution figure.
 
-`reverse_seq=0`	This option takes value 0 or 1. It tells the assembler if the read sequences need to be complementarily reversed. Illumima GA produces two types of paired-end libraries: a) forward-reverse, generated from fragmented DNA ends with typical insert size less than 500 bp; b) reverse-forward, generated from circularizing libraries with typical insert size greater than 2 Kb. The parameter "reverse_seq" should be set to indicate this: 0, forward-reverse; 1, reverse-forward.
+`reverse_seq=0`:	This option takes value 0 or 1. It tells the assembler if the read sequences need to be complementarily reversed. Illumima GA produces two types of paired-end libraries: a) forward-reverse, generated from fragmented DNA ends with typical insert size less than 500 bp; b) reverse-forward, generated from circularizing libraries with typical insert size greater than 2 Kb. The parameter "reverse_seq" should be set to indicate this: 0, forward-reverse; 1, reverse-forward.
 
-`asm_flags=3`	This indicator decides in which part(s) the reads are used. It takes value 1(only contig assembly), 2 (only scaffold assembly), 3(both contig and scaffold assembly), or 4 (only gap closure).
+`asm_flags=3`:	This indicator decides in which part(s) the reads are used. It takes value 1(only contig assembly), 2 (only scaffold assembly), 3(both contig and scaffold assembly), or 4 (only gap closure).
 
-`rank=1`	It takes integer values and decides in which order the reads are used for scaffold assembly. Libraries with the same "rank" are used at the same time during scaffold assembly. 
-5.3 How to set library rank?
+`rank=1`:	It takes integer values and decides in which order the reads are used for scaffold assembly. Libraries with the same "rank" are used at the same time during scaffold assembly. 
+
+How do you set library rank?
 SOAPdenovo will use the pair-end libraries with insert size from smaller to larger to construct scaffolds. Libraries with the same rank would be used at the same time. For example, in a dataset of a human genome, we set five ranks for five libraries with insert size 200-bp, 500-bp, 2-Kb, 5-Kb and 10-Kb, separately. It is desired that the pairs in each rank provide adequate physical coverage of the genome.
 
 `q1=../../data/group1/PE-350.1.fastq`	Pair-end file 1 (with quality scores)
@@ -229,7 +230,7 @@ Using what you’ve learned, do the 25 kmer value.
 
 `$ cd ../../abyss/abyss31`
 
-We change to a subdirectory because abyss puts all it’s output into the current working directory.
+We change to a subdirectory because abyss puts all its output into the current working directory.
 
 Understand `abyssk31.pbs`. ABYSS is simple as it has just one command to run the entire pipeline. First edit the `abyssk31.pbs` to change GROUPNUMBER to your group number.
 ~~~
@@ -246,13 +247,13 @@ To look at the first 50 lines, enter:
 
 To create a new file that only includes these first 50 lines. :
 
-`$ head -50 coverage.hist >short.hist`
+`$ head -50 coverage.hist > short.hist`
 
 EMAIL the `short.hist` file to yourself to look at it in a spreadsheet.
 
 `$ mail -a short.hist -r youremail@wherever.com  youremail@wherever.com`
 
-(enter subject, enter, ctrl-d to send)
+(enter subject, hit <kbd>enter</kbd>, `ctrl-d` to send)
 
 To determine the final assembled size of the genome, use grep at the command line to extract that information from the output file:
 
@@ -304,7 +305,7 @@ First create a new directory:
 
 `$ cd ..`
 
-(you should be in the ‘abyss directory now, to check use “print working directory”)
+(you should be in the `abyss` directory now, to check use “print working directory”)
 
 ~~~
 $ pwd  

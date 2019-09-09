@@ -9,7 +9,7 @@ language: Shell
 How can I get rid of sequence data that doesn't meet my quality standards?
 
 ### Objectives:
-- Clean FASTQ reads using Trimmommatic.
+- Clean FASTQ reads using Trimmomatic.
 - Select and set multiple options for command-line bioinformatics tools.
 - Write `for` loops with two variables.
 
@@ -55,8 +55,8 @@ output files. These files are described below.
 
 | option    | meaning |
 | ------- | ---------- |
-|  \<inputFile1>  | Input reads to be trimmed. Typically the file name will contain an `_1` or `_R1` in the name.|
-| \<inputFile2> | Input reads to be trimmed. Typically the file name will contain an `_2` or `_R2` in the name.|
+|  \<inputFile1>  | Input reads to be trimmed. Typically the file name will contain `_1` or `_R1` in the name.|
+| \<inputFile2> | Input reads to be trimmed. Typically the file name will contain `_2` or `_R2` in the name.|
 |  \<outputFile1P> | Output file that contains surviving pairs from the `_1` file. |
 |  \<outputFile1U> | Output file that contains orphaned reads from the `_1` file. |
 |  \<outputFile2P> | Output file that contains surviving pairs from the `_2` file.|
@@ -89,14 +89,13 @@ $ trimmomatic PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq  \
               SRR_1056_2.trimmed.fastq SRR_1056_2un.trimmed.fastq \
               ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
 ~~~
-{: .bash}
 
 In this example, we've told Trimmomatic:
 
 | code   | meaning |
 | ------- | ---------- |
 | `PE` | that it will be taking a paired end file as input |
-| `-threads 4` | to use four computing threads to run (this will spead up our run) |
+| `-threads 4` | to use four computing threads to run (this will speed up our run) |
 | `SRR_1056_1.fastq` | the first input file name |
 | `SRR_1056_2.fastq` | the second input file name |
 | `SRR_1056_1.trimmed.fastq` | the output file for surviving pairs from the `_1` file |
@@ -150,7 +149,7 @@ Input Read Pairs: 1107090 Both Surviving: 885220 (79.96%) Forward Only Surviving
 TrimmomaticPE: Completed successfully
 ~~~
 
-Exercise 1
+#### Checking your Trimmomatic outputs
 
 You may have noticed that Trimmomatic automatically detected the
 quality encoding of our sample. It is always a good idea to
@@ -188,12 +187,13 @@ $ ls SRR2589044* -l -h
 
 
 We've just successfully run Trimmomatic on one of our FASTQ files!
-However, there is some bad news. Trimmomatic can only operate on
+
+*However, there is some bad news.* Trimmomatic can only operate on
 one sample at a time and we have more than one sample. The good news
 is that we can use a `for` loop to iterate through our sample files
 quickly! 
 
-We unzipped one of our files before to work with it, let's compress it again before we run our for loop.
+We unzipped one of our files before to work with it, let's compress it again before we run our `for` loop.
 
 ~~~
 gzip SRR2584863_1.fastq 

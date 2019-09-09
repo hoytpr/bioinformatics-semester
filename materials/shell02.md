@@ -54,7 +54,7 @@ BUT there is only **ONE *home* directory per user**.
 >
 > We have to understand and accept that different
 > operating systems have different places for the scientists' home directory. 
-> for Windows the home directory is on hard drive "C" and 
+> For Windows the home directory is on hard drive "C" and 
 > the output of `pwd` is usually:
 > ~~~
 > $ pwd
@@ -66,7 +66,7 @@ BUT there is only **ONE *home* directory per user**.
 > /Users/<username>
 > ```
 > > NOTE that whenever you see this format: `"<username>"`, it is referring to 
-> > **ANY** username and subtitutes for yours or mine. For any commands using this format, You 
+> > **ANY** username and substitutes for yours or mine. For any commands using this format, you 
 > > would type in **your username** rather than the actual `"<username>"` letters. 
 > > Mine would be `/c/Users/hoyt`, but on a Mac mine would be `/Users/hoyt` and on a Linux/Unix system it would be:
 > > `/home/hoyt`. 
@@ -566,7 +566,7 @@ Check that we've moved to the right place by running `pwd` and `ls -F`
 
 ### Relative vs. Absolute Paths
 
-If we want to move up one level from the data directory, we could use the`cd ..` command.  But
+If we want to move up one level from the data directory, we could use the `cd ..` command.  But
 there is another way to move to any directory, regardless of your
 current location.  
 
@@ -583,7 +583,7 @@ exactly one directory, no matter where we are when we run the command.
 
 Probably the best example of an absolute path is when you use the `pwd` 
 command. This always displays your location in the filesystem 
-hierachy starting at the root directory. From within `data` we can type
+hierarchy starting at the root directory. From within `data` we can type
 `pwd` and it gives us the absolute path to `data-shell`. This absolute path 
 lets us move to our `data-shell` directory from anywhere on
 the filesystem. 
@@ -593,7 +593,7 @@ $ pwd
 /Users/nelle/Desktop/data-shell/data
 ~~~
 Now we know that we can get to our `data-shell` 
-folder from anywhere in the filesytem by typing:
+folder from anywhere in the filesystem by typing:
 ~~~
 $ cd /Users/nelle/Desktop/data-shell
 ~~~
@@ -736,7 +736,7 @@ and we will use it with many other tools as we go on.
 #### Lesson Keypoints:
 
 - Information is stored in files, which are stored in directories (folders).
-- Directories can also store other directories, which forms a hieerarchical directory tree.
+- Directories can also store other directories, which forms a hierarchical directory tree.
 - `cd <path>` changes the current working directory.
 - `ls <path>` prints a listing of a specific file or directory; `ls` on its own lists the current working directory.
 - `pwd` prints the user's current working directory.

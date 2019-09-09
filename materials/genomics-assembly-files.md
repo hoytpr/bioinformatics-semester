@@ -5,8 +5,8 @@ title: Read Processing
 language: Shell
 ---
 ### A Genome Assembly Workshop 
-This part of the course uses a traditional workshop pedagody with "slides" for readings, and 
-"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced. 
+This part of the course uses a traditional workshop pedagogy with "slides" for readings, and 
+"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced but we can work through them in class. 
 
 ### Hands-on Genome Assembly Read Processing
 
@@ -19,7 +19,7 @@ those who helped design these lessons.
 ### Data and directory structure
 This exercise will likely use the local University supercomputing resources. 
 (AKA: The HPCC) Normally, we would not be able to perform these assemblies
-"interactively" i.e by entering commands at the command prompt. 
+"interactively" *i.e.* by entering commands at the command prompt. 
 Instead we would enter commands by submitting our commands as a "job" in the 
 computers "queue". Most of the commands we enter will be identical
 to the commands you would place inside your "job submission script"
@@ -142,16 +142,16 @@ Our assembly will start using one Illumina library, PE-350, which is a paired en
 >@READ-ID
 >ATAGAGATAGAGAGAG (the sequence: here showing 16 nucleotides)
 >+READ-ID (usually empty. Otherwise will repeat READ-ID)
->;9;7;;.7;3933334 (**quality** identifiersfor each of the 16 bases shown)
+>;9;7;;.7;3933334 (**quality** identifiers for each of the 16 bases shown)
 >~~~
 >
 >Each base has quality identifier called PHRED score, typically between value 0-40 for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There are also two systems of such conversion, PHRED+33 and PHRED+64. PHRED+33 is used in new Illumina protocols. PHRED+64 is used rarely, but be aware!
 > 
->“Phred quality scores   are defined as a property which is logarithmically related to the base-calling error probabilities  .”
+>“Phred quality scores are defined as a property which is logarithmically related to the base-calling error probabilities.”
 > 
 >-Wikipedia.
 
-The basics of PHRED scores are decsribed in this chart: 
+The basics of PHRED scores are described in this chart: 
 
 | Quality Score	| Probability of incorrect base call | Base call accuracy |
 | ---- | ------------- | -----------|

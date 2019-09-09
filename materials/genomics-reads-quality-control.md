@@ -7,15 +7,16 @@ language: Shell
 (This material is under development)
 ### Assessing Read Quality
 
-questions:
-- "How can I describe the quality of my data?"
-objectives:
-- "Explain how a FASTQ file encodes per-base quality scores."
-- "Interpret a FastQC plot summarizing per-base quality across all reads."
-- "Use `for` loops to automate operations on multiple files."
+Questions:
+- How can I describe the quality of my data?
+
+Objectives:
+- Explain how a FASTQ file encodes per-base quality scores.
+- Interpret a FastQC plot summarizing per-base quality across all reads.
+- Use `for` loops to automate operations on multiple files.
 keypoints:
-- "Quality encodings vary across sequencing platforms."
-- "`for` loops let you perform the same set of operations on multiple files with a single command."
+- Quality encodings vary across sequencing platforms.
+- `for` loops let you perform the same set of operations on multiple files with a single command.
 
 #### Bioinformatics workflows
 
@@ -154,8 +155,8 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
 
-we can now see that there are a range of quality score, but that the end of the sequence
-very poor (`#` = a quality score of 2). 
+we can now see that there is a range of quality scores, but that the end 
+of the sequence is very poor quality (`#` = a quality score of 2). 
 
 **[Do the In-class Exercise by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 Work on the questions yourself, 
@@ -316,7 +317,8 @@ let's transfer them to our local computers (i.e. your laptop).
 To transfer a file from a remote server to our own machines, we will
 use `scp`, which we learned yesterday in the Shell Genomics lesson. 
 
-Transferring files
+**Transferring files**
+
 First we
 will make a new directory on our computer to store the HTML files
 we're transferring. Let's put it on our desktop for now. Open a new
@@ -380,7 +382,7 @@ We've now looked at quite a few "Per base sequence quality" FastQC graphs, but t
 + **Sequence Length Distribution**: the distribution of sequence lengths of all reads in the file. If the data is raw, there is often on sharp peak, however if the reads have been trimmed, there may be a distribution of shorter lengths. 
 + **Sequence Duplication Levels**: A distribution of duplicated sequences. In sequencing, we expect most reads to only occur once. If some sequences are occurring more than once, it might indicate enrichment bias (e.g. from PCR). If the samples are high coverage (or RNA-seq or amplicon), this might not be true.  
 + **Overrepresented sequences**: A list of sequences that occur more frequently than would be expected by chance. 
-+ **Adapter Content**: a graph indicating where adapater sequences occur in the reads.
++ **Adapter Content**: a graph indicating where adapter sequences occur in the reads.
 
 ## Working with the FastQC text output
 

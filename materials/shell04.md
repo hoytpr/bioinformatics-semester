@@ -343,7 +343,7 @@ $ wc -l *.pdb | sort -n
  107 total
 ~~~
 
-Then add another pipe, to the`head` command, 
+Then add another pipe, to the `head` command, 
 so that the full pipeline becomes:
 
 ~~~
@@ -398,7 +398,7 @@ and from `sort` through `head` to the screen.
 ![Redirects and Pipes]({{ site.baseurl }}/fig/redirects-and-pipes.png)
 
 This simple idea is why Unix has been so successful, and why we are 
-learning how to use Unux and Unux-based programming languages.
+learning how to use Unix and Unix-based programming languages.
 Instead of creating enormous programs that try to do many different things,
 **Unix programmers focus on creating lots of simple tools that each do one job well,
 and that work well with each other.**
@@ -458,7 +458,7 @@ standard input.
 > is
 > a test
 > ```
-> <kbd>Ctrl-D</kbd>  (This tells the shell you finished typing the input)
+> <kbd>Ctrl-D</kbd>  (This tells the shell you finished typing the input).
 > The shell then executes the `wc -l` command using your 
 > input lines (no file needed!).
 >

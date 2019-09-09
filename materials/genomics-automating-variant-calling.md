@@ -5,32 +5,28 @@ title: Automating Genomic Variant Calling
 language: Shell
 ---
 
-- "How can I make my workflow more efficient and less error-prone?"
-objectives:
-- "Write a shell script with multiple variables."
-- "Incorporate a `for` loop into a shell script."
-- ""
-keypoints:
-- "We can combine multiple commands into a shell script to automate a workflow."
-- "Use `echo` statements within your scripts to get an automated progress update."
+#### Questions:
+- How can I make my workflow more efficient and less error-prone?
 
-# What is a shell script?
+#### Objectives:
+- Write a shell script with multiple variables.
+- Incorporate a `for` loop into a shell script.
 
-You wrote a simple shell script in a [previous lesson](http://www.datacarpentry.org/shell-genomics/05-writing-scripts/) that we used to extract bad reads from our
+### What is a shell script?
+
+You wrote a simple shell script in a [previous lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts) that we used to extract bad reads from our
 FASTQ files and put them into a new file. 
 
 Here's the script you wrote:
 
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
-
 echo "Script finished!"
 ~~~
-{: .bash}
 
-That script was only two lines long, but shell scripts can be much more complicated
-than that and can be used to perform a large number of operations on one or many 
-files. This saves you the effort of having to type each of those commands over for
+That script was only two lines long, but shell scripts can be much more sophisticated
+and can be used to perform a large number of operations on one 
+file. This saves you the effort of having to re-type each of those commands for
 each of your data files and makes your work less error-prone and more reproducible. 
 For example, the variant calling workflow we just carried out had about eight steps
 where we had to type a command into our terminal. Most of these commands were pretty 
@@ -50,7 +46,6 @@ $ for filename in *.zip
 > unzip $filename
 > done
 ~~~
-{: .bash}
 
 And here's the one you wrote for running Trimmomatic on all of our `.fastq` sample files.
 
@@ -61,18 +56,16 @@ $ for infile in *.fastq
 > java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE $infile $outfile SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
-{: .bash}
 
-In this lesson, we will create two shell scripts. The first will run our FastQC analysis, 
-including creating our summary file. To do this, we'll take each of the commands we entered to run FastQC and 
-process the output files and put them into a single file with a `.sh` extension. The `.sh` is not essential, but
-serves as a reminder to ourselves and to the computer that this is a shell script.
+In this lesson, we will create **two shell scripts**. 
 
-# Analyzing Quality with FastQC
+### First Script: Analyzing Quality with FastQC
 
-We will use the command `touch` to create a new file where we will write our shell script. We will create this script in a new
-directory called `scripts/`. Previously, we used
-`nano` to create and open a new file. The command `touch` allows us to create a new file without opening that file.
+We'll combine each of the commands we used to run FastQC and 
+process the output files into a single file with a `.sh` (the Bash script) extension. This script will include creating our summary file. 
+
+Let's create a new directory named "scripts" and then use the command `touch` to create a new file where we will write our shell script. Remember, we used
+`nano` to create and open a new file, but the command `touch` allows us to create a new file without opening that file.
 
 ~~~
 $ cd ~/dc_workshop
@@ -80,30 +73,23 @@ $ mkdir scripts
 $ cd scripts
 $ touch read_qc.sh
 $ ls 
-~~~
-{: .bash}
-
-~~~
 read_qc.sh
 ~~~
-{: .output}
 
-We now have an empty file called `read_qc.sh` in our `scripts/` directory. We will now open this file in `nano` and start
-building our script.
+We now have an empty file called `read_qc.sh` in our `scripts/` directory. 
+Open `read_qc.sh` in `nano` and start building our script.
 
 ~~~
 $ nano read_qc.sh
 ~~~
-{: .bash}
 
-Enter the following pieces of code into your shell script (not into your terminal prompt).
+Use `nano` to place the following pieces of code into your shell script (not into your terminal prompt).
 
 Our first line will move us into the `untrimmed_fastq/` directory when we run our script.
 
 ~~~
 cd ~/dc_workshop/data/untrimmed_fastq/
 ~~~
-{: .output}
 
 These next two lines will give us a status message to tell us that we are currently running FastQC, then will run FastQC
 on all of the files in our current directory with a `.fastq` extension. 
@@ -122,7 +108,6 @@ you do.'
 ~~~
 mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
 ~~~
-{: .output}
 
 Our next three lines first give us a status message to tell us we are saving the results from FastQC, then moves all of the files
 with a `.zip` or a `.html` extension to the directory we just created for storing our FastQC results. 
@@ -142,7 +127,7 @@ cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 {: .output}
 
 The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our ZIP
-files. Then we run our for loop to unzip all of the `.zip` files in this directory.
+files. Then we run our `for` loop to unzip all of the `.zip` files in this directory.
 
 ~~~
 echo "Unzipping..."
@@ -162,7 +147,7 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
-> ## Using `echo` statements
+> ### Using `echo` statements
 > 
 > We've used `echo` statements to add progress statements to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
@@ -580,6 +565,8 @@ $ bash run_variant_calling.sh
 {: .callout}
 
 
-
+### Keypoints:
+- We can combine multiple commands into a shell script to automate a workflow.
+- Use `echo` statements within your scripts to get an automated progress update.
 
 

@@ -141,7 +141,7 @@ can be read by any user and written to by the file owner
 file can be executed as a program. We use the command `chmod` 
 to change write permissions. 
 Here we are adding (`+`) executable permissions (`+x`).
-(**NOTE:** the following only works in a real linux environment, 
+(**NOTE:** the following only works in a real Unix environment, 
 and will not work in GitBash terminal)
 
 ~~~
@@ -174,12 +174,12 @@ download data onto your instance, or to move data between your computer and the 
 There are two programs that will download data from a remote server to your local
 (or remote) machine: ``wget`` and ``curl``. They were designed to do slightly different
 tasks by default, so you'll need to give the programs somewhat different options to get
-the same behaviour, but they are mostly interchangeable.
+the same behavior, but they are mostly interchangeable.
 
  - ``wget`` is short for "world wide web get", and it's basic function is to *download*
  web pages or data at a web address.
 
- - ``cURL`` is a pun, it is suppose to be read as "see URL", so it's basic function is
+ - ``cURL`` is a pun, it is supposed to be read as "see URL", so it's basic function is
  to *display* webpages or data at a web address.
 
 Which one you need to use mostly depends on your operating system, as most computers will
@@ -242,7 +242,7 @@ machine, not your local one.
 What if the data you need is on your local computer, but you need to get it *into* the
 cloud? There are also several ways to do this, but it's *always* easier
 to start the transfer locally. **This means if you're typing into a terminal, and the terminal
-should not be logged into your instance, it should be your local computer termianl. If you're
+should not be logged into your instance, it should be your local computer terminal. If you're
 using a transfer program, it needs to be installed on your local machine, not your instance.**
 
 ### Transferring Data Between your Local Machine and the Cloud
@@ -295,8 +295,8 @@ $ scp dcuser@ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_rea
 ~~~
 
 Remember that with both commands, they are run from your **local** machine, and we've flipped the order of the 'to' and 'from' parts of the command.
-</div>
 These directions are platform specific so please follow the instructions for your system:
+
 NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
 
@@ -330,7 +330,7 @@ C:\User\your-username\Downloads> pscp.exe local_file.txt dcuser@EC-number-ip.add
 ### Downloading Data from your Virtual Machine with PSCP
 
 1. Follow the instructions in the Upload section to download (if needed) and access the *PSCP* program (steps 1-3)
-2. Download the text file using the following command **(make sure you use substitute 'your-pc-username' for your actual pc username and dcuser@ ip.address with your remote login credentials)**
+2. Download the text file using the following command **(make sure you use substitute 'your-pc-username' for your actual pc username and dcuser@ip.address with your remote login credentials)**
 
 ~~~
 C:\User\your-pc-username\Downloads> pscp.exe dcuser@EC-number-ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt.

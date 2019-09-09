@@ -17,7 +17,7 @@ N50 statistic is a metric of the length of a set of sequences. N50 is the contig
 $ cd ../../results
 $ ls
 ~~~
-This directory contains the results from all the programs. If you have a different assembly (e.g different K-mers) using the same assembler, name them differently, for example: abyss25.fasta   abyss31.fasta  soap31.fasta  velvet31.fasta
+This directory contains the results from all the programs. If you have a different assembly (*e.g.* different K-mers) using the same assembler, name them differently, for example: `abyss25.fasta`   `abyss31.fasta`  `soap31.fasta`  `velvet31.fasta`
 
 Note: Abyss has a command to get the scaffold statistic (N50) of an assembly
 Use can use the command `abyss-fac`, which scans the contigs lengths and outputs the N50 for your assembly. We will cover K-mer comparisons later but thought you might like to know:
@@ -115,13 +115,15 @@ Repeat the above procedure on the worst assembly.  How different is it ? `______
 
 `________________________________________`
 
-Background: about the data used in the exercise
+Background:
+
 The data used in this exercise comes from a mutant yeast, using a novel method to generate the mutant. Our data comes from an individual called MUTATOR4.
 
-Exercise originally presented at OSU by Dr. Haibao Tang, JCVI. Modified by Dr. Dana Brunson, OSU HPCC, and Dr. Peter R. Hoyt
+Exercise originally presented at OSU by Dr. Haibao Tang, JCVI. Modified by Dr. Dana Brunson, OSU HPCC (now at Internet2), and Dr. Peter R. Hoyt
 
 The paper:
 http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3364565/
+
 The data (we partitioned the reads to chromosomes so that assembly ran faster in workshop):
 http://www.ncbi.nlm.nih.gov/sra/DRX001304
 

@@ -495,7 +495,7 @@ $ find . -name '*.txt'
 
 Understand that in these examples the `find` command works harder 
 than commands we've seen in other lessons! 
-Remeber that the shell expands the wildcard before anything else 
+Remember that the shell expands the wildcard before anything else 
 happens, so if a file matching the pattern (ending in `.txt`) 
 is present in the *current working directory*  
 (`haiku.txt` in this example), the command `find . -name *.txt` **stops** 

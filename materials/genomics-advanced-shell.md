@@ -5,23 +5,23 @@ title: Advanced Shell
 language: Shell
 ---
 ### Questions:
-- "How can I search within files?"
-- "How can I combine existing commands to do new things?"
+- How can I search within files?
+- How can I combine existing commands to do new things?
 ### Objectives:
-- "Employ the `grep` command to search for information within files."
-- "Print the results of a command to a file."
-- "Construct command pipelines with two or more stages."
+- Employ the `grep` command to search for information within files.
+- Print the results of a command to a file.
+- Construct command pipelines with two or more stages.
 
 ### Searching files
 
-We discussed in a previous episode how to search within a file using `less`. We can also
-search within files without even opening them, using `grep`. `grep` is a command-line
-utility for searching plain-text files for lines matching a specific set of 
+We discussed in a previous episode how to search within a file using `less` and also
+how to search within files without even opening them, using `grep`. Remember `grep` 
+searches plain-text files for lines matching a specific set of 
 characters (sometimes called a string) or a particular pattern 
 (which can be specified using something called regular expressions). We're not going to work with 
-regular expressions in this lesson, and are instead going to specify the strings 
+regular expressions in this lesson, but are going to specify the strings 
 we are searching for.
-Let's give it a try!
+
 
 > #### Nucleotide abbreviations
 > 
@@ -104,7 +104,7 @@ All of these sequences were printed to our terminal screen, but in order to work
 sequences and perform other operations on them, we will need to capture that output in some
 way. 
 
-We can do this with something called "redirection". The idea is that
+Remember that we can do this with something called "redirection". The idea is that
 we are taking what would ordinarily be printed to the terminal screen and redirecting it to another location. 
 In our case, we want to print this information to a file so that we can look at it later and 
 use other commands to analyze this data.
@@ -124,7 +124,7 @@ $ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq > bad_reads.txt
 > You might be confused about why we're naming our output file with a `.txt` extension. After all,
 > it will be holding FASTQ formatted data that we're extracting from our FASTQ files. Won't it 
 > also be a FASTQ file? The answer is, yes - it will be a FASTQ file and it would make sense to 
-> name it with a `.fastq` extension. However, using a `.fastq` extension will lead us to problems
+> name it with a `.fastq` extension. However, using a `.fastq` extension will lead to problems
 > when we move to using wildcards later in this episode. We'll point out where this becomes
 > important. For now, it's good that you're thinking about file extensions! 
 > 
@@ -133,7 +133,7 @@ The prompt should sit there a little bit, and then it should look like nothing
 happened. But type `ls`. You should see a new file called `bad_reads.txt`. 
 
 We can check the number of lines in our new file using a command called `wc`. 
-`wc` stands for **word count**. This command counts the number of words, lines, and characters
+Remember that `wc` stands for **word count**. This command counts the number of words, lines, and characters
 in a file. 
 
 ~~~
@@ -185,7 +185,7 @@ Here, the output of our second  call to `wc` shows that we no longer have any li
 because the second file we searched (`SRR097977.fastq`) does not contain any lines that match our
 search sequence. So our file was overwritten and is now empty.
 
-We can avoid overwriting our files by using the command `>>`. `>>` is known as the **"append redirect"** and will 
+We can avoid overwriting our files by using the command `>>`. Remember that `>>` is known as the **"append redirect"** and will 
 append new output to the end of a file, rather than overwriting it.
 
 ~~~
@@ -229,14 +229,12 @@ creating a new output file each time has the potential to clutter up our workspa
 so far haven't been interested in the actual contents of those files, only in the number of 
 reads that we've found. We created the files to store the reads and then counted the lines in 
 the file to see how many reads matched our criteria. There's a way to do this, however, that
-doesn't require us to create these intermediate files - the pipe command (`|`).
+doesn't require us to create these intermediate files using the pipe command (`|`).
 
-This is probably not a key on
-your keyboard you use very much, so let's all take a minute to find that key. 
-What `|` does is take the output that is
-scrolling by on the terminal and uses that output as input to another command. 
-When our output was scrolling by, we might have wished we could slow it down and
-look at it, like we can with `less`. Well it turns out that we can! We can redirect our output
+Remember that `|` takes the output that would otherwise be sent to the 
+terminal and uses that output as input to another command. 
+When our output is large, and we want to slow it down and
+look at it, like we can with `less`, we can! We can redirect our output
 from our `grep` call through the `less` command.
 
 ~~~
@@ -255,8 +253,8 @@ do anything all that impressive on their own, but when you start chaining
 them together, you can do some really powerful things very
 efficiently. 
 
-### Using Basename in 'for' loops
-`basename` is a function in UNIX that is helpful for removing a uniform 
+### Using `basename` in 'for' loops
+`basename` is a function in Unix that is helpful for replacing a uniform 
 part of a name from a list of files. In this case, we will use `basename` 
 to remove the `.pdb` extension from the files that we’ve been working with. 
 
@@ -278,13 +276,13 @@ $ basename aldrin.pdb .pdf
 aldrin.pdb
 ~~~
 
-Basename is really powerful when used in a `for` loop. It allows 
-us to access just the file prefix, which you can use to name things. 
+`basename` is really powerful when used in a `for` loop. It allows 
+us to access ONLY the file prefix, which you can use to name things. 
 Let's try this.
 
 Inside our `for` loop, we create a new variable name. We call 
 the `basename` function inside the parenthesis, then submit our variable 
-name from the for loop, in this example `${filename}`, and finally indicate 
+name from the `for` loop, in this example `${filename}`, and finally indicate 
 that `.pdb` should be removed from the file name. It’s important to note 
 that **we’re not changing the actual files**, we’re creating a new variable 
 called `name`. The line `> echo ${name}` will print to the terminal 
@@ -325,7 +323,7 @@ etc...
 >> 
 >>
 
-One way this is really useful is to move files. Let's rename all of our .txt files using `mv` so that they have the years on them, which will document when we created them. 
+One really useful way to use `basename` is to move files. Let's rename all of our .txt files using `mv` so that they have the years on them, which will document when we created them. 
 
 ~~~
 $ for filename in *.txt
@@ -333,21 +331,6 @@ $ for filename in *.txt
 > name=$(basename ${filename} .txt)
 > mv ${filename}  ${name}_2019.txt
 ~~~
-
-
-> #### Exercise
->
-> Remove `_2019` from all of the `.txt` files. 
->
->> #### Solution
->>  
->> ~~~
->> $ for filename in *_2019.txt
->> > do
->> > name=$(basename ${filename} *_2019.txt)
->> > mv ${filename} ${name}.txt
->> > done
->> ~~~
 
 
 ### Keypoints:

@@ -394,7 +394,7 @@ There several very notable things about this script.
 
 1\. Because the special variable `$@` makes her script **flexible**
 it will take everything in the command line as input, so Nelle can also 
-used piped commands!
+use piped commands!
 
 ~~~
 $ bash do-stats.sh NENE*[AB].txt | wc -l
