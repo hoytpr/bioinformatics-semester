@@ -67,11 +67,11 @@ Is not the true Tao, until
 Today it is not working
 ~~~
 
-Here, `not` is the pattern we're searching for. The grep command searches through the file, looking for matches to the pattern specified. To use it type `grep`, then the pattern we're searching for (`not`) and finally the name of the file (or files) we're searching in.
+Here, `not` is the pattern we're searching for. The `grep` command searches through the file, looking for matches to the pattern specified. To use it type `grep`, then the pattern we're searching for (`not`) and finally the name of the file (or files) we're searching in (`haiku.txt`).
 
 The output is the three lines in the file that contain the letters `not`.
 
-By default, `grep` searches for a pattern in a case-sensitive way. In addition, the search pattern we have selected does not have to form a complete word, as we will see in the next example.
+By default, `grep` searches for a pattern in a *case-sensitive* way. In addition, the search pattern we have selected does not have to form a complete word, as we will see in the next example.
 
 Let's search for the pattern: `The`.
 
@@ -188,7 +188,7 @@ Miscellaneous:
 ### Using `grep` with Wildcards
 
 `grep`'s real power doesn't come from its options, though; it comes from
-the fact that patterns can include wildcards. (The technical name for
+the fact that *patterns can include wildcards*. (The technical name for
 these is **regular expressions**, which
 is what the "re" in "grep" stands for.) Regular expressions are both complex
 and powerful; if you want to do complex searches, please look at the lesson
@@ -215,7 +215,7 @@ Now we are going to crete a much more complicated script.
 You have already covered all the commands you need for this script, but 
 it will take some thought and probably some testing!
 
-Let's pretend Leah is a graduate student with several hundred 
+Let's pretend Leah is a new graduate student with several hundred 
 data files saved in the `data-shell\data\animal-counts` directory, 
 each of which is formatted like this:
 
@@ -230,7 +230,7 @@ each of which is formatted like this:
 She wants to write a **shell script** that takes a ***species*** as the first command-line argument 
 and a ***directory*** as the second argument. The script should return one file called `<species>.txt` 
 containing a list of *dates* and the *number* of that species seen on each date.
-For example, using the data shown above, the script could create a file named
+**For example"**, using the data shown above, the script should create a file named
 `rabbit.txt` that would contain:
 
 ~~~
@@ -252,10 +252,10 @@ cut -d , -f 1,3
 ~~~
 
 **Hint:** use `man grep` (or `grep --help`) to look for how to `grep` text 
-*recursively* in a directory and `man cut` (or `cut --help`) to select more 
+*recursively* in a directory and review `man cut` (or `cut --help`) to select more 
 than one *field* in a line.
 
-An example with these file types is provided in `data-shell/data/animal-counts/animals.txt`
+An example of this file type is provided in `data-shell/data/animal-counts/animals.txt`
 
 (try not to look at the answer!)
 
