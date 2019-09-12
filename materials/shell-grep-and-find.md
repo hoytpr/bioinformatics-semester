@@ -317,7 +317,7 @@ $ bash count-species.sh bear .
 ```
 
 ### `grep` and Little Women
-*** A Couple more useful `grep` flags:
+***A Couple more useful `grep` flags:***
 You and your friend, having just finished reading *Little Women* by
 Louisa May Alcott, are in an argument.  Of the four sisters in the
 book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
