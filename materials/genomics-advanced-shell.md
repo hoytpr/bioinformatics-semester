@@ -277,8 +277,9 @@ aldrin.pdb
 ~~~
 
 `basename` is really powerful when used in a `for` loop. It allows 
-us to access ONLY the file prefix, which you can use to name things. 
-Let's try this.
+us to access file names from the end of a `$path` variable (a variable 
+that includes a path), or even ONLY the file prefix, which you 
+can use to name things. ***Let's try isolating a prefix for naming!***
 
 Inside our `for` loop, we create a new variable name. We call 
 the `basename` function inside the parenthesis, then submit our variable 
