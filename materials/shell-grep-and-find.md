@@ -326,36 +326,115 @@ most mentioned.  You, however, are certain it was Amy.  Luckily, you
 have a file `LittleWomen.txt` containing the full text of the novel
 (`data-shell/writing/data/LittleWomen.txt`).
 Using a `for` loop, how would you tabulate the number of times each
-of the four sisters is mentioned?
+of the four sisters is mentioned? Can we think of a couple different solutions?
 
 Hint: one solution might employ
 the commands `grep` and `wc` and a `|`, while another might utilize
-`grep` options only.
-***There is often more than one way to solve a programming task***, so a
-particular solution is usually chosen based on a combination of
-yielding the correct result, elegance, readability, and speed. 
-No one should expect that they will be able to determine
-the "best" way to answer questions when first starting to
-learn programming. 
+`grep` options only. 
+
+#### New `grep` Flags
+1. The `-o` flag changes `grep`'s default output from lines, to **o**nly 
+showing the matching pattern within the line!
+
+2. The `-w` flag uses **word boundaries** to make sure that only complete words are matched (this isn't completely new)
+
+3. The `-c` flag tells `grep` to "print only a count of selected lines per FILE". 
 
 ..
+So let's try some things:
+```
+$ grep "jo" LittleWomen.txt | wc -l
+284
 
-..
+$ grep "Jo" LittleWomen.txt | wc -l
+1528
+```
+ The first thing we remember is that capitalization matters! We need to be
+ looking for "Jo", not "jo"
+ 
+ ```
+$ grep "Jo" "Meg" "Beth" "Amy" LittleWomen.txt | wc -l
+grep: Meg: No such file or directory
+grep: Beth: No such file or directory
+grep: Amy: No such file or directory
+1528
+```
+Now we remember that `grep` only takes one pattern at a time, so we'll
+probably have to create a `for` loop to enter all the names.
+Let's use "sis" as the variable name:
 
-..
+```
+$ for sis in Jo Meg Beth Amy
+> do
+> grep $sis LittleWomen.txt | wc -l
+> done
+1528
+685
+463
+643
+``` 
+Now it looks very promising! But let's add some output that helps us identify
+which count goes with which name (think about if we made this a script). So we hit the up arrow and edit the command by adding `echo $sis:;` like this:
+```
+$ for sis in Jo Meg Beth Amy; do echo $sis:; grep $sis LittleWomen.txt | wc -l; done 
+Jo:
+1528
+Meg:
+685
+Beth:
+463
+Amy:
+643
+```
+This looks great and we are building up our caommands into a script just like
+we learned to do it. But now lets add the new flags:
+```
+$ for sis in Jo Meg Beth Amy; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
+Jo:
+1543
+Meg:
+685
+Beth:
+465
+Amy:
+645
+```
+This is different! We have MORE counts of each name! The reason is that the
+`-o` flag matches the pattern (e.g. "Jo") and then outputs it. This means 
+every time a "Jo" is found, it would be output to the terminal... but we are piping it to
+`wc -l` to count the number of lines. This is important because even if there are
+multiple matches to "Jo" on a single line, they will be output separately. 
+This seems like we are finished, but we still have another problem...
+We are looking for a pattern like "Jo", but that will also match "John". 
+We can find any "John" patterns by running:
+```
+$ grep -o John LittleWomen.txt | wc -l
+167
+```
+So our command isn't finished. How can we match "Jo", without matching 
+"John" (or JoAnne, or Jonathan, or any other pattern like "Jo")?
 
-..
-
+We can use **word boundaries** which is what the flag `-w` does. The `-w` flag 
+forces `grep` to match only a whole word. This means "Jo" only matches "Jo"! Let's try it:
+```
+$ for sis in Jo
+> do
+> echo $sis:
+> grep -o $sis LittleWomen.txt | wc -l
+> done
+Jo:
+1355
+```
+and when we use all the daughter's names:
 
 #### Solution1
+
 ```
-for sis in Jo Meg Beth Amy
-do
-	echo $sis:
-grep -ow $sis LittleWomen.txt | wc -l
-done
-```
-```
+$ for sis in Jo Meg Beth Amy
+> do
+> echo $sis:
+> grep -o $sis LittleWomen.txt | wc -l
+> done
 Jo:
 1355
 Meg:
@@ -364,9 +443,15 @@ Beth:
 459
 Amy:
 645
-```
+``` 
+This is the answer! Congratulations on building up a new command that finds exactly
+the names of the daughters, and counts them even if they are on the same line. 
 
-#### Solution2
+
+#### Using the `-c` flag (Solution 2)
+But we saw in the help file that `-c` counts the number of lines also. 
+What if we just used `-c` instead of piping the output to `wc -l`?
+
 ```
 for sis in Jo Meg Beth Amy
 do
@@ -385,41 +470,79 @@ Amy:
 643
 ```
 
-The second solution is ***not quite as good!*** Using the `--help` 
-file (or `man` pagefor `grep` Let's break this down:
+The second solution is ***not quite as good*** and reports fewer name counts!
+To discover why, let's look at the `grep --help` file 
+(or `man` page for `grep`) again more closely.
 
 The `-o` flag changes `grep`'s default output from lines, to **o**nly 
-showing the matching pattern within the line! In this example, 
-`-o` **shows** "only the part of a line matching **`$sis`**". 
-This means instead of *lines*, all of the instances of "Jo", "Meg", "Beth", or 
-"Amy" are output (*but* this could include things like "John" or "Bethy"). 
-The `-w` flag uses **word boundaries** to make sure that only complete words are matched!
-
-This means only *exactly* "Jo", "Meg", "Beth", or "Amy" will be 
-matched and output. If you output `grep -ow` to the *terminal*, 
+showing the matching pattern within the line! 
+The `-w` flag uses **word boundaries** to make sure that only 
+*exactly* "Jo", "Meg", "Beth", or "Amy" will be matched.
+If you output `grep -ow` to the *terminal* (the same as `stdout`), 
 each time a name is found, it ends up on a ***different terminal
-line***. When you instead pipe those to `wc -l` you get a 
-count of all exact matches to the sisters' names. 
+line***. When you pipe those to `wc -l` you get a 
+count of **all lines with exact matches** to the sisters' names. 
 
-With the second solution, `grep -c` forces `grep` back to reporting
-the number of **lines** matched. So although `grep -o` will find all the instances 
-of `$sis`, `grep -c` only **c**ounts and reports the number of 
-***lines*** where they are found. The total number of matches 
-reported *by lines*, will be always lower if there is *more than one 
-match per line*.
+Using `-c` in the second solution, the help says:
+
+"-c, --count  print only a count of selected ***lines*** per FILE"
+
+In the second solution `grep -ow` correctly finds all exact matches 
+of the sisters' names, but these are not output as `stdout` 
+(as if they went to the terminal) and 
+`grep -c` only **c**ounts and reports the number of 
+***lines*** where they are found... even if there is *more than one 
+match per line*. The total number of matches reported *by lines*, 
+will be always lower if there are more than on match per line.
 
 If this is still confusing, try breaking down the loops into 
 single commands, or try running these commands looking for 
 only "Jo" and carefully study the difference in the outputs:
 
+**Remember the correct answer is:**
+```
+$ for sis in Jo; do echo $sis:; grep -ow $sis LittleWomen.txt | wc -l; done
+Jo:
+1355
+```
 ```
 $ for sis in Jo; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
-$ for sis in Jo; do echo $sis:; grep -ow $sis LittleWomen.txt | wc -l; done
-$ for sis in Jo; do echo $sis:; grep -w $sis LittleWomen.txt | wc -l; done
-$ for sis in Jo; do echo $sis:; grep -c $sis LittleWomen.txt; done
-$ for sis in Jo; do echo $sis:; grep -cw $sis LittleWomen.txt; done
-$ for sis in Jo; do echo $sis:; grep -oc $sis LittleWomen.txt; done
+Jo:
+1543
+(Without word boundaries, any line with "Jo" including (e.g.) "John" is used as 
+`stdout` (on separate lines) and then counted.)
 ```
+```
+$ for sis in Jo; do echo $sis:; grep -w $sis LittleWomen.txt | wc -l; done
+Jo:
+1347
+(This correctly matches "Jo" using word boundaries, but the `stdout` 
+uses the `grep` default of using complete lines. Anytime "Jo" is matched
+on a line multiple times, it only counts as one line.)
+```
+```
+$ for sis in Jo; do echo $sis:; grep -c $sis LittleWomen.txt; done
+Jo:
+1528
+(This matches any line with "Jo" including (e.g.) "John", or multiple
+instances of "Jo" or "John" on a line, but is not sent to `stdout`. This 
+is similar to `grep` default behavior except it outputs the **number** of lines, 
+instead of the lines themselves.)
+```
+```
+$ for sis in Jo; do echo $sis:; grep -cw $sis LittleWomen.txt; done
+Jo:
+1347
+(This correctly matches "Jo" using word boundaries, but if the matches
+are on the same line, they are only counted once because of the `-c` flag.)
+```
+
+> ***There is often more than one way to solve a programming task***, so a
+> particular solution is usually chosen based on a combination of
+> yielding the correct result, elegance, readability, and speed. 
+> No one should expect that they will be able to determine
+> the "best" way to answer questions when first starting to
+> learn programming. 
 
 ### Using `find`
 While `grep` finds lines in files, the `find` command finds ***files*** themselves. 
