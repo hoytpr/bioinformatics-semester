@@ -385,7 +385,8 @@ Amy:
 643
 ```
 
-The second solution is ***not quite as good!*** Let's break this down:
+The second solution is ***not quite as good!*** Using the `--help` 
+file (or `man` pagefor `grep` Let's break this down:
 
 The `-o` flag changes `grep`'s default output from lines, to **o**nly 
 showing the matching pattern within the line! In this example, 
