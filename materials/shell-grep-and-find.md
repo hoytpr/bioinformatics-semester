@@ -389,11 +389,11 @@ The second solution is ***not quite as good!*** Let's break this down:
 
 The `-o` flag changes `grep`'s default output from lines, to **o**nly 
 showing the matching pattern within the line! In this example, 
-`-o` **shows** "only the part of a line matching `$sis`". 
-This means rather than lines, ALL of the instances of "Jo", "Meg", "Beth", or 
-"Amy" are output (but this could include things like "John" or "Bethy"). 
-The `-w` flag makes sure that only complete words are matched because of
-**word boundaries**.  
+`-o` **shows** "only the part of a line matching **`$sis`"**. 
+This means instead of *lines*, all of the instances of "Jo", "Meg", "Beth", or 
+"Amy" are output (*but* this could include things like "John" or "Bethy"). 
+The `-w` flag uses **word boundaries** to make sure that only complete words are matched!
+
 This means only *exactly* "Jo", "Meg", "Beth", or "Amy" will be 
 matched and output. If you output `grep -ow` to the *terminal*, 
 each time a name is found, it ends up on a ***different terminal
