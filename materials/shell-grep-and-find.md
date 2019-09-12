@@ -390,7 +390,7 @@ file (or `man` pagefor `grep` Let's break this down:
 
 The `-o` flag changes `grep`'s default output from lines, to **o**nly 
 showing the matching pattern within the line! In this example, 
-`-o` **shows** "only the part of a line matching **`$sis`"**. 
+`-o` **shows** "only the part of a line matching **`$sis`**". 
 This means instead of *lines*, all of the instances of "Jo", "Meg", "Beth", or 
 "Amy" are output (*but* this could include things like "John" or "Bethy"). 
 The `-w` flag uses **word boundaries** to make sure that only complete words are matched!
