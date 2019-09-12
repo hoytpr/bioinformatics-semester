@@ -8,8 +8,8 @@ professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: peter.r.hoyt@okstate.edu
 phone: 405-744-6206
-schedule: ['TBD']
-location: ['TBD']
+schedule: 9:00AM - 10:15AM  T & Th
+location: 246H NRC
 office_hours: Tuesdays 10-11am
 office_hours_location: 110FC HBRC
 ---
