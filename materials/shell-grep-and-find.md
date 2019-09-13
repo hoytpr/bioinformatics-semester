@@ -485,15 +485,15 @@ count of **all `stdout` lines with exact matches** to the sisters' names.
 
 Using `-c` in the second solution, the help says:
 
-"`-c, --count  print only a count of selected ***lines*** per FILE`"
+"`-c, --count  print only a count of selected` ***`lines`*** `per FILE`"
 
 In the second solution `grep -ow` correctly finds all exact matches 
 of the sisters' names, but these are not output as `stdout` 
-(as if they went to the terminal) and 
+(as if they went to the terminal) because 
 `grep -c` only **c**ounts and reports the number of 
-***lines*** in the file where they are found... these lines may have 
+***lines*** in the file... these lines may have 
 *more than one match per line*. The total number of matches reported *by lines*, 
-will be always lower if there are more than on match per line.
+will be always lower if there is more than one match per line.
 
 If this is still confusing, try breaking down the loops into 
 single commands, or try running these commands looking for 
