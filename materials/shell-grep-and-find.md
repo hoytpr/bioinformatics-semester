@@ -682,7 +682,7 @@ Just be aware that this behavior can happen.
 > while `find` ***searches*** for things with certain properties and shows them.
 
 The command line's power lies in combining tools, and we've seen how to do that with pipes;
-Now let's look at another way to **combine tools**.
+Now let's look at another way to **combine tools using `$()`**.
 
 We know that `find . -name '*.txt'` gives us a list of all 
 text files in or below the current directory.
