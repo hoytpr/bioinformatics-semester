@@ -420,7 +420,7 @@ forces `grep` to match only a whole word. This means "Jo" only matches "Jo"! Let
 $ for sis in Jo
 > do
 > echo $sis:
-> grep -o $sis LittleWomen.txt | wc -l
+> grep -ow $sis LittleWomen.txt | wc -l
 > done
 Jo:
 1355
@@ -433,7 +433,7 @@ and when we use all the daughter's names:
 $ for sis in Jo Meg Beth Amy
 > do
 > echo $sis:
-> grep -o $sis LittleWomen.txt | wc -l
+> grep -ow $sis LittleWomen.txt | wc -l
 > done
 Jo:
 1355
