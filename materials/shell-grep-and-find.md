@@ -499,21 +499,21 @@ If this is still confusing, try breaking down the loops into
 single commands, or try running these commands looking for 
 only "Jo" and carefully study the difference in the outputs:
 
-**Remember the first loop is the correct answer:**
+**Remember the first loop below is the correct answer:**
 ```
 $ for sis in Jo; do echo $sis:; grep -ow $sis LittleWomen.txt | wc -l; done
 Jo:
 1355
 ```
-Now examine these:
+Now examine these loops:
 
 ```
 $ for sis in Jo; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
 Jo:
 1543
 ```
-(Without word boundaries, any line with "Jo" including (*e.g.*) "John" is used as 
-`stdout` (on separate lines) and then counted.)
+Without word boundaries in the above loop, any line with "Jo" including (*e.g.*) "John" is used as 
+`stdout` (on separate lines) and then counted.
 
 
 ```
@@ -521,9 +521,9 @@ $ for sis in Jo; do echo $sis:; grep -w $sis LittleWomen.txt | wc -l; done
 Jo:
 1347
 ```
-(This correctly matches "Jo" using word boundaries, but the `stdout` 
+The above loop correctly matches "Jo" using word boundaries, but the `stdout` 
 uses the `grep` default of returning complete lines. Anytime "Jo" is matched
-on a line multiple times, it only counts as one line.)
+multiple times on a line, it only counts as one line.
 
 
 ```
@@ -531,10 +531,11 @@ $ for sis in Jo; do echo $sis:; grep -c $sis LittleWomen.txt; done
 Jo:
 1528
 ```
-(This matches any line with "Jo" including (*e.g.*) "John", or multiple
-instances of "Jo" or "John" on a line, but is not sent to `stdout`. This 
-is similar to `grep` default behavior except it outputs the **number** of lines,
-instead of the lines themselves.)
+The above loop matches any line with a "Jo" including words like (*e.g.*) "John", 
+(or JoAnne, or Jonathan, or any other pattern like "Jo"), and it will match 
+multiple instances of "Jo" or "John, (etc.)" on a line. This is similar to `grep` 
+default behavior except it outputs only the **number** of lines, instead of 
+the lines themselves.
 
 
 ```
@@ -542,8 +543,8 @@ $ for sis in Jo; do echo $sis:; grep -cw $sis LittleWomen.txt; done
 Jo:
 1347
 ```
-(This correctly matches "Jo" using word boundaries, but if the matches
-are on the same line, they are only counted once because of the `-c` flag.)
+The above loop correctly matches "Jo" using word boundaries, but when "Jo" occurs
+multiple times on the same line, they are only counted once because of the `-c` flag.
 
 
 > ***There is often more than one way to solve a programming task***, so a
