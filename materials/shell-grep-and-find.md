@@ -315,6 +315,9 @@ For each animal, you would call the script above like this:
 ```
 $ bash count-species.sh bear .
 ```
+The special variable `$1` is the species name, and the special variable `$2`
+is the directory (in this case, the current working directory or `.`).
+
 <a name="grep"></a>
 ### `grep` and Little Women
 ***A couple more useful `grep` flags: `-o` and `-c`***
