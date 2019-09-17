@@ -739,7 +739,7 @@ $ grep "FE" $(find ../data/pdb/ -name '*.pdb')
 
 We learned the `-v` flag for `grep` inverts pattern matching, so that only lines
 which do ***not*** match the pattern are printed. 
-For example, we can use grep to look for lines in `haiku.txt` that do NOT
+For example, we can use `grep` to look for lines in `haiku.txt` that do NOT
 contain the word `is`:
 ```
 $ grep -vw 'is' haiku.txt
@@ -752,27 +752,39 @@ and the presence of absence:
 
 Yesterday it worked
 ```
+Once again, notice that the pattern "Is" does not match the pattern "is".
+Capitalizations matters! 
 
 Knowing this about `grep`, let's **first change into the `data-shell/data/pdb`** 
-directory, then answer which of the following commands will find all files 
-whose names end in `l.pdb` (*e.g.*, `nerol.pdb`), but do
+directory, then examine the following commands to detemine which will 
+show us all files whose names end in "`l.pdb`" (*e.g.*, `nerol.pdb`), but do
 *not* contain the word `meth`?
 Once you have thought about your answer, you can test the commands below:
 
 1.  `find . -name '*l.pdb' | grep -v meth`
-2.  `find . -name *l.pdb | grep -v meth`
-3.  `grep -v "temp" $(find . -name *l.pdb)`
-4.  None of the above.
+2.  `find . -name *l.pdb | grep -v meth`**\***
 
 #### Solution
-* The correct answer is 1. Putting the match expression in quotes prevents the shell
-expanding it, so it gets passed to the `find` command.
+* The correct answer is 1. Putting the wildcard match pattern in quotes prevents the shell
+expanding it, so it gets passed to the `find` command. The `find` command outputs the 
+***names*** of the files to the `grep` command. 
 
 * Option 2 is **incorrect** because the shell expands `*l.pdb` *first* instead of 
 passing the wildcard expression to `find`. 
 
-* Option 3 is incorrect because it searches the contents of the files for lines which
-do not match "temp", rather than searching the file names.
+\*An error occurs that is unclear:
+```
+find: paths must precede expression: citronellal.pdb
+Usage: find [-H] [-L] [-P] [-Olevel] [-D help|tree|search|stat|rates|opt|exec] [path...] [expression]
+```
+The error is due to the immediate expansion of the wildcard such that the actual command is something like:
+```
+find . -name cholesterol.pdb citronellal.pdb cyclohexanol.pdb ethanol.pdb (etc.)
+```
+However, the `find` command thinks it is **done** when it finds the 
+first filename with a perfect match: 
+`cholesterol.pdb`. Subsequent names passed to `find` (i.e. `citronellal.pdb`) are 
+not understood (because `. -name cholesterol.pdb` is not a path).
 
 > ### `find` Pipeline Reading Comprehension
 >
@@ -783,25 +795,81 @@ do not match "temp", rather than searching the file names.
 > ~~~
 >
 > #### Solution
-> 1. Find all files with a `.dat` extension in the current directory
-> 2. Count the number of lines in each of these files
+> 1. First (like math) find all files with a `.dat` extension in the current directory
+> 2. Count the number of lines in each of these files and pass output to `sort`
 > 3. Sort the output from step 2. numerically
 
-> ### Advanced: Finding Files With Different Properties
-> 
+Unfortunately, we don't have any `.dat` files in the `pdb` directory! 
+So where are the `.dat` files? This is a great question! Let's **find** them!
+Assuming they are in our lesson directory structure, they must be within or below
+the `data-shell` directory, which is two directories up from our current 
+working directory. We can check this with `pwd`:
+
+```
+$ pwd
+/c/Users/<username>/Desktop/data-shell/data/pdb
+```
+So to find all the `.dat` files, we need to use `find` starting at the path `../..`
+
+```
+$ find ../.. -name "*.dat"
+../../creatures/backups/original-basilisk.dat
+../../creatures/backups/original-unicorn.dat
+../../creatures/basilisk.dat
+../../creatures/one unicorn.dat
+../../creatures/unicorn.dat
+```
+
+The output `../../creatures/one unicorn.dat` looks odd. This is because there 
+is a file with a ***space*** in the name: "`one unicorn.txt`"! Remember 
+that `find` works a little harder than most commands, so it searched for 
+and found a name that contains spaces. 
+So what happens if we then finish our command and pass those filenames 
+to the `wc -l` command?
+```
+$ wc -l $(find ../.. -name "*.dat") | sort -n
+wc: ../../creatures/one: No such file or directory
+wc: unicorn.dat: No such file or directory
+ 163 ../../creatures/backups/original-basilisk.dat
+ 163 ../../creatures/backups/original-unicorn.dat
+ 163 ../../creatures/basilisk.dat
+ 163 ../../creatures/unicorn.dat
+ 652 total
+```
+It works! There are 163 lines in `basilisk.dat` and `unicorn.data` and their backups. 
+In this case the `sort -n` didn't really do anything. But what about the errors?
+The errors occur because `wc -l` does NOT process filenames with spaces. Instead, 
+`wc` looks for a *directory* named `../../creatures/one` (`data-shell/creatures/one`)
+which does not exist. Similarly, a file named `unicorn.txt` can't be found in the 
+`data-shell/creatures/one` directory (because they don't exist). 
+
+> Just for fun:  
+> If your `data-shell/creatures/` directory doesn't have the file `one unicorn.txt` 
+> you can create it using the command:
+> ```
+> touch ../../creatures/"one unicorn.txt"
+> ``` 
+
+> ### Very Advanced: Finding Files With Different Properties
+> **Using the help or man pages of `find`**
 > The `find` command can be given several other criteria known as "tests"
 > to locate files with specific attributes, such as creation time, size,
-> permissions, or ownership.  Use `man find` to explore these, and then
-> write a single command to find all files in or below the current directory
-> that were modified by the user `nelle` in the last 24 hours.
+> permissions, or ownership.  Use `--help` or `man find` to explore these topics, 
+> and then write a single command to:
+> 1. find all files in or below the current directory
+> 2. that were modified by the user `nelle` 
+> 3. in the last 24 hours.
 >
-> Hint 1: you will need to use three tests: `-type`, `-mtime`, and `-user`.
+> Hint 1: We won't use the `$()` format but you will need to use three tests: `-type`, `-mtime`, and `-user`.
 > 
-> Hint 2: At the end of `help` you see that `find` is maintained at ["http://savannah.gnu.org/"](http://savannah.gnu.org), where
-> you can get more help (do not email). Also, you can use a search engine or go 
-> to [Indiana U.](https://kb.iu.edu/d/admm)  
+> Hint 2: You are going to need a lot of help! 
+> > At the end of `help` you see that `find` is maintained at ["http://savannah.gnu.org/"](http://savannah.gnu.org), where
+> > you can get more help (do not email). Also, you can use a search engine, or go 
+> > to [Indiana U.](https://kb.iu.edu/d/admm) where there is a great help section
+> > for shell commands. 
 > 
-> Hint 3: The value for `-mtime` will need to be negative---why?
+> Hint 3: The `-mtime` uses integer values that are days (24-hours). 
+> So the past WEEK would be `-mtime -7`. Why would the value need to be negative?
 >
 > > ## Solution
 > > Assuming that Nelle’s home is our working directory we type:
@@ -809,7 +877,15 @@ do not match "temp", rather than searching the file names.
 > > ~~~
 > > $ find ./ -type f -mtime -1 -user nelle
 > > ~~~
-> > 
+But this is not satisfying because user `nelle` doesn't exist on our laptops! To 
+see this command working we will have to use our own username, and we should 
+probably use a longer timeframe. Use `ls -l` to find your username, then substitute it into the following command:
+```
+$ find ./ -type f -mtime -60 -user <username>
+```
+
+Congratulations on finishing the `grep` and `find` lesson! You learned a lot but
+you will use these commands a lot too!
 
 ### Keypoints:
 - `find` finds files with specific properties that match patterns.
