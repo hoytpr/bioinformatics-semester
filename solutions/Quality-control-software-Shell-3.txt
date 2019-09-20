@@ -1,5 +1,6 @@
 
 3. Overall Read Quality Exercise answers
 
-All of the reads contain usable data, but the quality decreases toward
-the end of the reads.
+The best answer to this question is that all of the reads contain 
+usable data, but the quality decreases toward the ends of all the reads.
+After trimming, they should all have the same quality.

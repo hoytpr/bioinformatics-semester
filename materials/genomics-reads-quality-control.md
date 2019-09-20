@@ -116,10 +116,10 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 ~~~
 {: .output}
 
-Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
+(NOTE if the above  looks like 6 (or 8) lines, it is because Line 2 and Line 4 (and potentially Line 3) have "wrapped" around on your computer screen) Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
 probability of an incorrect base call (e.g. 1 in 10) or, equivalently, the base call 
 accuracy (e.g. 90%). To make it possible to line up each individual nucleotide with its quality
-score, the numerical score is converted into a code where each individual character 
+score, the numerical score is converted into a ***character*** code where each individual *character* 
 represents the numerical quality score for an individual nucleotide. For example, in the line
 above, the quality score line is: 
 
@@ -128,23 +128,23 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 ~~~
 {: .output}
 
-The numerical value assigned to each of these characters depends on the 
+The numerical value assigned to each of these *characters* depends on the 
 sequencing platform that generated the reads. The sequencing machine used to generate our data 
 uses the standard Sanger quality PHRED score encoding, using by Illumina version 1.8 onwards.
-Each character is assigned a quality score between 0 and 40 as shown in the chart below.
+Each *character* is assigned a quality score between 0 and 40 as shown in the chart below.
 
 ~~~
-Quality encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
-                  |         |         |         |         |
-Quality score:    0........10........20........30........40                                
+Quality character encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
+                            |         |         |         |         |
+Quality score:              0........10........20........30........40                                
 ~~~
 {: .output}
 
-Each quality score represents the probability that the corresponding nucleotide call is
-incorrect. This quality score is logarithmically based, so a quality score of 10 reflects a
+Each quality score represents the **probability** that the corresponding nucleotide call is
+correct. This quality score is logarithmically based, so a quality score of 10 reflects a
 base call accuracy of 90%, but a quality score of 20 reflects a base call accuracy of 99%. 
 These probability values are the results from the base calling algorithm and dependent on how 
-much signal was captured for the base incorporation. 
+much unambiguous signal was captured for the base incorporation. 
 
 Looking back at our read: 
 
@@ -156,9 +156,10 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 ~~~
 
 we can now see that there is a range of quality scores, but that the end 
-of the sequence is very poor quality (`#` = a quality score of 2). 
+of the sequence is very poor quality (`#` = a quality score of 2 which is 
+the same as 2 out of 10 bases are inaccurate, meaning an accuracy of only 80%). 
 
-**[Do the In-class Exercise by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
+**[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 Work on the questions yourself, 
 before looking at the answers (take about 5 minutes).
 #### Assessing Quality using FastQC
@@ -371,6 +372,8 @@ Your computer will open each of the HTML files in your default web
 browser. Depending on your settings, this might be as six separate
 tabs in a single window or six separate browser windows.
 
+**[Do the In-class Exercises 3 and 4 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
+
 ## Decoding the other FastQC outputs
 We've now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we haven't talked about! Below we have provided a brief overview of interpretations for each of these plots. It's important to keep in mind 
 
@@ -427,7 +430,7 @@ expects to get only one zip file as input. We could go through and
 unzip each file one at a time, but this is very time consuming and 
 error-prone. Someday you may have 500 files to unzip!
 
-A more efficient way is to use a `for` loop like we learned in the Shell Genomics lesson to iterate through all of
+A more efficient way is to use a `for` loop like we learned in the Shell lesson to iterate through all of
 our `.zip` files. Let's see what that looks like and then we'll 
 discuss what we're doing with each line of our loop.
 
@@ -447,7 +450,6 @@ The interpreter runs the command `unzip` on `SRR2584863_1_fastqc.zip`.
 For the second iteration, `$filename` becomes 
 `SRR2584863_2_fastqc.zip`. This time, the shell runs `unzip` on `SRR2584863_2_fastqc.zip`.
 It then repeats this process for the four other `.zip` files in our directory.
-
 
 When we run our `for` loop, you will see output that starts like this:
 
@@ -493,8 +495,8 @@ SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
 
 The `.html` files and the uncompressed `.zip` files are still present,
-but now we also have a new directory for each of our samples. We can 
-see for sure that it's a directory if we use the `-F` flag for `ls`. 
+but now we also have a new directory for each of our samples. Remember
+that we can see which are directories if we use the `-F` flag for `ls`. 
 
 ~~~
 $ ls -F 

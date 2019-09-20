@@ -14,3 +14,4 @@ $ ls -l -h
 
 
 There are six FASTQ files ranging from 124M (124MB) to 545M. 
+The ls -h flag shows the file sizes in "human readable" format.
