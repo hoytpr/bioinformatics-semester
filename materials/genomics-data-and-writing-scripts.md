@@ -137,34 +137,58 @@ First, let's look at the current permissions.
 
 ~~~
 $ ls -l bad-reads-script.sh
--rw-rw-r-- 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
+-rw-rw-r-- 1 user group 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
 
 Without going into great details, the permissions are most commonly 
-divided into three types: **`r` "run", `w` "write", and `x` "execute".**
+divided into three types: **`r` "read", `w` "write", and `x` "execute".**
 Also, the first position is reserved for descriptors, and the most 
 common descriptor is: **`d` "directory".** 
 
 Finally, the 10 permission indicators are actually four separate sections:
 
 | Position 1 | Positions 2-3-4 | Positions 5-6-7 | Positions 8-9-10 |
-|------------|-----------------|-----------------|------------------|
-| Descriptor | Admin Permissions | Group Permissions | User Permissions|
+|-------|---------|-----------|----------|
+| Descriptor | Current User or Owner Permissions | Group Permissions | Everybody Permissions|
 
-Depending on whether you are logged on as an administrator, or you are 
-part of a specific group, or you are a simple user, your permissions 
-will vary for any file or directory.
+For each section, the user or group permissions can be set independently. This 
+user-and-group model means that for each file, every user on the system falls 
+into one of three categories: the owner/user of the file, someone in the file’s 
+group, and everyone else. Permissions can be carefully adjusted depending on whether 
+you are logged on as an administrator, or you are  part of a specific group.
 
-We see that it says `-rw-r--r--`. This shows that the file 
-can be read by any group or user and also *written to* by the file owner 
-(you, because you made the file, and you are the administrator of your 
-computer). We want to change these permissions so that the 
-file can be executed as a program. We use the command `chmod` 
-to change write permissions. 
+We see that `bad-reads-script.sh` permissions are `-rw-r--r--`. This shows that the file 
+can be read by every group or user and also *written to* by the file owner 
+(you, because you made the file, and you are the current user or administrator of your 
+computer). We can visualize the permissions as a table:
+
+<table class="table table-striped" style="width:400px">
+<tr><td></td><th>user</th><th>group</th><th>everyone</th></tr>
+<tr><th>read</th><td>yes</td><td>yes</td><td>yes</td></tr>
+<tr><th>write</th><td>yes</td><td>no</td><td>no</td></tr>
+<tr><th>execute</th><td>no</td><td>no</td><td>no</td></tr>
+</table>
+
+We want to **change** these permissions so that the 
+file can be executed as a program. 
+
+We use the command `chmod` to change permissions for any file or directory. 
 Here we are adding (`+`) executable permissions (`+x`).
-(**NOTE:** the following may not work unless you are working within 
-in a real Unix environment, and did not work in a Windows-based GitBash terminal)
 
+> #### Windows Users: LEARN THIS! 
+> **This doesn't work in the GitBash terminal on your laptop, but *will* work when you
+> log onto a remote system! (Even when using Gitbash!)**
+> 
+> These commands work when you are using 
+> a real Unix environment, including Macs. However, Windows systems, even when running 
+> a Bash shell program cannot use `chmod`. This is because Windows, defines permissions 
+> by [access control lists](https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists), or ACLs. An ACL is a paired list of a “who” with a “what”. 
+> For example, you could give a collaborator (who) permission 
+> to append data to a file (what) without giving them permission to delete it. We will not address 
+> these issues today, but we WILL say that Windows users **can execute scripts locally** because the 
+> operating system interprets whether the *contents* of the file are executable or not.  
+
+To add "execute" permissions to a script use:
 ~~~
 $ chmod +x bad-reads-script.sh
 ~~~
@@ -173,15 +197,17 @@ Now let's look at the permissions again.
 
 ~~~
 $ ls -l bad-reads-script.sh
--rwxrwxr-x 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
+-rwxr-xr-x 1 user group 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
 
-Now we see that it says `-rwxr-xr-x`. The `x`'s that are there now tell us we 
-can run it as a program. So, let's try it! We'll need to put `./` at the beginning 
-so the computer knows to look here in this directory for the program.
-> NOTE: The `chmod` command will change permissions for all types of users
-> when used this way. There are ways to change them individually
-> but we aren't covering those methods at this time 
+Now we see that it says `-rwxr-xr-x`. 
+> NOTE: The `chmod` command will change permissions for all user types
+> when used this way. There are alternate methods that change permissions individually,
+> but we aren't covering those methods at this time.
+
+The `x`'s now tell us we 
+can run the script as a program. So, let's try it! We'll need to put `./` at the beginning 
+so the computer knows to look here (the current working directory) for the program.
 
 ~~~
 $ ./bad-reads-script.sh
@@ -191,7 +217,7 @@ The script should run the same way as before, but now we've created our very own
 
 ### Log on to a Remote System
 
-To continue this lesson, we may want to connect to a remote system.
+To continue this lesson, we want to connect to a remote system.
 We can use a remote cloud instance or here at OSU we can use Cowboy.
 To log on to Cowboy, start a NEW and SEPARATE terminal window.
 
@@ -199,25 +225,34 @@ Once the new terminal is open, connect to Cowboy using the command:
 `ssh <username>@cowboy.hpc.okstate.edu`
 
 If you see a warning about the computer not being known, type "yes" to accept the computer.
-You should then see a request for your password:
+You should then see a request for your password. Type in your password.
+NOTE: You won't see anything when you type your password. The cursor won't even move.
+That's expected, so keep typing!
 ```
 $ ssh phoyt@cowboy.hpc.okstate.edu
 phoyt@cowboy.hpc.okstate.edu's password:
 Last login: Thu Aug  8 12:28:36 2019 from 139.78.154.30
 Welcome to Cowboy!
 ```
-NOTE: You won't see anything when you type your password. The cursor won't even move.
-That's expected, so keep typing!
 
-Congratulations! You have used the command-line interface to
+**Congratulations!** You have used the command-line interface to
 connect to a remote supercomputer! This is a big step forward when 
 working in genomics!
 
-You should be in your "home" directory, so confirm that by typing:
+You should be in your "home" directory. Because all the commands we have learned so far work exactly the same on Cowboy, you can confirm you are in your home directory by typing:
 ```
 pwd
 /home/phoyt
 ```
+### Pause for a moment
+
+Now your training takes on new power! While we had fun learning commands and working 
+with files on our laptops (or desktops), it's important to realize that now you are 
+on a supercomputer. The computing power available to you has now increased by a ginormous 
+amount (that's a lot). We will explore some of this power later, but for now just 
+realize how ALL the commands you have learned, can now be applied to your home 
+directory on a supercomputer. Do you want to make sub-directories? Use `mkdir`. 
+Want to create a text file? Use `nano`. Write a script? Yep, you can do that too. 
 
 ### Moving and Downloading Data
 
@@ -225,8 +260,9 @@ So far, we've worked with data that is pre-loaded on the class website, and this
 to if the data was available on an "instance" in the cloud. Usually, however,
 most analyses begin with moving data into the cloud instance. Below we'll show you 
 some commands to download data onto your computer as if it was an instance, 
-or to move data between your computer and the cloud.
-
+or to move data between your computer and the cloud. [For more details on a cloud 
+instance, follow this link.]({{ site.baseurl  }}/materials/extras/instance)
+<a name="cloud"></a>
 ### Getting data *from* the cloud
 
 There are two programs that will download data from a remote server to your local
@@ -304,6 +340,10 @@ It's important to note that both ``curl`` and ``wget`` download to the computer 
 the ``curl`` command above in the AWS terminal, the file will be downloaded to your AWS
 machine, not your local one.
 
+### Using Multiple Terminal Windows!
+
+Now for something different! Without closing local terminal window, you should open a NEW terminal window. This terminal window will be your LOCAL terminal, and the window connected to Cowboy or the cloud, will be your REMOTE terminal. Opening multiple terminals is very common and is supported on Macs, and Windows GitBash, as well as most Unix-like operating systems. 
+
 ### Moving files between your laptop and your supercomputer or cloud instance
 
 What if the data you need is on your local computer, but you need to get it *into* the
@@ -347,8 +387,12 @@ $  scp local_file.txt dcuser@ip.address:/home/dcuser/
 
 2. For the Cowboy supercomputer
 ~~~
-$  scp local_file.txt <username>@cowboy.hpc.okstate.edu:/home/dcuser/
+$  scp local_file.txt <username>@cowboy.hpc.okstate.edu:/home/<username>/
 ~~~
+
+You may be asked to re-enter your password.  Then you should see the file name printed 
+to the screen. When you are back at your command prompt, switch to the Cowboy Terminal 
+and use `ls` to make sure the file README.txt is now in your home folder. 
 
 #### Downloading Data from a Virtual Machine with scp
 
