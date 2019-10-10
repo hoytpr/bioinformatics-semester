@@ -78,7 +78,7 @@ We will need to load the data using a function called `read.csv()`.
 Let's start with the file `combined_tidy_vcf.csv` which on the AWS cloud is 
 located in `/home/dcuser/.solutions/R_data/`. Alternatively you can 
 find (or even read in) the file directly from [FigShare] 
-("https://ndownloader.figshare.com/files/14632895")
+(https://ndownloader.figshare.com/files/14632895)
 When we read in the file, we will give it an **object** name. Let's call these 
 data `variants`. Remember, we are creating an object in R rather than working on the 
 datafile directly. This preserves our original data, while we can manipulate data
