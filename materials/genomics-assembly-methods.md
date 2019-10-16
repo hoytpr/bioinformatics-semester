@@ -5,11 +5,16 @@ title: Assembly Tools
 language: Shell
 ---
 ### Hands-on Genome Assembly Tools 
+(This workshop-style-lesson is taught on the Cowboy supercomputer at OSU)
 
 #### DISCLAIMER: These software are pretty much (not yet completely) obsolete.
 
 We are using them to demonstrate some processes used in 
 bioinformatics. We want you to know you can do this!
+But be aware that open source software 
+stops working eventually if is not actively maintained. The software used in this 
+beginner's introduction are already suffering from ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) 
+a term introduced in 2019.  
 
 #### Why are we using older software?
 
@@ -25,7 +30,8 @@ many important bioinformatics processes like assembly,
 
 **Online learning repositories** 
 such as [The Carpentries](https://carpentries.org/), including [Software Carpentry](https://software-carpentry.org/) and [Data Carpentry](https://datacarpentry.org/) 
-(which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, and also for their ability to remain current!  
+(which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, 
+and also for their ability to remain current! Also consider free resources like [Cyverse](https://cyverse.org/). 
 
 **Do some research and find the best software for your project** 
 if you plan to perform assembly or RNA-Seq in your own experiments.
@@ -35,8 +41,6 @@ particular the [Galaxy Project](https://galaxyproject.org/) is a great place to 
 
 For an interesting discussion about scientists using outdated software see this 
 2018 article [Scientists Continue to Use Outdated Methods](https://www.the-scientist.com/news-opinion/scientists-continue-to-use-outdated-methods-30438), 
-and here's a 2019 article which coins the term ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) meaning that open source software 
-stops working eventually if is not actively maintained. The software used in this beginner's introduction are already suffering from software collapse. 
 
 ### Assembly
 
@@ -62,11 +66,11 @@ Be sure to change the line:
 
 `export GROUPNUMBER=1`
 
-to your group number.  You will need to do this for all the submission scripts today.
+to ***your*** group number.  You will need to do this for all the submission scripts today.
 
 The first section of our `velvetk31.pbs` script sets up the scheduler requests (the queueing system) and environment variables. The  assembler commands are `velveth` and `velvetg`. What do these commands do?  See the [velvet website here](https://github.com/dzerbino/velvet).  
 
-If you understand the script and have changed the groupnumber, press ctrl-x, save the file and submit it to the queue with the `qsub` command as follows.
+If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `qsub` command as follows.
 
 `$ qsub velvetk31.pbs`
  
@@ -112,7 +116,7 @@ To try different kmers, first copy your pbs script:
 $ cp velvetk31.pbs velvetk21.pbs
 $ nano -w velvetk21.pbs
 ~~~
-and change K to a different value, currently 31. Try 21, 25.
+and change K to a different value, currently 31. Try 21, and 25.
 then submit this new job:
 
 `$ qsub velvetk21.pbs`
