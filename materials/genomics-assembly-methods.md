@@ -215,7 +215,7 @@ $ cp soap31/soap.config soap21/.      (that dot at the end is necessary)
 $ cd soap21
 $ nano -w soapk21.pbs 
 ~~~
-Now modify `soapk21.pbs` and change K  from 31 to a different value. Try 21,  then 25.  After submitting your job:
+Now modify `soapk21.pbs` and change K from 31 to **21**, and submit your job:
 
 `qsub soapk21.pbs`
 
@@ -223,8 +223,7 @@ Be sure to copy the result to your appropriate results folder.
 
 `$ cp soap21.scafSeq ../../results/soap21.fasta`
 
-Using what you’ve learned, do the 25 kmer value. 
-
+Using what you’ve learned, do the **25** K-mer value. 
 
 ### ABYSS
 
@@ -255,7 +254,7 @@ and so they are ignored (we're going to ignore them too!). The `coverage.hist`
 file is a two-column tab-delimited file where the first column equals
 "coverage", and the 2nd column equals "Number of K-mers". 
 You can plot this K-mer histogram with any software 
-you want (EXCEL, R, etc.) but only the first 50 lines are very useful. 
+you want (Excel, R, etc.) but only the first 50 lines are very useful. 
 To look at the first 50 lines, enter:
 
 `$ head -n 50 coverage.hist`
@@ -265,7 +264,7 @@ Shrink the file by creating a new file that only includes these first 50 lines:
 
 `$ head -50 coverage.hist > short.hist.txt`
 
-Here is a new trick: You can use the shell to ***E-mail*** the `short.hist.txt` file to 
+Here is a new trick: You can use the shell to **E-mail** the `short.hist.txt` file to 
 yourself then look at it in a spreadsheet. The command (below) includes entering 
 your email address ***twice*** because you are both the recipient, and the sender.
 
@@ -276,10 +275,10 @@ hit the **<kbd>Enter</kbd>** key, and then use **`ctrl-d`** to send the message.
 After emailing the file to yourself, open your email and place the attached file 
 on your Desktop. 
 
-Open `short.hist.txt` using Excel or another spreadsheet program and plot it  
-In Excel, you would highlight all 50 values in both columns and then select 
-"Insert" then "Recommended Charts", and pick the top chart. However you plot the 
-chart, it should be similar to this plot for Group1.
+Open `short.hist.txt` using Excel or another spreadsheet program and create
+a plot from these data. In Excel, you would highlight all 50 values in both 
+columns and then select "Insert" then "Recommended Charts", and pick the top 
+chart. In general, it should be similar to this plot for Group1.
 
 ![group1 kmer31 plot]({{ site.baseurl }}/fig/kmers-short-hist-graph.png)
 
@@ -293,22 +292,23 @@ Assembled 563522 k-mer in 245 contigs.
 ~~~
 (Remember this is for "Group 1" and your output may be different). Notice that 
 we have a "caret" symbol **`^`** in front of our search pattern: "Assembled". 
-The `^` is a special character that tells `grep` to only look for the pattern 
-if it is at the beginning of a line. 
+The `^` is a special character that tells `grep` to only match the pattern 
+*if it is at the beginning of a line*. 
 
 To determine the ***highest*** K-mer coverage in the histogram use:
 
 `$ grep median abyssk31.pbs.o<jobidnumber>`
 
-and put your answer in this box `___________` (For group1 it's "19")
+and put your answer in this box `___________`
 
-Here's another trick where you can use this K-mer histogram to estimate the genome size 
-(Why do you want to do that?)
+Here's another trick: You can use this K-mer histogram to estimate the size of
+the genome you sequenced using the following formula:
 
 ##### Genome_size = Total_Kmers / peak_Kmer_coverage
 
-For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion). But essentially
-K-mers represent a copy of all your sequencing data just broken into small fragments of an exact size.
+For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
+that explain why we want to estimate genome sizes. Briefly,
+K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
 Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
 
 > This is useful because: 
@@ -317,55 +317,86 @@ Abyss is able to **estimate** your coverage of the genome based on the number of
 > 
 > Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
 > was "10-fold", you could easily estimate your genome being sequenced 
-> was 3-billion base-pars long (30,000,000,000 ÷ 10 = 3,000,000,000)
+> was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
   
 To calculate "Total_Kmers", create a third column in your spreadsheet that multiplies 
 column 1 and column 2, and then sum all the numbers of the 3rd column. This is 
-the total number of all your "good" K-mers.
+(approximately) the total number of all your "good" K-mers.
 
 Use the formula to estimate the genome size base on K-mer histogram: `______________` bp
 
 The `abyssk31.pbs.o<jobid>` is very useful. Find these information from the log file:
 
-contig stats: n50 ________  
+contig stats: n50 `________` 
 
-max _______ 
+max `_______`
 
-total __________ (compare to the estimate based on K-mer)
+total `__________` (compare to the estimate based on K-mer)
 
-scaffold stats: n50 ________  
+scaffold stats: n50 `________`  
 
-max _______ 
+max `_______` 
 
-total __________ 
+total `__________` 
 
-Where are the results stored?
-
-Now ABYSS is done. Save the results and rename it!
+The results are always stored in the **current working directory** when using Abyss.
+When the output from ABYSS is complete, save the results and rename the output 
+fasta file as we did for the other assemblers.
 
 `$ cp abyss31-scaffolds.fa ../../results/abyss31.fasta`
 
-**Does the assembly get better  if I use a different K-mer size?**
+**Does the assembly get better if I use a different K-mer size?**
 
-Changing the K-mer option for assemblies.  Luckily assemblers run fast, run two different additional K-mer options using Abyss. Why? Because the current value K=31 may not be the best! Try 21, and 25 for most assemblers, they need odd numbers, so 24 won’t work.  
+Luckily assemblers run fast. We will now run two different additional K-mer 
+options using Abyss. Remember that the current value (K=31) may not be the 
+best! Try 21, and 25, for most assemblers. Most assemblers only use K-mer 
+sizes that are odd numbers, so 24 won’t work. 
 
-First create a new directory:
+Remember that Abyss outputs to the current working directory, so when 
+using Abyss, you should first create a new directory to work within:
 
-`$ cd ..`
-
-(you should be in the `abyss` directory now, to check use “print working directory”)
+Start by going up into the `abyss` directory using `$ cd ..` and then 
+create new directories for each K-mer you will use.
 
 ~~~
 $ pwd  
-/scratch/username/mcbios/abyss
+/scratch/<username>/mcbios/abyss
 $ mkdir abyss21
 $ cp abyss31/abyssk31.pbs abyss21/abyssk21.pbs
 $ cd abyss21
 $ nano -w abyssk21.pbs
- change K to a different value, currently 31. Try 21, 25 and submit:
+~~~
+Use `nano` to change K from 31 to **21**. Then save the file and submit.
+~~~
 $ qsub abyssk21.pbs
 ~~~
-Whan it’s done, your output files will automatically have the new K-mer in their names. Copy the result to your results folder
+Then, go the the same process to use a K-mer value of **25**.
+~~~
+$ cd ..
+$ pwd  
+/scratch/<username>/mcbios/abyss
+$ mkdir abyss25
+$ cp abyss31/abyssk31.pbs abyss25/abyssk25.pbs
+$ cd abyss25
+$ nano -w abyssk25.pbs
+~~~ 
+Remember to change the K-mer value to **25**. Save the file and submit.
+~~~
+$ qsub abyssk25.pbs
+~~~
+Whan it’s done, your output files will automatically have the new K-mer in their names! 
+Copy the result to your results folder.
+~~~
+$ cd ..
+$ pwd  
+/scratch/<username>/mcbios/abyss
+$ cp abyss21/abyss21-scaffolds.fa ../results/abyss21.fasta
+$ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
+~~~
 
-`$ cp abyss21-scaffolds.fa ../../results/abyss21.fasta`
+Congratualtions! This lesson has shown you how you can assemble genomes using 
+three different software, and using different parameters (K-mers, in this lesson). 
+Now we should check our assemblies in a process called "validation" 
+before sending the best assembly to our collaborators!
+
 

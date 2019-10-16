@@ -67,7 +67,7 @@ ABySS uses an iterative algorithm to estimate the k-mer coverage and
 genome size. It first finds the median k-mer coverage. The threshold
 below which k-mers are ignored is then set to:
 
-`round(sqrt(median_kmer_coverage))`
+**`round(sqrt(median_kmer_coverage))`**
 
 Those k-mers failing the coverage
 threshold are ignored, and the median k-mer coverage is then recalculated.
