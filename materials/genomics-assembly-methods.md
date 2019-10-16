@@ -231,7 +231,9 @@ Using what you’ve learned, do the **25** K-mer value.
 
 We change to a subdirectory because abyss puts all its output into the **current working directory**.
 
-Understand `abyssk31.pbs`. ABYSS is simple to run as it has just one command to run 
+Use `cat` to display the `abyssk31.pbs` submission script to your terminal, and look 
+through the file so that you understand the parts. ABYSS is simple to run as it has 
+just one command to run
 an entire pipeline of software. Because it runs several software packages, it 
 takes a few minutes to complete. First edit the `abyssk31.pbs` to change 
 GROUPNUMBER to your group number.
@@ -271,7 +273,8 @@ your email address ***twice*** because you are both the recipient, and the sende
 `$ mail -a short.hist.txt -r youremail@wherever.com  youremail@wherever.com`
 
 After entering the command, you will be prompted for a "Subject". Enter a short subject, 
-hit the **<kbd>Enter</kbd>** key, and then use **`ctrl-d`** to send the message. 
+hit the **<kbd>Enter</kbd>** key (there will be no prompt after 
+hitting <kbd>Enter</Kbd>), and then use **`ctrl-d`** to send the message. 
 After emailing the file to yourself, open your email and place the attached file 
 on your Desktop. 
 
@@ -312,35 +315,37 @@ K-mers represent a copy of all your sequencing data, broken into small fragments
 Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
 
 > This is useful because: 
-> 1. Assemblers can sometimes be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
+> 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
 > 2. You might not know anything about your genome size!
 > 
 > Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
-> was "10-fold", you could easily estimate your genome being sequenced 
+> was "10-fold", you could then estimate the size of your genome being sequenced 
 > was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
   
 To calculate "Total_Kmers", create a third column in your spreadsheet that multiplies 
-column 1 and column 2, and then sum all the numbers of the 3rd column. This is 
-(approximately) the total number of all your "good" K-mers.
+column 1 (position of K-mers) and column 2 (number of K-mers), and then sum 
+all the numbers of the 3rd column. This is 
+(approximately) the **total number** of all your "good" K-mers.
 
-Use the formula to estimate the genome size base on K-mer histogram: `______________` bp
+The formula estimates the genome size based on K-mer histogram: to be `________` bp.
 
-The `abyssk31.pbs.o<jobid>` is very useful. Find these information from the log file:
+The log file `abyssk31.pbs.o<jobid>` is very useful. Use the `less` command and search 
+through `abyssk31.pbs.o<jobid>` for "N50" to locate these information:
 
-contig stats: n50 `________` 
+**contig** stats: n50 `________` 
 
 max `_______`
 
 total `__________` (compare to the estimate based on K-mer)
 
-scaffold stats: n50 `________`  
+**scaffold** stats: n50 `________`  
 
 max `_______` 
 
 total `__________` 
 
 The results are always stored in the **current working directory** when using Abyss.
-When the output from ABYSS is complete, save the results and rename the output 
+When the output from Abyss is complete, save the results and rename the scaffold output 
 fasta file as we did for the other assemblers.
 
 `$ cp abyss31-scaffolds.fa ../../results/abyss31.fasta`
@@ -353,10 +358,12 @@ best! Try 21, and 25, for most assemblers. Most assemblers only use K-mer
 sizes that are odd numbers, so 24 won’t work. 
 
 Remember that Abyss outputs to the current working directory, so when 
-using Abyss, you should first create a new directory to work within:
+changing K-mer number in Abyss, you should first create a new directory 
+to work within.
 
 Start by going up into the `abyss` directory using `$ cd ..` and then 
-create new directories for each K-mer you will use.
+create new directories for each K-mer you will use. Then copy and simultaneously 
+rename the `abyssk31.pbs` submission script. To use a K-mer of 21 do this:
 
 ~~~
 $ pwd  
@@ -384,8 +391,8 @@ Remember to change the K-mer value to **25**. Save the file and submit.
 ~~~
 $ qsub abyssk25.pbs
 ~~~
-Whan it’s done, your output files will automatically have the new K-mer in their names! 
-Copy the result to your results folder.
+When the jobs are done, your output files will automatically have the new K-mer in their names! 
+Copy the results to your results folder.
 ~~~
 $ cd ..
 $ pwd  
