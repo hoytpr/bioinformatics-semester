@@ -14,9 +14,18 @@ By far the most widely used statistics for describing the quality of a genome as
 
 Another way to say this is the [N50 statistic](http://en.wikipedia.org/wiki/N50_statistic) is a metric of the length of a set of sequences. N50 is the contig length such that using equal or longer contigs produces half the bases.
 
+Think of it as the contig in the middle when all contigs are lined up by size. The size of that contig, is the N50 size.
+
 Maybe a figure will help. 
  
 ![N50]({{ site.baseurl }}/fig/N50.png)
+
+> We are using several pre-made `.pbs` submission scripts, so let's briefly review 
+> the structure of a submission script using the `velvetk21.pbs` we'll use later in 
+> this lesson as an example:
+>
+> ![Submission Scripts]({{ site.baseurl }}/fig/PBS-script-details.png)
+
 
 Now that we have completed several assemblies, let's look at our results. 
 ~~~
@@ -163,7 +172,6 @@ software on our example files. Some of these software are pipelines that
 include the software we have experiomented with today. 
 
 http://kmergenie.bx.psu.edu/  [“kmergenie”](http://kmergenie.bx.psu.edu/)
-See some slides here: http://ged.msu.edu/angus/tutorials-2013/files/2013-june-18-msu.pdf
 
 Another *de novo* assembly tutorial: [http://www.cbs.dtu.dk/courses/27626/Exercises/denovo_exercise.php](http://www.cbs.dtu.dk/courses/27626/Exercises/denovo_exercise.php)
 (uses quake & jellyfish)
