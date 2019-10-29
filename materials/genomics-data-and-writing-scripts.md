@@ -378,7 +378,7 @@ $ scp <remote cloud instance> <local file>
 
 #### Uploading Data to your remote computer with scp
 
-Open the terminal and use the `scp` command to upload a file (e.g. local_file.txt) to the remote home directory. 
+Open the terminal and use the `scp` command to upload a file (e.g. `local_file.txt`) to the remote home directory. 
 
 1. the cloud instance on AWS or Cyverse:
 ~~~
@@ -406,7 +406,7 @@ $ find ~ -name *.txt
 
 ### Cloud computer instructions are slightly different
 
-When we are on a cloud system like Cyverse, we would download the bad reads file in ~/shell_data/scripted_bad_reads.txt to our home ~/Download directory using the following command **(make sure you substitute your remote login credentials for "<username>@your-instance-number")**:
+When we are on a cloud system like Cyverse, we would download the bad reads file in ~/shell_data/scripted_bad_reads.txt to our home ~/Download directory using the following command **\(make sure you substitute your remote login credentials for "\<username\>@your-instance-number"\)**:
 
 ~~~
 $ scp <remote-username>@ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
@@ -440,7 +440,7 @@ go to your start menu/search enter the term **'cmd'**; you will be able to start
 > cd Downloads
 ~~~
 
-Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and <remote-username>)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute '<username>' with your actual computer username)**
+Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and \<remote-username\>)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute '\<username\>' with your actual computer username)**
 
 1. For the Cyverse cloud
 
