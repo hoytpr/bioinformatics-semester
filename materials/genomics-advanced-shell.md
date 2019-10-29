@@ -4,10 +4,10 @@ element: notes
 title: Advanced Shell
 language: Shell
 ---
-### Questions:
+### Review of Shell Accomplishments
+
 - How can I search within files?
 - How can I combine existing commands to do new things?
-### Objectives:
 - Employ the `grep` command to search for information within files.
 - Print the results of a command to a file.
 - Construct command pipelines with two or more stages.

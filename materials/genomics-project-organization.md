@@ -79,8 +79,8 @@ your local machine". For Windows users, this works, mostly, using the
 Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!    
 **Option C** might be available where you work using the University's supercomputers.     
 [**Option D**]({{ site.baseurl }}/materials/genomics-project-organization-optionD/#optionD) 
-is a great possibility, if the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
-cloud instance remains available.
+is a great option. Clicking this link will open a NEW Lesson on the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
+if the cloud instance remains available.
 
 ### Option A using AWS
 

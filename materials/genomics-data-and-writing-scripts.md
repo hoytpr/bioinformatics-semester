@@ -376,13 +376,13 @@ Then move it back by re-ordering the to and from fields:
 $ scp <remote cloud instance> <local file>
 ~~~
 
-#### Uploading Data to your Virtual Machine with scp
+#### Uploading Data to your remote computer with scp
 
 Open the terminal and use the `scp` command to upload a file (e.g. local_file.txt) to the remote home directory. 
 
 1. the cloud instance on AWS or Cyverse:
 ~~~
-$  scp local_file.txt dcuser@ip.address:/home/dcuser/
+$  scp local_file.txt <remote-username>@ip.address:/home/<remote-username>/
 ~~~
 
 2. For the Cowboy supercomputer
@@ -394,7 +394,7 @@ You may be asked to re-enter your password.  Then you should see the file name p
 to the screen. When you are back at your command prompt, switch to the Cowboy Terminal 
 and use `ls` to make sure the file README.txt is now in your home folder. 
 
-#### Downloading Data from a Virtual Machine with scp
+#### Downloading Data from a remote computer with scp
 
 Let's download a text file from our remote machine. You should have a file that contains bad reads called ~/shell_data/scripted_bad_reads.txt.
 
@@ -404,63 +404,69 @@ Let's download a text file from our remote machine. You should have a file that 
 $ find ~ -name *.txt
 ~~~
 
-### Cloud Computer Instructions
+### Cloud computer instructions are slightly different
 
-1. Download the bad reads file in ~/shell_data/scripted_bad_reads.txt to your home ~/Download directory using the following command **(make sure you substitute your remote login credentials for "dcuser@your-instance-number")**:
+When we are on a cloud system like Cyverse, we would download the bad reads file in ~/shell_data/scripted_bad_reads.txt to our home ~/Download directory using the following command **(make sure you substitute your remote login credentials for "<username>@your-instance-number")**:
 
 ~~~
-$ scp dcuser@ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
+$ scp <remote-username>@ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
 ~~~
 
-Remember that with both commands, they are run from your **local** machine, and we've flipped the order of the 'to' and 'from' parts of the command.
-These directions are platform specific so please follow the instructions for your system:
+Remember that with both commands, they are run from your **local** machine, and 
+we can flip the order of the 'to' and 'from' parts of the command.
+These directions ***are platform specific*** so please follow the instructions for your system:
 
+<!--
 NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
+-->
 
-**Please select the platform you wish to use for the exercises: <select id="id_platform" name="platformlist" onchange="change_content_by_platform('id_platform');return false;"><option value="aws_unix" id="id_aws_unix" selected> AWS_UNIX </option><option value="aws_win" id="id_aws_win" selected> AWS_Windows </option></select>**
+### Windows: Uploading Data to your remote computer with PSCP
 
-<div id="div_aws_win" style="display:block" markdown="1">
-
-### Uploading Data to your Virtual Machine with PSCP
-
-If you're using a PC, we recommend you use the *PSCP* program. This program is from the same suite of
+If you're using a PC, we recommend you use the *PSCP* program. 
+This program is from the same suite of
 tools as the putty program we have been using to connect.
+(It usually works)
 
 1. If you haven't done so, download pscp from [http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe](http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe)
 2. Make sure the *PSCP* program is somewhere you know on your computer. In this case,
 your Downloads folder is appropriate.
 3. Open the windows [PowerShell](https://en.wikipedia.org/wiki/Windows_PowerShell);
 go to your start menu/search enter the term **'cmd'**; you will be able to start the shell
-(the shell should start from C:\Users\your-pc-username>).
+(the shell should start from C:\Users\<username>).
 4. Change to the download directory
 
 ~~~
 > cd Downloads
 ~~~
 
-5. Locate a file on your computer that you wish to upload (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and login credentials)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute 'your-username' for your actual pc username)**
+Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and <remote-username>)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute '<username>' with your actual computer username)**
+
+1. For the Cyverse cloud
 
 ~~~
-C:\User\your-username\Downloads> pscp.exe local_file.txt dcuser@EC-number-ip.address:/home/dcuser/
+C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
+~~~
+
+2. For Cowboy
+
+~~~
+C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/
 ~~~
 
 ### Downloading Data from your Virtual Machine with PSCP
 
-1. Follow the instructions in the Upload section to download (if needed) and access the *PSCP* program (steps 1-3)
-2. Download the text file using the following command **(make sure you use substitute 'your-pc-username' for your actual pc username and dcuser@ip.address with your remote login credentials)**
+1. For the Cyverse cloud
 
 ~~~
-C:\User\your-pc-username\Downloads> pscp.exe dcuser@EC-number-ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
-
-C:\User\your-pc-username\Downloads
+C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
 ~~~
 
-</div>
+2. For Cowboy
 
-
-
-<div id="div_aws_unix" style="display:block" markdown="1">
+~~~
+C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
+~~~
 
 ### Keypoints:
 - Scripts are a collection of commands executed together.

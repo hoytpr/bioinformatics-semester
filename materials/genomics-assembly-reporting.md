@@ -195,9 +195,9 @@ This is probably a good idea
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
 re-align their own best assemblies using even more (different) software. To try this
 and to show you quickly some additional bioinformatics software, enter the 
-commands below, but change the filename (`abyss31.fasta`) to your **best** assembly
-and run **`nucmer`**.
-
+commands below, but change the filename (`abyss31.fasta`) to your **best** assembly. 
+Also remember to change your groupnumber (or this won't work)!!! Then run **`nucmer`**.
+If you don't know your best assembly yet, try using abyss31.fasta:
 (Note: make sure module `bio_apps` is available)
 ~~~
 $ cd ../
@@ -206,11 +206,18 @@ $ cd nucmer
 $ module load bio_apps
 $ nucmer ../results/abyss31.fasta ../data/group1/ref.fasta
 ~~~
-Visualize your `nucmer` assembly in dot plot using the software `mummerplot`.
+"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html)which claims to be the most [user-friendly] (http://mummer.sourceforge.net/manual/)
+alignment script for standard DNA sequence alignment. NUCmer uses a three step 
+process - maximal exact matching, match clustering, and alignment extension. 
+(But you don't have to learn that for now!) The output of NUCmer is a simple 
+positional chart. You can visualize your `nucmer` 
+assembly as a dot plot using the software `mummerplot`.
 ~~~
 $ mummerplot out.delta --postscript --layout
 ~~~
-When `mmummerplot` is done, convert the plot from "postscript" to "PDF":
+But, as you might have guessed, the output of `mummerplot` is a postscript file. 
+When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
+using a shell command:
 ~~~
 $ ps2pdf out.ps
 ~~~
@@ -220,7 +227,7 @@ $ mail -a out.pdf -r <youremailaddress> <youremailaddress>
 ~~~
 (remember to hit `ctrl-d` to send)
 
-Repeat the above procedure on the **worst** assembly.  How different is it from your best assembly? 
+Repeat the above procedure on the **worst** assembly (has the most misassembled contigs).  How different is it from your best assembly? 
 
 - best assembly N50 from `nucmer`: `____________________`
 - worst assembly N50 from `nucmer`: `____________________`
