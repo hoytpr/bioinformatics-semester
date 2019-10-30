@@ -322,16 +322,17 @@ The first few columns represent the information we have about a ***predicted var
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
 | FILTER | a `.` if no quality filters have been applied, PASS if a filter is passed, or the name of the filters this variant failed | 
+| INFO | annotations contained in the INFO field are represented as tag-value pairs.  They typically summarize context information from the sample |
 
 In an ideal world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
 However, in reality we need to continue filtering on multiple other metrics. 
 
 The last two columns contain the ***genotypes*** and can be tricky to decode. 
 
-| column | info |
+| column | definition |
 | ------- | ---------- |
-| FORMAT | lists in order the metrics presented in the final column | 
-| results | lists the values associated with those metrics in order | 
+| FORMAT | The short names of the sample-level annotations in the order of the metrics presented in the final column | 
+| results | lists the values associated with those metrics in order to determine if a variant is real or not | 
 
 For our file, the metrics presented are **GT:PL:GQ**. 
 

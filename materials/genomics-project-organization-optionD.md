@@ -85,11 +85,14 @@ Once the instance says "Active" with a bright green DOT,
 you are good to proceed.  
 
 Click on the instance name and you should see a GUI with an option 
-to "Open web shell" near the top-right. Click on "Open web shell". 
+to "Open web shell" near the top-right. This can be hidden from view if your browser is
+not set to "full-screen" mode. Click on "Open web shell". 
 
-This will put you inside a Terminal window (you will use the terminal from your browser), 
+This will put you inside a Terminal window (In this case you are actually using the terminal 
+from your inside your browser window!), 
 BUT (and this is important!), you will still need to connect to the Workshop 
-because it is a ["Docker image"](https://docs.docker.com/engine/reference/commandline/image/) (we won't be discussing these for a while).
+because it is a ["Docker image"](https://docs.docker.com/engine/reference/commandline/image/) (we won't be discussing these for a while,
+but it's slightly similar to a virtual machine... if you are familiar with those).
 
 To connect to the Workshop Docker image, use ssh as if it was a new computer, by entering the command 
 `ssh dcuser@127.0.0.1 -p 21 (password: data4Carp)`. 
