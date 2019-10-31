@@ -13,13 +13,53 @@ language: Shell
 - Use `chmod` to make a script an executable program.
 - Start working with remote computer systems
 
+### Moving to a bigger BASH
+
+IMPORTANT! Leave your Cowboy login window open! Don't touch it.
+
+Now open ***another*** terminal window (Windows users who run Putty, can go back to Gitbash). 
+
+We want to take what we've been learning, and move to the next level, so let's do exactly that! 
+Make sure you are on your Desktop by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder
+
+~~~
+$ cd
+$ cd ..
+$ ls shell_data
+sra_metadata   untrimmed_fastq
+~~~
+ We are going to move our entire `shell_data` file hierachy onto Cowboy. But before we move `shell_data` to Cowboy, we should compress it into a single file that is small and complete. This takes the command `tar`. From your Desktop directory type:
+ 
+ ```
+ $ tar -zcvf shelldata.tar.gz shell_data/
+ ```
+This will create a file named `shelldata.tar.gz` on your desktop!
+Now we need to upload `shelldata.tar.gz` to our Cowboy (scratch) home directory. 
+To do this, while still in your Desktop directory type:
+~~~
+$ scp shelldata.tar.gz <username>@cowboy.hpc.okstate.edu:/scratch/<username>/
+~~~
+
+You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
+will be uploaded. Finally we want to decompress the directories so they are exactly 
+the same as we had on our local computer. To do this in your Cowboy login window 
+(the terminal we told you to leave open) please type:
+```
+$ tar -zxvf shelldata.tar.gz
+$ ls shell_data
+sra_metadata   untrimmed_fastq
+```
+
+We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`
+
 ### Writing files review
+We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files.
+We've used a lot of files that already exist, but what if we want to write our own files?
+As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files.
 
-We've been able to do a lot of work with files that already exist, but what if we want to write our own files. We're not going to type in a FASTA file, but we'll see as we go through other tutorials, there are a lot of reasons we'll want to write a file, or edit an existing file.
+To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
 
-To add text to files, we're going to use a text editor called Nano. We're going to create a file to take notes about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
-
-This is good practice when working in bioinformatics. We can create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory.
+This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
 
 Let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
 then run `nano` to create a file called `README.txt`:
@@ -37,7 +77,7 @@ You should see something like this:
 
 The text at the bottom of the screen shows the keyboard shortcuts for performing various tasks in `nano`. We will talk more about how to interpret this information soon.
 
--->
+
 
 > #### Which Editor?
 >
@@ -100,6 +140,8 @@ Now you've written a file. You can take a look at it with `less` or `cat`, or op
 > > Use `nano README.txt` to open the file.  
 > > Add today's date and then use <kbd>Ctrl</kbd>-<kbd>X</kbd> to exit and `y` to save.
 > >
+
+-->
 
 ### Writing scripts
 
@@ -175,18 +217,16 @@ file can be executed as a program.
 We use the command `chmod` to change permissions for any file or directory. 
 Here we are adding (`+`) executable permissions (`+x`).
 
-> #### Windows Users: LEARN THIS! 
-> **This doesn't work in the GitBash terminal on your laptop, but *will* work when you
-> log onto a remote system! (Even when using Gitbash!)**
-> 
-> These commands work when you are using 
-> a real Unix environment, including Macs. However, Windows systems, even when running 
-> a Bash shell program cannot use `chmod`. This is because Windows, defines permissions 
+> #### Windows Users: FYI about `chmod`! 
+> `chmod` *will* work when you 
+> are logged onto (or SSH to) a remote system like Cowboy!
+> But **doesn't work in the GitBash terminal on your laptop**
+<!--
+> Windows, defines permissions 
 > by [access control lists](https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists), or ACLs. An ACL is a paired list of a “who” with a “what”. 
-> For example, you could give a collaborator (who) permission 
-> to append data to a file (what) without giving them permission to delete it. We will not address 
-> these issues today, but we WILL say that Windows users **can execute scripts locally** because the 
+> Nonetheless, Windows users **can execute scripts locally** because the 
 > operating system interprets whether the *contents* of the file are executable or not.  
+-->
 
 To add "execute" permissions to a script use:
 ~~~
@@ -215,13 +255,10 @@ $ ./bad-reads-script.sh
 
 The script should run the same way as before, but now we've created our very own computer program!
 
-### Log on to a Remote System
+### Another way to log on to a Remote System
 
-To continue this lesson, we want to connect to a remote system.
-We can use a remote cloud instance or here at OSU we can use Cowboy.
-To log on to Cowboy, start a NEW and SEPARATE terminal window.
-
-Once the new terminal is open, connect to Cowboy using the command:
+If we want to connect to a remote system and we are already in a bash terminal, 
+We can use the command `ssh` to connect to another remote system. For example, In your Gitbash window (Windows users) or your old local bash window (Macs/Unix) you can type:
 `ssh <username>@cowboy.hpc.okstate.edu`
 
 If you see a warning about the computer not being known, type "yes" to accept the computer.
@@ -236,14 +273,9 @@ Welcome to Cowboy!
 ```
 
 **Congratulations!** You have used the command-line interface to
-connect to a remote supercomputer! This is a big step forward when 
-working in genomics!
+connect to a remote supercomputer, and now have two active connections!! 
+This is a big step forward when working in genomics!
 
-You should be in your "home" directory. Because all the commands we have learned so far work exactly the same on Cowboy, you can confirm you are in your home directory by typing:
-```
-pwd
-/home/phoyt
-```
 ### Pause for a moment
 
 Now your training takes on new power! While we had fun learning commands and working 
@@ -336,28 +368,24 @@ download the page instead of showing it to us **and** specifies that it should s
 file using the **O**riginal name it had on the server: `species_EnsemblBacteria.txt`
 
 It's important to note that both ``curl`` and ``wget`` download to the computer that the
-**command line belongs to**. So, if you are logged into AWS on the command line and execute
-the ``curl`` command above in the AWS terminal, the file will be downloaded to your AWS
+**command line belongs to**. So, if you are logged into a remote cloud on the command line and execute
+the ``curl`` command above in the cloud's terminal, the file will be downloaded to your remote
 machine, not your local one.
 
-### Using Multiple Terminal Windows!
-
-Now for something different! Without closing local terminal window, you should open a NEW terminal window. This terminal window will be your LOCAL terminal, and the window connected to Cowboy or the cloud, will be your REMOTE terminal. Opening multiple terminals is very common and is supported on Macs, and Windows GitBash, as well as most Unix-like operating systems. 
-
-### Moving files between your laptop and your supercomputer or cloud instance
+### Moving files with SCP or PSCP
 
 What if the data you need is on your local computer, but you need to get it *into* the
 cloud? There are also several ways to do this, but it's *always* easier
-to start the transfer locally. **Important: The terminal you are typing in
-should be your *local computer terminal* (not one on your remote system). If you're
-using a transfer program, use the one installed on your local machine, not your instance.**
+to start the transfer locally. **Important**: For this exercise the terminal you are typing in
+should be your *local computer terminal* (not one logged into your remote system). If you're
+using a transfer program, use the one installed on your local machine, not your instance.
 
 ### Transferring Data Between your Local Machine and the Cloud
 ### scp
 
 `scp` stands for 'secure copy protocol', and is a widely used UNIX tool for moving files
-between computers. The simplest way to use `scp` is to run it in your local terminal,
-and use it to copy a single file:
+between computers and should be installed already. The simplest way to use `scp` 
+is to run it in your local terminal, and use it to copy a single file:
 
 ~~~
 scp <file I want to move> <where I want to move it>
@@ -380,19 +408,22 @@ $ scp <remote cloud instance> <local file>
 
 Open the terminal and use the `scp` command to upload a file (e.g. `local_file.txt`) to the remote home directory. 
 
-1. the cloud instance on AWS or Cyverse:
+1. the cloud instance on Cyverse:
 ~~~
 $  scp local_file.txt <remote-username>@ip.address:/home/<remote-username>/
 ~~~
-
-2. For the Cowboy supercomputer
+2. AWS
+~~~
+$  scp local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
+~~~
+3. For the Cowboy supercomputer
 ~~~
 $  scp local_file.txt <username>@cowboy.hpc.okstate.edu:/home/<username>/
 ~~~
 
 You may be asked to re-enter your password.  Then you should see the file name printed 
 to the screen. When you are back at your command prompt, switch to the Cowboy Terminal 
-and use `ls` to make sure the file README.txt is now in your home folder. 
+and use `ls` to make sure the file `local_file.txt` is now in your home folder. 
 
 #### Downloading Data from a remote computer with scp
 
@@ -404,13 +435,19 @@ Let's download a text file from our remote machine. You should have a file that 
 $ find ~ -name *.txt
 ~~~
 
-### Cloud computer instructions are slightly different
+### Cloud computer instructions can be slightly different
 
-When we are on a cloud system like Cyverse, we would download the bad reads file in ~/shell_data/scripted_bad_reads.txt to our home ~/Download directory using the following command **\(make sure you substitute your remote login credentials for "\<username\>@your-instance-number"\)**:
+When we are on a cloud system like Cyverse, we would download the bad reads file in `~/shell_data/scripted_bad_reads.txt` to our home `~/Download` directory using the following command **\(make sure you substitute your remote login credentials for "\<username\>@remote-IP-address"\)**:
 
+1. Cyverse
 ~~~
 $ scp <remote-username>@ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
 ~~~
+2. AWS
+~~~
+$ scp <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
+~~~
+
 
 Remember that with both commands, they are run from your **local** machine, and 
 we can flip the order of the 'to' and 'from' parts of the command.
@@ -421,9 +458,9 @@ NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
 -->
 
-### Windows: Uploading Data to your remote computer with PSCP
+### Windows Only: Uploading Data to your remote computer with PSCP
 
-If you're using a PC, we recommend you use the *PSCP* program. 
+If you're using a PC, you may also have installed the *PSCP* program. 
 This program is from the same suite of
 tools as the putty program we have been using to connect.
 (It usually works)
