@@ -331,7 +331,7 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The short names of the sample-level annotations in the order of the metrics presented in the final column | 
+| FORMAT | The metrics (short names) of the sample-level annotations presented in order | 
 | results | lists the values associated with those metrics in order to determine if a variant is real or not | 
 
 For our file, the metrics presented are **GT:PL:GQ**. 
@@ -341,7 +341,6 @@ For our file, the metrics presented are **GT:PL:GQ**.
 | GT | the genotype of this sample which for a diploid genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. For a diploid organism, the GT field indicates the two alleles carried by the sample, encoded by a 0 for the REF allele, 1 for the first ALT allele, 2 for the second ALT allele, etc. |
 | PL | the likelihoods of the given genotypes |
 | GQ | the Phred-scaled confidence for the genotype | 
-| AD, DP | the depth per allele by sample and coverage |
 
 The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place
 to learn more about VCF file format.
