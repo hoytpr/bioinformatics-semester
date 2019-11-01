@@ -372,7 +372,7 @@ It's important to note that both ``curl`` and ``wget`` download to the computer 
 the ``curl`` command above in the cloud's terminal, the file will be downloaded to your remote
 machine, not your local one.
 
-### Moving files with SCP or PSCP
+### Transferring Data Between your Local Machine and the Cloud
 
 What if the data you need is on your local computer, but you need to get it *into* the
 cloud? There are also several ways to do this, but it's *always* easier
@@ -380,8 +380,7 @@ to start the transfer locally. **Important**: For this exercise the terminal you
 should be your *local computer terminal* (not one logged into your remote system). If you're
 using a transfer program, use the one installed on your local machine, not your instance.
 
-### Transferring Data Between your Local Machine and the Cloud
-### scp
+#### Moving files with SCP or PSCP
 
 `scp` stands for 'secure copy protocol', and is a widely used UNIX tool for moving files
 between computers and should be installed already. The simplest way to use `scp` 
@@ -435,9 +434,9 @@ Let's download a text file from our remote machine. You should have a file that 
 $ find ~ -name *.txt
 ~~~
 
-### Cloud computer instructions can be slightly different
+#### Cloud computer instructions can be slightly different
 
-When we are on a cloud system like Cyverse, we would download the bad reads file in `~/shell_data/scripted_bad_reads.txt` to our home `~/Download` directory using the following command **\(make sure you substitute your remote login credentials for "\<username\>@remote-IP-address"\)**:
+When we are on a cloud system like Cyverse, we would download the bad reads file in `~/shell_data/scripted_bad_reads.txt` to our home `~/Download` directory using the following command (make sure you substitute your remote login credentials for "\<username\>@remote-IP-address"):
 
 1. Cyverse
 ~~~
@@ -458,7 +457,7 @@ NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
 -->
 
-### Windows Only: Uploading Data to your remote computer with PSCP
+#### Windows Only: Uploading Data to your remote computer with PSCP
 
 If you're using a PC, you may also have installed the *PSCP* program. 
 This program is from the same suite of
@@ -477,9 +476,9 @@ go to your start menu/search enter the term **'cmd'**; you will be able to start
 > cd Downloads
 ~~~
 
-Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and \<remote-username\>)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute '\<username\>' with your actual computer username)**
+Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address (or instance number for AWS), and \<remote-username\>)**. You will be prompted to enter a password, and then your upload will begin. (make sure you use substitute '\<username\>' with your actual computer username)
 
-1. For the Cyverse cloud
+1. For the AWS cloud (@EC--- is the "instance" number)
 
 ~~~
 C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
@@ -491,9 +490,9 @@ C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-numbe
 C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/
 ~~~
 
-### Downloading Data from your Virtual Machine with PSCP
+#### Downloading Data from your Virtual Machine with PSCP
 
-1. For the Cyverse cloud
+1. For the AWS cloud
 
 ~~~
 C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
