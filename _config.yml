@@ -22,3 +22,5 @@ author:
 github:
   repo:           https://hoytpr.github.io/bioinformatics-semester/
   #               Be sure the 'Issues' feature is activated in 'Settings'
+exclude:
+  - bin/
