@@ -123,7 +123,7 @@ Might want to put an image of paired-end-sequencing here
 -->
 
 While the files are downloading, notice these sequence files are in pairs. Each pair has
-the same prefix or "samplename" followed by a "1" or a "2". These are called "Paired-end"
+the same prefix or "samplename" followed by a "1" or a "2". These are called "paired-end"
 sequence files. The file with a "1" is called the "Read1" file, and the file with the "2" is called the "Read2" file. 
 There **must** be the same number of reads in each of the paired read files. We can check this later.
 The data comes in a compressed format ("gnu-zip"), which is why there is a `.gz` at the end of the file names. 
@@ -188,7 +188,8 @@ Each *character* is assigned a quality score between 0 and 41 as shown in the ch
 ~~~
 Quality character encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJ
                             |         |         |         |         |
-Quality score:              0........10........20........30........40 (41 = Better than 40)                               
+Quality score:              0........10........20........30........40 
+("J" = 41 = Better than 40)                               
 ~~~
 {: .output}
 
@@ -397,13 +398,13 @@ Now we can transfer our HTML files to our local computer using `scp`.
 For AWS:
 
 ~~~
-$ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
+$ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 For Cowboy:
 
 ~~~
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 As a reminder, the first part
@@ -462,7 +463,7 @@ We've now looked at quite a few "Per base sequence quality" FastQC graphs, but t
 ## Working with the FastQC text output
 
 Now that we've looked at our HTML reports to get a feel for the data,
-let's look more closely at the other output files. Go back to the terminal 
+let's look more closely at the other output files. **Go back** to the terminal 
 program that is connected to Cowboy or your cloud instance
 and make sure you're in
 our results subdirectory.   
@@ -632,6 +633,6 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 > If *you* type `>` or `$` yourself, it is an instruction from you that
 > the shell to redirect output or get the value of a variable.
 
-Go to [Trimming and Filtering Reads]({{site.baseurl }}/materials/trimming-and-filtering)
+Our next lesson is [Genomics Trimming and Filtering Reads]({{site.baseurl }}/materials/genomics-trimming-and-filtering)
 
 Acknowlegments: See [contributors here](https://github.com/datacarpentry/wrangling-genomics/blob/gh-pages/_episodes/02-quality-control.md).

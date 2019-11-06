@@ -46,11 +46,50 @@ Usage:
        -version
 ~~~
 
+### Interpreting Usage Instructions
+
+Usage instructions are sometimes hard to read (the lines can wrap around), and they without careful
+inspection, your commands don't work. When first using software, you should take time to look at all
+the usage options. Sometimes it helps to break them down on separate lines where you can assign them
+the values you want, before combining them into a single line command. 
+After typing the command `trimmomatic` the next arguments are:
+
+~~~
+PE 
+[-version] 
+[-threads <threads>] 
+[-phred33|-phred64] 
+[-trimlog <trimLogFile>] 
+[-summary <statsSummaryFile>] 
+[-quiet] 
+[-validatePairs] 
+[-basein <inputBase> | <inputFile1> <inputFile2>] 
+[-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] 
+<trimmer1>
+...
+~~~
+ For single-end read files:
+~~~
+ SE 
+ [-version] 
+ [-threads <threads>] 
+ [-phred33|-phred64] 
+ [-trimlog <trimLogFile>] 
+ [-summary <statsSummaryFile>] 
+ [-quiet] 
+ <inputFile> 
+ <outputFile> 
+ <trimmer1>
+ ...
+~~~
+
 This output shows us that we must first specify whether we have paired end (`PE`) or single end (`SE`) reads.
-Next, we specify what flag we would like to run. For example, you can specify `threads` to indicate the number
-processors on your computer that you want Trimmomatic to use. These flags are not necessary, but they can give
-you more control over the command. The flags are followed by positional arguments, meaning the order in which you 
-specify them is important. In paired end mode, Trimmomatic expects the two input files, and then the names of the
+After this you can specify a specific version of the Trimmomatic software to use (e.g. `-version 0.36`).
+Next, we specify what flag(s) we would like to run. For example, you can specify `threads` to indicate the number
+processors on your computer that you want Trimmomatic to use. Flags like `-version` and `-threads` 
+are not always necessary, but they can give
+you more control over the command. These flags are followed by **positional arguments**, meaning the order in which you 
+specify them is important. In **paired end mode**, Trimmomatic expects the two input files, and then the names of the
 output files. These files are described below.
 
 | option    | meaning |
@@ -62,7 +101,7 @@ output files. These files are described below.
 |  \<outputFile2P> | Output file that contains surviving pairs from the `_2` file.|
 |  \<outputFile2U> | Output file that contains orphaned reads from the `_2` file.|
 
-The last thing trimmomatic expects to see is the trimming parameters:
+The last things Trimmomatic expects are the steps of the trimming parameters:
 
 | step   | meaning |
 | ------- | ---------- |
@@ -77,8 +116,8 @@ The last thing trimmomatic expects to see is the trimming parameters:
 |  `TOPHRED64` |  Convert quality scores to Phred-64. |
 
 We will use only a few of these options and trimming steps in our
-analysis. It is important to understand the steps you are using to
-clean your data. For more information about the Trimmomatic arguments
+analysis. ***It is important to understand the steps you are using to
+clean your data***. For more information about the Trimmomatic arguments
 and options, see [the Trimmomatic manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf).
 
 However, a complete command for Trimmomatic will look something like the command below. This command is an example and will not work as we do not have the files it refers to:
@@ -105,6 +144,14 @@ In this example, we've told Trimmomatic:
 | `ILLUMINACLIP:SRR_adapters.fa`| to clip the Illumina adapters from the input file using the adapter sequences listed in `SRR_adapters.fa` |
 |`SLIDINGWINDOW:4:20` | to use a sliding window of size 4 that will remove bases if their phred score is below 20 |
 
+#### Orphaned vs. Survivor Reads
+
+Remember that in paired-end sequencing, each read in the R1 file, must have a corresponding read in 
+the R2 file. When Trimmomatic trims reads, it will remove (bad) reads as directed, which can 
+leave a read in one file without a corresponding read in the other file. When this happens, the read 
+that lost it's (bad) corresponding read, will be moved to the orphaned or "un-trimmed" fastq file, with the 
+same name prefix. These orphaned reads can sometimes be used as "single-end" reads. 
+
 ## Running Trimmomatic
 
 Now we will run Trimmomatic on our data. To begin, navigate to your `untrimmed_fastq` data directory:
@@ -117,6 +164,16 @@ We are going to run Trimmomatic on one of our paired-end samples.
 We saw using FastQC that Nextera adapters were present in our samples. 
 The adapter sequences came with the installation of trimmomatic, so we will first copy these sequences into our current directory.
 
+On Cowboy the command is:
+
+`$cp /scratch/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
+
+or to pull the read from The Data Carpentry site use:
+
+`curl -O https://github.com/datacarpentry/wrangling-genomics/tree/gh-pages/files/NexteraPE-PE.fa`
+
+From the dc-genomics AWS cloud use:
+
 ~~~
 $ cp ~/.miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/NexteraPE-PE.fa .
 ~~~
@@ -124,7 +181,7 @@ $ cp ~/.miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/Nex
 We will also use a sliding window of size 4 that will remove bases if their
 phred score is below 20 (like in our example above). We will also
 discard any reads that do not have at least 25 bases remaining after
-this trimming step. This command will take a few minutes to run.
+this trimming step. If using the Cowboy computer, make sure you are using a "captured" node to work interactively. This command will take a few minutes to run.
 
 ~~~
 $ trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
@@ -155,7 +212,7 @@ You may have noticed that Trimmomatic automatically detected the
 quality encoding of our sample. It is always a good idea to
 double-check this or to enter the quality encoding manually.
 
-We can confirm that we have our output file:
+We can confirm that we have our output files:
 
 ~~~
 $ ls SRR2589044*
@@ -210,9 +267,18 @@ $ for infile in *_1.fastq.gz
 > done
 ~~~
 
-Go ahead and run the for loop. It should take a few minutes for
+Go ahead and run the for loop. Remember when working on Cowboy, we have to capture the node we are working with using `qsub -I`.
+It should take a few minutes for
 Trimmomatic to run for each of our six input files. Once it's done
 running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we matched the ending `_1.fastq.gz`, we re-ran Trimmomatic on this file, overwriting our first results. That's ok, but it's good to be aware that it happened.
+
+> #### Bonus: Running a loop submission script
+>
+>What if we don't have a "captured" node on our supercomputer, and need to use submission script? How would we run a loop in a submission script? 
+>An answer is on the bonus page: [Running Loops for submissions]({{ site.baseurl }}/materials/extras/loops-and-submissions)
+
+<a name="trimout"></a>
+Now let's look at our Trimmomatic outputs.
 
 ~~~
 $ ls
