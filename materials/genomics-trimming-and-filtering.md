@@ -48,7 +48,7 @@ Usage:
 
 ### Interpreting Usage Instructions
 
-Usage instructions are sometimes hard to read (the lines can wrap around), and they without careful
+Usage instructions are sometimes hard to read (the lines can wrap around), and without careful
 inspection, your commands don't work. When first using software, you should take time to look at all
 the usage options. Sometimes it helps to break them down on separate lines where you can assign them
 the values you want, before combining them into a single line command. 
