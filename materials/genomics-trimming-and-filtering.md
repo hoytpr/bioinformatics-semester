@@ -30,11 +30,11 @@ filter poor quality reads and trim poor quality bases from our samples.
 ## Trimmomatic Options
 
 Trimmomatic has a variety of options to trim your reads. If we run the command, we can see some of our options.
+(NOTE: Options display doesn't work on the Cowboy supercomputer)
 
 ~~~
 $ trimmomatic
 ~~~
-
 
 Which will give you the following output:
 ~~~
@@ -48,11 +48,11 @@ Usage:
 
 ### Interpreting Usage Instructions
 
-Usage instructions are sometimes hard to read (the lines can wrap around), and without careful
-inspection, your commands don't work. When first using software, you should take time to look at all
+Usage instructions are sometimes hard to read (the lines can wrap around), so careful
+inspection is needed to be sure your commands work. When first using software, you should take time to look at all
 the usage options. Sometimes it helps to break them down on separate lines where you can assign them
 the values you want, before combining them into a single line command. 
-After typing the command `trimmomatic` the next arguments are:
+Here's an example: For the command `trimmomatic` the next arguments are:
 
 ~~~
 PE 
@@ -109,7 +109,7 @@ The last things Trimmomatic expects are the steps of the trimming parameters:
 | `SLIDINGWINDOW` | Perform sliding window trimming, cutting once the average quality within the window falls below a threshold. |
 | `LEADING`  | Cut bases off the start of a read, if below a threshold quality.  |
 |  `TRAILING` |  Cut bases off the end of a read, if below a threshold quality. |
-| `CROP`  |  Cut the read to a specified length. |
+| `CROP`  |  Cut the read to a specified length from the end. |
 |  `HEADCROP` |  Cut the specified number of bases from the start of the read. |
 | `MINLEN`  |  Drop an entire read if it is below a specified length. |
 |  `TOPHRED33` | Convert quality scores to Phred-33.  |
@@ -126,7 +126,7 @@ However, a complete command for Trimmomatic will look something like the command
 $ trimmomatic PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq  \
               SRR_1056_1.trimmed.fastq SRR_1056_1un.trimmed.fastq \
               SRR_1056_2.trimmed.fastq SRR_1056_2un.trimmed.fastq \
-              ILLUMINACLIP:SRR_adapters.fa SLIDINGWINDOW:4:20
+              ILLUMINACLIP:NexteraPR-PE.fa SLIDINGWINDOW:4:20
 ~~~
 
 In this example, we've told Trimmomatic:
@@ -141,7 +141,7 @@ In this example, we've told Trimmomatic:
 | `SRR_1056_1un.trimmed.fastq` | the output file for orphaned reads from the `_1` file |
 | `SRR_1056_2.trimmed.fastq` | the output file for surviving pairs from the `_2` file |
 | `SRR_1056_2un.trimmed.fastq` | the output file for orphaned reads from the `_2` file |
-| `ILLUMINACLIP:SRR_adapters.fa`| to clip the Illumina adapters from the input file using the adapter sequences listed in `SRR_adapters.fa` |
+| `ILLUMINACLIP:NexteraPR-PE.fa`| to clip the Illumina adapters from the input file using the adapter sequences listed in `NexteraPR-PE.fa` |
 |`SLIDINGWINDOW:4:20` | to use a sliding window of size 4 that will remove bases if their phred score is below 20 |
 
 #### Orphaned vs. Survivor Reads
