@@ -181,15 +181,32 @@ $ cp ~/.miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/Nex
 We will also use a sliding window of size 4 that will remove bases if their
 phred score is below 20 (like in our example above). We will also
 discard any reads that do not have at least 25 bases remaining after
-this trimming step. If using the Cowboy computer, make sure you are using a "captured" node to work interactively. This command will take a few minutes to run.
+this trimming step. If using the Cowboy computer, use the submission script shown below, or 
+make sure you are using a "captured" node to work interactively. This command will take a few minutes to run.
 
+The PBS script looks like this:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load trimmomatic
+trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
+                SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
+                SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
+                SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
+~~~
+The interactive command looks like this:
 ~~~
 $ trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
                 SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
                 SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
                 SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
 ~~~
-
+The interactive output looks like this:
 
 ~~~
 TrimmomaticPE: Started with arguments:
@@ -267,10 +284,26 @@ $ for infile in *_1.fastq.gz
 > done
 ~~~
 
-Go ahead and run the for loop. Remember when working on Cowboy, we have to capture the node we are working with using `qsub -I`.
+Go ahead and run the for loop. Remember when working on Cowboy, we have to capture the 
+node we are working with using `qsub -I`. 
+Withuout a captured node, the commandline on a submission script looks like this:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load trimmomatic
+for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); trimmomatic PE ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
+~~~
+
 It should take a few minutes for
 Trimmomatic to run for each of our six input files. Once it's done
 running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we matched the ending `_1.fastq.gz`, we re-ran Trimmomatic on this file, overwriting our first results. That's ok, but it's good to be aware that it happened.
+
+<!--
 
 > #### Bonus: Running a loop submission script
 >
@@ -278,6 +311,9 @@ running, take a look at your directory contents. You'll notice that even though 
 >An answer is on the bonus page: [Running Loops for submissions]({{ site.baseurl }}/materials/extras/loops-and-submissions)
 
 <a name="trimout"></a>
+
+-->
+
 Now let's look at our Trimmomatic outputs.
 
 ~~~

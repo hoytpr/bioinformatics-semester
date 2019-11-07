@@ -106,7 +106,7 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fa
 
 > #### Faster option
 > 
-> If we are working with with a pre-made image or if your workshop is short on time or the 
+> If we are working with a pre-made image or if your workshop is short on time or the 
 > venue's internet connection is weak or unstable, learners can 
 > avoid needing to download the data and instead use the data files provided in a `.backup/` directory.
 > 
@@ -169,7 +169,7 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
 
-(NOTE if the above  looks like 6 (or 8) lines, it is because Line 2 and Line 4 (and potentially Line 3) have "wrapped" around on your computer screen) Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
+(NOTE if the above looks like 6 (or 8) lines, it is because Line 2 and Line 4 (and potentially Line 3) have "wrapped" around on your computer screen) Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
 probability of an incorrect base call (e.g. 1 in 10) or, equivalently, the base call 
 accuracy (e.g. 90%). To make it possible to line up each individual nucleotide with its quality
 score, the numerical score is converted into a ***character*** code where each individual *character* 
@@ -457,7 +457,7 @@ We've now looked at quite a few "Per base sequence quality" FastQC graphs, but t
 + [**Sequence Length Distribution**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html): the distribution of sequence lengths of all reads in the file. If the data is raw, there is often on sharp peak, however if the reads have been trimmed, there may be a distribution of shorter lengths. 
 + [**Sequence Duplication Levels**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html): A distribution of duplicated sequences. In sequencing, we expect most reads to only occur once. If some sequences are occurring more than once, it might indicate enrichment bias (e.g. from PCR). If the samples are high coverage (or RNA-seq or amplicon), this might not be true.  
 + [**Overrepresented sequences**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html): A list of sequences that occur more frequently than would be expected by chance. 
-+ [**Adapter Content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html): a graph indicating where adapater sequences occur in the reads.
++ [**Adapter Content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html): a graph indicating where adapter sequences occur in the reads.
 + [**K-mer Content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/11%20Kmer%20Content.html): a graph showing any sequences which may show a positional bias within the reads.
 
 ## Working with the FastQC text output
@@ -635,4 +635,4 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 
 Our next lesson is [Genomics Trimming and Filtering Reads]({{site.baseurl }}/materials/genomics-trimming-and-filtering)
 
-Acknowlegments: See [contributors here](https://github.com/datacarpentry/wrangling-genomics/blob/gh-pages/_episodes/02-quality-control.md).
+Acknowledgments: See [contributors here](https://github.com/datacarpentry/wrangling-genomics/blob/gh-pages/_episodes/02-quality-control.md).
