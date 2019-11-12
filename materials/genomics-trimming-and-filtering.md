@@ -162,13 +162,14 @@ $ cd ~/dc_workshop/data/untrimmed_fastq
 
 We are going to run Trimmomatic on one of our paired-end samples. 
 We saw using FastQC that Nextera adapters were present in our samples. 
-The adapter sequences came with the installation of trimmomatic, so we will first copy these sequences into our current directory.
+The adapter sequences came with the installation of trimmomatic,  in a file
+named `NexteraPE-PE.fa`, so we will first copy these sequences into our current directory.
 
 On Cowboy the command is:
 
 `$cp /scratch/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
 
-or to pull the read from The Data Carpentry site use:
+or to pull the "trimming" file from The Data Carpentry site use:
 
 `curl -O https://github.com/datacarpentry/wrangling-genomics/tree/gh-pages/files/NexteraPE-PE.fa`
 
@@ -178,7 +179,29 @@ From the dc-genomics AWS cloud use:
 $ cp ~/.miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/NexteraPE-PE.fa .
 ~~~
 
-We will also use a sliding window of size 4 that will remove bases if their
+Take a quick look at the Nextera trimming file:
+
+~~~
+$ cat NexteraPE-PE.fa
+>PrefixNX/1
+AGATGTGTATAAGAGACAG
+>PrefixNX/2
+AGATGTGTATAAGAGACAG
+>Trans1
+TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG
+>Trans1_rc
+CTGTCTCTTATACACATCTGACGCTGCCGACGA
+>Trans2
+GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG
+>Trans2_rc
+CTGTCTCTTATACACATCTCCGAGCCCACGAGAC
+~~~
+This file contains the known sequences of adapters used in Nextera
+libraries. They are usually trimmed off but in some cases, they might
+be left for an external software like `trimmomatic` to remove as
+part of a pipeline. 
+
+We will also use a sliding window of size 4bp that will remove bases if their
 phred score is below 20 (like in our example above). We will also
 discard any reads that do not have at least 25 bases remaining after
 this trimming step. If using the Cowboy computer, use the submission script shown below, or 
@@ -199,6 +222,9 @@ trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
                 SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
                 SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
 ~~~
+Save this submission script as trim1.pbs, and submit it to Cowboy using
+`qsub trim1.pbs`. 
+
 The interactive command looks like this:
 ~~~
 $ trimmomatic PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
@@ -284,9 +310,8 @@ $ for infile in *_1.fastq.gz
 > done
 ~~~
 
-Go ahead and run the for loop. Remember when working on Cowboy, we have to capture the 
-node we are working with using `qsub -I`. 
-Withuout a captured node, the commandline on a submission script looks like this:
+With a captured node, we can type this in and run the for loop. 
+Without a captured node, the commandline on a submission script looks like this:
 
 ~~~
 #!/bin/bash
@@ -301,7 +326,7 @@ for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); trimmomat
 
 It should take a few minutes for
 Trimmomatic to run for each of our six input files. Once it's done
-running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we matched the ending `_1.fastq.gz`, we re-ran Trimmomatic on this file, overwriting our first results. That's ok, but it's good to be aware that it happened.
+running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we matched the ending `_1.fastq.gz`, we re-ran Trimmomatic on this file, overwriting our first results. That's OK, but it's good to be aware that it happened.
 
 <!--
 
