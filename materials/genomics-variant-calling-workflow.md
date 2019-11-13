@@ -13,15 +13,19 @@ language: Shell
 - Describe the types of data formats encountered during variant calling.
 - Use command line tools to perform variant calling.
 
+We mentioned before that we are working with files from a long-term evolution study of an *E. coli* population (designated Ara-3). The basic concept is to understand how genomes can evolve over time, in particular to understand if evolution happens in "jumps" or if it is essentially a consitent force (that might be measured!). Now that we have looked at our data to make sure that it is high quality, and removed low-quality base calls, we can perform ***variant calling*** to see how the population changed over time. We care how this population changed relative to the original population, *E. coli* strain REL606. Therefore, we will align each of our samples to the *E. coli* REL606 reference genome, and see what differences exist in our reads versus the genome.
 
+#### What are variants?
 
-We mentioned before that we are working with files from a long-term evolution study of an *E. coli* population (designated Ara-3). Now that we have looked at our data to make sure that it is high quality, and removed low-quality base calls, we can perform variant calling to see how the population changed over time. We care how this population changed relative to the original population, *E. coli* strain REL606. Therefore, we will align each of our samples to the *E. coli* REL606 reference genome, and see what differences exist in our reads versus the genome.
+The [NCI Dictionary of Genetics Terms](https://www.cancer.gov/publications/dictionaries/genetics-dictionary/def/genetic-variant) defines a genetic variant as "An alteration in the most common DNA nucleotide sequence. The term variant can be used to describe an alteration that may be benign, pathogenic, or of unknown significance. The term variant is increasingly being used in place of the term mutation." 
+
+Genetic variation and mutations are related, but not the same. The three primary causes for genetic variation are horizontal gene transfer, recombination during sexual reproduction, and mutations. For mutations, there are three primary types: Insertions, Deletions, and Base Substitutions. The common term for these mutation types is "indels". Most software that claims to measure "variants", actually measure "indels". Also, to define an indel as a "variant", one must compare the indels to a "reference" sequence. We don't need to know all the technical details of evolution, but it's good to understand that this experiment is measuring changes in the genome over time, using the REL606 genome as the reference.
 
 ### Alignment to a reference genome
 
 ![workflow_align]({{ site.baseurl }}/fig/variant_calling_workflow_align.png)
 
-We perform read alignment or mapping to determine where in the genome our reads originated from. There are a number of tools to
+We perform **read alignment** or mapping to determine where in the genome our reads originated from. There are a number of tools to
 choose from and, while there is no gold standard, there are some tools that are better suited for particular NGS analyses. We will be
 using the [Burrows Wheeler Aligner (BWA)](http://bio-bwa.sourceforge.net/), which is a software package for mapping low-divergent
 sequences against a large reference genome. 
@@ -34,7 +38,7 @@ The alignment process consists of two steps:
 
 ### Setting up
 
-First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. 
+First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. We will start in our `dc_workshop` directory.
 
 ~~~
 $ cd ~/dc_workshop
@@ -42,22 +46,8 @@ $ mkdir -p data/ref_genome
 $ curl -L -o data/ref_genome/ecoli_rel606.fasta.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz
 $ gunzip data/ref_genome/ecoli_rel606.fasta.gz
 ~~~
-{: .bash}
 
-> ### Exercise 
-> 
-> We saved this file as `data/ref_genome/ecoli_rel606.fasta.gz` and then decompressed it. 
-> What is the real name of the genome? 
-> 
->> ## Solution
->> 
->> ~~~
->> $ head data/ref_genome/ecoli_rel606.fasta
->> ~~~
->> {: .bash}
->> 
->> The name of the sequence follows the `>` character. The name is `CP000819.1 Escherichia coli B str. REL606, complete genome`.
->> Remember this chromosome name (`CP000819.1`), as we will use it later in the lesson. 
+**[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-Shell)**
 
 We will also download a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
 and will enable us to run our variant calling workflow quite quickly. 
@@ -77,8 +67,21 @@ $ mkdir -p results/sam results/bam results/bcf results/vcf
 ~~~
 
 ### Index the reference genome
-Our first step is to index the reference genome for use by BWA. Indexing allows the aligner to quickly find potential alignment sites for query sequences in a genome, which saves time during alignment. Indexing the reference only has to be run once. The only reason you would want to create a new index is if you are working with a different reference genome or you are using a different tool for alignment.
+Our first step is to index the reference genome for use by BWA. Indexing allows the aligner to quickly find potential alignment sites for our query sequences in a genome, which saves time during alignment. Indexing the reference only has to be run once. The only reason you would want to create a new index is if you are working with a different reference genome or you are using a different tool for alignment.
 
+Cowboy:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bwa
+bwa index data/ref_genome/ecoli_rel606.fasta
+~~~
+Cloud instance:
 ~~~
 $ bwa index data/ref_genome/ecoli_rel606.fasta
 ~~~
@@ -99,8 +102,8 @@ While the index is created, you will see output something like this:
 
 ### Align reads to reference genome
 
-The alignment process consists of choosing an appropriate reference genome to map our reads against and then deciding on an 
-aligner. We will use the BWA-MEM algorithm, which is the latest and is generally recommended for high-quality queries as it 
+The alignment process consists of choosing an appropriate reference genome to map our reads against and then 
+***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is the latest and is generally recommended for high-quality queries as it 
 is faster and more accurate.
 
 An example of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
@@ -109,13 +112,13 @@ An example of what a `bwa` command looks like is below. This command will not ru
 $ bwa mem ref_genome.fasta input_file_R1.fastq input_file_R2.fastq > output.sam
 ~~~
 
-Have a look at the [bwa options page](http://bio-bwa.sourceforge.net/bwa.shtml). While we are running bwa with the default 
-parameters here, your use case might require a change of parameters. *NOTE: Always read the manual page for any tool before using 
-and make sure the options you use are appropriate for your data.*
+Using this example, take a look at the [bwa options page](http://bio-bwa.sourceforge.net/bwa.shtml). While we are running bwa with the default 
+parameters here, your use case might require a change of parameters. *NOTE: Always read the manual page for any tool before use,
+and make sure the options you choose are appropriate for your data.*
 
-We're going to start by aligning the reads from just one of the 
+We're going to start by aligning the reads from only ***one*** of the 
 samples in our dataset (`SRR2584866`). Later, we'll be 
-iterating this whole process on all of our sample files.
+iterating this whole process on all of our sample files with loops.
 
 ~~~
 $ bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
@@ -142,12 +145,13 @@ is a tab-delimited text file that contains information for each individual read 
 have time to go in detail of the features of the SAM format, the paper by 
 [Heng Li et al.](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
-**The compressed binary version of SAM is called a BAM file.** We use this version to reduce size and to allow for *indexing*, which enables efficient random access of the data contained within the file.
+**The compressed binary version of SAM is called a BAM file.** We use the BAM file version to reduce size and to allow for *indexing*, which enables efficient random access of the data contained within the file.
 
-The file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of
+We can open and look at a SAM file because it is text, but once we start working with the BAM formatted files, we won't be able to look at them with any text editor. 
+The SAM file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of
 alignment, etc., this will change depending on the aligner being used. Following the header is the **alignment section**. Each line
 that follows corresponds to alignment information for a single read. Each alignment line has **11 mandatory fields** for essential
-mapping information and a variable number of other fields for aligner specific information. An example entry from a SAM file is 
+mapping information and a **variable** number of other fields for aligner specific information. An example entry from a SAM file is 
 displayed below with the different fields highlighted.
 
 ![sam_bam1]({{ site.baseurl }}/fig/sam_bam.png)
@@ -159,31 +163,26 @@ We will convert the SAM file to BAM format using the `samtools` program with the
 
 ~~~
 $ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.aligned.bam
-~~~
-{: .bash}
 
-~~~
 [samopen] SAM header is present: 1 sequences.
 ~~~
-{: .output}
 
+### Sorting BAM files by coordinates
 
-### Sort BAM file by coordinates
-
-Next we sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output.
+To manipulate the BAM files, we need to use the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output.
 
 ~~~
 $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584866.aligned.bam 
 ~~~
 
-Our files are pretty small, so we probably won't see any output. If you run the workflow with larger files, you will see something like this:
+Our files are pretty small, so we may not see any output. If you run the workflow with larger files, you will see something like this:
 ~~~
 [bam_sort_core] merging from 2 files...
 ~~~
 
-SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input.
+SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
-You can use samtools to learn more about this bam file as well.
+You can use other tools in samtools to learn more about SRR2584866.aligned.bam, e.g. `flagstat`.
 
 ~~~
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
@@ -207,10 +206,10 @@ This will give you the following statistics about your sorted bam file:
 0 + 0 with mate mapped to a different chr (mapQ>=5)
 ~~~
 
-### Variant calling
+### Variant calling with bcftools
 
-A variant call is a conclusion that there is a nucleotide difference vs. some reference at a given position in an individual genome
-or transcriptome, often referred to as a Single Nucleotide Polymorphism (SNP). The call is usually accompanied by an estimate of 
+A variant call in our experiment is a conclusion that there is a nucleotide difference vs. some reference at a given position in an individual genome
+or transcriptome. This type of variant is often referred to as a Single Nucleotide Polymorphism (SNP). Any variant call is usually accompanied by an estimate of 
 variant frequency and some measure of confidence. Similar to other steps in this workflow, there are number of tools available for 
 variant calling. In this workshop we will be using `bcftools`, but there are a few things we need to do before actually calling the 
 variants.
@@ -219,36 +218,45 @@ variants.
 
 #### Step 1: Calculate the read coverage of positions in the genome
 
-Do the first pass on variant calling by counting read coverage with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a bcf format output file, `-o` specifies where to write the output file, and `-f` flags the path to the reference genome:
+Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file:
 
 ~~~
 $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam 
-~~~
 
-~~~
 [mpileup] 1 samples in 1 input files
 ~~~
 
-We have now generated a file with coverage information for every base.
+We have now generated a file with coverage information for **every base**.
 
 #### Step 2: Detect the single nucleotide polymorphisms (SNPs)
 
-Identify SNPs using bcftools `call`. We have to specify ploidy with the flag `--ploidy`, which is one for the haploid *E. coli*. `-m` allows for multiallelic and rare-variant calling, `-v` tells the program to output variant sites only (not every site in the genome), and `-o` specifies where to write the output file:
+Identify SNPs using the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file:
 
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
 
+For more details onthe options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
+
 #### Step 3: Filter and report the SNP variants in variant calling format (VCF)
+
+The `VCF` format is one of the most famous formats in bioinformatics! Mostly because there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `samtools` package gives us a consistent output, that we can analyze (or "parse") using a Perl script. 
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
 ~~~
 $ vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
+The `vcfutils.pl` script outputs a well-formatted `.vcf` file we can now explore using a text editor. But this is a big and complex file. 
 
 ### Explore the VCF format:
+
+![VCF File Parts]({{ site.baseurl }}/fig/vcf-file-basic-parts.png)
+(image credit: The Broad Institute)
+
+The basic parts of a `.vcf` file are the "Header", followed by the "Records". Both parts have important and 
+highly specific information.  Let's look at the file using `less`.
 
 ~~~
 $ less -S results/vcf/SRR2584866_final_variants.vcf
@@ -256,7 +264,7 @@ $ less -S results/vcf/SRR2584866_final_variants.vcf
 
 You will see the header (which describes the format), the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
-some additional information:
+lots of additional information:
 
 ~~~
 ##fileformat=VCFv4.2
@@ -288,28 +296,34 @@ some additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
-{: .output}
+The image below is just another example of the HEADER region of a `.vcf` file but is an image 
+to prevent the header lines from wrapping on your terminal screen. 
 
-Followed by information on each of the variations observed: 
+![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
+
+All of the header information, and configuration details are
+followed by information for **each of the variations observed**: 
 
 ~~~
-#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  results/bam/SRR2584866.aligned.sorted.bam
-CP000819.1      1521    .       C       T       207     .       DP=9;VDB=0.993024;SGB=-0.662043;MQSB=0.974597;MQ0F=0;AC=1;AN=1;DP4=0,0,4,5;MQ=60
-CP000819.1      1612    .       A       G       225     .       DP=13;VDB=0.52194;SGB=-0.676189;MQSB=0.950952;MQ0F=0;AC=1;AN=1;DP4=0,0,6,5;MQ=60
-CP000819.1      9092    .       A       G       225     .       DP=14;VDB=0.717543;SGB=-0.670168;MQSB=0.916482;MQ0F=0;AC=1;AN=1;DP4=0,0,7,3;MQ=60
-CP000819.1      9972    .       T       G       214     .       DP=10;VDB=0.022095;SGB=-0.670168;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,2,8;MQ=60      GT:PL
-CP000819.1      10563   .       G       A       225     .       DP=11;VDB=0.958658;SGB=-0.670168;MQSB=0.952347;MQ0F=0;AC=1;AN=1;DP4=0,0,5,5;MQ=60
-CP000819.1      22257   .       C       T       127     .       DP=5;VDB=0.0765947;SGB=-0.590765;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,2,3;MQ=60      GT:PL
-CP000819.1      38971   .       A       G       225     .       DP=14;VDB=0.872139;SGB=-0.680642;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,4,8;MQ=60      GT:PL
-CP000819.1      42306   .       A       G       225     .       DP=15;VDB=0.969686;SGB=-0.686358;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,5,9;MQ=60      GT:PL
-CP000819.1      45277   .       A       G       225     .       DP=15;VDB=0.470998;SGB=-0.680642;MQSB=0.95494;MQ0F=0;AC=1;AN=1;DP4=0,0,7,5;MQ=60
-CP000819.1      56613   .       C       G       183     .       DP=12;VDB=0.879703;SGB=-0.676189;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,8,3;MQ=60      GT:PL
-CP000819.1      62118   .       A       G       225     .       DP=19;VDB=0.414981;SGB=-0.691153;MQSB=0.906029;MQ0F=0;AC=1;AN=1;DP4=0,0,8,10;MQ=59
-CP000819.1      64042   .       G       A       225     .       DP=18;VDB=0.451328;SGB=-0.689466;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,7,9;MQ=60      GT:PL
+#CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
+CP000819.1  1521  .  C  T  207  .  DP=9;VDB=0.993024;SGB=-0.662043;MQSB=0.974597;MQ0F=0;AC=1;AN=1;DP4=0,0,4,5;MQ=60  GT:PL  1:237,0
+CP000819.1  1612  .  A  G  225  .  DP=13;VDB=0.52194;SGB=-0.676189;MQSB=0.950952;MQ0F=0;AC=1;AN=1;DP4=0,0,6,5;MQ=60  GT:PL  1:255,0
+CP000819.1  9092  .  A  G  225  .  DP=14;VDB=0.717543;SGB=-0.670168;MQSB=0.916482;MQ0F=0;AC=1;AN=1;DP4=0,0,7,3;MQ=60  GT:PL  1:255,0
+CP000819.1  9972  .  T  G  214  .  DP=10;VDB=0.022095;SGB=-0.670168;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,2,8;MQ=60  GT:PL  1:244,0
+CP000819.1  10563  .  G  A  225  .  DP=11;VDB=0.958658;SGB=-0.670168;MQSB=0.952347;MQ0F=0;AC=1;AN=1;DP4=0,0,5,5;MQ=60  GT:PL  1:255,0
+CP000819.1  22257  .  C  T  127  .  DP=5;VDB=0.0765947;SGB=-0.590765;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,2,3;MQ=60  GT:PL  1:157,0
+CP000819.1  38971  .  A  G  225  .  DP=14;VDB=0.872139;SGB=-0.680642;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,4,8;MQ=60  GT:PL  1:255,0
+CP000819.1  42306  .  A  G  225  .  DP=15;VDB=0.969686;SGB=-0.686358;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,5,9;MQ=60  GT:PL  1:255,0
+CP000819.1  45277  .  A  G  225  .  DP=15;VDB=0.470998;SGB=-0.680642;MQSB=0.95494;MQ0F=0;AC=1;AN=1;DP4=0,0,7,5;MQ=60  GT:PL  1:255,0
+CP000819.1  56613  .  C  G  183  .  DP=12;VDB=0.879703;SGB=-0.676189;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,8,3;MQ=60  GT:PL  1:213,0
+CP000819.1  62118  .  A  G  225  .  DP=19;VDB=0.414981;SGB=-0.691153;MQSB=0.906029;MQ0F=0;AC=1;AN=1;DP4=0,0,8,10;MQ=59  GT:PL  1:255,0
+CP000819.1  64042  .  G  A  225  .  DP=18;VDB=0.451328;SGB=-0.689466;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,7,9;MQ=60  GT:PL  1:255,0
 ~~~
-{: .output}
 
 **This is a lot of information**, so let's take some time to make sure we understand our output.
+
+Here's what the top of the RECORDS might look like if you opened it in a spreadsheet
+![VCF File top]({{ site.baseurl }}/fig/vcf-file-spreadsheet.png)
 
 The first few columns represent the information we have about a ***predicted variation***. 
 
@@ -317,33 +331,57 @@ The first few columns represent the information we have about a ***predicted var
 | ------- | ---------- |
 | CHROM | contig location where the variation occurs | 
 | POS | position within the contig where the variation occurs | 
-| ID | a `.` until we add annotation information | 
+| ID | a **`.`** until we add annotation information | 
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
-| FILTER | a `.` if no quality filters have been applied, PASS if a filter is passed, or the name of the filters this variant failed | 
-| INFO | annotations contained in the INFO field are represented as tag-value pairs.  They typically summarize context information from the sample |
+| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
+| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters.  They typically summarize information from the sample. Check the header for definitions. |
 
-In an ideal world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
-However, in reality we need to continue filtering on multiple other metrics. 
+You can also find additional information on how they are calculated and how they should be interpreted in the "Annotations" 
+section of the [Broad Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
+In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
+However, in reality we will need to continue filtering on multiple other metrics. 
 
-The last two columns contain the ***genotypes*** and can be tricky to decode. 
+The last two columns contain the ***genotypes*** and can be tricky to decode.
+
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The metrics (short names) of the sample-level annotations presented in order | 
-| results | lists the values associated with those metrics in order to determine if a variant is real or not | 
+| FORMAT | The metrics (short names) of the sample-level annotations presented *in order* | 
+| results | lists the values corresponding to those metrics *in order* | 
 
-For our file, the metrics presented are **GT:PL:GQ**. 
+These last two columns are important for determining if the variance call is real or not. 
+For our file, the metrics presented are **GT:PL** which (according to the header) stand for 
+"**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
+Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric names, and 
+are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | the genotype of this sample which for a diploid genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. For a diploid organism, the GT field indicates the two alleles carried by the sample, encoded by a 0 for the REF allele, 1 for the first ALT allele, 2 for the second ALT allele, etc. |
-| PL | the likelihoods of the given genotypes |
-| GQ | the Phred-scaled confidence for the genotype | 
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles |
+| DP | the filtered sequencing depth (number of reads), at the sample level |
+| GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
+| PL | the "Normalized" **Phred-scaled likelihoods** of the given genotypes |
 
-The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place
-to learn more about VCF file format.
+To be very clear, here's another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
+It has been opened in a spreadsheet, and shows that there can be several short-name metrics under the "FORMAT" column, 
+each with a corresponding value under the "Results" column, named `NA12878` in this example. 
+![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
+In this example, at position 873762 the metrics are:
+
+| FORMAT | NA12878 |
+| ------ | ------- |
+| GT | 0/1 |
+| AD | 173,141 |
+| DP | 282 |
+| GQ | 99 |
+| PL | 255,0,255 |
+
+For a full breakdown of the variant call at this site, read this extra page on VCF interpretation
+
+#### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
 > ### Exercise
 > 

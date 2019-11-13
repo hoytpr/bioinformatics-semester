@@ -1,14 +1,17 @@
 ---
 layout: exercise
 topic: Genomics
-title: Trimming and Filtering Genomics Reads
+title: Variant Calling Workflow
 language: Shell
 ---
 Uncomment below to work on exercise
 
 <!--
 
-## Exercise 1
+### Exercise 1
+We saved this file as `data/ref_genome/ecoli_rel606.fasta.gz` and then decompressed it. 
+
+What is the real name of the genome? 
 
 --> 
 
