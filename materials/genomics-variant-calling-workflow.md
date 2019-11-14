@@ -379,7 +379,8 @@ In this example, at position 873762 the metrics are:
 | GQ | 99 |
 | PL | 255,0,255 |
 
-For a full breakdown of the variant call at this site, read this extra page on VCF interpretation
+For a full breakdown of the variant call at this site, read this [extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)
+
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
