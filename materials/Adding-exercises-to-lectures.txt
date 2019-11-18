@@ -16,7 +16,8 @@ title: Variant Calling Workflow
 language: Shell
 ---
 
-Could use: \exercises\Genomics-variant-calling-workflow-1-Shell.md
+Could use: 
+\exercises\Genomics-variant-calling-workflow-1-Shell.md
 \exercises\Genomics-variant-calling-workflow-2-Shell.md
 
 But YAML also needs to say:
@@ -41,7 +42,7 @@ Genomics-variant-calling-workflow-Shell.txt
 
 bioinformatics-semester/solutions use multiple files:
 
-Genomics-variant-calling-workflow-Shell-1.txt
-Genomics-variant-calling-workflow-Shell-2.txt
+Genomics-variant-calling-workflow-1-Shell.txt
+Genomics-variant-calling-workflow-2-Shell.txt
 
 With answers to the questions

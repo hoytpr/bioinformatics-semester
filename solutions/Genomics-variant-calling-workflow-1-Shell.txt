@@ -1,6 +1,7 @@
 
 ## Solution
- 
+
+Use `head` to look at the file
 
 $ head data/ref_genome/ecoli_rel606.fasta
 

@@ -13,6 +13,8 @@ language: Shell
 - Describe the types of data formats encountered during variant calling.
 - Use command line tools to perform variant calling.
 
+It's always good to acknowledge the people who create these great lessons.
+This one is adapted from [Data Carpentry "Wrangling Genomics"](https://github.com/datacarpentry/wrangling-genomics/blob/gh-pages/_episodes/04-variant_calling.md)
 We mentioned before that we are working with files from a long-term evolution study of an *E. coli* population (designated Ara-3). The basic concept is to understand how genomes can evolve over time, in particular to understand if evolution happens in "jumps" or if it is essentially a consitent force (that might be measured!). Now that we have looked at our data to make sure that it is high quality, and removed low-quality base calls, we can perform ***variant calling*** to see how the population changed over time. We care how this population changed relative to the original population, *E. coli* strain REL606. Therefore, we will align each of our samples to the *E. coli* REL606 reference genome, and see what differences exist in our reads versus the genome.
 
 #### What are variants?
@@ -47,7 +49,7 @@ $ curl -L -o data/ref_genome/ecoli_rel606.fasta.gz ftp://ftp.ncbi.nlm.nih.gov/ge
 $ gunzip data/ref_genome/ecoli_rel606.fasta.gz
 ~~~
 
-**[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-Shell)**
+**[Do the In-class Exercise 1 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-1-Shell)**
 
 We will also download a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
 and will enable us to run our variant calling workflow quite quickly. 
@@ -62,14 +64,18 @@ You will also need to create directories for the results that will be generated 
 line of code because `mkdir` can accept multiple new directory
 names as input.
 
-~~~
+```
 $ mkdir -p results/sam results/bam results/bcf results/vcf
-~~~
+```
 
 ### Index the reference genome
-Our first step is to index the reference genome for use by BWA. Indexing allows the aligner to quickly find potential alignment sites for our query sequences in a genome, which saves time during alignment. Indexing the reference only has to be run once. The only reason you would want to create a new index is if you are working with a different reference genome or you are using a different tool for alignment.
 
-Cowboy:
+Our first step is to index the reference genome for use by BWA. Indexing allows the aligner to quickly find potential 
+alignment sites for our query sequences in a genome, which saves time during alignment. Indexing the reference only has 
+to be run once. The only reason you would want to create a new index is if you are working with a different reference 
+genome or you are using a different tool for alignment.
+
+Cowboy: make a submission script file named `index.pbs`
 
 ~~~
 #!/bin/bash
@@ -103,8 +109,9 @@ While the index is created, you will see output something like this:
 ### Align reads to reference genome
 
 The alignment process consists of choosing an appropriate reference genome to map our reads against and then 
-***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is the latest and is generally recommended for high-quality queries as it 
-is faster and more accurate.
+***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is the latest and is generally recommended 
+for high-quality queries as it is faster and more accurate. Unlike our previous lessons using older software, this is 
+the state-of-the-art! BWA-MEM does a lot of same things, but does them automatically. 
 
 An example of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
 
@@ -120,11 +127,27 @@ We're going to start by aligning the reads from only ***one*** of the
 samples in our dataset (`SRR2584866`). Later, we'll be 
 iterating this whole process on all of our sample files with loops.
 
+On Cowboy, make a submission script named align.pbs
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bwa
+bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
+~~~
+
+On a cloud instance the command is:
+
 ~~~
 $ bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
 ~~~
 
-You will see output that starts like this: 
+You will see output that starts like this:
+or it will be in the submission script output file: `align.oxxxxxx` 
 
 ~~~
 [M::bwa_idx_load_from_disk] read 0 ALT contigs
@@ -148,7 +171,8 @@ have time to go in detail of the features of the SAM format, the paper by
 **The compressed binary version of SAM is called a BAM file.** We use the BAM file version to reduce size and to allow for *indexing*, which enables efficient random access of the data contained within the file.
 
 We can open and look at a SAM file because it is text, but once we start working with the BAM formatted files, we won't be able to look at them with any text editor. 
-The SAM file begins with a **header**, which is optional. The header is used to describe source of data, reference sequence, method of
+So let's go ahead and look at the formatting of a SAM file now. 
+The SAM file begins with a **header**, which is optional. The header is used to describe the source of the data, the reference sequence, the method of
 alignment, etc., this will change depending on the aligner being used. Following the header is the **alignment section**. Each line
 that follows corresponds to alignment information for a single read. Each alignment line has **11 mandatory fields** for essential
 mapping information and a **variable** number of other fields for aligner specific information. An example entry from a SAM file is 
@@ -175,14 +199,14 @@ To manipulate the BAM files, we need to use the `samtools` toolset. Our next ste
 $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584866.aligned.bam 
 ~~~
 
-Our files are pretty small, so we may not see any output. If you run the workflow with larger files, you will see something like this:
-~~~
-[bam_sort_core] merging from 2 files...
-~~~
+> Our files are pretty small, so we may not see any output. If you run the workflow with larger files, you will see something like this:
+> ~~~
+> [bam_sort_core] merging from 2 files...
+> ~~~
 
 SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
-You can use other tools in samtools to learn more about SRR2584866.aligned.bam, e.g. `flagstat`.
+You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
 
 ~~~
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
@@ -209,7 +233,7 @@ This will give you the following statistics about your sorted bam file:
 ### Variant calling with bcftools
 
 A variant call in our experiment is a conclusion that there is a nucleotide difference vs. some reference at a given position in an individual genome
-or transcriptome. This type of variant is often referred to as a Single Nucleotide Polymorphism (SNP). Any variant call is usually accompanied by an estimate of 
+or transcriptome. This type of variant is often referred to as a **Single Nucleotide Polymorphism (SNP)**. Any variant call is usually accompanied by an estimate of 
 variant frequency and some measure of confidence. Similar to other steps in this workflow, there are number of tools available for 
 variant calling. In this workshop we will be using `bcftools`, but there are a few things we need to do before actually calling the 
 variants.
@@ -218,7 +242,7 @@ variants.
 
 #### Step 1: Calculate the read coverage of positions in the genome
 
-Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file:
+Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag.
 
 ~~~
 $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
@@ -231,7 +255,7 @@ We have now generated a file with coverage information for **every base**.
 
 #### Step 2: Detect the single nucleotide polymorphisms (SNPs)
 
-Identify SNPs using the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file:
+To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
@@ -241,7 +265,7 @@ For more details onthe options and flags of bcftools, make sure you [read the ma
 
 #### Step 3: Filter and report the SNP variants in variant calling format (VCF)
 
-The `VCF` format is one of the most famous formats in bioinformatics! Mostly because there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `samtools` package gives us a consistent output, that we can analyze (or "parse") using a Perl script. 
+The `VCF` format is one of the most famous formats in bioinformatics! Unfortunately there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `samtools` package gives us a Perl script we can use to convert (or "parse") the original `.vcf` file into a more standard `.vcf` (final) format. 
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
@@ -296,13 +320,19 @@ lots of additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
+We should mention that although our output does not have an `AD` metric in the header, a common HEADER line includes:
+~~~
+##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+~~~
+You can see this yourself by downloading similar test data from our resource bundle NA12878 with a valid VCF header produced by HaplotypeCaller.
+
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. 
 
 ![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
 
 All of the header information, and configuration details are
-followed by information for **each of the variations observed**: 
+followed by RECORDS information for **each of the variations observed**: 
 
 ~~~
 #CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
@@ -360,14 +390,15 @@ are also separated by colon characters. These and a few other metrics and defini
 | metric | definition | 
 | ------- | ---------- |
 | GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. |
-| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles |
+| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles (REF,ALT)|
 | DP | the filtered sequencing depth (number of reads), at the sample level |
 | GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
 | PL | the "Normalized" **Phred-scaled likelihoods** of the given genotypes |
 
 To be very clear, here's another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and shows that there can be several short-name metrics under the "FORMAT" column, 
-each with a corresponding value under the "Results" column, named `NA12878` in this example. 
+each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
+probabilities always use the format `REF/ALT`.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
 
@@ -384,23 +415,7 @@ For a full breakdown of the variant call at this site, read this [extra page on 
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
-> ### Exercise
-> 
-> Use the `grep` and `wc` commands you've learned to assess how many variants are in the vcf file. 
->
->> #### Solution
->> 
->> ~~~
->> $ grep -v "#" results/vcf/SRR2584866_final_variants.vcf | wc -l
->> ~~~
->> {: .bash}
->> 
->> ~~~ 
->> 766
->> ~~~
->> {: .output}
->>
->> There are 766 variants in this file.
+**[Do the In-class Exercise 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-2-Shell)**
 
 ### Assess the alignment (visualization) - optional step
 
