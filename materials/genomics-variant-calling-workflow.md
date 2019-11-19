@@ -193,8 +193,22 @@ $ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR258486
 
 ### Sorting BAM files by coordinates
 
-To manipulate the BAM files, we need to use the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output.
+To manipulate the BAM files, we need to use the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output (only works on samtools after version 1.2).
 
+On Cowboy create a submission script called `bamsort.pbs`:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load samtools/1.9
+samtools sort results/bam/SRR2584866.aligned.bam -o results/bam/SRR2584866.aligned.sorted.bam
+~~~
+
+On a cloud instance:
 ~~~
 $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584866.aligned.bam 
 ~~~
@@ -207,6 +221,7 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
 You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
+We can run this at the command line as it takes only a second to complete:
 
 ~~~
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
@@ -244,6 +259,19 @@ variants.
 
 Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag.
 
+On Cowboy, create a submission script called pileup.pbs:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bcftools
+bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
+~~~
+On a cloud instance:
 ~~~
 $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam 
@@ -257,6 +285,18 @@ We have now generated a file with coverage information for **every base**.
 
 To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
+The ploidy.pbs submission script on Cowboy should be:
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bcftools
+bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
+~~~
+On a cloud instance:
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
@@ -265,10 +305,23 @@ For more details onthe options and flags of bcftools, make sure you [read the ma
 
 #### Step 3: Filter and report the SNP variants in variant calling format (VCF)
 
-The `VCF` format is one of the most famous formats in bioinformatics! Unfortunately there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `samtools` package gives us a Perl script we can use to convert (or "parse") the original `.vcf` file into a more standard `.vcf` (final) format. 
+The `VCF` format is one of the most famous formats in bioinformatics! Unfortunately there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `bcftools` package gives us a Perl script we can use to convert (or "parse") the original `.vcf` file into a more standard `.vcf` (final) format. 
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
+On Cowboy make a submission script named finalvcf.pbs:
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bcftools
+vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
+~~~
+
+On a cloud instance:
 ~~~
 $ vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
@@ -440,11 +493,24 @@ $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 It uses different colors to display mapping quality or base quality, subjected to users' choice. Samtools viewer is known to work with an 130 GB alignment swiftly. Due to its text interface, displaying alignments over network is also very fast.
 
 In order to visualize our mapped reads we use `tview`, giving it the sorted bam file and the reference file: 
+NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try 
+
+`qsub -I`
+
+and you should see something like: 
+`job waiting to start`
+When your prompt changes to something like: `[phoyt@n217]` you will need to change into your dc_workshop directory again
+and then type the command:
+
+```
+[phoyt@n217 dc_workshop]$ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
+```
+
+On a cloud instance type:
 
 ~~~
 $ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
 ~~~
-{: .bash}
 
 ~~~
 1         11        21        31        41        51        61        71        81        91        101       111       121
@@ -457,24 +523,12 @@ AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTG
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ....................................  ,,a,,,,,,,,,,,,,,,,,,,,,,,,,,,,,     .......
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, .............................  ,,,,,,,,,,,,,,,,,g,,,,,    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ...........................T.......   ,,,,,,,,,,,,,,,,,,,,,,,c,          ......
-......................... ................................   ,g,,,,,,,,,,,,,,,,,,,      ...........................
-,,,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,       ..........................
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,   ................................T..  ..............................   ,,,,,,
-...........................       ,,,,,,g,,,,,,,,,,,,,,,,,   ....................................         ,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,, ....................................  ...................................        ....
-....................................  ........................  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,      ....
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-........................            .................................. .............................     ....
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,   ....................................        ..........................
-...............................       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ....................................
-...................................  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ..................................
-.................................... ,,,,,,,,,,,,,,,,,,a,,,,,,,,,,,,,,,,,        ,,,,,,,,,,,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,  ............................ ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-~~~
-{: .output}
 
-The first line of output shows the genome coordinates in our reference genome. The second line shows the reference
+~~~
+
+
+(If the output isn't perfect, that's okay). The first line of output shows the genome coordinates in our reference genome. 
+The second line shows the reference
 genome sequence. The third lines shows the consensus sequence determined from the sequence reads. A **`.`** indicates
 a match to the reference sequence, so we can see that the consensus from our sample matches the reference in most
 locations. That is good! If that wasn't the case, we should probably reconsider our choice of reference.
@@ -483,7 +537,7 @@ Below the horizontal line, we can see all of the reads in our sample aligned wit
 positions where the called base differs from the reference are shown. You can use the arrow keys on your keyboard
 to scroll or type `?` for a help menu. To navigate to a specific position, type `g` (for "goto"). A dialogue box will appear. In
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
-(*e.g.* for this sample, type `NC_012967.1:50` to view the 50th base. Type `Ctrl^C` or `q` to exit `tview`. 
+(*e.g.* for this sample, type `CP000819.1:50` to view the 50th base. Type `Ctrl^C` or `q` to exit `tview`
 
 > ### Exercise 
 > 
@@ -496,16 +550,16 @@ this box, type the name of the "chromosome" followed by a colon and the position
 >> $ samtools tview ~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 >> ~~~
 >> 
->> Then type `g`. In the dialogue box, type `NC_012967.1:4377265`. 
+>> Then type `g`. In the dialogue box, type `CP000819.1:4377265`. 
 >> `G` is the variant. `A` is canonical. This variant possibly changes the phenotype of this sample to hypermutable. It occurs
 >> in the gene *mutL*, which controls DNA mismatch repair.
 
 ### Viewing with IGV
 
-[IGV](http://www.broadinstitute.org/igv/) is a stand-alone browser, which has the advantage of being installed locally and providing fast access. Web-based genome browsers, like [Ensembl](http://www.ensembl.org/index.html) or the [UCSC browser](https://genome.ucsc.edu/), are slower, but provide more functionality. They not only allow for more polished and flexible visualization, but also provide easy access to a wealth of annotations and external data sources. This makes it straightforward to relate your data with information about repeat regions, known genes, epigenetic features or areas of cross-species conservation, to name just a few.
+[IGV](http://www.broadinstitute.org/igv/) is a stand-alone genome browser, which has the advantage of being installed locally and providing fast access. Web-based genome browsers, like [Ensembl](http://www.ensembl.org/index.html) or the [UCSC browser](https://genome.ucsc.edu/), are slower, but provide more functionality. They not only allow for more polished and flexible visualization, but also provide easy access to a wealth of annotations and external data sources. This makes it straightforward to relate your data with information about repeat regions, known genes, epigenetic features or areas of cross-species conservation, to name just a few.
 
 In order to use IGV, we will need to transfer some files to our local machine. We know how to do this with `scp`. 
-Open a new tab in your terminal window and create a new folder. We'll put this folder on our Desktop for 
+Open a new tab in your LOCAL terminal window (not the one connected to a remote computer) and create a new folder. We'll put this folder on our Desktop for 
 demonstration purposes, but in general you should avoid proliferating folders and files on your Desktop and 
 instead organize files within a directory structure like we've been using in our `dc_workshop` directory.
 
@@ -514,9 +568,20 @@ $ mkdir ~/Desktop/files_for_igv
 $ cd ~/Desktop/files_for_igv
 ~~~
 
-Now we will transfer our files to that new directory. Remember to replace the text between the `@` and the `:` 
-with your AWS (or CyVerse) instance number. The commands to `scp` always go in the terminal window that is connected to your
-local computer (not your AWS instance).
+Now we will transfer our files to that new directory. 
+
+
+When using a remote system, remember to replace the text between the `@` and the `:` 
+with your <username><ip-address>, or your AWS (or CyVerse) instance number. The commands to `scp` always go in the terminal window that is connected to your
+**local** computer (not your AWS instance).
+
+For Cowboy:
+~~~
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/files_for_igv
+~~~
 
 ~~~
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/files_for_igv
@@ -528,7 +593,7 @@ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vc
 You will need to type the password for your AWS instance each time you call `scp`. 
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
-to unzip it, and then drag the program into your Applications folder (or Windows users can put it into the `~/Desktop/files_for_igv` folder they just creaeted). 
+to unzip it, and then drag the program into your Applications folder (or Windows users can put it into the `~/Desktop/files_for_igv` folder they just created). 
 
 1. Open IGV.
 2. Load our reference genome file (`ecoli_rel606.fasta`) into IGV using the **"Load Genomes from File..."** option under the **"Genomes"** pull-down menu.
