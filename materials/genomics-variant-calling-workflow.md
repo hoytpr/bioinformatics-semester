@@ -224,7 +224,8 @@ You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`
 We can run this at the command line as it takes only a second to complete:
 
 ~~~
-samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
+$ module load samtools/1.9
+$ samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 
 This will give you the following statistics about your sorted bam file:
@@ -245,11 +246,16 @@ This will give you the following statistics about your sorted bam file:
 0 + 0 with mate mapped to a different chr (mapQ>=5)
 ~~~
 
+We can't go over all the information provided, but notice that 99.98% of the reads were mapped, and 99.05% were properly mapped as pairs.
+Also notice that when we saved the "unpaired" files during our quality control steps, those show up as 
+"singletons", and a few of them were used (which is better than throwing them away!).
+ 
 ### Variant calling with bcftools
 
-A variant call in our experiment is a conclusion that there is a nucleotide difference vs. some reference at a given position in an individual genome
+A variant call in our experiment is a conclusion that there is a **nucleotide difference vs. some reference at a given position** in an individual genome
 or transcriptome. This type of variant is often referred to as a **Single Nucleotide Polymorphism (SNP)**. Any variant call is usually accompanied by an estimate of 
-variant frequency and some measure of confidence. Similar to other steps in this workflow, there are number of tools available for 
+variant frequency (counts, or sometimes coverage) and some measure of confidence (can be a Phred-like score, or even a p-value). 
+Similar to other steps in this workflow, there are number of tools available for 
 variant calling. In this workshop we will be using `bcftools`, but there are a few things we need to do before actually calling the 
 variants.
 
@@ -257,7 +263,7 @@ variants.
 
 #### Step 1: Calculate the read coverage of positions in the genome
 
-Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag.
+Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag. The input file is the last part of the command. 
 
 On Cowboy, create a submission script called pileup.pbs:
 
