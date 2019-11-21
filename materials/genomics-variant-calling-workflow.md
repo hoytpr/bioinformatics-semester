@@ -464,7 +464,7 @@ It has been opened in a spreadsheet, and shows some very significant differences
 and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
 Notice there can be several short-name metrics under the "FORMAT" column, 
 each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
-probabilities always use the format `REF/ALT`.
+metric values always use the format `REF/ALT`.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
 
@@ -477,8 +477,8 @@ In this example, at position 873762 the metrics are:
 | PL | 255,0,255 |
 
 Now you should notice that the `PL` Metric has ***three*** values (`255,0,255`), rather than the ***two*** values
-we have in our bcftools-produced `.vcf` file. For a full breakdown of the variant call at this SNP, using the Braod format,
-read this [extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)
+we have in our bcftools-produced `.vcf` file. For a full breakdown of the variant call at this SNP, using the Broad format,
+read this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
 
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
@@ -505,7 +505,7 @@ $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 
 [Samtools](http://www.htslib.org/) implements a very simple text alignment viewer based on the GNU
 `ncurses` library, called `tview`. This alignment viewer works with short indels and shows [MAQ](http://maq.sourceforge.net/) consensus. 
-It uses different colors to display mapping quality or base quality, subjected to users' choice. Samtools viewer is known to work with an 130 GB alignment swiftly. Due to its text interface, displaying alignments over network is also very fast.
+It can use colors to display mapping quality or base quality, subjected to users' choice (but we won't specifiy colors for now). Samtools viewer is known to work with an 130 GB alignment swiftly. Due to its text interface, displaying alignments over network is also very fast.
 
 In order to visualize our mapped reads we use `tview`, giving it the sorted bam file and the reference file: 
 NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try 
@@ -545,7 +545,7 @@ AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTG
 (If the output isn't perfect, that's okay). The first line of output shows the genome coordinates in our reference genome. 
 The second line shows the reference
 genome sequence. The third lines shows the consensus sequence determined from the sequence reads. A **`.`** indicates
-a match to the reference sequence, so we can see that the consensus from our sample matches the reference in most
+a match to the reference sequence, so we can see that the *consensus* from our sample matches the reference in most
 locations. That is good! If that wasn't the case, we should probably reconsider our choice of reference.
 
 Below the horizontal line, we can see all of the reads in our sample aligned with the reference genome. Only 
@@ -554,7 +554,7 @@ to scroll or type `?` for a help menu. To navigate to a specific position, type 
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
 (*e.g.* for this sample, type `CP000819.1:50` to view the 50th base. Type `Ctrl^C` or `q` to exit `tview`
 
-> ### Exercise 
+> ### In Class Exercise 
 > 
 > Visualize the alignment of the reads for our `SRR2584866` sample. What variant is present at 
 > position 4377265? What is the canonical nucleotide in that position? 
@@ -587,7 +587,8 @@ Now we will transfer our files to that new directory.
 
 
 When using a remote system, remember to replace the text between the `@` and the `:` 
-with your <username><ip-address>, or your AWS (or CyVerse) instance number. The commands to `scp` always go in the terminal window that is connected to your
+with your `<username><ip-address>`, or your AWS (or CyVerse) instance number. The commands 
+to `scp` always go in the terminal window that is connected to your
 **local** computer (not your AWS instance).
 
 For Cowboy:
@@ -597,7 +598,7 @@ $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.ali
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/files_for_igv
 ~~~
-
+For an AWS cloud instance:
 ~~~
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/files_for_igv
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/files_for_igv
@@ -608,14 +609,18 @@ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vc
 You will need to type the password for your AWS instance each time you call `scp`. 
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
-to unzip it, and then drag the program into your Applications folder (or Windows users can put it into the `~/Desktop/files_for_igv` folder they just created). 
+to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
+their `C:Programs Files/IGV_2.7.2` folder
+and also places a link to the application on their Desktop. You can put the application link into the `~/Desktop/files_for_igv` 
+folder you just created. 
 
-1. Open IGV.
+1. Open IGV (double-click on the icon/link).
 2. Load our reference genome file (`ecoli_rel606.fasta`) into IGV using the **"Load Genomes from File..."** option under the **"Genomes"** pull-down menu.
 3. Load our BAM file (`SRR2584866.aligned.sorted.bam`) using the **"Load from File..."** option under the **"File"** pull-down menu. 
 4.  Do the same with our VCF file (`SRR2584866_final_variants.vcf`).
 
 Your IGV browser should look like the screenshot below:
+(But might be different)
 
 ![IGV]({{ site.baseurl }}/fig/igv-screenshot.png)
 
@@ -623,7 +628,8 @@ There should be two tracks: one corresponding to our BAM file and the other for 
 
 In the **VCF track**, each bar across the top of the plot shows the allele fraction for a single locus. The second bar shows
 the genotypes for each locus in each *sample*. We only have one sample called here so we only see a single line. Dark blue = 
-heterozygous, Cyan = homozygous variant, Grey = reference.  Filtered entries are transparent. There might be variations in the colors for different operating systems.
+heterozygous, Cyan = homozygous variant, Grey = reference.  Filtered entries are transparent. There might be variations in 
+the colors for different operating systems.
 
 Zoom in to inspect variants you see in your filtered VCF file to become more familiar with IGV. See how quality information 
 corresponds to alignment information at those loci.
