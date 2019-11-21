@@ -218,7 +218,7 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 > [bam_sort_core] merging from 2 files...
 > ~~~
 
-SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
+Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
 You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
 We can run this at the command line as it takes only a second to complete:
@@ -286,6 +286,11 @@ $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 ~~~
 
 We have now generated a file with coverage information for **every base**.
+
+Here's a visual summary of what we are identifying:
+
+![vcf-visual]({{ site.baseurl }}/fig/vcf-visual.png)
+
 
 #### Step 2: Detect the single nucleotide polymorphisms (SNPs)
 
@@ -383,7 +388,7 @@ We should mention that although our output does not have an `AD` metric in the h
 ~~~
 ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
 ~~~
-You can see this yourself by downloading similar test data from our resource bundle NA12878 with a valid VCF header produced by HaplotypeCaller.
+You can see this yourself by downloading similar test data but also know that there are variations in `.vcf` files.
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. 
@@ -425,7 +430,7 @@ The first few columns represent the information we have about a ***predicted var
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
 | FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
-| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters.  They typically summarize information from the sample. Check the header for definitions. |
+| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters.  They typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Annotations" 
 section of the [Broad Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
@@ -437,8 +442,8 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The metrics (short names) of the sample-level annotations presented *in order* | 
-| results | lists the values corresponding to those metrics *in order* | 
+| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in order* | 
+| "results" (usually a file name) | lists the values corresponding to those metrics *in order* | 
 
 These last two columns are important for determining if the variance call is real or not. 
 For our file, the metrics presented are **GT:PL** which (according to the header) stand for 
@@ -449,13 +454,15 @@ are also separated by colon characters. These and a few other metrics and defini
 | metric | definition | 
 | ------- | ---------- |
 | GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. |
-| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles (REF,ALT)|
+| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles (REF/ALT)|
 | DP | the filtered sequencing depth (number of reads), at the sample level |
 | GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
 | PL | the "Normalized" **Phred-scaled likelihoods** of the given genotypes |
 
 To be very clear, here's another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
-It has been opened in a spreadsheet, and shows that there can be several short-name metrics under the "FORMAT" column, 
+It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
+and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
+Notice there can be several short-name metrics under the "FORMAT" column, 
 each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
 probabilities always use the format `REF/ALT`.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
@@ -469,7 +476,9 @@ In this example, at position 873762 the metrics are:
 | GQ | 99 |
 | PL | 255,0,255 |
 
-For a full breakdown of the variant call at this site, read this [extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)
+Now you should notice that the `PL` Metric has ***three*** values (`255,0,255`), rather than the ***two*** values
+we have in our bcftools-produced `.vcf` file. For a full breakdown of the variant call at this SNP, using the Braod format,
+read this [extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)
 
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
