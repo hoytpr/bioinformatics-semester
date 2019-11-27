@@ -384,11 +384,12 @@ lots of additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
-We should mention that although our output does not have an `AD` metric in the header, a common HEADER line includes:
+We should mention that although our output does not have an `ID=AD` metric in the header, but it is common in HEADER 
+lines and `.vcf` files. Many of the metrics can be optionally output using the command line.
 ~~~
 ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
 ~~~
-You can see this yourself by downloading similar test data but also know that there are variations in `.vcf` files.
+**It is important to know that there are variations in `.vcf` files!**
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. 
@@ -421,7 +422,7 @@ Here's what the top of the RECORDS might look like if you opened it in a spreads
 
 The first few columns represent the information we have about a ***predicted variation***. 
 
-| column | info |
+| Column | Description |
 | ------- | ---------- |
 | CHROM | contig location where the variation occurs | 
 | POS | position within the contig where the variation occurs | 
@@ -430,10 +431,10 @@ The first few columns represent the information we have about a ***predicted var
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
 | FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
-| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters.  They typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
+| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters. These typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
 
-You can also find additional information on how they are calculated and how they should be interpreted in the "Annotations" 
-section of the [Broad Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
+You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
+section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
 In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
 However, in reality we will need to continue filtering on multiple other metrics. 
 
@@ -443,28 +444,28 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 | column | definition |
 | ------- | ---------- |
 | FORMAT | The **metrics** (short names) of the sample-level annotations presented *in order* | 
-| "results" (usually a file name) | lists the values corresponding to those metrics *in order* | 
+| "Results" (usually a sample name) | lists the values corresponding to those metrics *in order* | 
 
-These last two columns are important for determining if the variance call is real or not. 
-For our file, the metrics presented are **GT:PL** which (according to the header) stand for 
+These last two columns are important for determining if the variant call is real or not. 
+For the file in this lesson, the metrics presented are **GT:PL** which (according to the header) stand for 
 "**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
 Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 is heterozygous, and 1/1 is homozygous for the alternate allele. |
-| AD | the unfiltered allele depth, i.e. the number of reads that support each of the reported alleles (REF/ALT)|
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| AD | the unfiltered allele depth, i.e. the number of reads that match each of the reported alleles shown as `REF/ALT`|
 | DP | the filtered sequencing depth (number of reads), at the sample level |
 | GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
-| PL | the "Normalized" **Phred-scaled likelihoods** of the given genotypes |
+| PL | the "Normalized" Phred-scaled **likelihoods** of the given genotypes |
 
-To be very clear, here's another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
+To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
 and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
 Notice there can be several short-name metrics under the "FORMAT" column, 
 each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
-metric values always use the format `REF/ALT`.
+metric values always put the `REF` value before the `ALT` value.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
 
@@ -476,10 +477,9 @@ In this example, at position 873762 the metrics are:
 | GQ | 99 |
 | PL | 255,0,255 |
 
-Now you should notice that the `PL` Metric has ***three*** values (`255,0,255`), rather than the ***two*** values
-we have in our bcftools-produced `.vcf` file. For a full breakdown of the variant call at this SNP, using the Broad format,
-read this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
-
+Now you should notice that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
+we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
+we have created this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
@@ -494,31 +494,32 @@ will describe two different tools for visualization; a light-weight command-line
 Institute's Integrative Genomics Viewer (IGV) which requires
 software installation and transfer of files.
 
-In order for us to visualize the alignment files, we will need to **index the BAM file** using `samtools`:
+In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
 
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
-{: .bash}
 
 #### Viewing with `tview`
 
 [Samtools](http://www.htslib.org/) implements a very simple text alignment viewer based on the GNU
 `ncurses` library, called `tview`. This alignment viewer works with short indels and shows [MAQ](http://maq.sourceforge.net/) consensus. 
-It can use colors to display mapping quality or base quality, subjected to users' choice (but we won't specifiy colors for now). Samtools viewer is known to work with an 130 GB alignment swiftly. Due to its text interface, displaying alignments over network is also very fast.
+It can use colors to display mapping quality or base quality, subjected to users' choice (but we won't specifiy colors for now). 
+Samtools viewer is fast enough to work with an 130 GB alignment and because it uses a text interface, you can even 
+display alignments over a network.
 
-In order to visualize our mapped reads we use `tview`, giving it the sorted bam file and the reference file: 
-NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try 
+In order to visualize our mapped reads with `tview`, we give it the sorted bam file and the reference file: 
+NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try:
 
 `qsub -I`
 
 and you should see something like: 
 `job waiting to start`
-When your prompt changes to something like: `[phoyt@n217]` you will need to change into your dc_workshop directory again
-and then type the command:
+When your prompt changes to something like: `[phoyt@n217]` you will be back in your "home" directory, and 
+need to change into your `dc_workshop` directory again. Then type the command:
 
 ```
-[phoyt@n217 dc_workshop]$ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
+$ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
 ```
 
 On a cloud instance type:
@@ -526,7 +527,7 @@ On a cloud instance type:
 ~~~
 $ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
 ~~~
-
+You should see an output similar to this:
 ~~~
 1         11        21        31        41        51        61        71        81        91        101       111       121
 AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTGGTTACCTGCCGTGAGTAAATTAAAATTTTATTGACTTAGGTCACTAAATAC
@@ -541,46 +542,47 @@ AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTG
 
 ~~~
 
-
-(If the output isn't perfect, that's okay). The first line of output shows the genome coordinates in our reference genome. 
-The second line shows the reference
-genome sequence. The third lines shows the consensus sequence determined from the sequence reads. A **`.`** indicates
-a match to the reference sequence, so we can see that the *consensus* from our sample matches the reference in most
+(If the output isn't exactly the same, that's okay). The ***first*** line of output shows the genome 
+coordinates in our reference genome. The ***second*** line shows the reference
+genome sequence. The ***third*** line shows the consensus sequence determined from the sequence reads. A **`.`** (dot) indicates
+a match to the reference sequence, and we can see that the *consensus* from our sample matches the reference in most
 locations. That is good! If that wasn't the case, we should probably reconsider our choice of reference.
 
-Below the horizontal line, we can see all of the reads in our sample aligned with the reference genome. Only 
-positions where the called base differs from the reference are shown. You can use the arrow keys on your keyboard
+Below the horizontal line, we can see all of the reads in our sample aligned with this region of the reference genome. Only 
+positions where the called base differs from the reference are the nucleotides shown. You can use the arrow keys on your keyboard
 to scroll or type `?` for a help menu. To navigate to a specific position, type `g` (for "goto"). A dialogue box will appear. In
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
 (*e.g.* for this sample, type `CP000819.1:50` to view the 50th base. Type `Ctrl^C` or `q` to exit `tview`
 
-> ### In Class Exercise 
+> ### In Class Exercise
 > 
 > Visualize the alignment of the reads for our `SRR2584866` sample. What variant is present at 
-> position 4377265? What is the canonical nucleotide in that position? 
+> position 4377265? What is the consensus (AKA "canonical") nucleotide in that position? 
 > 
 >> #### Solution
 >> 
->> ~~~
->> $ samtools tview ~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
->> ~~~
->> 
->> Then type `g`. In the dialogue box, type `CP000819.1:4377265`. 
->> `G` is the variant. `A` is canonical. This variant possibly changes the phenotype of this sample to hypermutable. It occurs
+>> Type `g`. In the dialogue box, then type `CP000819.1:4377265`. 
+>> `G` is the variant. `A` is canonical. After some research, you would find
+>> that this variant possibly changes the phenotype of this sample to hypermutable. Because it occurs
 >> in the gene *mutL*, which controls DNA mismatch repair.
 
 ### Viewing with IGV
 
-[IGV](http://www.broadinstitute.org/igv/) is a stand-alone genome browser, which has the advantage of being installed locally and providing fast access. Web-based genome browsers, like [Ensembl](http://www.ensembl.org/index.html) or the [UCSC browser](https://genome.ucsc.edu/), are slower, but provide more functionality. They not only allow for more polished and flexible visualization, but also provide easy access to a wealth of annotations and external data sources. This makes it straightforward to relate your data with information about repeat regions, known genes, epigenetic features or areas of cross-species conservation, to name just a few.
+[IGV](http://www.broadinstitute.org/igv/) is a stand-alone genome browser, which has the advantage of being installed 
+locally and providing fast access. Web-based genome browsers, like [Ensembl](http://www.ensembl.org/index.html) or 
+the [UCSC browser](https://genome.ucsc.edu/), are slower, but provide more functionality. They not only allow 
+for more polished and flexible visualization, but also provide easy access to a wealth of annotations and 
+external data sources. This makes it straightforward to relate your data with information about repeat 
+regions, known genes, epigenetic features or areas of cross-species conservation, to name just a few.
 
-In order to use IGV, we will need to transfer some files to our local machine. We know how to do this with `scp`. 
-Open a new tab in your LOCAL terminal window (not the one connected to a remote computer) and create a new folder. We'll put this folder on our Desktop for 
-demonstration purposes, but in general you should avoid proliferating folders and files on your Desktop and 
-instead organize files within a directory structure like we've been using in our `dc_workshop` directory.
+In order to use IGV, we will need to transfer some files to our local machine. We learned how to do this with `scp`. 
+Open a **new** tab in your LOCAL terminal window (not the one connected to a remote computer) and 
+create a new folder. We'll put this folder in our `dc_workshop` directory. 
+First make the directory we need to store the files:
 
 ~~~
-$ mkdir ~/Desktop/files_for_igv
-$ cd ~/Desktop/files_for_igv
+$ mkdir ~/Desktop/dc_workshop/files_for_igv
+$ cd ~/Desktop/dc_workshop/files_for_igv
 ~~~
 
 Now we will transfer our files to that new directory. 
@@ -593,17 +595,17 @@ to `scp` always go in the terminal window that is connected to your
 
 For Cowboy:
 ~~~
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
 ~~~
 For an AWS cloud instance:
 ~~~
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/files_for_igv
-$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/files_for_igv
+$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/dc_workshop/files_for_igv
+$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/dc_workshop/files_for_igv
+$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/dc_workshop/files_for_igv
+$ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/dc_workshop/files_for_igv
 ~~~
 
 You will need to type the password for your AWS instance each time you call `scp`. 
@@ -611,7 +613,7 @@ You will need to type the password for your AWS instance each time you call `scp
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
 their `C:Programs Files/IGV_2.7.2` folder
-and also places a link to the application on their Desktop. You can put the application link into the `~/Desktop/files_for_igv` 
+and also places a link to the application on their Desktop. You can copy the application link into the `~/Desktop/files_for_igv` 
 folder you just created. 
 
 1. Open IGV (double-click on the icon/link).
@@ -619,8 +621,7 @@ folder you just created.
 3. Load our BAM file (`SRR2584866.aligned.sorted.bam`) using the **"Load from File..."** option under the **"File"** pull-down menu. 
 4.  Do the same with our VCF file (`SRR2584866_final_variants.vcf`).
 
-Your IGV browser should look like the screenshot below:
-(But might be different)
+Your IGV browser should look similar to the screenshot below:
 
 ![IGV]({{ site.baseurl }}/fig/igv-screenshot.png)
 
