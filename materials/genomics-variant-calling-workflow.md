@@ -221,14 +221,20 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
 You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
-We can run this at the command line as it takes only a second to complete:
+On Cowboy, using `nano`, create a submission script named `flagstst.pbs` 
 
 ~~~
-$ module load samtools/1.9
-$ samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load samtools/1.9
+samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
-
-This will give you the following statistics about your sorted bam file:
+Save this file, and submit it. When it's finished
+the output will give you the following statistics about your sorted bam file:
 
 ~~~
 351169 + 0 in total (QC-passed reads + QC-failed reads)
@@ -263,7 +269,7 @@ variants.
 
 #### Step 1: Calculate the read coverage of positions in the genome
 
-Coverage, is the number of times any position in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag. The input file is the last part of the command. 
+Coverage, is the number of times any position (a specific nucleotide) in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag. The input file is the last part of the command. 
 
 On Cowboy, create a submission script called pileup.pbs:
 
@@ -312,7 +318,7 @@ On a cloud instance:
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
 
-For more details onthe options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
+For more details on the options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
 
 #### Step 3: Filter and report the SNP variants in variant calling format (VCF)
 
@@ -495,7 +501,18 @@ Institute's Integrative Genomics Viewer (IGV) which requires
 software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
-
+On Cowboy, create a submission script called samindex.pbd:
+```
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load bcftools
+samtools index results/bam/SRR2584866.aligned.sorted.bam
+```
+On a cloud instance just use:
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
@@ -519,10 +536,11 @@ When your prompt changes to something like: `[phoyt@n217]` you will be back in y
 need to change into your `dc_workshop` directory again. Then type the command:
 
 ```
+S cd dc_workshop
 $ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
 ```
 
-On a cloud instance type:
+This is the same command as when using a cloud instance:
 
 ~~~
 $ samtools tview results/bam/SRR2584866.aligned.sorted.bam data/ref_genome/ecoli_rel606.fasta
@@ -546,13 +564,15 @@ AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGCTTCTGAACTG
 coordinates in our reference genome. The ***second*** line shows the reference
 genome sequence. The ***third*** line shows the consensus sequence determined from the sequence reads. A **`.`** (dot) indicates
 a match to the reference sequence, and we can see that the *consensus* from our sample matches the reference in most
-locations. That is good! If that wasn't the case, we should probably reconsider our choice of reference.
+locations. That is good! If that wasn't the case, we should probably reconsider our choice of reference. 
+You can use the arrow keys on your keyboard
+to scroll or type `?` for a help menu.
 
 Below the horizontal line, we can see all of the reads in our sample aligned with this region of the reference genome. Only 
-positions where the called base differs from the reference are the nucleotides shown. You can use the arrow keys on your keyboard
-to scroll or type `?` for a help menu. To navigate to a specific position, type `g` (for "goto"). A dialogue box will appear. In
+positions where the called base differs from the reference are the nucleotides shown. 
+**To navigate to a specific position**, type `g` (for "goto"). A dialogue box will appear. In
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
-(*e.g.* for this sample, type `CP000819.1:50` to view the 50th base. Type `Ctrl^C` or `q` to exit `tview`
+(*e.g.* for this sample, type `CP000819.1:50` to view the 50th base. 
 
 > ### In Class Exercise
 > 
@@ -562,9 +582,32 @@ this box, type the name of the "chromosome" followed by a colon and the position
 >> #### Solution
 >> 
 >> Type `g`. In the dialogue box, then type `CP000819.1:4377265`. 
->> `G` is the variant. `A` is canonical. After some research, you would find
+>> `A` is canonical (reference) base call, but all the sequences show `G` is the variant. So this looks
+>> like a **hom-alt** or "homozygous-variant" position. After some research, you would find
 >> that this variant possibly changes the phenotype of this sample to hypermutable. Because it occurs
 >> in the gene *mutL*, which controls DNA mismatch repair.
+> 
+> Does this match what we know about our `VCF` file? Let's open our `SRR2584866_final_variants.vcf`
+> file and check out this variant!
+> 
+>> Use `nano` to open your file 
+>> `nano ~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf`
+>> in the bottom right, you will see `^_ Go To Line`. This means "control-underline" is the keystroke to give you a "go to line" command.
+>> To accomplish this, you'll need to use a combination of <kbd>CONTROL-SHIFT-Underline</kbd> because <kbd> SHIFT-Underline</kbd> 
+>> is the only way to get a `_` character. We already know that this position is on line 761 of the `VCF` file, so
+>> enter "761" when asked to "Enter line number, column number:".
+>> It should look like this, then you hit the <kbd> ENTER</kbd> key:
+>> ![nano goto]({{site.baseurl}}/fig/nanogoto.png)
+>> 
+
+The line 761 will probably be too long to fit on your screen, but should look like this:
+`CP000819.1	4377265	.	A	G	225	.	DP=16;VDB=0.921692;SGB=-0.683931;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,4,9;MQ=60	GT:PL	1:255,0`
+This tells us that in the chromosome CP000819.1, at position 4377265, we see a genotype call (`GT`) of `1` which is 
+homozygous variant (**hom-alt**) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
+(coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's heterozygous (10^-25.5 is very unlikely), but the sequenced
+sample is a homozygous variant! Our `VCF` file matches our `TVIEW` output!
+
+Type `Ctrl^C` or `q` to exit `tview`
 
 ### Viewing with IGV
 
@@ -576,22 +619,22 @@ external data sources. This makes it straightforward to relate your data with in
 regions, known genes, epigenetic features or areas of cross-species conservation, to name just a few.
 
 In order to use IGV, we will need to transfer some files to our local machine. We learned how to do this with `scp`. 
-Open a **new** tab in your LOCAL terminal window (not the one connected to a remote computer) and 
-create a new folder. We'll put this folder in our `dc_workshop` directory. 
-First make the directory we need to store the files:
+Open a **new** tab in your LOCAL terminal window **(not the one connected to a remote computer)** and 
+create a new folder named `dc_workshop` on our `Desktop`.
+Then we'll make the directory `files_for_igv` to store the files:
 
 ~~~
+$ mkdir ~/Desktop/dc_workshop
 $ mkdir ~/Desktop/dc_workshop/files_for_igv
 $ cd ~/Desktop/dc_workshop/files_for_igv
 ~~~
 
-Now we will transfer our files to that new directory. 
+Now we will transfer our files to that new directory using `scp`. 
 
-
-When using a remote system, remember to replace the text between the `@` and the `:` 
-with your `<username><ip-address>`, or your AWS (or CyVerse) instance number. The commands 
-to `scp` always go in the terminal window that is connected to your
-**local** computer (not your AWS instance).
+When using a remote system, remember to replace put your `<username>` before the `@` symbol, 
+and the `<ip-address>`, or your AWS (or CyVerse) instance number between the text between the `@` and the `:`.
+The commands to `scp` are always entered in the terminal window that is connected to your
+**local** computer (not your remote/AWS instance).
 
 For Cowboy:
 ~~~
@@ -608,40 +651,55 @@ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/data/ref_g
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/dc_workshop/files_for_igv
 ~~~
 
-You will need to type the password for your AWS instance each time you call `scp`. 
+You will need to type the password for your remote/AWS instance each time you call `scp`. 
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
 their `C:Programs Files/IGV_2.7.2` folder
 and also places a link to the application on their Desktop. You can copy the application link into the `~/Desktop/files_for_igv` 
-folder you just created. 
+folder you just created, or just open IGV from the Desktop 
 
 1. Open IGV (double-click on the icon/link).
 2. Load our reference genome file (`ecoli_rel606.fasta`) into IGV using the **"Load Genomes from File..."** option under the **"Genomes"** pull-down menu.
 3. Load our BAM file (`SRR2584866.aligned.sorted.bam`) using the **"Load from File..."** option under the **"File"** pull-down menu. 
 4.  Do the same with our VCF file (`SRR2584866_final_variants.vcf`).
 
-Your IGV browser should look similar to the screenshot below:
+Your IGV browser might look different than the screenshot below:
 
-![IGV]({{ site.baseurl }}/fig/igv-screenshot.png)
+![IGV]({{ site.baseurl }}/fig/igv-screenshot2.png)
 
 There should be two tracks: one corresponding to our BAM file and the other for our VCF file. 
 
 In the **VCF track**, each bar across the top of the plot shows the allele fraction for a single locus. The second bar shows
-the genotypes for each locus in each *sample*. We only have one sample called here so we only see a single line. Dark blue = 
-heterozygous, Cyan = homozygous variant, Grey = reference.  Filtered entries are transparent. There might be variations in 
+the genotypes for each locus in each *sample*. We only have one sample called here so we only see a single line. 
+Cyan = homozygous variant, Grey = reference. Most of what we see are homozygous variants, because E. coli is 
+a haploid organism. But we can see some heterozygous calls, if we know where to look. They will show up as dark-blue. 
+Filtered entries are transparent. There might be variations in 
 the colors for different operating systems.
 
-Zoom in to inspect variants you see in your filtered VCF file to become more familiar with IGV. See how quality information 
+We can zoom in to inspect variants you see in your filtered VCF file to become more familiar with IGV. 
+But first, let's check out our **hom-alt** allele in the *mutL* gene. At the top of IGV, there is a white box 
+with "CP000819.1" (the chromosome number) already entered. Let's go to position 4377265 again. Just click after 
+the CP000819.1 and enter a colon character then the position: `:4377265` and click on "Go".
+Suddenly a lot of information is visible. It should look like this:
+![igv-at-mutL]({{ site.baseurl }}/fig/igv-screenshot-mutl.png)
+
+Now we can see that at position 4377265, the reference genome sequence (at the bottom) has an "A", 
+but all the reads (16 of them) have a "G" at that position. We also see some reads are in the forward direction, 
+and some are in the reverse direction. We see the call is cyan colored or **hom-alt**. 
+Take some time to explore this output to see how quality information 
 corresponds to alignment information at those loci.
-Use [this Broad Institute website](http://software.broadinstitute.org/software/igv/AlignmentData) and the links therein to understand how IGV colors the alignments.
+Use [this Broad Institute website](http://software.broadinstitute.org/software/igv/AlignmentData) and the links 
+therein to understand how IGV colors the alignments.
+
+**Congratulations again!** You have mapped over a million sequence reads to a full bacterial genome, and everything looks correct!
 
 Now that we've run through our workflow for a single sample, we want to repeat this workflow for our other five
 samples. However, as usual, we don't want to type each of these individual steps again five more times. That would be very
 time consuming and error-prone, and would become impossible as we gathered more and more samples. Luckily, we
 already know the tools we need to use to automate this workflow and run it on as many files as we want using a
-single line of code. Those tools are: **wildcards**, **`for` loops**, and **bash scripts**. We'll use all three in the next 
-lesson. 
+single line of code. Those tools are: **wildcards**, **`for` loops**, and **bash scripts**. We'll use all three 
+in [the next lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts). 
 
 > ### Installing Software
 > 
