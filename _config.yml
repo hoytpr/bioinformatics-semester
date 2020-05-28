@@ -9,8 +9,8 @@ kramdown:
 permalink:        pretty
 
 # Setup
-title:            Introduction to Biological Informatics
-description:      'An OMICS Course Part 1: Shell and Genomics to R'
+title:            Data Science in Genomics Introduction
+description:      'An OMICS Course Part 1: Shell, Organizing and Genomics'
 url:              https://github.com/hoytpr/bioinformatics-semester
 baseurl:          /bioinformatics-semester
 email:            peter.r.hoyt@okstate.edu

@@ -15,13 +15,13 @@ language: Shell
 - Create files in that hierarchy using an editor or by copying and renaming existing files.
 - Delete, copy and move specified files and/or directories.
 
-`___________________________________________________________________________________________________`
+`____________________________________________________________________`
 
 ## Creating directories
 We now know how to explore files and directories,
 but how do we create them in the first place?
 
-### Step one: see where we are and what we already have
+### Step one: See where we are and what we already have
 Let's go back to our `data-shell` directory on the Desktop
 and use `ls -F` to see what it contains:
 
@@ -35,7 +35,7 @@ creatures/  data/  molecules/  north-pacific-gyre/  notes.txt  pizza.cfg  solar.
 ### Create a directory
 
 Let's create a new directory called `thesis` using the command `mkdir thesis`
-(which has no output):
+(which has no screen output):
 
 ~~~
 $ mkdir thesis
@@ -65,11 +65,11 @@ Complicated names of files and directories can make your life painful
 when working on the command line. Here we provide a few useful
 tips for the names of your files.
 
-1. Don't use whitespaces.
+1. Don't use whitespaces (a "space").
 
-   Whitespaces can make a name more meaningful
-   but because whitespace is used to separate arguments on the command line
-   it is better to completely avoid them in names of files and directories.
+   Whitespace is used to separate arguments on the command line!
+   Using spaces in file names effectively turns your file name into a command.
+   It is better to completely avoid them in names of files and directories.
    You can use `-` or `_` instead of whitespace.
 
 2. Don't begin the name with `-` (dash) or `.` (period).

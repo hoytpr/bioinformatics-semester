@@ -3,14 +3,14 @@ layout: page
 title: Syllabus
 catalog: BIOC 6820
 credits: 3
-semester: Fall 2019
+semester: Fall 2020
 professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: peter.r.hoyt@okstate.edu
 phone: 405-744-6206
 schedule: 9:00AM - 10:15AM  T & Th
-location: 246H NRC
-office_hours: Tuesdays 10-11am
+location: ZOOM link TBD
+office_hours: Tuesdays 10:30-11am
 office_hours_location: 110FC HBRC
 ---
 
@@ -18,8 +18,8 @@ office_hours_location: 110FC HBRC
 
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
 
-### OSU Fall 2019 Syllabus Attachment
-PDF can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2019-Syllabus-Attachment.pdf)
+### OSU Fall 2020 Syllabus Attachment
+PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2019-Syllabus-Attachment.pdf)
 
 ### Professor
 
@@ -51,7 +51,8 @@ Times: {{ page.office_hours }}
 
 Location: {{ page.office_hours_location }}
 
-Or by appointment. *Note: my schedule gets very busy during the semester so
+Except for emergencies, Dr. Hoyt will only be available for virtual meetings in Fall 2020. 
+*Note: my schedule gets very busy during the semester so
 please try to schedule appointments as far in advance as possible. In general it
 will be very difficult to set up appointments less than 24 hours in advance.*
 
@@ -77,7 +78,7 @@ There is no required text book for this class.
 
 Computers are increasingly essential to the study of all aspects of
 biology. The course seeks to improve cross-disciplinary understanding and
-will be taught using the Bash Shell and R, but the concepts learned will easily apply to
+will be taught using the Bash Shell, but the concepts learned will easily apply to
 all programming languages. No background in programming is required. 
 
 
@@ -96,7 +97,7 @@ results to graphs, text files, and potentially databases.
 
 Students completing this course will be able to:
 
-* Write simple computer programs in the BASH shell or R
+* Write simple computer programs in the BASH shell
 * Automate data analysis
 * Create well structured dataframes*
 * Extract information from dataframes*

@@ -5,11 +5,10 @@ layout: default
 ### Welcome!
 This website hosts introductory material for teaching biologists how to interact
 with data including: use of the Unix shell, creating scripts, using genomics tools 
-at the command-line, and creating automated genomics scripts. It leads into 
-using R-programming with data structures, and
-programming for data manipulation, analysis, and visualization. 
-It is offered as a flipped university course where the students read material 
-and they come to class to work through lecture materials in a hands-on
+at the command-line, and creating automated genomics scripts. 
+In the Fall of 2020, due to the N-Cov-2 pandemic, this course 
+is offered as an online/hybrid university course where the students read material 
+and they come to VIRTUAL class (using ZOOM) to work through lecture materials in a hands-on
 workshop-style (active learning) environment. 
 
 This course is **open-source**: meaning other instructors are welcome 
@@ -32,6 +31,10 @@ For Students
   <i class="fa fa-play-circle fa-fw"></i> Self-Guided Start-Up Guide</a>
 
 <!--
+
+It leads into 
+using R-programming with data structures, and
+programming for data manipulation, analysis, and visualization. 
 
 For Instructors
 : <a href="{{ site.baseurl}}/readings">
