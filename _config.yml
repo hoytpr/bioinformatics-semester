@@ -9,7 +9,7 @@ kramdown:
 permalink:        pretty
 
 # Setup
-title:            Data Science in Genomics Introduction
+title:            Data Science in Omics Introduction
 description:      'An OMICS Course Part 1: Shell, Organizing and Genomics'
 url:              https://github.com/hoytpr/bioinformatics-semester
 baseurl:          /bioinformatics-semester
