@@ -3,7 +3,7 @@ layout: page
 title: README
 ---
 
-### Data Science in Genomics Introduction was created with the:
+### Data Science in Omics Introduction was created with the:
 ### Data Carpentry for Biologists - [Semester Course](http://datacarpentry.org/semester-biology)
 
 ### You can cite the material used in this course using the follwing DOI:
