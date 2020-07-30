@@ -33,8 +33,8 @@ to be better. To strive toward this
 goal Dr. Hoyt will embrace The Carpentries active learning pedagogy and continue to
 improve the course through practices of education experts including 
 [Dr. Rochelle Tractenberg](https://cbpr.georgetown.edu/rochelle_tractenberg/#)
-who developed the [Mastery Rubric for Bioinformatics](https://www.biorxiv.org/content/10.1101/655456v1) (under peer review) 
-described in an [interview](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/)
+who developed the [Mastery Rubric for Bioinformatics](https://www.biorxiv.org/content/10.1101/655456v1) [published in PlOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0225256) 
+and described in an [interview](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/)
 by [Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
 [Life Science Trainers website](https://lifescitrainers.org).
  
