@@ -75,7 +75,8 @@ cp unicorn.dat original-unicorn.dat
 
 > **Indentation of code within a `for` loop**
 > Note that it is common practice to indent the line(s) of code within a `for` loop.
-> The only purpose is to make the code easier to read -- it is not required for the loop to run.
+> You do not need to indent the inner loop, but it will make the code easier to read. 
+> If you want to indent your loop in Gitbash, use four to eight spaces (**not** <kbd>Tab</kbd>)
 
 When using variables it is also
 possible to put the names into curly braces to clearly delimit the variable
@@ -192,8 +193,8 @@ from whatever file is being processed, and prints to the standard output.
 > #### Spaces in Names
 > It is best to **avoid using spaces** (or other special characters) in filenames.
 > But there is a *workaround* if one of the list elements
-> contains a space character: The workaround is to surround the filename with
-> quotes, **and also** surround our loop variable with quotes.
+> contains a space character: The workaround is to surround the full 
+> filename with quotes (don't use wildcards), **and also** surround our loop variable with quotes.
 > For example if the `creatures` directory had the following files:
 >
 > ~~~
@@ -215,7 +216,7 @@ from whatever file is being processed, and prints to the standard output.
 Nelle is now ready to process her current critical data files using 
 `goostats` --- a shell script written by her supervisor.
 This script calculates some statistics from a protein sample file, 
-and it takes two arguments:
+and it is **important** that we know it takes two arguments:
 
 1. an input file (containing the raw data)
 2. an output file (to store the calculated statistics)
@@ -243,7 +244,7 @@ NENE02043A.txt
 NENE02043B.txt
 ~~~
 
-Her next step is to decide what to call the files that the 
+Her next step is *to decide what to call the files* that the 
 `goostats` analysis program will create (the output filenames).
 Prefixing each input file's name with "stats" seems simple,
 and appropriate, so she modifies her loop to do that:
@@ -270,7 +271,8 @@ But typing in these loop commands over and over again is already
 becoming tedious, and Nelle is worried about making mistakes,
 so instead of re-entering her loop, she presses the **up arrow**.
 In response, the shell redisplays the whole loop on **one line**
-(using semi-colons to separate the loop parts):
+using semi-colons to separate the loop parts (except for 
+`do` which never takes a semi-colon):
 
 ~~~
 $ for datafile in NENE*[AB].txt; do echo $datafile stats-$datafile; done
@@ -282,15 +284,20 @@ then replaces it by typing in `bash goostats`:
 ~~~
 $ for datafile in NENE*[AB].txt; do bash goostats $datafile stats-$datafile; done
 ~~~
-
+> Using the command phrase `bash goostats` does two things. It tells the shell
+> that it wants to run a program using the `bash` shell. Then the phrase 
+> tells the bash shell the name of the program it wants to run (`goostats`). This
+> is very similar to wanting to run any program. If the program was written in 
+> Python for example, the command would have been `python goostats`.
+  
 When she presses **<kbd>Enter</kbd>**,
 the shell runs the modified command.
 However, nothing appears to happen --- there is no output!
 After a moment, Nelle realizes that since her script doesn't print 
 anything to the screen any longer, she has no idea whether it is 
 running on one or all of the 1518 files, much less how quickly.
-She kills the running command by typing `Ctrl-C`,
-uses **up-arrow** to repeat the command,
+She kills the running command by typing **`Ctrl-C`**,
+uses the **up-arrow** to repeat the command,
 and edits it to read:
 
 ~~~

@@ -4,48 +4,80 @@ element: notes
 title: Advanced Shell
 language: Shell
 ---
-### Questions:
-- "How can I search within files?"
-- "How can I combine existing commands to do new things?"
-### Objectives:
-- "Employ the `grep` command to search for information within files."
-- "Print the results of a command to a file."
-- "Construct command pipelines with two or more stages."
+### Review of Shell Accomplishments
+
+- How can I search within files?
+- How can I combine existing commands to do new things?
+- Employ the `grep` command to search for information within files.
+- Print the results of a command to a file.
+- Construct command pipelines with two or more stages.
+
+### Starting Genomics
+
+In previous lessons, you learned how to use the bash shell to interact with your computer through a command line interface. In this lesson, you will be applying this new knowledge to a more genomics oriented shell, located on a remote supercomputer (or even a remote cloud service). We will spend most of our time learning about the basics of the shell by manipulating some experimental data. Some of the data we’re going to be working with is quite large, and we’re also going to be using several bioinformatics packages in later lessons to work with this data. To avoid having to spend time downloading the data and downloading and installing all of the software, we’re going to have the data available locally by [downloading it here]({{ site.baseurl }}/data/shell_data.zip). Also registered students can download it from [Canvas](https://canvas.okstate.edu/files/4300836/download?download_frd=1) then unzip it on out Desktop. NOTE, that if we are working with data on a remote server we may have the data preinstalled. 
 
 ### Searching files
 
-We discussed in a previous episode how to search within a file using `less`. We can also
-search within files without even opening them, using `grep`. `grep` is a command-line
-utility for searching plain-text files for lines matching a specific set of 
+We discussed in a previous episode how to search within a file using `less` and also
+how to search within files without even opening them, using `grep`. Remember `grep` 
+searches plain-text files for lines matching a specific set of 
 characters (sometimes called a string) or a particular pattern 
-(which can be specified using something called regular expressions). We're not going to work with 
-regular expressions in this lesson, and are instead going to specify the strings 
+(which can be specified using special wildcard-like characters called 
+***regular expressions***). We're not going to work with 
+regular expressions in this lesson, but are going to specify the strings 
 we are searching for.
-Let's give it a try!
+
 
 > #### Nucleotide abbreviations
 > 
-> The four nucleotides that appear in DNA are abbreviated `A`, `C`, `T` and `G`. 
-> Unknown nucleotides are represented with the letter `N`. An `N` appearing
+> The four nucleotides that appear in DNA are abbreviated `A`, `C`, `T` and `G`.
+> When a sequencing instrument "sees" what it thinks is the addition of a 
+> specific base, then it "calls" that base as an A, C, T, or G. When a base can not
+> be called for any reason, unknown nucleotides are represented with the letter `N`. An `N` appearing
 > in a sequencing file represents a position where the sequencing machine was not able to 
-> confidently determine the nucleotide in that position. You can think of an `N` as a `NULL` value
-> within a DNA sequence. 
+> confidently determine the nucleotide in that position. You can think of an `N` 
+> as a `NULL` value within a DNA sequence. In other words, the base at that position could not be "called".  
 > 
+> Also, every single base that is called (including `N`) is given a **confidence score**.
+> The computer algorithms that produce a "read" also provide confidence values for each read.
+> We will see these confidence values (often called "Q" scores or Phred scores) 
+> for every base in every read of the fastq files.  
 
-We'll search for strings inside of our fastq files. Let's first make sure we are in the correct 
-directory.
+#### Details on the FASTQ format
 
+Although it looks complicated (and it is), we can understand the
+[fastq](https://en.wikipedia.org/wiki/FASTQ_format) format with a little decoding. 
+The first thing to know is that each sequence "read" in a fastq file is represented by FOUR lines.
+Some rules about the format
+include...
+
+|Line|Description|
+|----|-----------|
+|1|Always begins with '@' and then information about the read (e.g. identifier)|
+|2|**The actual DNA sequence**|
+|3|Always begins with a `+`, otherwise blank, or has the same info as line 1|
+|4|Has a string of characters which represent the **quality scores** and *must have same number of characters as line 2*|
+
+Let's first make sure we are in the correct directory: `shell_data/untrimmed_fastq`. 
+We have to remind ourselves 
+that the directory we start in depends on the operating system. For Macs and PCs we should use:
+
+~~~
+$ cd ~/Desktop/shell_data/untrimmed_fastq
+~~~
+On an HPC we would start in our home directory without a Desktop directory 
 ~~~
 $ cd ~/shell_data/untrimmed_fastq
 ~~~
-
-Suppose we want to see how many reads in our file have really bad segments containing 10 consecutive unknown nucleotides ("N").
+Then we can start by searching for `N` strings inside of our fastq files.
+Suppose we want to see how many reads in our file have really bad segments 
+containing 10 consecutive unknown nucleotides ("N").
 
 ### Determining quality
 
-In this lesson, we're going to be manually searching for strings of `N`s within our sequence
-results to illustrate some principles of file searching. It can be really useful to do this
-type of searching to get a feel for the quality of your sequencing results, however, in your 
+Manually searching for strings of `N`s illustrates some principles of file 
+searching. But it's only useful to do this type of searching to get an 
+overall feel for the quality of your sequencing results. However, in your 
 research you will most likely use a bioinformatics tool that has a built-in program for
 filtering out low-quality reads. You'll learn how to use one such tool in 
 [a later lesson]({{ site.baseurl }}/materials/genomics-assembly-files/).
@@ -56,23 +88,22 @@ $ grep NNNNNNNNNN SRR098026.fastq
 ~~~
 
 This command returns a lot of output to the terminal. Every single line in the SRR098026 
-file that contains at least 10 consecutive Ns is printed to the terminal, regardless of how long or short the file is. 
+file that contains at least 10 consecutive `N`s is printed to the terminal, regardless of how long or short the file is. 
 We may be interested not only in the actual sequence which contains this string, but 
-in the name (or identifier) of that sequence. We discussed in a previous lesson 
-that the identifier line immediately precedes the nucleotide sequence for each read
+in the name (or identifier) of that sequence. We know 
+that the identifier line immediately precedes the nucleotide sequence line for each read
 in a FASTQ file. We may also want to inspect the quality scores associated with
-each of these reads. To get all of this information, we will return the line 
-immediately before each match and the two lines immediately after each match.
+each of these reads. To get all of this information, we need a command that will 
+return the line immediately above (or ***b***efore each match and the two lines immediately below (or **a**fter each match (a total of 4 lines).
 
-We can use the `-B` argument for grep to return a specific number of lines before
-each match. The `-A` argument returns a specific number of lines after each matching line. Here we want the line *before* and the two lines *after* each 
-matching line, so we add `-B1 -A2` to our grep command.
+We can use the `-B` argument for `grep` to return a specific number of lines **B**efore
+each match. The `-A` argument returns a specific number of lines **A**fter each matching line. Here we want one line *before* and the two lines *after* each 
+matching line, so we add `-B1 -A2` to our `grep` command.
 
 ~~~
 $ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq
 ~~~
-
-One of the sets of lines returned by this command is: 
+The last four lines returned look like the correct output for our fastq format: 
 
 ~~~
 @SRR098026.177 HWUSI-EAS1599_1:2:1:1:2025 length=35
@@ -81,64 +112,98 @@ CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ~~~
 
+However, these lines are preceeded by two dashes **`--`** which seems odd. It turns out that when you use the `-A` or `-B` flags, `grep` has a default setting to add a **group separator** between lines of output that are not contiguous. When we see `--` it means there are other lines in the file between the lines shown, that did not match our pattern. 
+
+We bring this up now because it's important you know about this behavior and it is a great example of "wrangling" data. It also shows how it's important to read the `man` pages! This can be easily fixed if you know that it's happening.
+
+To prevent extra separators from being introduced you can use 
+`grep` and pipe the output to **another** grep. The second grep will select against the `--` pattern using the `-v` flag we learned about earlier.
+
+```
+$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--"
+```
+Now we can see the output is exactly the same, but there are no `--` group separators. 
+Also notice that the output is a perfectly formatted fastq file.
+That means we can redirect the output creating a fastq file called
+`bad_reads.fastq`
+
+```
+grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" > bad_reads.fastq
+```
+
+But you may be wondering what the `\` backslash is for when we use 
+`grep -v "\--"`. The easiest explanation is that it prevents an error! Try the command without the backslash.
+
+```
+$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "--"
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try 'grep --help' for more information.
+```
+
+The *error message* tells us that the proper usage of `grep` is the command, followed by an option (a "flag") and then a pattern before the filename. The shell cannot use a dash `-` as a pattern directly, because the dash symbolizes a flag or option is being passed to `grep`. To prevent the dash from beng used as a flag indicator, *we must put a **backslash** in front* which is known as an ***escape character***.
+
+There are several special characters like the dash `-` that are reserved by the shell. We have used many of them already (e.g. $, >, #, {, *, ?). When used properly, they don't need "escaping", but when used for pattern matching, they always require some kind of escape character! Even the backslash `\` needs to be "escaped" if you are searching for it in a pattern (`\\` is used to search for `\`)! The [topic of pattern matching](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html) is pretty complicated but [we have a partial list]({{ site.baseurl }}/materials/Characters-to-escape) of [common characters]({{ site.baseurl }}/materials/character-chart) that may need to be "escaped" when used for pattern matching. For now all you need to remember is that in the Bash shell, the backslash character `\` is used in front of a special character like "dash" `-` or wildcard in a pattern search. 
+
+> #### Preview, then redirect output
+> 
+> `grep` allowed us to identify sequences in our FASTQ files that match a particular pattern. 
+> We used what is printed to the terminal then captured that output using "redirection" `>`.
+> It's good practice to output to the terminal screen before creating or changing files to avoid problems. There are 
+> other ways to check your data before using it for downstream analyses, and we 
+> will discuss some later. 
+
+
 > #### Exercise
 >
-> 1. Search for the sequence `GNATNACCACTTCC` in the `SRR098026.fastq` file.
-> Have your search return all matching lines and the name (or identifier) for each sequence
+> 1. Search for the sequence `GNATNACCACTTCC` in the `SRR098026.fastq` file. 
+> Have your search return matching lines and the name (or identifier) for each sequence
 > that contains a match.
 > 
-> 2. Search for the sequence `AAGTT` in both FASTQ files.
+> 2. Search for the sequence `AAGTT` in **both** FASTQ files.
 > Have your search return all matching lines and the name (or identifier) for each sequence
-> that contains a match.
+> that contains a match. Remember to remove any group identifiers.
 > 
 > > #### Solution  
 > > 1. `grep -B1 GNATNACCACTTCC SRR098026.fastq`  
-> > 2. `grep -B1 AAGTT *.fastq`
+> > 2. `grep -B1 AAGTT *.fastq | grep -v "\--"`
 > >
-> 
 
-### Redirecting output
+### One last flag `-h`
 
-`grep` allowed us to identify sequences in our FASTQ files that match a particular pattern. 
-All of these sequences were printed to our terminal screen, but in order to work with these 
-sequences and perform other operations on them, we will need to capture that output in some
-way. 
+The Exercise #2 above showed that when we send ***multiple*** files to the `grep` command, the output lines are prefaced with the file name. This is to help us find the actual lines later (think if you had 5000 files). If we want to stop this from happening (in order to have a perfectly formatted `fastq` file as the output), we can use the `-h` flag. 
 
-We can do this with something called "redirection". The idea is that
-we are taking what would ordinarily be printed to the terminal screen and redirecting it to another location. 
-In our case, we want to print this information to a file so that we can look at it later and 
-use other commands to analyze this data.
-
-The command for redirecting output to a file is `>`.
+```
+grep -h -A1 -B1 AAGTT *.fastq | grep -v "\--"
+```
 
 Let's try out this command and copy all the records (including all four lines of each record) 
 in our FASTQ files that contain 
 `NNNNNNNNNN` to another file called `bad_reads.txt`.
 
 ~~~
-$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq > bad_reads.txt
+$ grep -h -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" > bad_reads.txt
 ~~~
 
 > ### File extensions
 > 
 > You might be confused about why we're naming our output file with a `.txt` extension. After all,
 > it will be holding FASTQ formatted data that we're extracting from our FASTQ files. Won't it 
-> also be a FASTQ file? The answer is, yes - it will be a FASTQ file and it would make sense to 
-> name it with a `.fastq` extension. However, using a `.fastq` extension will lead us to problems
+> also be a FASTQ file? The answer is, **yes** - it will be a FASTQ file and it would make sense to 
+> name it with a `.fastq` extension. However, using a `.fastq` extension will lead to problems
 > when we move to using wildcards later in this episode. We'll point out where this becomes
 > important. For now, it's good that you're thinking about file extensions! 
-> 
 
-The prompt should sit there a little bit, and then it should look like nothing
+When you run the command above, the prompt should sit there a little bit, 
+and then it should look like nothing
 happened. But type `ls`. You should see a new file called `bad_reads.txt`. 
 
 We can check the number of lines in our new file using a command called `wc`. 
-`wc` stands for **word count**. This command counts the number of words, lines, and characters
+Remember that `wc` stands for **word count**. This command counts the number of words, lines, and characters
 in a file. 
 
 ~~~
 $ wc bad_reads.txt
-  537  1073 23217 bad_reads.txt
+  536  1072 23214 bad_reads.txt
 ~~~
 
 This will tell us the number of lines, words and characters in the file. If we
@@ -146,7 +211,7 @@ want only the number of lines, we can use the `-l` flag for `lines`.
 
 ~~~
 $ wc -l bad_reads.txt
-  537 bad_reads.txt
+  536 bad_reads.txt
 ~~~
 
 Because we asked `grep` for all four lines of each FASTQ record, we need to divide the output by
@@ -160,9 +225,9 @@ four to get the number of sequences that match our search pattern.
 >>  
 >>
 >> ~~~
->> $ grep NNN SRR098026.fastq > bad_reads.txt
+>> $ grep NNN SRR098026.fastq | grep -v "\--" > bad_reads.txt
 >> $ wc -l bad_reads.txt
->> 249
+>> 249 bad_reads.txt
 >> ~~~
 >>
 
@@ -173,10 +238,10 @@ This is called "overwriting" and, just like you don't want to overwrite your vid
 of your kid's first birthday party, you also want to avoid overwriting your data files.
 
 ~~~
-$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq > bad_reads.txt
+$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" > bad_reads.txt
 $ wc -l bad_reads.txt
-  537 bad_reads.txt
-$ grep -B1 -A2 NNNNNNNNNN SRR097977.fastq > bad_reads.txt
+  536 bad_reads.txt
+$ grep -B1 -A2 NNNNNNNNNN SRR097977.fastq | grep -v "\--" > bad_reads.txt
 $ wc -l bad_reads.txt
   0 bad_reads.txt
 ~~~
@@ -185,26 +250,25 @@ Here, the output of our second  call to `wc` shows that we no longer have any li
 because the second file we searched (`SRR097977.fastq`) does not contain any lines that match our
 search sequence. So our file was overwritten and is now empty.
 
-We can avoid overwriting our files by using the command `>>`. `>>` is known as the **"append redirect"** and will 
+We can avoid overwriting our files by using the command `>>`. Remember that `>>` is known as the **"append redirect"** and will 
 append new output to the end of a file, rather than overwriting it.
 
 ~~~
-$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq > bad_reads.txt
+$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" > bad_reads.txt
 $ wc -l bad_reads.txt
-  537 bad_reads.txt
-$ grep -B1 -A2 NNNNNNNNNN SRR097977.fastq >> bad_reads.txt
+  536 bad_reads.txt
+$ grep -B1 -A2 NNNNNNNNNN SRR097977.fastq | grep -v "\--" >> bad_reads.txt
 $ wc -l bad_reads.txt
-  537 bad_reads.txt
+  536 bad_reads.txt
 ~~~
 
 The output of our second call to `wc` shows that we have not overwritten our original data. 
-
-We can also do this with a single line of code by using a wildcard. 
+In this way we can search all (think thousands of) our files for bad reads using a single line of code and a wildcard! 
 
 ~~~
-$ grep -B1 -A2 NNNNNNNNNN *.fastq > bad_reads.txt
+$ grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > bad_reads.txt
 $ wc -l bad_reads.txt
-  537 bad_reads.txt
+  536 bad_reads.txt
 ~~~
 
 > ### File extensions - part 2
@@ -215,7 +279,7 @@ $ wc -l bad_reads.txt
 > would give us a warning. 
 > 
 > ~~~
-> grep -B1 -A2 NNNNNNNNNN *.fastq > bad_reads.fastq
+> grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > bad_reads.fastq
 > grep: input file ‘bad_reads.fastq’ is also the output
 > ~~~
 > 
@@ -229,34 +293,30 @@ creating a new output file each time has the potential to clutter up our workspa
 so far haven't been interested in the actual contents of those files, only in the number of 
 reads that we've found. We created the files to store the reads and then counted the lines in 
 the file to see how many reads matched our criteria. There's a way to do this, however, that
-doesn't require us to create these intermediate files - the pipe command (`|`).
+doesn't require us to create these intermediate files using the pipe command (`|`).
 
-This is probably not a key on
-your keyboard you use very much, so let's all take a minute to find that key. 
-What `|` does is take the output that is
-scrolling by on the terminal and uses that output as input to another command. 
-When our output was scrolling by, we might have wished we could slow it down and
-look at it, like we can with `less`. Well it turns out that we can! We can redirect our output
+Remember that `|` takes the output that would otherwise be sent to the 
+terminal and uses that output as input to another command. 
+When our output is large, and we want to slow it down and
+look at it, like we can with `less`, we can! We can redirect our output
 from our `grep` call through the `less` command.
 
 ~~~
-$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | less
+$ grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" | less
 ~~~
 
 We can now see the output from our `grep` call within the `less` interface. We can use the up and down arrows 
 to scroll through the output and use `q` to exit `less`.
 
-Redirecting output is often not intuitive, and can take some time to get used to. Once you're 
-comfortable with redirection, however, you'll be able to combine any number of commands to
-do all sorts of exciting things with your data!
-
-None of the command line programs we've been learning
-do anything all that impressive on their own, but when you start chaining
-them together, you can do some really powerful things very
+Redirecting output can take some time to get used to but once you're 
+comfortable with redirection, you'll be able to combine lots of commands to
+manipulate your data! In fact the command line programs 
+we've been learning are rarely impressive on their own, but when 
+you start chaining them together, you can do some really powerful things very
 efficiently. 
 
-### Using Basename in 'for' loops
-`basename` is a function in UNIX that is helpful for removing a uniform 
+### Using `basename` in 'for' loops
+`basename` is a ***function*** (much like a program) in Unix that is helpful for replacing a uniform 
 part of a name from a list of files. In this case, we will use `basename` 
 to remove the `.pdb` extension from the files that we’ve been working with. 
 
@@ -278,17 +338,18 @@ $ basename aldrin.pdb .pdf
 aldrin.pdb
 ~~~
 
-Basename is really powerful when used in a `for` loop. It allows 
-us to access just the file prefix, which you can use to name things. 
-Let's try this.
+`basename` is really powerful when used in a `for` loop. It allows 
+us to access file names from the end of a `$path` variable (a variable 
+that includes a path), or even ONLY the file prefix, which you 
+can use to name things. ***Let's try isolating a prefix for naming!***
 
-Inside our `for` loop, we create a new variable name. We call 
-the `basename` function inside the parenthesis, then submit our variable 
-name from the for loop, in this example `${filename}`, and finally indicate 
+Inside our `for` loop, we create a new variable `name`. We call 
+the `basename` function inside the parenthesis, then submit a variable 
+name `${filename}` which was defined in the `for` loop. Finally we indicate 
 that `.pdb` should be removed from the file name. It’s important to note 
 that **we’re not changing the actual files**, we’re creating a new variable 
 called `name`. The line `> echo ${name}` will print to the terminal 
-the variable name each time the for loop runs. Because we are iterating 
+the variable name each time the `for` loop runs (and might help with troubleshooting too). Because we are iterating 
 over 48 files, we expect to see 48 lines of output.
 
 ~~~
@@ -308,7 +369,7 @@ cinnamaldehyde
 etc...
 ~~~
 
-> #### Exercise
+> #### Review Exercise
 >
 > Print the file prefix of all of the `.txt` files in our current directory.
 >
@@ -322,10 +383,8 @@ etc...
 >> > echo ${name}
 >> > done
 >> ~~~
->> 
->>
 
-One way this is really useful is to move files. Let's rename all of our .txt files using `mv` so that they have the years on them, which will document when we created them. 
+One really useful way to use `basename` is to move files. Let's rename all of our `.txt` files using `mv` so that they have year timestamps on them, which will document when we created them. 
 
 ~~~
 $ for filename in *.txt
@@ -334,21 +393,8 @@ $ for filename in *.txt
 > mv ${filename}  ${name}_2019.txt
 ~~~
 
-
-> #### Exercise
->
-> Remove `_2019` from all of the `.txt` files. 
->
->> #### Solution
->>  
->> ~~~
->> $ for filename in *_2019.txt
->> > do
->> > name=$(basename ${filename} *_2019.txt)
->> > mv ${filename} ${name}.txt
->> > done
->> ~~~
-
+Now you've learned a lot about some advanced shell commands for manipulating genomics data. But our "wrangling" isn't finished yet. 
+Our [next lesson]({{site.baseurl }}/materials/genomics-data-and-writing-scripts) takes us into the exciting world of writing scripts to automate tasks!
 
 ### Keypoints:
 - `grep` is a powerful search tool with many options for customization.

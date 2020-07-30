@@ -11,14 +11,55 @@ language: Shell
 - Write a basic shell script.
 - Use the `bash` command to execute a shell script.
 - Use `chmod` to make a script an executable program.
+- Start working with remote computer systems
 
-### Writing files
+### Moving to a bigger BASH
 
-We've been able to do a lot of work with files that already exist, but what if we want to write our own files. We're not going to type in a FASTA file, but we'll see as we go through other tutorials, there are a lot of reasons we'll want to write a file, or edit an existing file.
+IMPORTANT! Leave your Cowboy login window open! Don't touch it.
 
-To add text to files, we're going to use a text editor called Nano. We're going to create a file to take notes about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
+Now open ***another*** terminal window (Windows users who run Putty, can go back to Gitbash). 
 
-This is good practice when working in bioinformatics. We can create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory.
+We want to take what we've been learning, and move to the next level, so let's do exactly that! 
+Make sure you are on your Desktop by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder
+
+~~~
+$ cd
+$ cd ..
+$ ls shell_data
+sra_metadata   untrimmed_fastq
+~~~
+ We are going to move our entire `shell_data` file hierachy onto Cowboy. But before we move `shell_data` to Cowboy, we should compress it into a single file that is small and complete. This takes the command `tar`. From your Desktop directory type:
+ 
+ ```
+ $ tar -zcvf shelldata.tar.gz shell_data/
+ ```
+This will create a file named `shelldata.tar.gz` on your desktop!
+Now we need to upload `shelldata.tar.gz` to our Cowboy (scratch) home directory. 
+To do this, while still in your Desktop directory type:
+~~~
+$ scp shelldata.tar.gz <username>@cowboy.hpc.okstate.edu:/scratch/<username>/
+~~~
+
+You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
+will be uploaded. Finally we want to decompress the directories so they are exactly 
+the same as we had on our local computer. To do this in your Cowboy login window 
+(the terminal we told you to leave open) please type:
+```
+$ tar -zxvf shelldata.tar.gz
+$ ls shell_data
+sra_metadata   untrimmed_fastq
+```
+
+We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`
+
+### Writing files review
+We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files.
+We've used a lot of files that already exist, but what if we want to write our own files?
+As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files.
+
+To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
+
+This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
 
 Let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
 then run `nano` to create a file called `README.txt`:
@@ -28,15 +69,19 @@ $ cd ~/shell_data/untrimmed_fastq
 $ nano README.txt
 ~~~
 
+<!--
+
 You should see something like this: 
 
 ![nano201711.png]({{ site.baseurl }}/fig/nano201711.png)
 
 The text at the bottom of the screen shows the keyboard shortcuts for performing various tasks in `nano`. We will talk more about how to interpret this information soon.
 
-> ####     Which Editor?
+
+
+> #### Which Editor?
 >
-> When we say, "`nano` is a text editor," we really do mean "text": it can
+> Remember when when we say, "`nano` is a text editor," we really do mean "text": it can
 > only work with plain character data, not tables, images, or any other
 > human-friendly media. We use it in examples because it is one of the 
 > least complex text editors. However, because of this trait, it may 
@@ -96,6 +141,8 @@ Now you've written a file. You can take a look at it with `less` or `cat`, or op
 > > Add today's date and then use <kbd>Ctrl</kbd>-<kbd>X</kbd> to exit and `y` to save.
 > >
 
+-->
+
 ### Writing scripts
 
 A really powerful thing about the command line is that you can write scripts. Scripts let you save commands to run them and also lets you put multiple commands together. Though writing scripts may require an additional time investment initially, this can save you time as you run them repeatedly. Scripts can also address the challenge of reproducibility: if you need to repeat an analysis, you retain a record of your command history within the script.
@@ -105,10 +152,10 @@ One thing we will commonly want to do with sequencing results is pull out bad re
 Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 ~~~
-grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
+grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > scripted_bad_reads.txt
 ~~~
 
-We're going to create a new file to put this command in. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
+We're going to create a new file to put this `grep` command in. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
 $ nano bad-reads-script.sh
@@ -116,7 +163,7 @@ $ nano bad-reads-script.sh
 
 Type your `grep` command into the file and save it as before. Be careful that you did not add the `$` at the beginning of the line.
 
-Now comes the neat part. We can run this script. Type:
+Now comes the fun part. We can **run** this script as a computer program. Type:
 
 ~~~
 $ bash bad-reads-script.sh
@@ -132,18 +179,56 @@ First, let's look at the current permissions.
 
 ~~~
 $ ls -l bad-reads-script.sh
--rw-rw-r-- 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
+-rw-rw-r-- 1 user group 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
 
-We see that it says `-rw-r--r--`. This shows that the file 
-can be read by any user and written to by the file owner 
-(you). We want to change these permissions so that the 
-file can be executed as a program. We use the command `chmod` 
-to change write permissions. 
-Here we are adding (`+`) executable permissions (`+x`).
-(**NOTE:** the following only works in a real linux environment, 
-and will not work in GitBash terminal)
+Without going into great details, the permissions are most commonly 
+divided into three types: **`r` "read", `w` "write", and `x` "execute".**
+Also, the first position is reserved for descriptors, and the most 
+common descriptor is: **`d` "directory".** 
 
+Finally, the 10 permission indicators are actually four separate sections:
+
+| Position 1 | Positions 2-3-4 | Positions 5-6-7 | Positions 8-9-10 |
+|-------|---------|-----------|----------|
+| Descriptor | Current User or Owner Permissions | Group Permissions | Everybody Permissions|
+
+For each section, the user or group permissions can be set independently. This 
+user-and-group model means that for each file, every user on the system falls 
+into one of three categories: the owner/user of the file, someone in the file’s 
+group, and everyone else. Permissions can be carefully adjusted depending on whether 
+you are logged on as an administrator, or you are  part of a specific group.
+
+We see that `bad-reads-script.sh` permissions are `-rw-r--r--`. This shows that the file 
+can be read by every group or user and also *written to* by the file owner 
+(you, because you made the file, and you are the current user or administrator of your 
+computer). We can visualize the permissions as a table:
+
+<table class="table table-striped" style="width:400px">
+<tr><td></td><th>user</th><th>group</th><th>everyone</th></tr>
+<tr><th>read</th><td>yes</td><td>yes</td><td>yes</td></tr>
+<tr><th>write</th><td>yes</td><td>no</td><td>no</td></tr>
+<tr><th>execute</th><td>no</td><td>no</td><td>no</td></tr>
+</table>
+
+We want to **change** these permissions so that the 
+file can be executed as a program. 
+
+We use the command `chmod` to change permissions for any file or directory. 
+Here we are adding (`+`) executable permissions (`+x`).
+
+> #### Windows Users: FYI about `chmod`! 
+> `chmod` *will* work when you 
+> are logged onto (or SSH to) a remote system like Cowboy!
+> But **doesn't work in the GitBash terminal on your laptop**
+<!--
+> Windows, defines permissions 
+> by [access control lists](https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists), or ACLs. An ACL is a paired list of a “who” with a “what”. 
+> Nonetheless, Windows users **can execute scripts locally** because the 
+> operating system interprets whether the *contents* of the file are executable or not.  
+-->
+
+To add "execute" permissions to a script use:
 ~~~
 $ chmod +x bad-reads-script.sh
 ~~~
@@ -152,10 +237,17 @@ Now let's look at the permissions again.
 
 ~~~
 $ ls -l bad-reads-script.sh
--rwxrwxr-x 1 dcuser dcuser 0 Oct 25 21:46 bad-reads-script.sh
+-rwxr-xr-x 1 user group 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
 
-Now we see that it says `-rwxr-xr-x`. The `x`'s that are there now tell us we can run it as a program. So, let's try it! We'll need to put `./` at the beginning so the computer knows to look here in this directory for the program.
+Now we see that it says `-rwxr-xr-x`. 
+> NOTE: The `chmod` command will change permissions for all user types
+> when used this way. There are alternate methods that change permissions individually,
+> but we aren't covering those methods at this time.
+
+The `x`'s now tell us we 
+can run the script as a program. So, let's try it! We'll need to put `./` at the beginning 
+so the computer knows to look here (the current working directory) for the program.
 
 ~~~
 $ ./bad-reads-script.sh
@@ -163,33 +255,69 @@ $ ./bad-reads-script.sh
 
 The script should run the same way as before, but now we've created our very own computer program!
 
+### Another way to log on to a Remote System
+
+If we want to connect to a remote system and we are already in a bash terminal, 
+We can use the command `ssh` to connect to another remote system. For example, In your Gitbash window (Windows users) or your old local bash window (Macs/Unix) you can type:
+`ssh <username>@cowboy.hpc.okstate.edu`
+
+If you see a warning about the computer not being known, type "yes" to accept the computer.
+You should then see a request for your password. Type in your password.
+NOTE: You won't see anything when you type your password. The cursor won't even move.
+That's expected, so keep typing!
+```
+$ ssh phoyt@cowboy.hpc.okstate.edu
+phoyt@cowboy.hpc.okstate.edu's password:
+Last login: Thu Aug  8 12:28:36 2019 from 139.78.154.30
+Welcome to Cowboy!
+```
+
+**Congratulations!** You have used the command-line interface to
+connect to a remote supercomputer, and now have two active connections!! 
+This is a big step forward when working in genomics!
+
+### Pause for a moment
+
+Now your training takes on new power! While we had fun learning commands and working 
+with files on our laptops (or desktops), it's important to realize that now you are 
+on a supercomputer. The computing power available to you has now increased by a ginormous 
+amount (that's a lot). We will explore some of this power later, but for now just 
+realize how ALL the commands you have learned, can now be applied to your home 
+directory on a supercomputer. Do you want to make sub-directories? Use `mkdir`. 
+Want to create a text file? Use `nano`. Write a script? Yep, you can do that too. 
+
 ### Moving and Downloading Data
 
-So far, we've worked with data that is pre-loaded on the instance in the cloud. Usually, however,
-most analyses begin with moving data onto the instance. Below we'll show you some commands to 
-download data onto your instance, or to move data between your computer and the cloud.
-
-### Getting data from the cloud
+So far, we've worked with data that is pre-loaded on the class website, and this is similar 
+to if the data was available on an "instance" in the cloud. Usually, however,
+most analyses begin with moving data into the cloud instance. Below we'll show you 
+some commands to download data onto your computer as if it was an instance, 
+or to move data between your computer and the cloud. [For more details on a cloud 
+instance, follow this link.]({{ site.baseurl  }}/materials/extras/instance)
+<a name="cloud"></a>
+### Getting data *from* the cloud
 
 There are two programs that will download data from a remote server to your local
-(or remote) machine: ``wget`` and ``curl``. They were designed to do slightly different
-tasks by default, so you'll need to give the programs somewhat different options to get
-the same behaviour, but they are mostly interchangeable.
+machine (or your remote instance): `wget` and `curl`. They were designed to do 
+slightly different tasks by default, so you'll need to give the programs 
+somewhat different options to get the same behavior, but they are 
+mostly interchangeable.
 
- - ``wget`` is short for "world wide web get", and it's basic function is to *download*
+ - `wget` is short for "world wide web get", and it's basic function is to *download*
  web pages or data at a web address.
 
- - ``cURL`` is a pun, it is suppose to be read as "see URL", so it's basic function is
- to *display* webpages or data at a web address.
+ - `cURL` is a pun, it is supposed to be read as "see URL", and it's basic (original) 
+ function is  to *display* webpages or data at a web address. 
+ But it downloads files also.
 
-Which one you need to use mostly depends on your operating system, as most computers will
-only have one or the other installed by default.
+Which command to use mostly depends on your operating system, as most computers will
+*only have one or the other* installed by default.
 
-Let's say you want to download some data from Ensembl. We're going to download a very small
+Let's say you want to download some data from [Ensembl](https://uswest.ensembl.org/info/data/ftp/index.html). We're going to download a very small
 tab-delimited file that just tells us what data is available on the Ensembl bacteria server.
 Before we can start our download, we need to know whether we're using ``curl`` or ``wget``.
 
-To see which program you have type:
+To see which program is installed on your operating system you shouold type:
  
 ~~~
 $ which curl
@@ -212,6 +340,13 @@ $
 
 This output means that you have ``curl`` installed, but not ``wget``.
 
+Windows users with GitBash installed will likely see this:
+
+```
+$ which curl
+/mingw64/bin/curl
+```
+
 Once you know whether you have ``curl`` or ``wget`` use one of the
 following commands to download the file:
 
@@ -230,119 +365,144 @@ $ curl -O ftp://ftp.ensemblgenomes.org/pub/release-37/bacteria/species_EnsemblBa
 Since we wanted to *download* the file rather than just view it, we used ``wget`` without
 any modifiers. With ``curl`` however, we had to use the -O flag, which simultaneously tells ``curl`` to
 download the page instead of showing it to us **and** specifies that it should save the
-file using the same name it had on the server: species_EnsemblBacteria.txt
+file using the **O**riginal name it had on the server: `species_EnsemblBacteria.txt`
 
 It's important to note that both ``curl`` and ``wget`` download to the computer that the
-command line belongs to. So, if you are logged into AWS on the command line and execute
-the ``curl`` command above in the AWS terminal, the file will be downloaded to your AWS
+**command line belongs to**. So, if you are logged into a remote cloud on the command line and execute
+the ``curl`` command above in the cloud's terminal, the file will be downloaded to your remote
 machine, not your local one.
 
-### Moving files between your laptop and your instance
+### Transferring Data Between your Local Machine and the Cloud
 
 What if the data you need is on your local computer, but you need to get it *into* the
 cloud? There are also several ways to do this, but it's *always* easier
-to start the transfer locally. **This means if you're typing into a terminal, and the terminal
-should not be logged into your instance, it should be your local computer termianl. If you're
-using a transfer program, it needs to be installed on your local machine, not your instance.**
+to start the transfer locally. **Important**: For this exercise the terminal you are typing in
+should be your *local computer terminal* (not one logged into your remote system). If you're
+using a transfer program, use the one installed on your local machine, not your instance.
 
-### Transferring Data Between your Local Machine and the Cloud
-### scp
+#### Moving files with SCP or PSCP
 
 `scp` stands for 'secure copy protocol', and is a widely used UNIX tool for moving files
-between computers. The simplest way to use `scp` is to run it in your local terminal,
-and use it to copy a single file:
+between computers and should be installed already. The simplest way to use `scp` 
+is to run it in your local terminal, and use it to copy a single file:
 
 ~~~
 scp <file I want to move> <where I want to move it>
 ~~~
 
 Note that you are always running `scp` locally, but that *doesn't* mean that
-you can only move files from your local computer. A command like:
+you can only move files from your local computer. You can move a file:
 
 ~~~
-$ scp <local file> <AWS instance>
+$ scp <local file> <remote cloud instance>
 ~~~
 
-To move it back, you just re-order the to and from fields:
+Then move it back by re-ordering the to and from fields:
 
 ~~~
-$ scp <AWS instance> <local file>
+$ scp <remote cloud instance> <local file>
 ~~~
 
-#### Uploading Data to your Virtual Machine with scp
+#### Uploading Data to your remote computer with scp
 
-1. Open the terminal and use the `scp` command to upload a file (e.g. local_file.txt) to the dcuser home directory:
+Open the terminal and use the `scp` command to upload a file (e.g. `local_file.txt`) to the remote home directory. 
 
+1. the cloud instance on Cyverse:
 ~~~
-$  scp local_file.txt dcuser@ip.address:/home/dcuser/
+$  scp local_file.txt <remote-username>@ip.address:/home/<remote-username>/
+~~~
+2. AWS
+~~~
+$  scp local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
+~~~
+3. For the Cowboy supercomputer
+~~~
+$  scp local_file.txt <username>@cowboy.hpc.okstate.edu:/home/<username>/
 ~~~
 
-#### Downloading Data from your Virtual Machine with scp
+You may be asked to re-enter your password.  Then you should see the file name printed 
+to the screen. When you are back at your command prompt, switch to the Cowboy Terminal 
+and use `ls` to make sure the file `local_file.txt` is now in your home folder. 
+
+#### Downloading Data from a remote computer with scp
 
 Let's download a text file from our remote machine. You should have a file that contains bad reads called ~/shell_data/scripted_bad_reads.txt.
 
-**Tip:** If you are looking for another (or any really) text file in your home directory to use instead try
+**Tip:** If you are looking for another (or any) text file in your home directory to use instead try
 
 ~~~
 $ find ~ -name *.txt
 ~~~
 
+#### Cloud computer instructions can be slightly different
 
-1. Download the bad reads file in ~/shell_data/scripted_bad_reads.txt to your home ~/Download directory using the following command **(make sure you use substitute dcuser@your-instance-number with your remote login credentials)**:
+When we are on a cloud system like Cyverse, we would download the bad reads file in `~/shell_data/scripted_bad_reads.txt` to our home `~/Download` directory using the following command (make sure you substitute your remote login credentials for "\<username\>@remote-IP-address"):
 
+1. Cyverse
 ~~~
-$ scp dcuser@ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
+$ scp <remote-username>@ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
+~~~
+2. AWS
+~~~
+$ scp <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt. ~/Downloads
 ~~~
 
-Remember that with both commands, they are run from your **local** machine, and we've flipped the order of the 'to' and 'from' parts of the command.
-</div>
-These directions are platform specific so please follow the instructions for your system:
+
+Remember that with both commands, they are run from your **local** machine, and 
+we can flip the order of the 'to' and 'from' parts of the command.
+These directions ***are platform specific*** so please follow the instructions for your system:
+
+<!--
 NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
+-->
 
-**Please select the platform you wish to use for the exercises: <select id="id_platform" name="platformlist" onchange="change_content_by_platform('id_platform');return false;"><option value="aws_unix" id="id_aws_unix" selected> AWS_UNIX </option><option value="aws_win" id="id_aws_win" selected> AWS_Windows </option></select>**
+#### Windows Only: Uploading Data to your remote computer with PSCP
 
-<div id="div_aws_win" style="display:block" markdown="1">
-
-### Uploading Data to your Virtual Machine with PSCP
-
-If you're using a PC, we recommend you use the *PSCP* program. This program is from the same suite of
+If you're using a PC, you may also have installed the *PSCP* program. 
+This program is from the same suite of
 tools as the putty program we have been using to connect.
+(It usually works)
 
 1. If you haven't done so, download pscp from [http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe](http://the.earth.li/~sgtatham/putty/latest/x86/pscp.exe)
 2. Make sure the *PSCP* program is somewhere you know on your computer. In this case,
 your Downloads folder is appropriate.
 3. Open the windows [PowerShell](https://en.wikipedia.org/wiki/Windows_PowerShell);
 go to your start menu/search enter the term **'cmd'**; you will be able to start the shell
-(the shell should start from C:\Users\your-pc-username>).
+(the shell should start from C:\Users\<username>).
 4. Change to the download directory
 
 ~~~
 > cd Downloads
 ~~~
 
-5. Locate a file on your computer that you wish to upload (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address, and login credentials)**. You will be prompted to enter a password, and then your upload will begin. **(make sure you use substitute 'your-username' for your actual pc username)**
+Locate a file on your computer that you wish to **upload** (be sure you know the path). Then upload it to your remote machine **(you will need to know your ip address (or instance number for AWS), and \<remote-username\>)**. You will be prompted to enter a password, and then your upload will begin. (make sure you use substitute '\<username\>' with your actual computer username)
+
+1. For the AWS cloud (@EC--- is the "instance" number)
 
 ~~~
-C:\User\your-username\Downloads> pscp.exe local_file.txt dcuser@EC-number-ip.address:/home/dcuser/
+C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
 ~~~
 
-### Downloading Data from your Virtual Machine with PSCP
-
-1. Follow the instructions in the Upload section to download (if needed) and access the *PSCP* program (steps 1-3)
-2. Download the text file using the following command **(make sure you use substitute 'your-pc-username' for your actual pc username and dcuser@ ip.address with your remote login credentials)**
+2. For Cowboy
 
 ~~~
-C:\User\your-pc-username\Downloads> pscp.exe dcuser@EC-number-ip.address:/home/dcuser/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
-
-C:\User\your-pc-username\Downloads
+C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/
 ~~~
 
-</div>
+#### Downloading Data from your Virtual Machine with PSCP
 
+1. For the AWS cloud
 
+~~~
+C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
+~~~
 
-<div id="div_aws_unix" style="display:block" markdown="1">
+2. For Cowboy
+
+~~~
+C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
+~~~
 
 ### Keypoints:
 - Scripts are a collection of commands executed together.

@@ -52,12 +52,12 @@ html {
  * Flexible banner for housing site name, intro, and "footer" content. Starts
  * out above content in mobile and later moves to the side with wider viewports.
  */
-
+/* change background-color below to change sidebar everywhere orig was 202020 */
 .sidebar {
   text-align: center;
   padding: 2rem 1rem;
-  color: rgba(255,255,255,.5);
-  background-color: #202020;
+  color: rgba(255,255,255,.6);
+  background-color: #0a1e3b;
 }
 @media (min-width: 48em) {
   .sidebar {
@@ -69,7 +69,7 @@ html {
     text-align: left;
   }
 }
-
+/* Above background was 202020 */
 /* Sidebar links */
 .sidebar a {
   color: #fff;

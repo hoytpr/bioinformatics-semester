@@ -58,7 +58,7 @@ Examples of just a few "future-self" questions that might arise:
 
 The only way to prevent these from being problems is by good documentation!
 It's worthwhile to consider your future-self as an entirely separate 
-collaborator. The better your documenation is, the more this 
+collaborator. The better your documentation is, the more this 
 'collaborator' will thank you!
 
 Luckily enough, recording your computational experiments is 
@@ -79,8 +79,8 @@ your local machine". For Windows users, this works, mostly, using the
 Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!    
 **Option C** might be available where you work using the University's supercomputers.     
 [**Option D**]({{ site.baseurl }}/materials/genomics-project-organization-optionD/#optionD) 
-is a great possibility, if the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
-cloud instance remains available.
+is a great option. Clicking this link will open a NEW Lesson on the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
+if the cloud instance remains available.
 
 ### Option A using AWS
 
@@ -90,7 +90,7 @@ While logged into your AWS instance (or from inside of a
 terminal window)     
 We start by **creating a directory**
 that we can use for the rest of the workshop/lesson. First navigate 
-to your AWS home directory. Use `cd`<kbd>Enter</kbd>, and 
+to your AWS home directory. Use `cd` <kbd>Enter</kbd>, and 
 confirm that you are in the correct directory using the `pwd` command.
 
 ~~~
@@ -153,7 +153,7 @@ your data that you never modify guarantees that you will always be
 able to start over if something goes wrong with your analysis. When
 starting any analysis, you can make a copy of your raw data file and
 do your manipulations on that file, rather than the raw version. We
-learned in [the READINGS for todays lesson](http://www.datacarpentry.org/shell-genomics/03-working-with-files/#file-permissions) how to prevent overwriting our raw data
+learned in [the READINGS for today's lesson](http://www.datacarpentry.org/shell-genomics/03-working-with-files/#file-permissions) how to prevent overwriting our raw data
 files by setting restrictive file permissions. 
 
 > NOTE: We previously used the `chmod` command in the Bash shell 
@@ -223,7 +223,7 @@ From the `nano` screen, you can use your cursor to navigate, type, and delete li
 
 > #### Navigating in Nano
 > 
-> Although `nano` is useful, it can be frustrating to edit documents, as you 
+> We know `nano` is useful and not too complicated, but it can be frustrating to edit documents, because you 
 > can't use your mouse to navigate to the part of the document you would like to edit.
 > Here are some useful keyboard shortcuts for moving around within a text document in 
 > `nano`. You can find more information by typing <kbd>Ctrl</kbd>-<kbd>G</kbd> within `nano`.
@@ -247,7 +247,7 @@ Add a date line and comment to the line where you have created the directory, fo
 The bash shell treats the `#` character as a comment character.    
 **Any text on a line after a `#` character is ignored by bash** 
 when evaluating the text 
-as code with [one exeception](https://en.wikipedia.org/wiki/Shebang_(Unix)). 
+as code with [one exception](https://en.wikipedia.org/wiki/Shebang_(Unix)). 
 
 Next, remove any lines of the history that are not relevant by 
 navigating to those lines and using your 
@@ -304,5 +304,5 @@ bioinformatics journey!
 [A Quick Guide to Organizing Computational Biology Projects](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000424)
 
 ### Keypoints:
-- "Spend the time to organize your file system when you start a new project. Your future self will thank you!"
-- "Always save a write-protected copy of your raw data."
+- Spend the time to organize your file system when you start a new project. Your future self will thank you!
+- Always save a write-protected copy of your raw data.

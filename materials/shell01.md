@@ -7,19 +7,11 @@ language: Shell
 
 #### Questions:
 - What is a command shell and why would I use one?
-objectives:
+
+#### Objectives:
 - Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
 - Explain when and why command-line interfaces should be used instead of graphical interfaces.
-keypoints:
-- Explain the steps in the shell's read-run-print cycle.
-- Most commands take flags (options) which begin with a `-`.
-- Identify the actual command, flags, and filenames in a command-line call.
-- Explain the steps in the shell's read-run-print cycle.
-- Demonstrate the use of tab completion and explain its advantages.
-keypoints:
-- A shell is a program whose primary purpose is to read commands and run other programs.
-- The shell's main advantages are its high action-to-keystroke ratio, its support for automating repetitive tasks, and its capacity to access networked machines.
-- The shell's main disadvantages are its primarily textual nature and how cryptic its commands and operation can be.
+
 
 ### Background
 At a high level, computers do four things:
@@ -80,19 +72,19 @@ indicating that the shell (in this case, a version "3.2") is waiting for input.
 Technically, the "$" is defined as the "prompt" but your shell may use 
 different text for the prompt.    
 Most importantly:    
-when typing commands, either from these lessons or from other sources,
+When typing commands, either from these lessons or from other sources,
 *do not type the prompt*, only the commands that follow it.
 
 In the above example, the part that you type in the second 
 line of the example is,
-`ls -F /`,
+`ls -F /`.
 This typically has the following structure: a **command**,
 some **flags** (also called **options** or **switches**) and an **argument**.
 
 **Commands** are actually special programs that are built into the Shell, 
-and are mostly the same for all types of "shells" available..
+and are mostly the same for all types of "shells" available.
 
-**Flags** start with a single dash (`-`) or two dashes (`--`), and change the behaviour of a command.
+**Flags** start with a single dash (`-`) or two dashes (`--`), and change the behavior of a command.
 
 **Arguments** tell the command what to operate on (e.g. files and directories).
 
@@ -105,7 +97,7 @@ In the second line of the example above, our **command** is `ls`, with a <kbd>SP
 between `ls` and `-F` the shell will look for a command called `ls-F`, which 
 doesn't exist. Also, ***capitalization matters***: `ls -f` is different from `ls -F` 
 (NOTE: Windows systems, and therefore GitBash, don't always care about 
-capitalization of the **command** but the flags must be capatilized correctly). 
+capitalization of the **command** but the flags must be capatalized correctly). 
 
 On the next line we see the output that our command produced. In this case it is a listing 
 of files and folders in a location called `/` - we'll cover what all these mean 
@@ -221,7 +213,8 @@ At 30 seconds per sample,
 the whole process will take more than 12 hours
 (and that's assuming the best-case scenario where she is ready to select the next file
 as soon as the previous sample analysis has finished).
-Only a machine could do this without taking breaks, so it'll probaly take much longer than 12 hours, not to mention that
+Only a machine could do this without taking breaks, so it'll probably 
+take much longer than 12 hours, not to mention that
 the chances of her selecting all 1520 files correctly are practically zero.
 Missing that paper deadline is looking increasingly likely.
 
@@ -234,4 +227,12 @@ so that her computer can work 24 hours a day while she writes her paper.
 As a bonus,
 once she has put a processing pipeline together,
 she will be able to use it again whenever she collects more data.
+
+#### Keypoints:
+- Explain the steps in the shell's read-run-print cycle.
+- Most commands take flags (options) which begin with a `-`.
+- Identify the actual command, flags, and filenames in a command-line call.
+- Explain the steps in the shell's read-run-print cycle.
+- Demonstrate the use of tab completion and explain its advantages.
+- A shell is a program whose primary purpose is to read commands and run other programs.
 

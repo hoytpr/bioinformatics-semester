@@ -1,0 +1,14 @@
+
+## Solution
+
+Use `head` to look at the file
+
+$ head data/ref_genome/ecoli_rel606.fasta
+
+The name of the sequence follows the `>` character. The name is `CP000819.1 Escherichia coli B str. REL606, complete genome`. Remember this chromosome name (`CP000819.1`), as we will use it later in the lesson. 
+
+
+
+
+
+Genomics-variant-calling-workflow-Shell.txt

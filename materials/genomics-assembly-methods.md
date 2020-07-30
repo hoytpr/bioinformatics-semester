@@ -5,11 +5,16 @@ title: Assembly Tools
 language: Shell
 ---
 ### Hands-on Genome Assembly Tools 
+(This workshop-style-lesson is taught on the Cowboy supercomputer at OSU)
 
 #### DISCLAIMER: These software are pretty much (not yet completely) obsolete.
 
 We are using them to demonstrate some processes used in 
 bioinformatics. We want you to know you can do this!
+But be aware that open source software 
+stops working eventually if is not actively maintained. The software used in this 
+beginner's introduction are already suffering from ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) 
+a term introduced in 2019.  
 
 #### Why are we using older software?
 
@@ -25,7 +30,8 @@ many important bioinformatics processes like assembly,
 
 **Online learning repositories** 
 such as [The Carpentries](https://carpentries.org/), including [Software Carpentry](https://software-carpentry.org/) and [Data Carpentry](https://datacarpentry.org/) 
-(which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, and also for their ability to remain current!  
+(which this course [uses](https://datacarpentry.org/shell-genomics/)) are needed for their carefully curated lessons, 
+and also for their ability to remain current! Also consider free resources like [Cyverse](https://cyverse.org/). 
 
 **Do some research and find the best software for your project** 
 if you plan to perform assembly or RNA-Seq in your own experiments.
@@ -35,8 +41,6 @@ particular the [Galaxy Project](https://galaxyproject.org/) is a great place to 
 
 For an interesting discussion about scientists using outdated software see this 
 2018 article [Scientists Continue to Use Outdated Methods](https://www.the-scientist.com/news-opinion/scientists-continue-to-use-outdated-methods-30438), 
-and here's a 2019 article which coins the term ["Software collapse"](https://hal.archives-ouvertes.fr/hal-02117588) meaning that open source software 
-stops working eventually if is not actively maintained. The software used in this beginners introduction are already suffering from software collapse. 
 
 ### Assembly
 
@@ -62,11 +66,11 @@ Be sure to change the line:
 
 `export GROUPNUMBER=1`
 
-to your group number.  You will need to do this for all the submission scripts today.
+to ***your*** group number.  You will need to do this for all the submission scripts today.
 
 The first section of our `velvetk31.pbs` script sets up the scheduler requests (the queueing system) and environment variables. The  assembler commands are `velveth` and `velvetg`. What do these commands do?  See the [velvet website here](https://github.com/dzerbino/velvet).  
 
-If you understand the script and have changed the groupnumber, press ctrl-x, save the file and submit it to the queue with the `qsub` command as follows.
+If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `qsub` command as follows.
 
 `$ qsub velvetk31.pbs`
  
@@ -112,7 +116,7 @@ To try different kmers, first copy your pbs script:
 $ cp velvetk31.pbs velvetk21.pbs
 $ nano -w velvetk21.pbs
 ~~~
-and change K to a different value, currently 31. Try 21, 25.
+and change K to a different value, currently 31. Try 21, and 25.
 then submit this new job:
 
 `$ qsub velvetk21.pbs`
@@ -143,16 +147,17 @@ SOAPdenovo is different as it uses a configuration file `soap.config`, where we 
 
 #### SOAPdenovo options and arguments
 
-`[LIB]`	Calls the soap denovo command library into action
+`[LIB]`:	Calls the soap denovo command library into action
 
-`avg_ins=350`	This value indicates the average insert size of this library or the peak value position in the insert size distribution figure.
+`avg_ins=350`:	This value indicates the average insert size of this library or the peak value position in the insert size distribution figure.
 
-`reverse_seq=0`	This option takes value 0 or 1. It tells the assembler if the read sequences need to be complementarily reversed. Illumima GA produces two types of paired-end libraries: a) forward-reverse, generated from fragmented DNA ends with typical insert size less than 500 bp; b) reverse-forward, generated from circularizing libraries with typical insert size greater than 2 Kb. The parameter "reverse_seq" should be set to indicate this: 0, forward-reverse; 1, reverse-forward.
+`reverse_seq=0`:	This option takes value 0 or 1. It tells the assembler if the read sequences need to be complementarily reversed. Illumima GA produces two types of paired-end libraries: a) forward-reverse, generated from fragmented DNA ends with typical insert size less than 500 bp; b) reverse-forward, generated from circularizing libraries with typical insert size greater than 2 Kb. The parameter "reverse_seq" should be set to indicate this: 0, forward-reverse; 1, reverse-forward.
 
-`asm_flags=3`	This indicator decides in which part(s) the reads are used. It takes value 1(only contig assembly), 2 (only scaffold assembly), 3(both contig and scaffold assembly), or 4 (only gap closure).
+`asm_flags=3`:	This indicator decides in which part(s) the reads are used. It takes value 1(only contig assembly), 2 (only scaffold assembly), 3(both contig and scaffold assembly), or 4 (only gap closure).
 
-`rank=1`	It takes integer values and decides in which order the reads are used for scaffold assembly. Libraries with the same "rank" are used at the same time during scaffold assembly. 
-5.3 How to set library rank?
+`rank=1`:	It takes integer values and decides in which order the reads are used for scaffold assembly. Libraries with the same "rank" are used at the same time during scaffold assembly. 
+
+How do you set library rank?
 SOAPdenovo will use the pair-end libraries with insert size from smaller to larger to construct scaffolds. Libraries with the same rank would be used at the same time. For example, in a dataset of a human genome, we set five ranks for five libraries with insert size 200-bp, 500-bp, 2-Kb, 5-Kb and 10-Kb, separately. It is desired that the pairs in each rank provide adequate physical coverage of the genome.
 
 `q1=../../data/group1/PE-350.1.fastq`	Pair-end file 1 (with quality scores)
@@ -195,14 +200,14 @@ max length contig _______
 
 total __________ 
 
-Where are the results stored?
+Where are the results stored? 
 FASTA file: `soap31.scafSeq`
 
 Now SOAP is done. Save the results!
 
 `$ cp soap31.scafSeq ../../results/soap31.fasta`
 
-**Does the assembly get better  if I use a different K-mer size?**
+**Does the assembly get better if I use a different K-mer size?**
 
 To run a different kmer e.g ‘21’, create a new soap directory and copy the submit and config files into it. Notice that we are changing the names of the files while copying them to reflect the new kmer we are testing:
 ~~~
@@ -214,7 +219,7 @@ $ cp soap31/soap.config soap21/.      (that dot at the end is necessary)
 $ cd soap21
 $ nano -w soapk21.pbs 
 ~~~
-Now modify `soapk21.pbs` and change K  from 31 to a different value. Try 21,  then 25.  After submitting your job:
+Now modify `soapk21.pbs` and change K from 31 to **21**, and submit your job:
 
 `qsub soapk21.pbs`
 
@@ -222,101 +227,187 @@ Be sure to copy the result to your appropriate results folder.
 
 `$ cp soap21.scafSeq ../../results/soap21.fasta`
 
-Using what you’ve learned, do the 25 kmer value. 
-
+Using what you’ve learned, do the **25** K-mer value. 
 
 ### ABYSS
 
 `$ cd ../../abyss/abyss31`
 
-We change to a subdirectory because abyss puts all it’s output into the current working directory.
+We change to a subdirectory because abyss puts all its output into the **current working directory**.
 
-Understand `abyssk31.pbs`. ABYSS is simple as it has just one command to run the entire pipeline. First edit the `abyssk31.pbs` to change GROUPNUMBER to your group number.
+Use `cat` to display the `abyssk31.pbs` submission script to your terminal, and look 
+through the file so that you understand the parts. ABYSS is simple to run as it has 
+just one command to run
+an entire pipeline of software. Because it runs several software packages, it 
+takes a few minutes to complete. First edit the `abyssk31.pbs` to change 
+GROUPNUMBER to your group number.
 ~~~
 $ nano -w abyssk31.pbs
 $ qsub abyssk31.pbs
 ~~~
 
-K-mer coverage:
+#### K-mer coverage:
 
-There is one file of interest here: `coverage.hist` as generated by ABYSS. This is the K-mer histogram. It is a two-column file with 1st column (coverage), 2nd column (# of K-mers). Plot this K-mer histogram however you want (EXCEL, R, etc.). Only the first 50 lines are very useful, so we will help you shrink the file to include just the first 50 lines:
+There is a file of interest here: `coverage.hist` as generated by ABYSS. This is 
+the K-mer histogram. 
+
+![K-mer histogram from slides]({{ site.baseurl }}/fig/kmer-hist.png)
+
+From the slides (from Kelley et al., 2010) you should remember that when using 
+K-mer based assembly methods, "good" K-mers should show a peak where coverage 
+is the most accurate. K-mers at low coverage tend to be those with many errors, 
+and so they are ignored (we're going to ignore them too!). The `coverage.hist` 
+file is a two-column tab-delimited file where the first column equals
+"coverage", and the 2nd column equals "Number of K-mers". 
+You can plot this K-mer histogram with any software 
+you want (Excel, R, etc.) but only the first 50 lines are very useful. 
 To look at the first 50 lines, enter:
 
 `$ head -n 50 coverage.hist`
 
-To create a new file that only includes these first 50 lines. :
+The number of K-mers at every possible level of coverage are shown. 
+Shrink the file by creating a new file that only includes these first 50 lines:
 
-`$ head -50 coverage.hist >short.hist`
+`$ head -50 coverage.hist > short.hist.txt`
 
-EMAIL the `short.hist` file to yourself to look at it in a spreadsheet.
+Here is a new trick: You can use the shell to **E-mail** the `short.hist.txt` file to 
+yourself then look at it in a spreadsheet. The command (below) includes entering 
+your email address ***twice*** because you are both the recipient, and the sender.
 
-`$ mail -a short.hist -r youremail@wherever.com  youremail@wherever.com`
+`$ mail -a short.hist.txt -r youremail@wherever.com  youremail@wherever.com`
 
-(enter subject, enter, ctrl-d to send)
+After entering the command, you will be prompted for a "Subject". Enter a short subject, 
+hit the **<kbd>Enter</kbd>** key (there will be no prompt after 
+hitting <kbd>Enter</Kbd>), and then use **`ctrl-d`** to send the message. 
+After emailing the file to yourself, open your email and place the attached file 
+on your Desktop. 
 
-To determine the final assembled size of the genome, use grep at the command line to extract that information from the output file:
+Open `short.hist.txt` using Excel or another spreadsheet program and create
+a plot from these data. In Excel, you would highlight all 50 values in both 
+columns and then select "Insert" then "Recommended Charts", and pick the top 
+chart. In general, it should be similar to this plot for Group1.
+
+![group1 kmer31 plot]({{ site.baseurl }}/fig/kmers-short-hist-graph.png)
+
+Keep your spreadsheet software open while you return to the terminal window on Cowboy. 
+To determine the final **assembled size** of the genome, use `grep` at the command 
+line to extract that information from the output file:
 
 ~~~
 $ grep ^Assembled abyssk31.pbs.o<jobidnumber>
 Assembled 563522 k-mer in 245 contigs.
 ~~~
-for more information: https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8
+(Remember this is for "Group 1" and your output may be different). Notice that 
+we have a "caret" symbol **`^`** in front of our search pattern: "Assembled". 
+The `^` is a special character that tells `grep` to only match the pattern 
+*if it is at the beginning of a line*. 
 
-To determine the highest K-mer coverage in the histogram use:
+To determine the ***highest*** K-mer coverage in the histogram use:
 
 `$ grep median abyssk31.pbs.o<jobidnumber>`
 
 and put your answer in this box `___________`
 
-You can estimate genome size just based on this K-mer histogram (why do you want to do that?)
+Here's another trick: You can use this K-mer histogram to estimate the size of
+the genome you sequenced using the following formula:
 
 ##### Genome_size = Total_Kmers / peak_Kmer_coverage
 
-(hint: To calculate Total_Kmers, Create a third column by multiplying column 1 and column2, and then sum the numbers of the 3rd column)
+For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
+that explain why we want to estimate genome sizes. Briefly,
+K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
+Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
 
-Use the formula to estimate the genome size base on K-mer histogram: `______________` bp
+> This is useful because: 
+> 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
+> 2. You might not know anything about your genome size!
+> 
+> Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
+> was "10-fold", you could then estimate the size of your genome being sequenced 
+> was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
+  
+To calculate "Total_Kmers", create a third column in your spreadsheet that multiplies 
+column 1 (position of K-mers) and column 2 (number of K-mers), and then sum 
+all the numbers of the 3rd column. This is 
+(approximately) the **total number** of all your "good" K-mers.
 
-The `abyssk31.pbs.o<jobid>` is very useful. Find these information from the log file:
+The formula estimates the genome size based on K-mer histogram: to be `________` bp.
 
-contig stats: n50 ________  
+The log file `abyssk31.pbs.o<jobid>` is very useful. Use the `less` command and search 
+through `abyssk31.pbs.o<jobid>` for "N50" to locate these information:
 
-max _______ 
+**contig** stats: n50 `________` 
 
-total __________ (compare to the estimate based on K-mer)
+max `_______`
 
-scaffold stats: n50 ________  
+total `__________` (compare to the estimate based on K-mer)
 
-max _______ 
+**scaffold** stats: n50 `________`  
 
-total __________ 
+max `_______` 
 
-Where are the results stored?
+total `__________` 
 
-Now ABYSS is done. Save the results and rename it!
+The results are always stored in the **current working directory** when using Abyss.
+When the output from Abyss is complete, save the results and rename the scaffold output 
+fasta file as we did for the other assemblers.
 
 `$ cp abyss31-scaffolds.fa ../../results/abyss31.fasta`
 
-**Does the assembly get better  if I use a different K-mer size?**
+**Does the assembly get better if I use a different K-mer size?**
 
-Changing the K-mer option for assemblies.  Luckily assemblers run fast, run two different additional K-mer options using Abyss. Why? Because the current value K=31 may not be the best! Try 21, and 25 for most assemblers, they need odd numbers, so 24 won’t work.  
+Luckily assemblers run fast. We will now run two different additional K-mer 
+options using Abyss. Remember that the current value (K=31) may not be the 
+best! Try 21, and 25, for most assemblers. Most assemblers only use K-mer 
+sizes that are odd numbers, so 24 won’t work. 
 
-First create a new directory:
+Remember that Abyss outputs to the current working directory, so when 
+changing K-mer number in Abyss, you should first create a new directory 
+to work within.
 
-`$ cd ..`
-
-(you should be in the ‘abyss directory now, to check use “print working directory”)
+Start by going up into the `abyss` directory using `$ cd ..` and then 
+create new directories for each K-mer you will use. Then copy and simultaneously 
+rename the `abyssk31.pbs` submission script. To use a K-mer of 21 do this:
 
 ~~~
 $ pwd  
-/scratch/username/mcbios/abyss
+/scratch/<username>/mcbios/abyss
 $ mkdir abyss21
 $ cp abyss31/abyssk31.pbs abyss21/abyssk21.pbs
 $ cd abyss21
 $ nano -w abyssk21.pbs
- change K to a different value, currently 31. Try 21, 25 and submit:
+~~~
+Use `nano` to change K from 31 to **21**. Then save the file and submit.
+~~~
 $ qsub abyssk21.pbs
 ~~~
-Whan it’s done, your output files will automatically have the new K-mer in their names. Copy the result to your results folder
+Then, go the the same process to use a K-mer value of **25**.
+~~~
+$ cd ..
+$ pwd  
+/scratch/<username>/mcbios/abyss
+$ mkdir abyss25
+$ cp abyss31/abyssk31.pbs abyss25/abyssk25.pbs
+$ cd abyss25
+$ nano -w abyssk25.pbs
+~~~ 
+Remember to change the K-mer value to **25**. Save the file and submit.
+~~~
+$ qsub abyssk25.pbs
+~~~
+When the jobs are done, your output files will automatically have the new K-mer in their names! 
+Copy the results to your results folder.
+~~~
+$ cd ..
+$ pwd  
+/scratch/<username>/mcbios/abyss
+$ cp abyss21/abyss21-scaffolds.fa ../results/abyss21.fasta
+$ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
+~~~
 
-`$ cp abyss21-scaffolds.fa ../../results/abyss21.fasta`
+Congratualtions! This lesson has shown you how you can assemble genomes using 
+three different software, and using different parameters (K-mers, in this lesson). 
+Now we should check our assemblies in a process called "validation" 
+before sending the best assembly to our collaborators!
+
 

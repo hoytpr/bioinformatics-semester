@@ -4,109 +4,76 @@ element: notes
 title: Project Organization
 language: Shell
 ---
-### Questions:
-- What [options](#options) for this course curricula exist?
-- How can I organize my file system for a new bioinformatics project?
-- How can I document my work?
-
-### Objectives:
-- Create a file system for a bioinformatics project.
-- Explain what types of files should go in your `docs`, `data`, and `results` directories.
-- Use the `history` command and a text editor like `nano` to document your work on your project.
-
-### Getting your project started
-
-**Project organization** is one of the most **important** parts of 
-a sequencing project, and yet is often overlooked amidst the
-excitement of getting a first look at new data. You can always reorganize your project when (for example) you decide to publish the data, but it's much better to get yourself organized from the beginning.   
-
-You should approach your sequencing project similar to any 
-biological experiment, which ideally begins with good 
-experimental design. 
-
-> We're going to *assume* that you've 
-> already designed a beautiful sequencing experiment to 
-> address your biological hypothesis, collected appropriate 
-> samples, are using appropriate controls, and that you 
-> have enough statistical power to 
-> answer the questions you're interested in asking... RIGHT ?!?!? 
-> These steps are all incredibly important, but beyond the scope 
-> of these lessons. 
-
-For all of those steps (collecting 
-specimens, extracting DNA, prepping your samples, etc.)
-you've likely kept a **lab notebook** that details how 
-and why you did each step. However, the process of documentation 
-doesn't start or stop at the sequencer!  
-
-Genomics projects can quickly accumulate hundreds of files across 
-dozens of folders. Every computational analysis you perform over 
-the course of your project is going to create
-**many** files, which becomes a problem when you'll *inevitably 
-want to run some of those analyses again, or document 
-how you performed the analyses*. Try to think in 
-terms of your "past-self", "present-self" and "future self". 
-For instance, your present-self might have made significant 
-headway into your project, but then has to remember the PCR conditions
-your past-self used to create your sequencing library months prior. 
-
-Examples of just a few "future-self" questions that might arise: 
-- What were your best alignment results?
-- Which folder were they in: Analysis1, AnalysisRedone, or AnalysisRedone2?
-- Which quality cutoff did you use?
-- What version of a given program did you use to implement your analysis?
-
-The only way to prevent these from being problems is by good documentation!
-It's worthwhile to consider your future-self as an entirely separate 
-collaborator. The better your documenation is, the more this 
-'collaborator' will thank you!
-
-Luckily enough, recording your computational experiments is 
-even easier than recording lab data. Copy/Paste will become
-your friend, sensible file names will make your analysis 
-understandable (by you and your collaborators), and 
-writing the methods section for your next paper should be easy! 
-With this in mind, let's have a look at the best practices for 
-documenting your genomics project. 
-<a name="options"></a>
-## Options for this course
-
-Here is where the course and the workshops start to diverge into ***options***.    
-**Option A** is to use an online cloud computing resource as is 
-described in the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html).     
-**Option B** is on the same page as **Option A** but is "Using the lessons 
-on your local machine". For Windows users, this works, mostly, using the 
-Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!    
-**Option C** might be availble where you work using the University's supercomputers.     
-**Option D** is only a possibility, but involves using a [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) cloud instance.
-
+<a name="optionD"></a>
 ### OptionD Cyverse Cloud
 
-**Option D** <a name="optionD"></a>  If you didn't mean to click on OptionD, 
+**Option D**   If you didn't mean to click on OptionD, 
 [go back to the OptionA AWS page.]({{ site.baseurl }}/materials/genomics-project-organization/#options)
+
+### A Carpentries lesson, on the Cyverse cloud.
+
+In August, 2019, The Carpentries tested a new workshop for genomics learning.
+This was a very different workshop. An important goal of the lesson was to 
+show learners how to use a "Cloud" to analyze large genomic datasets. The
+lesson was a huge success, but started with fairly advanced learners. This was important because the later parts of the workshop used very powerful scripting in Bash and
+in the programming language `R`. 
+
+But there are many parts that beginners can learn, and we are going to explore
+some of those in this lesson. The first thing we need to do, is log on to a "cloud".
+Fortunately, there  is a free cloud infrastructure designed for scientists that
+we have used at OSU for 8 years. This is [Cyverse](https://cyverse.org/). 
+Cyverse is an [NSF-funded resource]({{ site.baseurl }}/materials/genomics-project-organization-optionD#nsf)for the research community, 
+that is very carefully maintained and kept current with the newest 
+methodologies. It provides training, and provides
+computational resources focused on genomics. Originally called "iPlant" due to it's 
+focus on plant genomics, Cyverse is genome-agnostic and one of the largest research 
+facilities available for free. 
+
+Although the Carpentries workshop was hosted on the Amazon Cloud (AWS), Dr. Jason Williams 
+put the entire workshop together on Cyverse for those who can't pay for AWS computer time.
 
 ***Cyverse***: Obtain an account on [Cyverse](https://user.cyverse.org/register).
 
-After getting an account on Cyverse, request access (register for) an Atmosphere account. 
-For justification, state that you are taking a course at Oklahoma State 
-University from Dr. Peter R. Hoyt.
+If you don't already have an account on Cyverse, you should get 
+one now. During registration, be sure to request access to the 
+Cyverse Discovery Environment, "Atmosphere", and Data Store 
+(at least!). For justification, state that you are taking a 
+course at Oklahoma State 
+University from Dr. Peter R. Hoyt. We will be using the 
+"Atmosphere" cloud services for this lesson.
 
-To continue this lesson, log into your [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) account.
-Go to the "Images" tab and locate the image named ["DataCarpentry Genomics May2019
-May 8th 19 10:55 by williams"](https://atmo.cyverse.org/application/images/1699)
-Click on the blue "Launch" button under your username in the top right corner.
+Using your web-browser, go to [https://cyverse.org/atmosphere](https://cyverse.org/atmosphere) and click on the 
+"Launch Atmosphere" button. In the next window, click on the "Login" at the upper right (circled in red below)
+![Cyverse login]({{ site.baseurl }}/fig/cyverse-login.png)
+Note that you can search for "images" in this window, but let's login first. 
+Enter your username and password then click on "login". The Cyverse Atmosphere will load
+and the following window will give you several choices:
+![Cyverse first]({{ site.baseurl }}/fig/cyverse-first-window.png)
 
-If asked for "Resources" select "Medium 1" from the drop-down menu.
+Click on the "Images tab circled in red above and you will be taken to the image search page. Here you can search for any pre-made instances. However, all you need to do is scroll down and you will soon see (in large font) the image named the ["DataCarpentry Genomics May2019"](https://atmo.cyverse.org/application/images/1699) 
+![Cyverse DC Image]({{ site.baseurl }}/fig/cyverse-workshop-image.png)
+
+Click on the image name and you will be taken to the page 
+describing the image, including who created it, when, and 
+what it is used for. Specifics include software and the 
+operating system installed as part of the image. 
+This image also has instructions which we will use for 
+the "Linux Lessons". On the right side of the screen, 
+click the blue "Launch" button!
+
+If asked for "Resources" select "Medium 3" from the drop-down menu.
 
 The instance should say "Launching" with a circular indicator going crazy. 
 
-Now you have to wait about 35 minutes for the image to create the instance. (1:57PM until 2:33PM) 
+Now you have to wait about 35 minutes for the image to create the instance.
 
-Return to the Atmosphere webpage, and click on the "Projects" tab to see your new "Project" called "Workshop".
+While you are waiting, return to the Atmosphere webpage, and click on the "Projects" 
+tab to see your new "Project" called "Workshop".
  
 ![projects]({{ site.baseurl }}/fig/cyverse-project.png)
 
-At the bottom of the "Workshop" Project window, click on the small three stacked nodes icon to see the progress of the instance. 
+At the bottom of the "Workshop" Project window, click on the small 
+three stacked nodes icon to see the progress of the instance. 
 
 The Instance should be "Active" under "Status" and under "Activity" should say "Deploying" 
 with an IP Address!
@@ -114,21 +81,24 @@ with an IP Address!
 ![progress]({{ site.baseurl }}/fig/cyverse-deploying.png)
 
 The IP address is important for later, so write it down. 
-Once the instance says "Active" with a bright green DOT, you are good to proceed.  
+Once the instance says "Active" with a bright green DOT, 
+you are good to proceed.  
 
-Click on the instance name and you should see a GUI with an option to "Open web shell" near the top-right. Click on "Open web shell". 
+Click on the instance name and you should see a GUI with an option 
+to "Open web shell" near the top-right. This can be hidden from view if your browser is
+not set to "full-screen" mode. Click on "Open web shell". 
 
-This will put you inside a Terminal window (you will use the terminal from your browser), 
+This will put you inside a Terminal window (In this case you are actually using the terminal 
+from your inside your browser window!), 
 BUT (and this is important!), you will still need to connect to the Workshop 
-because it is a "Docker image" (we won't be discussing these for a while).
+because it is a ["Docker image"](https://docs.docker.com/engine/reference/commandline/image/) (we won't be discussing these for a while,
+but it's slightly similar to a virtual machine... if you are familiar with those).
 
-To connect to the Workshop Docker image, use ssh by entering the command 
+To connect to the Workshop Docker image, use ssh as if it was a new computer, by entering the command 
 `ssh dcuser@127.0.0.1 -p 21 (password: data4Carp)`. 
 
-> SSH stands for "Secure Shell" or "Secure Socket Shell".
-> SSH is a secure way to access a computer over a network. 
-> This command also indicates that your username is "dcuser" and you want to access 
-> the computer at the IP address 127.0.0.1, using the port number 21 (-p 21). 
+> This command indicates that your username is "dcuser" and you want to access 
+> the computer (the Docker image of the workshop actually) at the IP address 127.0.0.1, using the port number 21. 
 
 After entering the command, you will immediately be asked for a password, which is "data4Carp"
 
@@ -357,3 +327,9 @@ bioinformatics journey!
 ### Keypoints:
 - "Spend the time to organize your file system when you start a new project. Your future self will thank you!"
 - "Always save a write-protected copy of your raw data."
+
+
+[Go Back to Data and Writing Scripts]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts#cloud)
+
+<a name="nsf"></a>
+This material is based upon work supported by the National Science Foundation under Award Numbers DBI-0735191,  DBI-1265383, and DBI-1743442. URL: www.cyverse.org

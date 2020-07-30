@@ -7,6 +7,7 @@ language: Shell
 
 [Introduction to the Command Line for Genomics](https://datacarpentry.org/shell-genomics/)
 [Data Carpentry Genomics Command-line Glossary](https://datacarpentry.org/shell-genomics/reference/)
+[Which Cloud for my Data?](https://datacarpentry.org/cloud-genomics/04-which-cloud/index.html)
 
 (uncomment for working on readings)
 

@@ -1,0 +1,48 @@
+In the materials folder 
+genomics-variant-calling-workflow.md could have:
+
+**[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-Shell)**
+Work on the questions yourself, 
+before looking at the answers (take about 5 minutes).
+
+************************
+EXTANT in the:
+\exercises\Genomics-variant-calling-workflow-Shell.md
+
+---
+layout: exercise
+topic: Genomics
+title: Variant Calling Workflow
+language: Shell
+---
+
+Could use: 
+\exercises\Genomics-variant-calling-workflow-1-Shell.md
+\exercises\Genomics-variant-calling-workflow-2-Shell.md
+
+But YAML also needs to say:
+title: Variant Calling Workflow 1
+title: Variant Calling Workflow 2
+
+*************************************
+**Exercise 1**
+
+1 - What is the last read in the `SRR2584863_1.fastq` file? How confident
+are you in this read? 
+
+**Exercise 2**
+
+2 - How big are the files?
+(Hint: Look at the options for the `ls` command to see how to show
+file sizes.)
+
+****************************
+EXTANT in:
+Genomics-variant-calling-workflow-Shell.txt
+
+bioinformatics-semester/solutions use multiple files:
+
+Genomics-variant-calling-workflow-1-Shell.txt
+Genomics-variant-calling-workflow-2-Shell.txt
+
+With answers to the questions

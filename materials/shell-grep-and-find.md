@@ -6,15 +6,16 @@ language: Shell
 ---
 
 ### Questions:
-- "How can I find files?"
-- "How can I find things in files?"
+- How can I find files?
+- How can I find things in files?
 
 ### Objectives:
-- "Use `grep` to select lines from text files that match simple patterns."
-- "Use `find` to find files whose names match simple patterns."
-- "Use the output of one command as the command-line argument(s) to another command."
-- "Explain what is meant by 'text' and 'binary' files, and why many common tools don't handle the latter well."
+- Use `grep` to select lines from text files that match simple patterns.
+- Use `find` to find files whose names match simple patterns.
+- Use the output of one command as the command-line argument(s) to another command.
+- Emphasize the use of `help` and `man` to use commands
 
+Explain what is meant by 'text' and 'binary' files, and why many common tools don't handle the latter well.
 
 In the same way that many of us now use "Google" as a 
 verb meaning "to find", Unix programmers often use the 
@@ -27,14 +28,13 @@ It is also the name of a very useful command-line program.
 For our examples,
 we will use a file that contains three haikus taken from a
 1998 competition in *Salon* magazine. For this set of examples,
-we're going to be working in the writing subdirectory:
+we're going to be working in the `data-shell/writing` subdirectory:
 
 ~~~
 $ cd
 $ cd Desktop/data-shell/writing
 $ cat haiku.txt
 ~~~
-{: .language-bash}
 
 ~~~
 The Tao that is seen
@@ -49,7 +49,7 @@ Yesterday it worked
 Today it is not working
 Software is like that.
 ~~~
-{: .output}
+
 
 > ## Forever, or Five Years
 >
@@ -57,136 +57,103 @@ Software is like that.
 > As [Jeff Rothenberg said](http://webcache.googleusercontent.com/search?q=cache:L8Qc7a8pP8YJ:www.clir.org/pubs/archives/ensuring.pdf+&cd=1&hl=en&ct=clnk&gl=us),
 > "Digital information lasts forever --- or five years, whichever comes first."
 > Luckily, popular content often [has backups](http://wiki.c2.com/?ComputerErrorHaiku).
-{: .callout}
 
-Let's find lines that contain the word "not":
+Let's find lines in haiku.txt that contain the word "not":
 
 ~~~
 $ grep not haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 Is not the true Tao, until
 "My Thesis" not found
 Today it is not working
 ~~~
-{: .output}
 
-Here, `not` is the pattern we're searching for. The grep command searches through the file, looking for matches to the pattern specified. To use it type `grep`, then the pattern we're searching for and finally the name of the file (or files) we're searching in.
+Here, `not` is the pattern we're searching for. The `grep` command searches through the file, looking for matches to the pattern specified. To use it type `grep`, then the pattern we're searching for (`not`) and finally the name of the file (or files) we're searching in (`haiku.txt`).
 
-The output is the three lines in the file that contain the letters "not".
+The output is the three **lines** in the file that contain the letters `not`. NOTE that `grep` returns
+lines of files!
 
-By default, grep searches for a pattern in a case-sensitive way. In addition, the search pattern we have selected does not have to form a complete word, as we will see in the next example.
+By default, `grep` searches for a pattern in a *case-sensitive* way. In addition, the search pattern we have selected does not have to form a complete word, as we will see in the next example.
 
-Let's search for the pattern: "The".
+Let's search for the pattern: `The`.
 
 ~~~
 $ grep The haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 The Tao that is seen
 "My Thesis" not found.
 ~~~
-{: .output}
 
-This time, two lines that include the letters "The" are outputted,
-one of which contained our search pattern within a larger word, "Thesis".
+This time, two lines that include the letters `The` are output,
+one of which contained our search pattern within a larger word, `Thesis`.
 
-To restrict matches to lines containing the word "The" on its own,
+To restrict matches to lines containing the word `The` on its own,
 we can give `grep` with the `-w` flag.
-This will limit matches to word boundaries.
+This will limit matches to **word boundaries**. This does not necessarily 
+mean single words (as we will see later), and it does not change the 
+way `grep` returns lines of files. 
 
-Later in this lesson, we will also see how we can change the search behavior of grep with respect to its case sensitivity.
+Later in this lesson, we will also see how we can change the search behavior of `grep` with respect to its case sensitivity.
 
 ~~~
 $ grep -w The haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 The Tao that is seen
 ~~~
-{: .output}
 
-Note that a "word boundary" includes the start and end of a line, so not
+**Note** that a "word boundary" includes the start and end of a line, so not
 just letters surrounded by spaces. 
+
 Sometimes we don't
 want to search for a single word, but a phrase. This is also easy to do with
-`grep` by putting the phrase in quotes.
+`grep` by putting the phrase in quotes. `grep` will then treat the phrase in quotes as the 
+PATTERN, and we can still use the `-w` flag to place word boundaries on the pattern.
 
 ~~~
 $ grep -w "is not" haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 Today it is not working
 ~~~
-{: .output}
 
-We've now seen that you don't have to have quotes around single words,
-but it is useful to use quotes when searching for multiple words.
-It also helps to make it easier to distinguish between the search term or phrase
+We've now seen that you don't *have* to use quotes around single words,
+but quotes are essential when searching for multiple words.
+Quotes also help make it easier to distinguish between the search term or phrase
 and the file being searched.
-We will use quotes in the remaining examples.
+We will always use quotes in the remaining examples.
 
-Another useful option is `-n`, which numbers the lines that match:
+Another useful flag is `-n`, which **numbers** the lines that match the pattern.
+NOTE that the line number is separated from the matching line by a "colon" character.
 
 ~~~
 $ grep -n "it" haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 5:With searching comes loss
 9:Yesterday it worked
 10:Today it is not working
 ~~~
-{: .output}
 
 Here, we can see that lines 5, 9, and 10 contain the letters "it".
 
-We can combine options (i.e. flags) as we do with other Unix commands.
-For example, let's find the lines that contain the word "the". We can combine
-the option `-w` to find the lines that contain the word "the" and `-n` to number the lines that match:
+We can combine flags as we do with other Unix commands.
+For example, let's find the line numbers and lines that contain the word "the". We can combine
+the flag options `-w` and `-n` to match the pattern "the":
 
 ~~~
 $ grep -n -w "the" haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 2:Is not the true Tao, until
 6:and the presence of absence:
 ~~~
-{: .output}
 
-Now we want to use the option `-i` to make our search case-insensitive:
+Here's a **new** flag, **`-i`** which grep can use to make our search case-**insensitive**:
 
 ~~~
 $ grep -n -w -i "the" haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 1:The Tao that is seen
 2:Is not the true Tao, until
 6:and the presence of absence:
 ~~~
-{: .output}
 
-Now, we want to use the option `-v` to invert our search, i.e., we want to output
-the lines that do not contain the word "the".
+Here is another flag option that is very useful. We can use **`-v`** to **invert** 
+our search, *i.e.*, we want to output 
+the lines that do ***not*** match the word "the".
 
 ~~~
 $ grep -n -w -v "the" haiku.txt
-~~~
-{: .language-bash}
-
-~~~
 1:The Tao that is seen
 3:You bring fresh toner.
 4:
@@ -197,15 +164,14 @@ $ grep -n -w -v "the" haiku.txt
 10:Today it is not working
 11:Software is like that.
 ~~~
-{: .output}
+***Wait!*** Why is line #1 is found in both searches? Because `grep -n -w -i "the" haiku.txt`
+is case insensitive, while `grep -n -w -v "the" haiku.txt` is case sensitive! 
+To output the exact opposite matches for `grep -n -w -i "the" haiku.txt`, we need
+to use: `grep -n -w -v -i "the" haiku.txt`. Now you begin to see how precise
+the `grep` command can be while searching for patterns! 
 
 `grep` has lots of other options. To find out what they are, we can type:
-
-~~~
-$ grep --help
-~~~
-{: .language-bash}
-
+`grep --help` on Windows, or `man grep` on a Mac:
 ~~~
 Usage: grep [OPTION]... PATTERN [FILE]...
 Search for PATTERN in each FILE or standard input.
@@ -227,168 +193,377 @@ Regexp selection and interpretation:
 Miscellaneous:
 ...        ...        ...
 ~~~
-{: .output}
 
-> ## Using `grep`
->
-> Which command would result in the following output:
->
-> ~~~
-> and the presence of absence:
-> ~~~
-> {: .output}
->
-> 1. `grep "of" haiku.txt`
-> 2. `grep -E "of" haiku.txt`
-> 3. `grep -w "of" haiku.txt`
-> 4. `grep -i "of" haiku.txt`
->
-> > ## Solution
-> > The correct answer is 3, because the `-w` flag looks only for whole-word matches.
-> > The other options will also match "of" when part of another word.
-> {: .solution}
-{: .challenge}
+### Using `grep` with Wildcards
 
-> ## Wildcards
->
-> `grep`'s real power doesn't come from its options, though; it comes from
-> the fact that patterns can include wildcards. (The technical name for
-> these is **regular expressions**, which
-> is what the "re" in "grep" stands for.) Regular expressions are both complex
-> and powerful; if you want to do complex searches, please look at the lesson
-> on [our website](http://v4.software-carpentry.org/regexp/index.html). As a taster, we can
-> find lines that have an 'o' in the second position like this:
->
-> ~~~
-> $ grep -E '^.o' haiku.txt
-> ~~~
-> {: .language-bash}
->
-> ~~~
-> You bring fresh toner.
-> Today it is not working
-> Software is like that.
-> ~~~
-> {: .output}
->
-> We use the `-E` flag and put the pattern in quotes to prevent the shell
-> from trying to interpret it. (If the pattern contained a `*`, for
-> example, the shell would try to expand it before running `grep`.) The
-> `^` in the pattern anchors the match to the start of the line. The `.`
-> matches a single character (just like `?` in the shell), while the `o`
-> matches an actual 'o'.
-{: .callout}
+`grep`'s real power doesn't come from its options, though; it comes from
+the fact that ***patterns can include special wildcards***. (The technical name for
+these is **regular expressions**, which
+is what the "re" in "grep" stands for.) Regular expressions can be very complex
+and if you want to do complex searches, please look at the lesson
+on [the Software Carpentry website](http://v4.software-carpentry.org/regexp/index.html). 
+For a small taste of what these special wildcards can do, let's
+find all the ***lines*** in `haiku.txt` that have an 'o' in the second position like this:
 
-> ## Tracking a Species
-> 
-> Leah has several hundred 
-> data files saved in one directory, each of which is formatted like this:
-> 
-> ~~~
-> 2013-11-05,deer,5
-> 2013-11-05,rabbit,22
-> 2013-11-05,raccoon,7
-> 2013-11-06,rabbit,19
-> 2013-11-06,deer,2
-> ~~~
-> {: .source}
->
-> She wants to write a shell script that takes a species as the first command-line argument 
-> and a directory as the second argument. The script should return one file called `species.txt` 
-> containing a list of dates and the number of that species seen on each date.
-> For example using the data shown above, `rabbit.txt` would contain:
-> 
-> ~~~
-> 2013-11-05,22
-> 2013-11-06,19
-> ~~~
-> {: .source}
->
-> Put these commands and pipes in the right order to achieve this:
-> 
-> ~~~
-> cut -d : -f 2  
-> >  
-> |  
-> grep -w $1 -r $2  
-> |  
-> $1.txt  
-> cut -d , -f 1,3  
-> ~~~
-> {: .language-bash}
->
-> Hint: use `man grep` to look for how to grep text recursively in a directory
-> and `man cut` to select more than one field in a line.
->
-> An example of such a file is provided in `data-shell/data/animal-counts/animals.txt`
->
-> > ## Solution
-> >
-> > ```
-> > grep -w $1 -r $2 | cut -d : -f 2 | cut -d , -f 1,3  > $1.txt
-> > ```
-> > {: .source}
-> >
-> > You would call the script above like this:
-> >
-> > ```
-> > $ bash count-species.sh bear .
-> > ```
-> > {: .language-bash}
-> {: .solution}
-{: .challenge}
+~~~
+$ grep -E '^.o' haiku.txt
+You bring fresh toner.
+Today it is not working
+Software is like that.
+~~~
 
-> ## Little Women
->
-> You and your friend, having just finished reading *Little Women* by
-> Louisa May Alcott, are in an argument.  Of the four sisters in the
-> book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
-> most mentioned.  You, however, are certain it was Amy.  Luckily, you
-> have a file `LittleWomen.txt` containing the full text of the novel
-> (`data-shell/writing/data/LittleWomen.txt`).
-> Using a `for` loop, how would you tabulate the number of times each
-> of the four sisters is mentioned?
->
-> Hint: one solution might employ
-> the commands `grep` and `wc` and a `|`, while another might utilize
-> `grep` options.
-> There is often more than one way to solve a programming task, so a
+We use the `-E` flag and put the pattern in quotes to prevent the *shell*
+from trying to expand it. (If the pattern contained a `*`, for
+example, the shell would try to expand it **before** running `grep`.) The
+use of `-E` lets `grep` take control of the wildcard pattern matching,
+changing to **regular expression wildcards** which are ***different 
+than the wildcards in the shell***. For example, **`^`** in the pattern *anchors 
+the match to the **start of the line***. Then the **`•`**
+*matches any single character* (just like `?` in the shell), while the **`o`**
+*matches the actual letter 'o'*. So we are asking `grep` to output all the lines 
+that start with any one character followed by an "o" character. 
+
+### Combining Shell Commands: Tracking a Species
+
+Now we are going to create a **much** more complicated script. 
+But don't worry because you have already covered all the commands 
+you need for this script, and we will give you some hints. But 
+it will take some thought and probably some (hint#1) testing! 
+Feel free to talk with your neighbor about this problem for 5 minutes,
+then we will solve this puzzle together. 
+
+#### Nelle's undergraduate project
+Nelle is careful to save all her data, and she has 
+some old data from an undergraduate project with **several hundred** 
+data files saved in the `data-shell\data\animal-counts` directory. 
+Each file has dates, species, and the counts of each species seen, formatted like this:
+
+~~~
+2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+~~~
+
+Nelle wants to find the number of animals she counted, on any date. 
+But she only wants data for one species at a time. Nelle knows she needs 
+to write a powerful script, but the script needs to be flexible, 
+because there are so many files, and she saw a lot of different animals!
+She wants to tell the script which species to search for, and which directory to search.
+Nelle decides to write a shell script that takes a ***species*** as the first command-line argument 
+and a ***directory*** as the second argument. The script should return one file called `<species>.txt` 
+containing a list of *dates* and the *number* of that species counted on each date.
+
+To be clear, she wants to run a script like this:
+```
+bash count-species.sh <animalname> <directory>
+```
+AND, using the data file as shown above, the script will create a file named
+for the species (*e.g.* when searching for "rabbit" it would produce `rabbit.txt`) that would contain:
+
+~~~
+2013-11-05,22
+2013-11-06,19
+~~~
+
+Nelle figured this out in only a few minutes of going through her old 
+notes on writing scripts. But we don't have time in class to review all our
+old lectures, so to help us create the script, let's try putting these commands, 
+special variables, and pipes in the correct order:
+
+~~~
+cut -d : -f 2  
+>  
+|  
+grep -w $1 -r $2  
+|  
+$1.txt  
+cut -d , -f 1,3  
+~~~
+
+**Hint#2:** use `man grep` (or `grep --help`) to look for how to `grep` text 
+*recursively* in a directory and review `man cut` (or `cut --help`) to select more 
+than one *field* in a line.
+**Hint#3:** It might help to start by focusing on just one species.
+
+For this lesson at least one example of this file type is provided as `data-shell/data/animal-counts/animals.txt`
+and some of you might have another file called `more-animals.txt` in the same directory.
+
+(try not to look at the answer!)
+
+..
+
+..
+
+..
+
+..
+
+..
+
+
+
+#### Solution
+
+```
+grep -w $1 -r $2 | cut -d : -f 2 | cut -d , -f 1,3  > $1.txt
+```
+
+For each animal, you would call the script above like this:
+
+```
+$ bash count-species.sh bear .
+```
+The special variable `$1` is the species name, and the special variable `$2`
+is the directory (in this case, the current working directory or `.`).
+
+<a name="grep"></a>
+### `grep` and Little Women
+***A couple more useful `grep` flags: `-o` and `-c`***
+ 
+You and your friend, having just finished reading *Little Women* by
+Louisa May Alcott, are in an argument.  Of the four sisters in the
+book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
+most mentioned.  You, however, are certain it was Amy.  Luckily, you
+have a file `LittleWomen.txt` containing the full text of the novel
+(`data-shell/writing/data/LittleWomen.txt`).
+Using a `for` loop, how would you tabulate the number of times each
+of the four sisters is mentioned? Can we think of a couple different solutions?
+
+Hint: one solution might employ
+the commands `grep` and `wc` and a `|`, while another might utilize
+`grep` options only. 
+
+#### New `grep` Flags
+1. The `-o` flag changes `grep`'s default output from lines, to **o**nly 
+showing the matching pattern within the line!
+
+2. The `-w` flag uses **word boundaries** to make sure that only complete words are matched (this isn't completely new)
+
+3. The `-c` flag tells `grep` to "print only a count of selected lines per FILE". 
+
+..
+So let's try some things:
+```
+$ grep "jo" LittleWomen.txt | wc -l
+284
+
+$ grep "Jo" LittleWomen.txt | wc -l
+1528
+```
+ The first thing we remember is that capitalization matters! We need to be
+ looking for "Jo", not "jo"
+ 
+ ```
+$ grep "Jo" "Meg" "Beth" "Amy" LittleWomen.txt | wc -l
+grep: Meg: No such file or directory
+grep: Beth: No such file or directory
+grep: Amy: No such file or directory
+1528
+```
+Now we remember that `grep` only takes one pattern at a time, so we'll
+probably have to create a `for` loop to enter all the names.
+Let's use "sis" as the variable name:
+
+```
+$ for sis in Jo Meg Beth Amy
+> do
+> grep $sis LittleWomen.txt | wc -l
+> done
+1528
+685
+463
+643
+``` 
+Now it looks very promising! But let's add some output that helps us identify
+which count goes with which name (think about if we made this a script). So we hit the up arrow and edit the command by adding `echo $sis:;` like this:
+```
+$ for sis in Jo Meg Beth Amy; do echo $sis:; grep $sis LittleWomen.txt | wc -l; done 
+Jo:
+1528
+Meg:
+685
+Beth:
+463
+Amy:
+643
+```
+This looks great and we are building up our commands into a script just like
+we learned to do it. But now lets add the new flags:
+```
+$ for sis in Jo Meg Beth Amy; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
+Jo:
+1543
+Meg:
+685
+Beth:
+465
+Amy:
+645
+```
+This is different! We have MORE counts of each name! The reason is that the
+`-o` flag matches the pattern (e.g. "Jo") and then outputs it. This means 
+every time a "Jo" is found, it would be output to the terminal... but we are piping it to
+`wc -l` to count the number of lines. This is important because even if there are
+multiple matches to "Jo" on a single line, they will be output separately. 
+This seems like we are finished, but we still have another problem...
+We are looking for a pattern like "Jo", but that will also match "John". 
+We can find any "John" patterns by running:
+```
+$ grep -o John LittleWomen.txt | wc -l
+167
+```
+So our command isn't finished. How can we match "Jo", without matching 
+"John" (or JoAnne, or Jonathan, or any other pattern like "Jo")?
+
+We can use **word boundaries** which is what the flag `-w` does. The `-w` flag 
+forces `grep` to match only a whole word. This means "Jo" only matches "Jo"! Let's try it:
+```
+$ for sis in Jo
+> do
+> echo $sis:
+> grep -ow $sis LittleWomen.txt | wc -l
+> done
+Jo:
+1355
+```
+and when we use all the daughter's names:
+
+#### Solution1
+
+```
+$ for sis in Jo Meg Beth Amy
+> do
+> echo $sis:
+> grep -ow $sis LittleWomen.txt | wc -l
+> done
+Jo:
+1355
+Meg:
+683
+Beth:
+459
+Amy:
+645
+``` 
+This is the answer! Congratulations on building up a new command that finds exactly
+the names of the daughters, and counts them even if they are on the same line. 
+
+
+#### Using the `-c` flag (Solution 2)
+But we saw in the help file that `-c` counts the number of lines also. 
+What if we just used `-c` instead of piping the output to `wc -l`?
+
+```
+for sis in Jo Meg Beth Amy
+do
+	echo $sis:
+grep -ocw $sis LittleWomen.txt
+done
+```
+```
+Jo:
+1347
+Meg:
+683
+Beth:
+457
+Amy:
+643
+```
+
+The second solution is ***not quite as good*** and reports fewer name counts!
+To discover why, let's look at the `grep --help` file 
+(or `man` page for `grep`) again more closely.
+
+The `-o` flag changes `grep`'s default output from lines, to **o**nly 
+showing the matching pattern within the line! 
+The `-w` flag uses **word boundaries** to make sure that only 
+*exactly* "Jo", "Meg", "Beth", or "Amy" will be matched.
+If you output `grep -ow` to the *terminal* (the same as `stdout`), 
+each time a name is found, it ends up on a ***different terminal
+line***. When you pipe those to `wc -l` you get a 
+count of **all `stdout` lines with exact matches** to the sisters' names. 
+
+Using `-c` in the second solution, the help says:
+
+"`-c, --count  print only a count of selected` ***`lines`*** `per FILE`"
+
+In the second solution `grep -ow` correctly finds all exact matches 
+of the sisters' names, but these are not output as `stdout` 
+(as if they went to the terminal) because 
+`grep -c` only **c**ounts and reports the number of 
+***lines*** in the file... these lines may have 
+*more than one match per line*. The total number of matches reported *by lines*, 
+will be always lower if there is more than one match per line.
+
+If this is still confusing, try breaking down the loops into 
+single commands, or try running these commands looking for 
+only "Jo" and carefully study the difference in the outputs:
+
+**Remember the first loop below is the correct answer:**
+```
+$ for sis in Jo; do echo $sis:; grep -ow $sis LittleWomen.txt | wc -l; done
+Jo:
+1355
+```
+Now examine these loops:
+
+```
+$ for sis in Jo; do echo $sis:; grep -o $sis LittleWomen.txt | wc -l; done
+Jo:
+1543
+```
+Without word boundaries in the above loop, any line with "Jo" including (*e.g.*) "John" is used as 
+`stdout` (on separate lines) and then counted.
+
+
+```
+$ for sis in Jo; do echo $sis:; grep -w $sis LittleWomen.txt | wc -l; done
+Jo:
+1347
+```
+The above loop correctly matches "Jo" using word boundaries, but the `stdout` 
+uses the `grep` default of returning complete lines. Anytime "Jo" is matched
+multiple times on a line, it only counts as one line.
+
+
+```
+$ for sis in Jo; do echo $sis:; grep -c $sis LittleWomen.txt; done
+Jo:
+1528
+```
+The above loop matches any line with a "Jo" including words like (*e.g.*) "John", 
+(or JoAnne, or Jonathan, or any other pattern like "Jo"), and it will match 
+multiple instances of "Jo" or "John, (etc.)" on a line. This is similar to `grep` 
+default behavior except it outputs only the **number** of lines, instead of 
+the lines themselves.
+
+
+```
+$ for sis in Jo; do echo $sis:; grep -cw $sis LittleWomen.txt; done
+Jo:
+1347
+```
+The above loop correctly matches "Jo" using word boundaries, but when "Jo" occurs
+multiple times on the same line, they are only counted once because of the `-c` flag.
+
+
+> ***There is often more than one way to solve a programming task***, so a
 > particular solution is usually chosen based on a combination of
-> yielding the correct result, elegance, readability, and speed.
->
-> > ## Solutions
-> > ```
-> > for sis in Jo Meg Beth Amy
-> > do
-> > 	echo $sis:
-> >	grep -ow $sis LittleWomen.txt | wc -l
-> > done
-> > ```
-> > {: .source}
-> >
-> > Alternative, slightly inferior solution:
-> > ```
-> > for sis in Jo Meg Beth Amy
-> > do
-> > 	echo $sis:
-> >	grep -ocw $sis LittleWomen.txt
-> > done
-> > ```
-> > {: .source}
-> >
-> > This solution is inferior because `grep -c` only reports the number of lines matched.
-> > The total number of matches reported by this method will be lower if there is more
-> > than one match per line.
-> {: .solution}
-{: .challenge}
+> yielding the correct result, elegance, readability, and speed. 
+> No one should expect that they will be able to determine
+> the "best" way to answer questions when first starting to
+> learn programming. 
 
-While `grep` finds lines in files,
-the `find` command finds files themselves.
-Again,
-it has a lot of options;
-to show how the simplest ones work, we'll use the directory tree shown below.
+### Using `find`
+While `grep` finds lines in files, the `find` command finds ***files*** themselves. 
+The `find` command has too many options to cover in this lesson, 
+so we will discuss a few options for `find` using the directory file 
+structure shown below.
 
-![File Tree for Find Example]({{ site.baseurl }}/fig/find-file-tree.svg)
+![File Tree for Find Example]({{ site.baseurl }}/fig/find-file-tree.png)
 
 Nelle's `writing` directory contains one file called `haiku.txt` and three subdirectories:
 `thesis` (which contains a sadly empty file, `empty-draft.md`);
@@ -401,10 +576,6 @@ let's run `find .`.
 
 ~~~
 $ find .
-~~~
-{: .language-bash}
-
-~~~
 .
 ./data
 ./data/one.txt
@@ -419,14 +590,14 @@ $ find .
 ./thesis
 ./thesis/empty-draft.md
 ~~~
-{: .output}
 
 As always,
 the `.` on its own means the current working directory,
-which is where we want our search to start.
-`find`'s output is the names of every file **and** directory
+which is where we want our search to start. After that, the objects 
+`find` displays are not listed in any particular order.
+`find`'s output includes the names of every file **and** directory
 under the current working directory.
-This can seem useless at first but `find` has many options
+This seems useful but `find` has many other options
 to filter the output and in this lesson we will discover some 
 of them.
 
@@ -438,28 +609,18 @@ Sure enough,
 
 ~~~
 $ find . -type d
-~~~
-{: .language-bash}
-
-~~~
 ./
 ./data
 ./thesis
 ./tools
 ./tools/old
 ~~~
-{: .output}
 
-Notice that the objects `find` finds are not listed in any particular order.
 If we change `-type d` to `-type f`,
 we get a listing of all the files instead:
 
 ~~~
 $ find . -type f
-~~~
-{: .language-bash}
-
-~~~
 ./haiku.txt
 ./tools/stats
 ./tools/old/oldtool
@@ -469,215 +630,269 @@ $ find . -type f
 ./data/LittleWomen.txt
 ./data/two.txt
 ~~~
-{: .output}
 
 Now let's try matching by name:
 
 ~~~
 $ find . -name *.txt
-~~~
-{: .language-bash}
-
-~~~
 ./haiku.txt
 ~~~
-{: .output}
 
-We expected it to find all the text files,
-but it only prints out `./haiku.txt`.
-The problem is that the shell expands wildcard characters like `*` *before* commands run.
-Since `*.txt` in the current directory expands to `haiku.txt`,
-the command we actually ran was:
+This is different! We might have expected it to find **all** the text files
+in all the directories,
+but `find` only displays `./haiku.txt`.
+This is because, as we have said before, **the shell expands wildcard characters 
+like `*` *before* commands run**. 
+When the shell saw `*.txt` it ***immediately*** expanded it in the 
+current directory to `haiku.txt` before doing anything else. So the command 
+we actually ran was:
 
 ~~~
 $ find . -name haiku.txt
 ~~~
-{: .language-bash}
 
-`find` did what we asked; we just asked for the wrong thing.
+`find` did what we asked! It found a `*.txt` file in the 
+current working directory and it was finished! 
 
-To get what we want,
-let's do what we did with `grep`:
-put `*.txt` in single quotes to prevent the shell from expanding the `*` wildcard.
-This way,
-`find` actually gets the pattern `*.txt`, not the expanded filename `haiku.txt`:
+To get all the text files,
+let's do what we did with `grep` and
+put `*.txt` in quotes to *prevent the shell from expanding the `*` wildcard*.
+This way, `find` is presented with the pattern `*.txt`!
 
 ~~~
 $ find . -name '*.txt'
-~~~
-{: .language-bash}
-
-~~~
 ./data/one.txt
 ./data/LittleWomen.txt
 ./data/two.txt
 ./haiku.txt
 ~~~
-{: .output}
 
-> ## Listing vs. Finding
->
+### Listing vs. Finding
+
+Understand that in these examples the `find` command works harder 
+than commands we've seen in other lessons! 
+Remember the command `find . -name *.txt` **stops** 
+because it is **done**. To be clear, it's done because  
+everything expands specifically as "find a `*.txt` file in the current working directory".
+However, if no `.txt` file is present in the current working directory, **`find` will begin at 
+the current working directory, and continue finding `.txt` files**! 
+We won't worry about this process for
+now, because we'll always use quotes around our arguments with wildcards. 
+Just be aware that this behavior can happen. 
+
 > `ls` and `find` can be made to do similar things given the right options,
-> but under normal circumstances,
-> `ls` lists everything it can,
-> while `find` searches for things with certain properties and shows them.
-{: .callout}
+> but under normal circumstances, `ls` lists everything it is told to list,
+> while `find` ***searches*** for things with certain properties and shows them.
 
-As we said earlier,
-the command line's power lies in combining tools.
-We've seen how to do that with pipes;
-let's look at another technique.
-As we just saw,
-`find . -name '*.txt'` gives us a list of all text files in or below the current directory.
-How can we combine that with `wc -l` to count the lines in all those files?
+The command line's power lies in combining tools, and we've seen how to do that with pipes;
+Now let's look at another way to **combine tools using `$()`**.
 
-The simplest way is to put the `find` command inside `$()`:
+We know that `find . -name '*.txt'` gives us a list of all 
+text files in or below the current directory.
+It's possible to combine that with `wc -l` to count the lines in all those files.
+
+The simplest way to combine these tools is to put the `find` command inside **`$()`**:
 
 ~~~
 $ wc -l $(find . -name '*.txt')
-~~~
-{: .language-bash}
-
-~~~
 11 ./haiku.txt
 300 ./data/two.txt
 21022 ./data/LittleWomen.txt
 70 ./data/one.txt
 21403 total
 ~~~
-{: .output}
 
-When the shell executes this command,
+This is kind of like Math again! When the shell executes this command,
 the first thing it does is run whatever is inside the `$()`.
-It then replaces the `$()` expression with that command's output.
-Since the output of `find` is the four filenames `./data/one.txt`, `./data/LittleWomen.txt`, `./data/two.txt`, and `./haiku.txt`,
-the shell constructs the command:
+Then the `$()` expression is given to the command, and used to generate the command's output.
+In this case, `find` outputs four filenames 
+
+```
+./data/one.txt
+./data/LittleWomen.txt
+./data/two.txt
+./haiku.txt`
+```
+
+and the shell puts all these together into the command:
 
 ~~~
 $ wc -l ./data/one.txt ./data/LittleWomen.txt ./data/two.txt ./haiku.txt
 ~~~
-{: .language-bash}
 
-which is what we wanted.
-This expansion is exactly what the shell does when it expands wildcards like `*` and `?`,
-but lets us use any command we want as our own "wildcard".
+This is what we wanted! When you think about it, this expansion is 
+exactly what the shell does when it expands wildcards like `*` and `?`,
+but using `$()` lets us turn any command we want into our own "wildcard".
 
-It's very common to use `find` and `grep` together.
-The first finds files that match a pattern;
-the second looks for lines inside those files that match another pattern.
-Here, for example, we can find PDB files that contain iron atoms
-by looking for the string "FE" in all the `.pdb` files above the current directory:
+**NOTE: It's very common to use `find` and `grep` together**
+because `find` can locate files that match a pattern,
+and `grep` identifies lines inside those files that match another pattern.
 
-~~~
-$ grep "FE" $(find .. -name '*.pdb')
-~~~
-{: .language-bash}
+To demonstrate how this works, let's find `.pdb` files that contain iron atoms
+by looking for the string "FE" in all the `.pdb` files 
+in Nelles `data-shell/data/pdb` directory (we don't even have to 
+leave the `writing` directory to do this!):
 
-~~~
+```
+$ grep "FE" $(find ../data/pdb/ -name '*.pdb')
 ../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518
-~~~
-{: .output}
+```
 
-> ## Matching and Subtracting
->
-> The `-v` flag to `grep` inverts pattern matching, so that only lines
-> which do *not* match the pattern are printed. Given that, which of
-> the following commands will find all files in `/data` whose names
-> end in `s.txt` (e.g., `animals.txt` or `planets.txt`), but do
-> *not* contain the word `net`?
-> Once you have thought about your answer, you can test the commands in the `data-shell`
-> directory.
->
-> 1.  `find data -name '*s.txt' | grep -v net`
-> 2.  `find data -name *s.txt | grep -v net`
-> 3.  `grep -v "temp" $(find data -name '*s.txt')`
-> 4.  None of the above.
->
-> > ## Solution
-> > The correct answer is 1. Putting the match expression in quotes prevents the shell
-> > expanding it, so it gets passed to the `find` command.
-> >
-> > Option 2 is incorrect because the shell expands `*s.txt` instead of passing the wildcard
-> > expression to `find`.
-> >
-> > Option 3 is incorrect because it searches the contents of the files for lines which
-> > do not match "temp", rather than searching the file names.
-> {: .solution}
-{: .challenge}
+### Matching and Subtracting
 
-> ## Binary Files
->
-> We have focused exclusively on finding patterns in text files. What if
-> your data is stored as images, in databases, or in some other format?
->
-> A handful of tools extend `grep` to handle a few non text formats. But a
-> more generalizable approach is to convert the data to text, or
-> extract the text-like elements from the data. On the one hand, it makes simple
-> things easy to do. On the other hand, complex things are usually impossible. For
-> example, it's easy enough to write a program that will extract X and Y
-> dimensions from image files for `grep` to play with, but how would you
-> write something to find values in a spreadsheet whose cells contained
-> formulas?
->
-> A last option is to recognize that the shell and text processing have
-> their limits, and to use another programming language.
-> When the time comes to do this, don't be too hard on the shell: many
-> modern programming languages have borrowed a lot of
-> ideas from it, and imitation is also the sincerest form of praise.
-{: .callout}
+We learned the `-v` flag for `grep` inverts pattern matching, so that only lines
+which do ***not*** match the pattern are printed. 
+For example, we can use `grep` to look for lines in `haiku.txt` that do NOT
+contain the word `is`:
+```
+$ grep -vw 'is' haiku.txt
+Is not the true Tao, until
+You bring fresh toner.
 
-The Unix shell is older than most of the people who use it. It has
-survived so long because it is one of the most productive programming
-environments ever created --- maybe even *the* most productive. Its syntax
-may be cryptic, but people who have mastered it can experiment with
-different commands interactively, then use what they have learned to
-automate their work. Graphical user interfaces may be better at the
-first, but the shell is still unbeaten at the second. And as Alfred
-North Whitehead wrote in 1911, "Civilization advances by extending the
-number of important operations which we can perform without thinking
-about them."
+With searching comes loss
+and the presence of absence:
+"My Thesis" not found.
 
-> ## `find` Pipeline Reading Comprehension
+Yesterday it worked
+```
+Once again, notice that the pattern "Is" does not match the pattern "is".
+Capitalizations matters! 
+
+Knowing this about `grep`, let's **first change into the `data-shell/data/pdb`** 
+directory, then examine the following commands to detemine which will 
+show us all files whose names end in "`l.pdb`" (*e.g.*, `nerol.pdb`), but do
+*not* contain the word `meth`?
+Once you have thought about your answer, you can test the commands below:
+
+1.  `find . -name '*l.pdb' | grep -v meth`
+2.  `find . -name *l.pdb | grep -v meth`**\***
+
+#### Solution
+* The correct answer is 1. Putting the wildcard match pattern in quotes prevents the shell
+expanding it, so it gets passed to the `find` command. The `find` command outputs the 
+***names*** of the files to the `grep` command. 
+
+* Option 2 is **incorrect** because the shell expands `*l.pdb` *first* instead of 
+passing the wildcard expression to `find`. 
+
+\*An error occurs that is unclear:
+```
+find: paths must precede expression: citronellal.pdb
+Usage: find [-H] [-L] [-P] [-Olevel] [-D help|tree|search|stat|rates|opt|exec] [path...] [expression]
+```
+The error is due to the immediate expansion of the wildcard such that the actual command is something like:
+```
+find . -name cholesterol.pdb citronellal.pdb cyclohexanol.pdb ethanol.pdb (etc.)
+```
+However, the `find` command thinks it is **done** when it finds the 
+first filename with a perfect match: 
+`cholesterol.pdb`. Subsequent names passed to `find` (i.e. `citronellal.pdb`) are 
+not understood (because `. -name cholesterol.pdb` is not a path).
+
+> ### `find` Pipeline Reading Comprehension
 >
-> Write a short explanatory comment for the following shell script:
+> Provide a short explanatory comment for the following shell script:
 >
 > ~~~
 > wc -l $(find . -name '*.dat') | sort -n
 > ~~~
-> {: .language-bash}
 >
-> > ## Solution
-> > 1. Find all files with a `.dat` extension in the current directory
-> > 2. Count the number of lines each of these files contains
-> > 3. Sort the output from step 2. numerically
-> {: .solution}
-{: .challenge}
+> #### Solution
+> 1. First (like math) find all files with a `.dat` extension in the current directory
+> 2. Count the number of lines in each of these files and pass output to `sort`
+> 3. Sort the output from step 2. numerically
 
-> ## Finding Files With Different Properties
-> 
+Unfortunately, we don't have any `.dat` files in the `pdb` directory! 
+So where are the `.dat` files? This is a great question! Let's **find** them!
+Assuming they are in our lesson directory structure, they must be within or below
+the `data-shell` directory, which is two directories up from our current 
+working directory. We can check this with `pwd`:
+
+```
+$ pwd
+/c/Users/<username>/Desktop/data-shell/data/pdb
+```
+So to find all the `.dat` files, we need to use `find` starting at the path `../..`
+
+```
+$ find ../.. -name "*.dat"
+../../creatures/backups/original-basilisk.dat
+../../creatures/backups/original-unicorn.dat
+../../creatures/basilisk.dat
+../../creatures/one unicorn.dat
+../../creatures/unicorn.dat
+```
+
+The output `../../creatures/one unicorn.dat` looks odd. This is because there 
+is a file with a ***space*** in the name: "`one unicorn.txt`"! Remember 
+that `find` works a little harder than most commands, so it searched for 
+and found a name that contains spaces. 
+So what happens if we then finish our command and pass those filenames 
+to the `wc -l` command?
+```
+$ wc -l $(find ../.. -name "*.dat") | sort -n
+wc: ../../creatures/one: No such file or directory
+wc: unicorn.dat: No such file or directory
+ 163 ../../creatures/backups/original-basilisk.dat
+ 163 ../../creatures/backups/original-unicorn.dat
+ 163 ../../creatures/basilisk.dat
+ 163 ../../creatures/unicorn.dat
+ 652 total
+```
+It works! There are 163 lines in `basilisk.dat` and `unicorn.data` and their backups. 
+In this case the `sort -n` didn't really do anything. But what about the errors?
+The errors occur because `wc -l` does NOT process filenames with spaces. Instead, 
+`wc` looks for a *directory* named `../../creatures/one` (`data-shell/creatures/one`)
+which does not exist. Similarly, a file named `unicorn.txt` can't be found in the 
+`data-shell/creatures/one` directory (because they don't exist). 
+
+> Just for fun:  
+> If your `data-shell/creatures/` directory doesn't have the file `one unicorn.txt` 
+> you can create it using the command:
+> ```
+> touch ../../creatures/"one unicorn.txt"
+> ``` 
+
+> ### Very Advanced: Finding Files With Different Properties
+> **Using the help or man pages of `find`**
 > The `find` command can be given several other criteria known as "tests"
 > to locate files with specific attributes, such as creation time, size,
-> permissions, or ownership.  Use `man find` to explore these, and then
-> write a single command to find all files in or below the current directory
-> that were modified by the user `ahmed` in the last 24 hours.
+> permissions, or ownership.  Use `--help` or `man find` to explore these topics, 
+> and then write a single command to:
+> 1. find all files in or below the current directory
+> 2. that were modified by the user `nelle` 
+> 3. in the last 24 hours.
 >
-> Hint 1: you will need to use three tests: `-type`, `-mtime`, and `-user`.
->
-> Hint 2: The value for `-mtime` will need to be negative---why?
+> Hint 1: We won't use the `$()` format but you will need to use three tests: `-type`, `-mtime`, and `-user`.
+> 
+> Hint 2: You are going to need a lot of help! 
+> > At the end of `help` you see that `find` is maintained at ["http://savannah.gnu.org/"](http://savannah.gnu.org), where
+> > you can get more help (do not email). Also, you can use a search engine, or go 
+> > to [Indiana U.](https://kb.iu.edu/d/admm) where there is a great help section
+> > for shell commands. 
+> 
+> Hint 3: The `-mtime` uses integer values that are days (24-hours). 
+> So the past WEEK would be `-mtime -7`. Why would the value need to be negative?
 >
 > > ## Solution
 > > Assuming that Nelle’s home is our working directory we type:
 > >
 > > ~~~
-> > $ find ./ -type f -mtime -1 -user ahmed
+> > $ find ./ -type f -mtime -1 -user nelle
 > > ~~~
-> > {: .language-bash}
-> {: .solution}
-{: .challenge}
+But this is not satisfying because user `nelle` doesn't exist on our laptops! To 
+see this command working we will have to use our own username, and we should 
+probably use a longer timeframe. Use `ls -l` to find your username, then substitute it into the following command:
+```
+$ find ./ -type f -mtime -60 -user <username>
+```
+
+Congratulations on finishing the `grep` and `find` lesson! You learned a lot but
+you will use these commands a lot too!
 
 ### Keypoints:
-- "`find` finds files with specific properties that match patterns."
-- "`grep` selects lines in files that match patterns."
-- "`--help` is a flag supported by many bash commands, and programs that can be run from within Bash, to display more information on how to use these commands or programs."
-- "`man command` displays the manual page for a given command."
-- "`$(command)` inserts a command's output in place."
+- `find` finds files with specific properties that match patterns.
+- `grep` selects lines in files that match patterns.
+- `--help` is a flag supported by many bash commands, and programs that can be run from within Bash, to display more information on how to use these commands or programs.
+- `man command` displays the manual page for a given command.
+- `$(command)` Can be used to generate a command's output for other commands.

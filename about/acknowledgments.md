@@ -36,7 +36,8 @@ improve the course through practices of education experts including
 who developed the [Mastery Rubric for Bioinformatics](https://www.biorxiv.org/content/10.1101/655456v1) [published in PlOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0225256) 
 and described in an [interview](https://lifescitrainers.org/2019/06/25/bioinformatics-mastery-rubric-interview-with-rochelle-tractenberg/)
 by [Jason Williams](https://www.linkedin.com/in/jason-williams-52847233) on the 
-[Life Science Trainers website](https://lifescitrainers.org).
+[Life Science Trainers website](https://lifescitrainers.org). See also her [poster](https://f1000research.com/posters/8-1160) and [slides](https://f1000research.com/slides/8-1161) 
+from ISMB/ECCB 2019 availble through [F1000](https://f1000research.com/) and [The GOBLET Foundation](https://www.mygoblet.org/).
  
 #### Diversity
 Oklahoma State University is proudly committed to promoting diversity and 

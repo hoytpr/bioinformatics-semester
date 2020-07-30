@@ -4,18 +4,21 @@ element: notes
 title: Genomics Reads Quality Controls
 language: Shell
 ---
-(This material is under development)
+
+(The `home` directory in this lesson may vary)
+Lesson based on [Data Carpentry](https://datacarpentry.org/wrangling-genomics/02-quality-control/index.html)
 ### Assessing Read Quality
 
-questions:
-- "How can I describe the quality of my data?"
-objectives:
-- "Explain how a FASTQ file encodes per-base quality scores."
-- "Interpret a FastQC plot summarizing per-base quality across all reads."
-- "Use `for` loops to automate operations on multiple files."
+Questions:
+- How can I describe the quality of my data?
+
+Objectives:
+- Explain how a FASTQ file encodes per-base quality scores.
+- Interpret a FastQC plot summarizing per-base quality across all reads.
+- Use `for` loops to automate operations on multiple files.
 keypoints:
-- "Quality encodings vary across sequencing platforms."
-- "`for` loops let you perform the same set of operations on multiple files with a single command."
+- Quality encodings vary across sequencing platforms.
+- `for` loops let you perform the same set of operations on multiple files with a single command.
 
 #### Bioinformatics workflows
 
@@ -43,11 +46,48 @@ built under the assumption that the data will be provided in a specific format.
 
 ### Starting with Data
 
+<!--
+
+The first step when working on Cowboy is to upload your `shell_data.zip`
+file which should be on your local Desktop. If it is not on your Desktop, you can 
+download it by clicking on [this link and downloading it here]({{ site.baseurl }}/data/shell_data.zip).
+Once the file is downloaded, use Filezilla to transfer it to your Cowboy home directory
+or you can use `scp` by typing the following command from your terminal:
+
+For Cowboy:
+
+~~~
+$ scp ~/Desktop/shell_data.zip <username>@cowboy.hpc.okstate.edu:/home/<username>/ 
+~~~
+
+For AWS:
+
+~~~
+$ scp ~/Desktop/shell_data.zip dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html
+~~~
+
+After transferring the file, we should unzip it:
+
+```
+unzip shell_data.zip
+```
+Now when you type `ls` you should see a `shell_data` folder with two subfolders:
+
+```
+$ ls
+shell_data
+$ ls shell_data
+sra_metadata  untrimmed_fastq
+```
+-->
+
 Often times, the first step in a bioinformatics workflow is getting the data you want to work with onto a computer where you can work with it. If you have sequenced your own data, the sequencing center will usually provide you with a link that you can use to download your data. Today we will be working with publicly available sequencing data.
 
 We are studying a population of *Escherichia coli* (designated Ara-3), which were propagated for more than 50,000 generations in a glucose-limited minimal medium. We will be working with three samples from this experiment, one from 5,000 generations, one from 15,000 generations, and one from 50,000 generations. The population changed substantially during the course of the experiment, and we will be exploring how with our variant calling workflow. 
 
 The data are paired-end, so we will download two files for each sample. We will use the [European Nucleotide Archive](https://www.ebi.ac.uk/ena) to get our data. The ENA "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation." The ENA also provides sequencing data in the fastq format, an important format for sequencing reads that we will be learning about today. 
+
+We are going to start in our home directory on our remote system:
 
 To download the data, run the commands below. It will take about 10 minutes to download the files.
 ~~~
@@ -62,20 +102,36 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_1.fa
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fastq.gz 
 ~~~
 
+<!--
+
 > #### Faster option
 > 
-> If your workshop is short on time or the venue's internet connection is weak or unstable, learners can 
-> avoid needing to download the data and instead use the data files provided in the `.backup/` directory.
+> If we are working with a pre-made image or if your workshop is short on time or the 
+> venue's internet connection is weak or unstable, learners can 
+> avoid needing to download the data and instead use the data files provided in a `.backup/` directory.
 > 
 > ~~~
+> cd ~/dc_workshop/data/untrimmed_fastq
 > cp ~/.backup/untrimmed_fastq/*fastq.gz .
 > ~~~
 > 
 > This command creates a copy of each of the files in the `.backup/untrimmed_fastq/` directory that end in `fastq.gz` and
 > places the copies in the current working directory (signified by `.`). 
 
+Might want to put an image of paired-end-sequencing here
 
-The data comes in a compressed format, which is why there is a `.gz` at the end of the file names. This makes it faster to transfer, and allows it to take up less space on our computer. Let's unzip one of the files so that we can look at the fastq format.
+-->
+
+While the files are downloading, notice these sequence files are in pairs. Each pair has
+the same prefix or "samplename" followed by a "1" or a "2". These are called "paired-end"
+sequence files. The file with a "1" is called the "Read1" file, and the file with the "2" is called the "Read2" file. 
+There **must** be the same number of reads in each of the paired read files. We can check this later.
+The data comes in a compressed format ("gnu-zip"), which is why there is a `.gz` at the end of the file names. 
+The `.gz` format is a lot like the `.zip` format, but different, so we use the command `gunzip` to decompress 
+the file, instead of `unzip`. Using compressed files is always good practice. This makes it faster to 
+transfer, and allows it to take up less space on our computer. When the downloads are finished,
+let's unzip one of the files so that we 
+can look at the fastq format.
 
 ~~~
 $ gunzip SRR2584863_1.fastq.gz 
@@ -88,9 +144,9 @@ We will now assess the quality of the sequence reads contained in our fastq file
 ![workflow_qc]({{ site.baseurl }}/fig/var_calling_workflow_qc.png)
 #### Details on the FASTQ format
 
-Although it looks complicated (and it is), we can understand the
-[fastq](https://en.wikipedia.org/wiki/FASTQ_format) format with a little decoding. Some rules about the format
-include...
+Although it looks complicated (and it is), we have learned the
+[fastq](https://en.wikipedia.org/wiki/FASTQ_format) format needs a little decoding. 
+Some rules about the format include...
 
 |Line|Description|
 |----|-----------|
@@ -105,7 +161,6 @@ the first four lines.
 ~~~
 $ head -n 4 SRR2584863_1.fastq 
 ~~~
-{: .bash}
 
 ~~~
 @SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
@@ -113,37 +168,36 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 +
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
-{: .output}
 
-Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
+(NOTE if the above looks like 6 (or 8) lines, it is because Line 2 and Line 4 (and potentially Line 3) have "wrapped" around on your computer screen) Line 4 shows the quality for each nucleotide in the read. Quality is interpreted as the 
 probability of an incorrect base call (e.g. 1 in 10) or, equivalently, the base call 
 accuracy (e.g. 90%). To make it possible to line up each individual nucleotide with its quality
-score, the numerical score is converted into a code where each individual character 
+score, the numerical score is converted into a ***character*** code where each individual *character* 
 represents the numerical quality score for an individual nucleotide. For example, in the line
 above, the quality score line is: 
 
 ~~~
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
-{: .output}
 
-The numerical value assigned to each of these characters depends on the 
+The numerical value assigned to each of these *characters* depends on the 
 sequencing platform that generated the reads. The sequencing machine used to generate our data 
 uses the standard Sanger quality PHRED score encoding, using by Illumina version 1.8 onwards.
-Each character is assigned a quality score between 0 and 40 as shown in the chart below.
+Each *character* is assigned a quality score between 0 and 41 as shown in the chart below.
 
 ~~~
-Quality encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
-                  |         |         |         |         |
-Quality score:    0........10........20........30........40                                
+Quality character encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJ
+                            |         |         |         |         |
+Quality score:              0........10........20........30........40 
+("J" = 41 = Better than 40)                               
 ~~~
 {: .output}
 
-Each quality score represents the probability that the corresponding nucleotide call is
-incorrect. This quality score is logarithmically based, so a quality score of 10 reflects a
+Each quality score represents the **probability** that the corresponding nucleotide call is
+correct. This quality score is logarithmically based, so a quality score of 10 reflects a
 base call accuracy of 90%, but a quality score of 20 reflects a base call accuracy of 99%. 
 These probability values are the results from the base calling algorithm and dependent on how 
-much signal was captured for the base incorporation. 
+much unambiguous signal was captured for the base incorporation. 
 
 Looking back at our read: 
 
@@ -154,10 +208,10 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 ~~~
 
-we can now see that there are a range of quality score, but that the end of the sequence
-very poor (`#` = a quality score of 2). 
+we can now see that there is a range of quality scores, but that the end 
+of the sequence is very poor quality (`#` = a quality score of 2 which is bad). 
 
-**[Do the In-class Exercise by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
+**[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 Work on the questions yourself, 
 before looking at the answers (take about 5 minutes).
 #### Assessing Quality using FastQC
@@ -191,7 +245,9 @@ Now let's take a look at a quality plot on the other end of the spectrum.
 
 ![bad_quality]({{ site.baseurl }}/fig/bad_quality1.8.png)
 
-Here, we see positions within the read in which the boxes span a much wider range. Also, quality scores drop quite low into the "bad" range, particularly on the tail end of the reads. The FastQC tool produces several other diagnostic plots to assess sample quality, in addition to the one plotted above. 
+Here, we see positions within the read in which the boxes span a much wider range. Also, quality scores drop 
+quite low into the "bad" range, particularly on the tail end of the reads. The FastQC tool produces several 
+ther diagnostic plots to assess sample quality, in addition to the one plotted above. 
 
 ### Running FastQC  
 
@@ -204,7 +260,7 @@ $ cd ~/dc_workshop/data/untrimmed_fastq/
 #### Review Exercise
 
 How big are the files?
-(Hint: Look at the options for the `ls` command to see how to show
+(Hint: Remember the options for the `ls` command to see how to show
 easily understandable file sizes.)
 
 #### Solution
@@ -222,46 +278,55 @@ $ ls -l -h
 There are six FASTQ files ranging from 124M (124MB) to 545M. 
 The biggest file (SRR2584863_1.fastq) is not in compressed format
 
-FastQC can accept multiple file names as input, and on both zipped and unzipped files, so we can use the \*.fastq* wildcard to run FastQC on all of the FASTQ files in this directory.
+FastQC can accept multiple file names as input, and on both zipped and unzipped files, so we could
+use the \*.fastq* wildcard to run FastQC on all of the FASTQ files in this directory. (Remember that
+the \* wildcard character can represent "none")
 
 ~~~
 $ fastqc *.fastq* 
 ~~~
 
-You will see an automatically updating output message telling you the 
-progress of the analysis. It will start like this: 
+Even though `fastqc` runs quickly, on the Cowboy Computer, we'll need to run `fastqc` 
+from a submission script.
+ 
+> If we "capture" a node on Cowboy to run the files interactively, we would 
+> see an automatically updating output message telling you the 
+> progress of the analysis like this: 
+> 
+> ~~~
+> Started analysis of SRR2584863_1.fastq
+> Approx 5% complete for SRR2584863_1.fastq
+> Approx 10% complete for SRR2584863_1.fastq
+> Approx 15% complete for SRR2584863_1.fastq
+> Approx 20% complete for SRR2584863_1.fastq
+> Approx 25% complete for SRR2584863_1.fastq
+> ~~~
 
-~~~
-Started analysis of SRR2584863_1.fastq
-Approx 5% complete for SRR2584863_1.fastq
-Approx 10% complete for SRR2584863_1.fastq
-Approx 15% complete for SRR2584863_1.fastq
-Approx 20% complete for SRR2584863_1.fastq
-Approx 25% complete for SRR2584863_1.fastq
-Approx 30% complete for SRR2584863_1.fastq
-Approx 35% complete for SRR2584863_1.fastq
-Approx 40% complete for SRR2584863_1.fastq
-Approx 45% complete for SRR2584863_1.fastq
-~~~
+To create a submission script we will use `nano`. The command is:
+`$ nano fastqc.pbs` and when `nano` opens we will enter the following lines:
+
+```
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+module load fastqc
+fastqc *.fastq* 
+```
+
+Then save the `.pbs` file and submit it:
+
+`qsub fastqc.pbs`
+
 
 In total, it should take about five minutes for FastQC to run on all
-six of our FASTQ files. When the analysis completes, your prompt
-will return. So your screen will look something like this:
-
-~~~
-Approx 80% complete for SRR2589044_2.fastq.gz
-Approx 85% complete for SRR2589044_2.fastq.gz
-Approx 90% complete for SRR2589044_2.fastq.gz
-Approx 95% complete for SRR2589044_2.fastq.gz
-Analysis complete for SRR2589044_2.fastq.gz
-$
-~~~
-
-The FastQC program has created several new files within our
+six of our FASTQ files. When it is completed, the FastQC program creates several new files within our
 `data/untrimmed_fastq/` directory. 
 
 ~~~
-$ ls 
+$ ls
 SRR2584863_1.fastq        SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
 SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.zip   SRR2589044_1_fastqc.zip
 SRR2584863_1_fastqc.zip   SRR2584866_1.fastq.gz     SRR2589044_1.fastq.gz
@@ -270,7 +335,7 @@ SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 SRR2584863_2.fastq.gz     SRR2584866_2.fastq.gz     SRR2589044_2.fastq.gz
 ~~~
 
-For each input FASTQ file, FastQC has created a `.zip` file and a
+For each input FASTQ file, FastQC has created a `.zip` file and an
 `.html` file. The `.zip` file extension indicates that this is 
 a compressed set of multiple output files. We'll be working
 with these output files soon. The `.html` file is a stable webpage
@@ -302,26 +367,27 @@ HTML files as a webpage:
 $ open SRR2584863_1_fastqc.html 
 ~~~
 
-However, if you try this on our AWS instance, you'll get an error: 
+However, if you try this on Cowboy or an Amazon cloud AWS instance, you'll get an error: 
 
 ~~~
 Couldn't get a file descriptor referring to the console
 ~~~
 
-This is because the AWS instance we're using doesn't have any web
-browsers installed on it, so the remote computer doesn't know how to 
+This is because these machines don't have any web
+browsers installed, so the remote computer doesn't know how to 
 open the file. We want to look at the webpage summary reports, so 
 let's transfer them to our local computers (i.e. your laptop).
 
 To transfer a file from a remote server to our own machines, we will
 use `scp`, which we learned yesterday in the Shell Genomics lesson. 
 
-Transferring files
+**Transferring files**
+
 First we
-will make a new directory on our computer to store the HTML files
+will make a new directory on our local computer to store the HTML files
 we're transferring. Let's put it on our desktop for now. Open a new
-tab in your terminal program (you can use the pull down menu at the
-top of your screen or the Cmd+t keyboard shortcut) and type: 
+terminal window, or a new tab in your terminal program (if your system
+supports tabs, use the Cmd+t keyboard shortcut) and type: 
 
 ~~~
 $ mkdir -p ~/Desktop/fastqc_html 
@@ -329,8 +395,16 @@ $ mkdir -p ~/Desktop/fastqc_html
 
 Now we can transfer our HTML files to our local computer using `scp`.
 
+For AWS:
+
 ~~~
-$ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html
+$ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
+~~~
+
+For Cowboy:
+
+~~~
+$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 As a reminder, the first part
@@ -358,7 +432,7 @@ SRR2589044_1_fastqc.html                      100%  249KB 370.1KB/s   00:00
 SRR2589044_2_fastqc.html                      100%  251KB 592.2KB/s   00:00  
 ~~~
 
-Now we can go to our new directory and open the HTML files. 
+Now we can go to our new local directory and open the HTML files. 
 
 ~~~
 $ cd ~/Desktop/fastqc_html/ 
@@ -369,32 +443,35 @@ Your computer will open each of the HTML files in your default web
 browser. Depending on your settings, this might be as six separate
 tabs in a single window or six separate browser windows.
 
-## Decoding the other FastQC outputs
-We've now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we haven't talked about! Below we have provided a brief overview of interpretations for each of these plots. It's important to keep in mind 
+**[Do the In-class Exercises 3 and 4 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 
-+ **Per tile sequence quality**: the machines that perform sequencing are divided into tiles. This plot displays patterns in base quality along these tiles. Consistently low scores are often found around the edges, but hot spots can also occur in the middle if an air bubble was introduced at some point during the run. 
-+ **Per sequence quality scores**: a density plot of quality for all reads at all positions. This plot shows what quality scores are most common. 
-+ **Per base sequence content**: plots the proportion of each base position over all of the reads. Typically, we expect to see each base roughly 25% of the time at each position, but this often fails at the beginning or end of the read due to quality or adapter content.
-+ **Per sequence GC content**: a density plot of average GC content in each of the reads.  
-+ **Per base N content**: the percent of times that 'N' occurs at a position in all reads. If there is an increase at a particular position, this might indicate that something went wrong during sequencing.  
-+ **Sequence Length Distribution**: the distribution of sequence lengths of all reads in the file. If the data is raw, there is often on sharp peak, however if the reads have been trimmed, there may be a distribution of shorter lengths. 
-+ **Sequence Duplication Levels**: A distribution of duplicated sequences. In sequencing, we expect most reads to only occur once. If some sequences are occurring more than once, it might indicate enrichment bias (e.g. from PCR). If the samples are high coverage (or RNA-seq or amplicon), this might not be true.  
-+ **Overrepresented sequences**: A list of sequences that occur more frequently than would be expected by chance. 
-+ **Adapter Content**: a graph indicating where adapater sequences occur in the reads.
+
+#### Decoding the other FastQC outputs
+We've now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we haven't talked about! Below we have provided a brief overview of interpretations for each of these plots. For more information, please see the FastQC documentation [here](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) 
+
++ [**Per tile sequence quality**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/12%20Per%20Tile%20Sequence%20Quality.html): the machines that perform sequencing are divided into tiles. This plot displays patterns in base quality along these tiles. Consistently low scores are often found around the edges, but hot spots can also occur in the middle if an air bubble was introduced at some point during the run. 
++ [**Per sequence quality scores**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/3%20Per%20Sequence%20Quality%20Scores.html): a density plot of quality for all reads at all positions. This plot shows what quality scores are most common. 
++ [**Per base sequence content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html): plots the proportion of each base position over all of the reads. Typically, we expect to see each base roughly 25% of the time at each position, but this often fails at the beginning or end of the read due to quality or adapter content.
++ [**Per sequence GC content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html): a density plot of average GC content in each of the reads.  
++ [**Per base N content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/6%20Per%20Base%20N%20Content.html): the percent of times that 'N' occurs at a position in all reads. If there is an increase at a particular position, this might indicate that something went wrong during sequencing.  
++ [**Sequence Length Distribution**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html): the distribution of sequence lengths of all reads in the file. If the data is raw, there is often on sharp peak, however if the reads have been trimmed, there may be a distribution of shorter lengths. 
++ [**Sequence Duplication Levels**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html): A distribution of duplicated sequences. In sequencing, we expect most reads to only occur once. If some sequences are occurring more than once, it might indicate enrichment bias (e.g. from PCR). If the samples are high coverage (or RNA-seq or amplicon), this might not be true.  
++ [**Overrepresented sequences**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html): A list of sequences that occur more frequently than would be expected by chance. 
++ [**Adapter Content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html): a graph indicating where adapter sequences occur in the reads.
++ [**K-mer Content**](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/11%20Kmer%20Content.html): a graph showing any sequences which may show a positional bias within the reads.
 
 ## Working with the FastQC text output
 
 Now that we've looked at our HTML reports to get a feel for the data,
-let's look more closely at the other output files. Go back to the tab
-in your terminal program that is connected to your AWS instance
-(the tab lab will start with `dcuser@ip`) and make sure you're in
+let's look more closely at the other output files. **Go back** to the terminal 
+program that is connected to Cowboy or your cloud instance
+and make sure you're in
 our results subdirectory.   
 
 ~~~
 $ cd ~/dc_workshop/results/fastqc_untrimmed_reads/ 
 $ ls 
 ~~~
-{: .bash}
 
 ~~~
 SRR2584863_1_fastqc.html  SRR2584866_1_fastqc.html  SRR2589044_1_fastqc.html
@@ -403,29 +480,15 @@ SRR2584863_2_fastqc.html  SRR2584866_2_fastqc.html  SRR2589044_2_fastqc.html
 SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
 
-Our `.zip` files are compressed files. They each contain multiple 
-different types of output files for a single input FASTQ file. To
-view the contents of a `.zip` file, we can use the program `unzip` 
-to decompress these files. Let's try doing them all at once using a
-wildcard.
-
-~~~
-$ unzip *.zip 
-Archive:  SRR2584863_1_fastqc.zip
-caution: filename not matched:  SRR2584863_2_fastqc.zip
-caution: filename not matched:  SRR2584866_1_fastqc.zip
-caution: filename not matched:  SRR2584866_2_fastqc.zip
-caution: filename not matched:  SRR2589044_1_fastqc.zip
-caution: filename not matched:  SRR2589044_2_fastqc.zip
-~~~
-
-This didn't work. We unzipped the first file and then got a warning
-message for each of the other `.zip` files. This is because `unzip` 
-expects to get only one zip file as input. We could go through and 
+Our `.zip` files are compressed files and can use the program `unzip` 
+to decompress them. But the command `unzip` 
+expects to get only **one** zip file as input, so we cannot use wildcards
+as we did with `fastqc`. We could go through and 
 unzip each file one at a time, but this is very time consuming and 
 error-prone. Someday you may have 500 files to unzip!
 
-A more efficient way is to use a `for` loop like we learned in the Shell Genomics lesson to iterate through all of
+A more efficient way is to use a `for` loop like we learned in the Shell lessons 
+to iterate through all of
 our `.zip` files. Let's see what that looks like and then we'll 
 discuss what we're doing with each line of our loop.
 
@@ -445,7 +508,6 @@ The interpreter runs the command `unzip` on `SRR2584863_1_fastqc.zip`.
 For the second iteration, `$filename` becomes 
 `SRR2584863_2_fastqc.zip`. This time, the shell runs `unzip` on `SRR2584863_2_fastqc.zip`.
 It then repeats this process for the four other `.zip` files in our directory.
-
 
 When we run our `for` loop, you will see output that starts like this:
 
@@ -491,8 +553,8 @@ SRR2584863_2_fastqc.zip   SRR2584866_2_fastqc.zip   SRR2589044_2_fastqc.zip
 ~~~
 
 The `.html` files and the uncompressed `.zip` files are still present,
-but now we also have a new directory for each of our samples. We can 
-see for sure that it's a directory if we use the `-F` flag for `ls`. 
+but now we also have a new directory for each of our samples. Remember
+that we can see which are directories if we use the `-F` flag for `ls`. 
 
 ~~~
 $ ls -F 
@@ -510,7 +572,6 @@ Let's see what files are present within one of these output directories.
 $ ls -F SRR2584863_1_fastqc/ 
 fastqc_data.txt  fastqc.fo  fastqc_report.html	Icons/	Images/  summary.txt
 ~~~
-{: .output}
 
 Use `less` to preview the `summary.txt` file for this sample. 
 
@@ -531,6 +592,7 @@ WARN    Adapter Content SRR2584863_1.fastq
 
 The summary file gives us a list of tests that FastQC ran, and tells
 us whether this sample passed, failed, or is borderline (`WARN`). Remember to quit from `less` you enter `q`.
+
 
 #### Documenting Our Work
 
@@ -558,8 +620,6 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 > to use. If you choose the wrong encoding, you run the risk of throwing away good reads or 
 > (even worse) not throwing away bad reads!
 
-
-
 > #### Same Symbols, Different Meanings
 >
 > Here we see `>` being used a shell prompt, whereas `>` is also
@@ -573,3 +633,6 @@ $ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 > If *you* type `>` or `$` yourself, it is an instruction from you that
 > the shell to redirect output or get the value of a variable.
 
+Our next lesson is [Genomics Trimming and Filtering Reads]({{site.baseurl }}/materials/genomics-trimming-and-filtering)
+
+Acknowledgments: See [contributors here](https://github.com/datacarpentry/wrangling-genomics/blob/gh-pages/_episodes/02-quality-control.md).

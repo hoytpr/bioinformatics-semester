@@ -5,8 +5,8 @@ title: Read Processing
 language: Shell
 ---
 ### A Genome Assembly Workshop 
-This part of the course uses a traditional workshop pedagody with "slides" for readings, and 
-"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced. 
+This part of the course uses a traditional workshop pedagogy with "slides" for readings, and 
+"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced but we can work through them in class. 
 
 ### Hands-on Genome Assembly Read Processing
 
@@ -19,7 +19,7 @@ those who helped design these lessons.
 ### Data and directory structure
 This exercise will likely use the local University supercomputing resources. 
 (AKA: The HPCC) Normally, we would not be able to perform these assemblies
-"interactively" i.e by entering commands at the command prompt. 
+"interactively" *i.e.* by entering commands at the command prompt. 
 Instead we would enter commands by submitting our commands as a "job" in the 
 computers "queue". Most of the commands we enter will be identical
 to the commands you would place inside your "job submission script"
@@ -42,19 +42,30 @@ Log into the Cowboy Supercomputer:
 Then open your FTP software, and connect to your account on Cowboy.
 You should have been given the file `mcbios.tar.gz`, for you to 
 place on your desktop. **Alternatively, registered students can download the file 
-[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto your local machine 
-and unzip it**. Then using FTP, transfer the file `mcbios.tar.gz`
-(or `mcbios.zip`) into your `/scratch/username` directory on Cowboy.
+[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto the Desktop of your local machine**. 
+Use FTP to transfer the file `mcbios.tar.gz`
+(or `mcbios.zip`) to Cowboy. 
+
+Filezilla FTP software is recommended, and a brief description of how to use Filezilla can be found in the [Filezilla Extra]({{ site.baseurl }}/materials/filezilla-extras) page.
+
+make sure the `mcbios.zip` file will be uploaded into your `/scratch/username` directory on Cowboy.
 NOTE that you should substitute `username` with your actual 
-username for the computer. For example, if your username is `phoyt`
-and the mcbios.zip file will be uploaded to `/scratch/phoyt`.
+username for the computer. For example, if your username was `phoyt`, upload the file to `/scratch/phoyt`.
 
 Then from your terminal program (Windows users will
 use "Putty") type in the following commands:
+
+For `mcbios.tar.gz` use:
 ~~~
-$ cd /scratch/username
-$ cp /scratch/bioworkshop/mcbios.tar.gz .
+$ cd /scratch/<username>
 $ tar xvf mcbios.tar.gz
+$ cd mcbios/
+$ ls
+~~~
+For `mcbios.zip` use:
+~~~
+$ cd /scratch/<username>
+$ unzip mcbios.zip
 $ cd mcbios/
 $ ls
 ~~~
@@ -101,7 +112,8 @@ What you should now have:
 `-- velvet
     `-- velvetk31.pbs
 ~~~
-
+To see this file structure, type in the command: `tree`.
+Notice that the top of the tree starts with a `dot` or `.` meaning the "current working directory". 
 We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as a note to your future self.
 
 ### Important notes before hands-on
@@ -142,16 +154,16 @@ Our assembly will start using one Illumina library, PE-350, which is a paired en
 >@READ-ID
 >ATAGAGATAGAGAGAG (the sequence: here showing 16 nucleotides)
 >+READ-ID (usually empty. Otherwise will repeat READ-ID)
->;9;7;;.7;3933334 (**quality** identifiersfor each of the 16 bases shown)
+>;9;7;;.7;3933334 (**quality** identifiers for each of the 16 bases shown)
 >~~~
 >
->Each base has quality identifier called PHRED score, typically between value 0-40 for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There are also two systems of such conversion, PHRED+33 and PHRED+64. PHRED+33 is used in new Illumina protocols. PHRED+64 is used rarely, but be aware!
+>Each base has quality identifier called PHRED score, typically between value 0-40 for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There are also two systems of such conversion, PHRED+33 and PHRED+64. PHRED+33 is used in almost all modern systems including Illumina protocols. PHRED+64 is used ***rarely***, but be aware!
 > 
->“Phred quality scores   are defined as a property which is logarithmically related to the base-calling error probabilities  .”
+>“Phred quality scores are defined as a property which is logarithmically related to the base-calling error probabilities.”
 > 
 >-Wikipedia.
 
-The basics of PHRED scores are decsribed in this chart: 
+The basics of PHRED scores are described in this chart: 
 
 | Quality Score	| Probability of incorrect base call | Base call accuracy |
 | ---- | ------------- | -----------|
@@ -168,26 +180,33 @@ the PHRED+33 system adds 33 to the quality score: PHRED(20)+33=**53**,
 which corresponds to and is given the **character** 5 using the reference chart below 
 (the "S" range) which is what shows up on the fourth line of every read within a fastq file. 
 
-> There is an older PHRED+64 system 
-> (older than version 1.8, the "I" range) that is rarely used anymore, 
-> where in PHRED+64 a score of 20 would be PHRED(20)+64=84, which is T.
-> It is very, very uncommon to see any sequence data using PHRED+64. 
-
-Using the table below you can usually determine if sequence quality scores 
-are using PHRED+33, or PHRED+64 encoding. (hint: PHRED+33 max score is "J")
+> The older PHRED+64 system 
+> is rarely used anymore but we are showing it
+> because although it's very, very uncommon to see any sequence data using PHRED+64 
+>(the capital "I" range), you might get some old data someday, and you'll need to check!
+> The table below shows how you can be sure sequence quality scores 
+> are using PHRED+33, because the PHRED+33 max score is "J", 
+> and the PHRED+64 minimum score is "@".
+> If you ever see any quality scores above "J", contact the person
+> who gave you the sequence data for more information!
 
 ![PhredScores]({{ site.baseurl }}/fig/PhredScores.png)
 
 ### Exercise
-The base quality in my data is encoded in `________` (Phred+33 or Phred+64 ?).
+The base quality in `PE-350.1.fastq` is encoded in Phred+33 or Phred+64 ?`________` 
 
-Library PE-350 contains a total of `______` reads. 
+The paired end dataset `PE-350.1.fastq` + `PE-350.2.fastq` contains a total of `______` reads. 
 
 (big hint: count # of lines using the terminal shell by typing:    
   `wc -l PE-350.1.fastq`    
-and divide by 4 or make the command line do all the arithmetic): 
+and divide by 4 
+
+<!--
+
+or make the command line do all the arithmetic): 
 
 `$ expr (cat PE-350.1.fastq | wc -l) / 4`
+-->
 
 ### How good is your sequencing run? Use FASTQC
 
@@ -197,21 +216,22 @@ without submitting them as a "job".
 If you want help with fastqc, you can type:
 `$ fastqc -h`
 
-Now perform the fastqc quality control 
+Now perform the fastqc quality control from within your group's
+folder:
 ```
 $ module load fastqc
 $ fastqc PE-350.1.fastq
 ```
 
-(**protip**: do this again to the PE-350.2.fastq file by using the up arrow
+(**protip**: do this again to the `PE-350.2.fastq` file by using the up arrow
 to bring up the last command, then use arrow keys to move over to change 
 1 to a 2 and press enter.)
 
 fastqc puts the results in the same folder as the data (in this case `data/group1/`)
 
-Download your fastqc results using FTP (Filezilla, WinSCP, or even at the command-line using SCP).
+Download your fastqc results using FTP and Filezilla (Later we'll learn how to perform FTP at the command line!).
 
-FASTQC generates a HTML report for each FASTQ file you run.  Use the WINSCP program to find the folder in `/scratch/username/mcbios/data/group1` (if you are in a different group, use that group's number) which holds the results of your analysis.  Use WinSCP to transfer the PE-350.1_fastqc folder to your desktop and double-click on  file fastqc_report.html (on your desktop) to open it in a browser. For more information and to see examples of what bad data look like, read the FASTQC manual when you have time. 
+FASTQC generates a HTML report for each FASTQ file you run.  Use the Filezilla program to find the folder in `/scratch/username/mcbios/data/group1` (if you are in a different group, use that group's number) which holds the results of your analysis.  Use Filezilla to transfer the `PE-350.1_fastqc.zip` file to your desktop and unzip the file, which generates a folder named `PE-350.1_fastqc` In that folder, double-click on the file `fastqc_report.html` to open it in a browser. This shows that the data are pretty good. For more information and to see examples of what bad data look like, read the [FASTQC manual](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) when you have time. 
 
 #### Assignment
 

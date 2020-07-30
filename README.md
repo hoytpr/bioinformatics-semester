@@ -3,7 +3,7 @@ layout: page
 title: README
 ---
 
-### Introduction to Biological Informatics was created with the:
+### Data Science in Omics Introduction was created with the:
 ### Data Carpentry for Biologists - [Semester Course](http://datacarpentry.org/semester-biology)
 
 ### You can cite the material used in this course using the follwing DOI:
@@ -26,7 +26,7 @@ videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
 We will primarily operate this course as
-a [flipped class](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
+a [online class due to the N-Cov-2 pandemic in 2020](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
 
 The developers encourage collaborative development. This repository was used originally by 
 @ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
