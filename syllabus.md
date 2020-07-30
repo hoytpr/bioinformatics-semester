@@ -19,7 +19,7 @@ office_hours_location: 110FC HBRC
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
 
 ### OSU Fall 2020 Syllabus Attachment
-PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2019-Syllabus-Attachment.pdf)
+PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2020-Syllabus-Attachment.pdf)
 
 ### Professor
 
