@@ -56,7 +56,7 @@ and in most packages that provide Unix-like tools for Windows.
 
 ### What does it look like?
 
-A typical shell window looks something like:
+A typical shell window (sometimes called a "terminal" window) looks something like:
 
 ~~~
 bash-3.2$ 
@@ -67,19 +67,22 @@ Network/              Volumes/
 bash-3.2$ 
 ~~~
 
+This is an example of the **comand line interface** we mentioned.
 The first line shows only a **prompt** ("bash-3.2$"),
-indicating that the shell (in this case, a version "3.2") is waiting for input.
-Technically, the "$" is defined as the "prompt" but your shell may use 
-different text for the prompt.    
+indicating that the shell (in this case, a version "3.2") is ***waiting for input***.
+Technically, only the "$" is the "prompt", but your shell (or other shell windows) 
+may include additional informative text with the prompt.    
 Most importantly:    
 When typing commands, either from these lessons or from other sources,
 *do not type the prompt*, only the commands that follow it.
 
-In the above example, the part that you type in the second 
-line of the example is,
-`ls -F /`.
+In the above example, the part that **you** type is the second 
+line of the example:
+
+`ls -F /`
+
 This typically has the following structure: a **command**,
-some **flags** (also called **options** or **switches**) and an **argument**.
+followed by **flags** (also called **options** or **switches**), followed by an **argument**.
 
 **Commands** are actually special programs that are built into the Shell, 
 and are mostly the same for all types of "shells" available.
@@ -92,38 +95,43 @@ Sometimes flags and arguments are referred to as ***parameters***.
 A command can be called with more than one flag and more than one argument: or, a
 command may not require an argument or a flag.
 
-In the second line of the example above, our **command** is `ls`, with a <kbd>SPACE</kbd> followed by the **flag** `-F` and (sometimes optional) an
-**argument** `/`. Each part is separated by spaces: if you omit the space 
+In the second line of the example above, our **command** is `ls`, 
+with a <kbd>SPACE</kbd> followed by the **flag** `-F`, another <kbd>SPACE</kbd>, and an
+**argument** `/`. Arguments are *not always* used. Importantly, each 
+part is separated by **spaces**!
+
+If you omit the space 
 between `ls` and `-F` the shell will look for a command called `ls-F`, which 
 doesn't exist. Also, ***capitalization matters***: `ls -f` is different from `ls -F` 
-(NOTE: Windows systems, and therefore GitBash, don't always care about 
+(EXCEPTION: Windows systems, and therefore GitBash, don't always care about 
 capitalization of the **command** but the flags must be capatalized correctly). 
 
-On the next line we see the output that our command produced. In this case it is a listing 
+On the next line we see the **output** that our command produced. In this case it is a listing 
 of files and folders in a location called `/` - we'll cover what all these mean 
 later today. Those using a macOS might recognize the output in this example.
 
-Finally, the shell again prints the prompt and waits for you to type the next 
+The final part is when the shell again prints the prompt and waits for you to type the next 
 command.
 
-In the examples for this lesson, we'll show the prompt as `$ `. You can make your 
+In the examples for this lesson, we'll show the prompt as `$ `. Your prompt may look 
+different, and if you want can make your 
 prompt look the same by executing the command `PS1='$ '`. But you can also leave 
-your prompt as it is - often the prompt includes useful information about who and where 
+your prompt as it is - often the extra information in the prompt includes who and where 
 you are.
 
-Open a shell window (Windows users open the "GitBash window) and try 
+Open a shell window (Windows users open the "GitBash" window) and try 
 executing `ls -F /` for yourself (don't forget that spaces
 and capitalization are important!). You can change the prompt too, if you like.
 
 ### How does the shell know what `ls` and its flags mean?
 
-Every command is a program stored somewhere on the computer, and the shell keeps a
-list of places to search for commands (the list is in a **variable** called `PATH`, 
+Every command is a **program** stored somewhere on the computer, and the shell keeps a
+list of places to search for these commands (the list is in a **variable** called `PATH`, 
 but those are concepts we'll meet later and are not too important at the moment). 
 Right now, the most important thing to remember is
 that commands, flags and arguments are separated by spaces.
 
-So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that the
+So let's look at the REPL (read-evaluate-print loop) in our example. Notice that the
 "evaluate" step is made of two parts:
 
 1. Read what was typed (`ls -F /` in our example)  
@@ -133,7 +141,7 @@ So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that
     b. Execute it, passing it the flags and arguments (`-F` and `/`) to 
        interpret as the program sees fit 
 3. Print the output produced by the program
-4. and then print the prompt and wait for you to enter another command.
+4. Then print the prompt again and wait for you to enter another command.
 
 > ## Command not found 
 > If the shell can't find a program whose name is the command you typed, it 
@@ -149,10 +157,11 @@ So let's look at the REPL (read-evaluate-print loop) in more detail. Notice that
 
 ### Is the Shell difficult?
 
-The Shell is a different than interacting than a GUI, and that 
-will take some effort and time to learn. A GUI 
-presents you with choices and you select one. With a **command line interface** (CLI) 
-the choices are combinations 
+The Shell is more difficult than interacting with a GUI, and that 
+will take some effort and time to learn. An important difference however is that a GUI 
+presents you with **pre-defined** choices and you select one. 
+With a **command line interface** (CLI) 
+there are many more choices that are combinations 
 of commands and parameters, more like words in a language than buttons on a screen. They
 are not presented to you so
 you must learn a few, like learning some vocabulary in a new language. But a small 
@@ -160,17 +169,18 @@ number of commands gets you a long way, and we'll cover an essential few today.
 
 ### The Shell provides flexibility and automation 
 
-The grammar of a shell allows you to combine existing tools into powerful
+Learning the grammar of a shell is important because it allows you to 
+combine existing tools into powerful
 pipelines and handle large volumes of data automatically. Sequences of
 commands can be written into a *script*, improving the reproducibility of 
 workflows and allowing you to repeat them easily.
 
 In addition, the command line is often the easiest way to interact with remote machines and supercomputers.
 Familiarity with the shell is pretty much essential to run a variety 
-of specialized tools and resources
-including high-performance computing systems.
-As clusters and cloud computing systems become more popular for scientific data crunching,
-being able to interact with the shell is becoming a necessary skill.
+of specialized tools and resources used on 
+high-performance computing systems.
+As clusters and cloud computing systems become more essential for scientific data crunching,
+being able to interact with the shell is a necessary skill.
 We can build on the command-line skills covered here
 to tackle a wide range of scientific questions and computational challenges.
 
