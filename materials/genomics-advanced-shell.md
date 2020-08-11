@@ -276,15 +276,17 @@ $ wc -l bad_reads.txt
 > This is where we would have trouble if we were naming our output file with a `.fastq` extension. 
 > If we already had a file called `bad_reads.fastq` (from our previous `grep` practice) 
 > and then ran the command above using a `.fastq` extension instead of a `.txt` extension, `grep`
-> would give us a warning. 
+> would potentially use the output file as part of the input!. 
 > 
 > ~~~
 > grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > bad_reads.fastq
-> grep: input file ‘bad_reads.fastq’ is also the output
+> $ wc -l bad_reads.fastq
+>  1072 bad_reads.fastq
 > ~~~
 > 
-> `grep` is letting you know that the output file `bad_reads.fastq` is also included in your
-> `grep` call because it matches the `*.fastq` pattern. Be careful with this as it can lead to
+> Because `grep` used the output file `bad_reads.fastq` in your
+> `grep` call (because it matches the `*.fastq` pattern) it counted the bad reads TWICE!
+> Be careful with your file extensions as this as it can lead to
 > some unintended results.
 > 
 
