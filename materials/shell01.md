@@ -188,7 +188,7 @@ to tackle a wide range of scientific questions and computational challenges.
 
 Make sure you've downloaded and installed the files and directories for 
 the [setup for this lesson]({{ site.baseurl }}/computer-setup).
-If not, download the ["data-shell.zip" file from Canvas](https://canvas.okstate.edu/files/4006292/download?download_frd=1) and place the 
+If not, download the 56Mb ["data-shell.zip" file from Canvas](https://canvas.okstate.edu/files/4006292/download?download_frd=1) and place the 
 file on your desktop. Then unzip the file, and you should have a folder 
 named "data-shell" on your Desktop. This is where we begin exploring the BASH shell.
 
@@ -203,8 +203,8 @@ She has 1520 samples in all and now needs to:
 
 1.  Run each sample through an assay machine
     that will measure the relative abundance of 300 different proteins.
-    The machine's output for a single sample is
-    a file with one line for each protein.
+    The machine's output for each individual sample is
+    a file with one line for each of the 300 proteins.
 2.  Calculate statistics for each of the proteins separately
     using a program her supervisor wrote called `goostats`.
 3.  Write up results.
@@ -214,24 +214,24 @@ She has 1520 samples in all and now needs to:
 It takes about half an hour for the assay machine to process each sample.
 The good news is that
 it only takes two minutes to set each one up.
-Since her lab has eight assay machines that she can use in parallel,
-this step will "only" take about two weeks.
+Since her lab has eight assay machines that she can use simultaneously,
+this assay step will "only" take about two weeks.
 
 The bad news is that if she has to run `goostats` by hand using a GUI,
-she'll have to select a file using an open file dialog 1520 times.
+she'll have to select a file using an "open file" dialog, 1520 times.
 At 30 seconds per sample,
 the whole process will take more than 12 hours
 (and that's assuming the best-case scenario where she is ready to select the next file
 as soon as the previous sample analysis has finished).
 Only a machine could do this without taking breaks, so it'll probably 
-take much longer than 12 hours, not to mention that
-the chances of her selecting all 1520 files correctly are practically zero.
-Missing that paper deadline is looking increasingly likely.
+take much longer than 12 hours. Also the chances of her selecting all 1520 files correctly 
+and keeeping the outputs perfectly organized are practically zero.
+But Nelle really doesn't want to miss that paper deadline.
 
-The next few lessons will explore what she should do instead.
+The next few lessons will explore what she can do instead.
 More specifically,
 they explain how she can use a command shell to run the `goostats` program,
-and use **loops** to automate the repetitive steps e.g. entering file names,
+and use **loops** to automate the repetitive steps *e.g.* entering file names,
 so that her computer can work 24 hours a day while she writes her paper.
 
 As a bonus,
@@ -239,10 +239,9 @@ once she has put a processing pipeline together,
 she will be able to use it again whenever she collects more data.
 
 #### Keypoints:
-- Explain the steps in the shell's read-run-print cycle.
+- The shell uses a read-evaluate-print-loop cycle.
 - Most commands take flags (options) which begin with a `-`.
-- Identify the actual command, flags, and filenames in a command-line call.
-- Explain the steps in the shell's read-run-print cycle.
-- Demonstrate the use of tab completion and explain its advantages.
+- Identify commands, flags, and filenames.
 - A shell is a program whose primary purpose is to read commands and run other programs.
 
+[Go to the next lesson]({{ site.baseurl }}/materials/shell02)

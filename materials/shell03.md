@@ -69,25 +69,25 @@ tips for the names of your files.
 
    Whitespace is used to separate arguments on the command line!
    Using spaces in file names effectively turns your file name into a command.
-   It is better to completely avoid them in names of files and directories.
+   It is better to ***never use spaces*** in names of files and directories.
    You can use `-` or `_` instead of whitespace.
 
 2. Don't begin the name with `-` (dash) or `.` (period).
 
-   Commands treat names starting with `-` as options or flags!
-   Files with names beginning with a `.` are automatically "hidden".
+   This is because the BASH shell treats names starting with `-` as options or flags!
+   Remember that files with names beginning with a `.` are automatically "hidden".
 
-3. Inside the name, stick with letters, numbers, `.` (period or 'full stop'), `-` (dash) and `_` (underscore).
+3. Inside a file or directory name the best practice is to only use letters, numbers, `.` (period or 'full stop'), `-` (dash) and `_` (underscore).
 
-   Many other characters have special meanings on the command line.
-   We will learn about some of these during this lesson.
-   There are special characters that can cause your command to not work as
-   expected and can even result in data loss.
+   Also, there are other characters that have special meanings on the command line
+   and we will learn about some of these during this lesson.
+   Some special characters can cause your command to fail or work differently, 
+   even resulting in data loss.
 
-**Important:** If you need to refer to names of files or directories that have whitespace
-or another non-alphanumeric character, you should surround the name in quotes (`""`).
+**Important:** If you need to refer to names of files or directories that already have whitespace
+or another non-alphanumeric character, you can work around this problem by surrounding the name in quotes (`""`).
 
-Since we've just created the `thesis` directory, there's nothing in it yet:
+Since we've just created the `thesis` directory, there's nothing in it yet, which we check using `ls`:
 
 ~~~
 $ ls -F thesis
@@ -105,14 +105,14 @@ $ nano draft.txt
 
 > ### Text vs. Whatever
 >
-> We usually call programs like Microsoft Word or LibreOffice Writer "text
+> We might call programs like Microsoft Word or LibreOffice Writer "text
 > editors", but we need to be a bit more careful when it comes to
 > programming. By default, Microsoft Word uses `.docx` files to store not
 > only text, but also formatting information (fonts, headings, and so
 > on). This extra information isn't stored as text, and doesn't mean
-> anything to many shell tools. They expect input files to contain
+> anything to many shell tools. ***Shell tools (commands, programs) expect input files to contain
 > nothing but the letters, digits, and punctuation from a standard computer
-> keyboard. When editing programs, therefore, you must use a plain
+> keyboard***. When editing shell files and programs, you **must** use a plain
 > text editor (or be very careful to save files as plain text).
 
 > ### Which Text Editor?
@@ -123,34 +123,34 @@ $ nano draft.txt
 > after this workshop. On Unix systems (such as Linux and Mac OS X),
 > many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
 > [Vim](http://www.vim.org/) (both of which require more time to learn), 
-> or a graphical editor such as
-> [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
-> use [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
+> or Macs can use a graphical editor such as
+> [Gedit](http://projects.gnome.org/gedit/). On Windows, a good text editor to
+> use is [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
 > text editor called `notepad` that can be run from the command line in the same
 > way as `nano` for the purposes of this lesson.  
 >
-> No matter what editor you use, you will need to know where it searches
+> No matter which editor you use, you need to know where it searches
 > for and saves files. If you start it from the shell, it will (probably)
 > use your *current working directory* as its default location. 
 
-Let's type in a few lines of text.
+Let's type a few lines of text into our "draft.txt" file.
 
 ![Nano in Action]({{ site.baseurl }}/fig/nano-screenshot.png)
 
 Once we're happy with our text, we can press <kbd>Ctrl</kbd>+<kbd>O</kbd> (press the Ctrl or Control key and, while
 holding it down, press the O key) to write our data to disk
-(we'll be asked what file we want to save this to:
+(we'll be asked what file we want to save to, so 
 press <kbd>Return</kbd> to accept the suggested default of `draft.txt`).
-Now our file is saved, and we can use `Ctrl-X` to quit the editor and
+Now our file is saved, and we can use `Ctrl-X` to exit the editor and
 return to the shell.
 
-> ### Control, Ctrl, or ^ Key
+> ### Key combinations with Control, Ctrl, or ^
 >
 > The __<kbd>Control</kbd>__ key (sometimes referred to as the "Command Key" 
-> on a Mac) is also called the "Ctrl" key. There are various ways
-> in which using the <kbd>Control</kbd> key may be described. For example, you may
+> on a Mac) is referred to using variations of text.
+> For example, you may
 > see an instruction to press the <kbd>Control</kbd> key and, while holding it down,
-> press the <kbd>X</kbd> key, described as any of:
+> press the <kbd>X</kbd> key. This may be described as any of:
 >
 > * `Control-X`
 > * `Control+X`
@@ -163,7 +163,7 @@ return to the shell.
 > This means that you can use `Control-G` to get help and `Control-O` to save your
 > file.
 
-nano doesn't leave any output on the screen after it exits,
+You may notice that `nano` doesn't leave any output on the screen after it exits,
 but `ls` now shows that we have created a file called `draft.txt`:
 
 ~~~
@@ -176,24 +176,26 @@ draft.txt
 We have seen how to create text files using the `nano` editor.
 Now, try the following command in your **home** directory:
 
-~~~
-$ cd      # go to your home directory
+First type `$ cd` to go your home directory, then type `pwd` to verify you are "home".
+Then type the following command:
+```
 $ touch my_file.txt
-~~~
+```
 
-Now use `ls` to inspect the files in your home directory (or using the GUI file explorer),
+Now use `ls` to inspect the files in your home directory (or you can use the GUI file explorer),
 and you should see a new file named `my_file.txt`. When you inspect the file 
 with `ls -s` (the `-s` flag stands for "size"), 
 note that the size of `my_file.txt` is `0`(kilobytes).  In other words, it contains no data.
 If you open `my_file.txt` using your text editor it is blank.
 
-Some programs do not generate output files themselves, but instead require that empty files 
-have already been generated. That's when `touch` becomes very valuable. 
+The `touch` command becomes very valuable when programs do not generate output files 
+themselves, but instead require that empty files 
+have already been generated.
 
-## Removing files and directories
+### Removing files and directories
 
-Return to the `data-shell` directory using `cd Desktop/data-shell`.
-Let's tidy up the `thesis` directory by removing the draft we created:
+From our "home" directory, return to the `data-shell` directory using `cd Desktop/data-shell`.
+Let's tidy up the `thesis` directory by removing the `draft.txt` file we created:
 
 ~~~
 $ cd thesis
@@ -203,7 +205,7 @@ $ rm draft.txt
 The `rm` is short for "remove" and this command removes (deletes) files.
 If we run `ls` again,
 its output is empty once more,
-which tells us that our file is gone:
+which tells us that our file `draft.txt` is gone:
 
 ~~~
 $ ls
@@ -212,10 +214,8 @@ $ ls
 
 > ## Deleting Is Forever!
 >
-> ***The Unix shell doesn't have a trash bin that we can recover deleted***
-> ***files from*** (though most graphical interfaces allow this 
-> including those for Linux).  Instead,
-> when we delete files using the command-line
+> ***The Unix shell doesn't have a trash bin where we can recover deleted files!***
+> Instead, when we delete files using the command-line they are gone and
 > their storage space on disk can be recycled. 
 
 Now, let's *re-create* `draft.txt`
@@ -242,23 +242,31 @@ $ rm thesis
 rm: cannot remove `thesis': Is a directory
 ~~~
 
-This happens because `rm` by default *only works on files, not directories*. However, It *can* remove directories if they are completely empty.
+This happens because `rm` by **default** only works on ***files***, not directories. However, It *can* remove directories if they are completely empty.
 
 To really get rid of `thesis` we must also delete the file `draft.txt`.
-We can do this with `-r` or the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`
+We can do this with the flag`-r` or the [recursive](https://en.wikipedia.org/wiki/Recursion) option for `rm`
 
 ~~~
 $ rm -r thesis
 $ ls
+
 ~~~
 
-## Using `rm` Safely
+## Understanding and Using `rm` Safely
 
 Removing the files in a directory recursively can be a **very dangerous**
 operation. If we're concerned about what we might be deleting we should
 add the "interactive" flag `-i` to `rm` which will ask us for confirmation
-before each step!
-
+before each step! To demonstrate this, we will recreate the `thesis` directory and the `draft.txt` file again:
+```
+$ mkdir thesis
+$ touch thesis/draft.txt
+$ ls thesis
+draft.txt
+```
+Now let's remove the `draft.txt` file using the `-i` flag for safety. Now you must
+accept each step of the command.
 ~~~
 $ rm -r -i thesis
 rm: descend into directory ‘thesis’? y
@@ -266,15 +274,13 @@ rm: remove regular file ‘thesis/draft.txt’? y
 rm: remove directory ‘thesis’? y
 ~~~
 
-This goes into the directory, removes everything in the directory, then 
-removes the directory itself, asking
-at each step for you to confirm the deletion.
+This shows how the command goes into the directory, removes everything in the directory, then 
+removes the directory itself.
 
 ## Moving files and directories
 Let's create that directory and file one more time.
-Note that this time we're running `nano` *from* the `data-shell` directory using 
-the path `thesis/draft.txt`, rather than going *into* the `thesis` directory 
-and running `nano` on `draft.txt` there.
+Note that we used `touch` earlier, and now are using `nano` from the `data-shell` directory 
+using the path `thesis/draft.txt`, rather than first going *into* the `thesis` directory. 
 
 ~~~
 $ pwd
@@ -293,6 +299,7 @@ which is short for "move":
 $ mv thesis/draft.txt thesis/quotes.txt
 ~~~
 
+The command `mv` is a little different because it takes **two** arguments.
 The first argument tells `mv` what we're "moving",
 while the second argument tells `mv` where it should go.
 In this case, we're moving `thesis/draft.txt` to `thesis/quotes.txt`,
@@ -310,31 +317,31 @@ lead to data loss. We can protect ourselves by using the additional flag, `mv -i
 (or `mv --interactive`), can be used to make `mv` ask you for confirmation 
 before overwriting.
 
-Unlike the `rm` command, `mv` works on directories containing files!
-
-Let's move `quotes.txt` into the current working directory.
-We use `mv` once again,
-but this time we'll just use the name of a directory as the second argument
-to tell `mv` that we want to keep the filename,
+Unlike the `rm` command, `mv` works on directories containing files! To show this
+let's move `quotes.txt` into our current working directory (`data-shell`).
+We use `mv` again,
+but this time we'll use the name of a directory as the second argument
+to tell `mv` that we want to keep the same filename,
 but put the file somewhere new.
 (This is why the command is called "move".)
 In this case,
-the directory name we use is the special directory name `.` that we mentioned earlier.
+the directory name we use is the special directory name **`.`** that we mentioned earlier.
 
 ~~~
 $ mv thesis/quotes.txt .
 ~~~
 
-The effect is to move the file from the directory it was in to the *current working directory*.
+The effect is to move the file from the directory it was in (`thesis`) to the *current working directory* (`data-shell`).
 `ls` now shows us that the `thesis` directory is empty:
 
 ~~~
 $ ls thesis
+
 ~~~
 
 Further (and we will use this often),
-`ls` with a *filename* as an argument only lists that file.
-We can use this to see that `quotes.txt` is still in our current directory:
+`ls` with a *filename* as an argument only lists that file *if it is present*.
+We can use this to see that `quotes.txt` is now in our current directory:
 
 ~~~
 $ ls quotes.txt
@@ -347,7 +354,7 @@ The `cp` (copy) command works very much like `mv`,
 except it copies a file instead of moving it.
 But `cp` can make a copy with a new name also! 
 Try this, and then check that `cp` worked as expected using `ls`
-with ***two paths*** as arguments --- like most Unix commands,
+with ***two paths*** as arguments --- like many Unix commands,
 `ls` can be given multiple paths at once:
 
 ~~~
@@ -358,7 +365,7 @@ quotes.txt   thesis/quotations.txt
 
 To prove that we made a copy,
 let's delete the `quotes.txt` file in the current directory
-and then run that same `ls` again.
+and then run that same `ls` command again.
 
 ~~~
 $ rm quotes.txt
@@ -373,11 +380,11 @@ but it does find the copy named `quotations.txt` in `thesis` that we didn't dele
 > ## What's In A Name?
 >
 > You may have noticed that all of Nelle's files' names are "something dot
-> something", and in this part of the lesson, we always used the extension
+> something", and so far, this lesson, always used the extension
 > `.txt`.  This is just a convention: We can call a file `mythesis` (no extension) or
 > almost anything else we want. However, most people use two-part names
-> most of the time to help them (and their programs) tell different kinds
-> of files apart. The second part of such a name is called the
+> to help them (and their programs) identify different types 
+> of files. The second part of such a name is called the
 > **filename extension**, and indicates
 > what type of data the file holds: `.txt` signals a plain text file, `.pdf`
 > indicates a PDF document, `.cfg` is a configuration file full of parameters
