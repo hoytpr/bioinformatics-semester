@@ -189,8 +189,21 @@ to tackle a wide range of scientific questions and computational challenges.
 Make sure you've downloaded and installed the files and directories for 
 the [setup for this lesson]({{ site.baseurl }}/computer-setup).
 If not, download the 56Mb ["data-shell.zip" file from Canvas](https://canvas.okstate.edu/files/4006292/download?download_frd=1) and place the 
-file on your desktop. Then unzip the file, and you should have a folder 
+file on your desktop using your GUI interface (if you are using one). 
+If the link above doesn't work, you will have to log into Canvas 
+at [the course site](https://canvas.okstate.edu/courses/78098), and go to the "Files" to download. 
+Then unzip the file using your computers' GUI operating system and you should have a folder 
 named "data-shell" on your Desktop. This is where we begin exploring the BASH shell.
+To make sure in your Shell Window type:
+```
+$ ls Desktop/data-shell
+
+creatures/          Jul26-2019-history.txt  pizza.cfg
+data/               molecules/              sample_submission.txt
+DataOrgSpreadTest/  north-pacific-gyre/     solar.pdf
+IsolateData.csv     notes.txt               writing/
+````
+The output should be similar to the one above. 
 
 ### Nelle's Pipeline: A Starting Point
 

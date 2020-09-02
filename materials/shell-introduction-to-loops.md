@@ -54,7 +54,7 @@ when using the "$" for variables in loops.
 >
 > If you want a prompt that shows your *current working directory* type: 
 > 
-> PS1="[\\\w] ? "
+> `PS1="[\\w] ? "`
 
 <!-- note the above line shows as "[\\w] ? " when rendered -->
 
