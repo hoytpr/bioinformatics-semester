@@ -290,7 +290,7 @@ done
 ```
 Now run the script:
 ```
-$ bash first-loop.sh more-animals.txt
+$ bash species.sh more-animals.txt
 Unique species in more-animals.txt:
 bear
 deer

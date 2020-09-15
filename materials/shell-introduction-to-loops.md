@@ -36,13 +36,13 @@ rather than treat it as text or a command.
 
 #### Temporarily Changing the Prompt
 
-Most of you probably have a "$" as your terminal prompt. Some of you 
-may have the greater-than symbol ">". In either case, this could cause 
+Most of you probably have a "**$**" as your terminal prompt. Some of you 
+may have the greater-than symbol "**>**". In either case, this could cause 
 confusion as we are just starting to use loops. So we are going to 
-change our prompt to a question mark followed by a space "? ". This is 
-only temporary, and you 
-don't have to do this if you are pretty sure you won't get confused
-when using the "$" for variables in loops.
+change our prompt to a question mark followed by a space **"? "**. This is 
+only temporary, and *you 
+don't have to do this* if you are pretty sure you won't get confused
+when using the "**$**" for variables in loops.
 
 > To change your prompt from "$ " to "? " just type:
 > 
@@ -54,7 +54,7 @@ when using the "$" for variables in loops.
 >
 > If you want a prompt that shows your *current working directory* type: 
 > 
-> PS1="[\\\w] ? "
+> `PS1="[\\w] ? "`
 
 <!-- note the above line shows as "[\\w] ? " when rendered -->
 

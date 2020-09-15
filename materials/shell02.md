@@ -19,8 +19,7 @@ language: Shell
 Nelle has taken a workshop that taught her the basics of setting up her 
 computer using the BASH shell. She learned that the part of the operating 
 system responsible for managing files and directories 
-is called the **file system**.
-It organizes our data into files (which hold information), and directories 
+is called the **file system** which organizes our data into **files** (which hold information), and **directories** 
 (also called "folders" which hold files or other directories).
 
 Several commands are frequently used to create, inspect, rename, and 
@@ -43,7 +42,7 @@ $ pwd
 ~~~
 
 Here, the computer's response is `/Users/nelle`. This **important** 
-directory is not ***only*** the *current working directory*, it 
+directory is not ***only*** our *current working directory*, it 
 is Nelle's **home** directory. 
 
 So let's go over that again... We can be at any place in the file structure, 
@@ -52,7 +51,7 @@ BUT there is only **ONE *home* directory per user**.
 
 > ### Home Directory Variations
 >
-> We have to understand and accept that different
+> Computers always give you a **home** directory. We have to understand and accept that different
 > operating systems have different places for the scientists' home directory. 
 > For Windows the home directory is on hard drive "C" and 
 > the output of `pwd` is usually:
@@ -67,15 +66,16 @@ BUT there is only **ONE *home* directory per user**.
 > ```
 > > NOTE that whenever you see this format: `"<username>"`, it is referring to 
 > > **ANY** username and substitutes for yours or mine. For any commands using this format, you 
-> > would type in **your username** rather than the actual `"<username>"` letters. 
+> > would type in **your username** rather than the actual letters: "<username>". 
 > > Mine would be `/c/Users/hoyt`, but on a Mac mine would be `/Users/hoyt` and on a Linux/Unix system it would be:
 > > `/home/hoyt`. 
   
-A typical Windows 10 file structure will look like the image below, using hard drive `C:` as 
+A typical MacOS or Windows 10 file structure will look like the image below, 
+and Windows in particular uses the hard drive `C:` as 
 the "root" directory (more on that later), but our setup instructions should
-**start** you in your `Users` directory (e.g. `Users/<username>`), 
+**start** you in your `home` directory (*e.g.* `Users/<username>`), 
 with at least a `Desktop` directory inside `Users/<username>/`. There might be
-lots of files in your `Desktop` directory, but we'll only use the `data-shell`
+lots of files or directories in your `Desktop` directory, but we'll only use the `data-shell`
 directory for this lesson. The differences may be confusing but   
 the GitBash window will show you similar outputs once we start 
 our lesson about moving through files and directories. 
@@ -89,7 +89,7 @@ output may differ slightly, but should be generally similar.
 To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.  For the
 sake of this example, we'll be
-illustrating the filesystem on **our scientist Nelle's computer**.  After this
+illustrating the filesystem on **our scientist Nelle's MacOS computer**.  After this
 lesson, you will have learned commands to explore your **own filesystem**,
 which will be constructed in a similar way.  
 
@@ -105,11 +105,11 @@ this is the leading slash in `/Users/nelle`.
 Inside the `root` directory are several other directories like:
 - `bin` (which is where some built-in programs are stored),
 - `data` (for miscellaneous data files),
-- `Users` (where users' personal directories are located),
+- `Users` (where users' personal home directories are located),
 - `tmp` (for temporary files that don't need to be stored long-term),
 -  and more.  
 
-We know that our **current working directory** `/Users/nelle` is stored 
+We know that our **current working directory** `/Users/nelle` is located 
 inside `/Users` because `/Users` is the first part of its name.
 Similarly, we know that `/Users` is stored inside the root directory `/`
 because its name begins with `/`.
@@ -154,8 +154,8 @@ system and how your filesystem is customized.)
 `ls` prints the names of the files and directories in the current directory. 
 We can make its output more comprehensible by using the **flag** `-F`
 (also known as a **switch** or an **option**),
-which tells `ls` to add a trailing **`/`** indicating if 
-the items are files, or directories. Any item name with a `/` 
+which tells `ls` to add a trailing **`/`** indicating that 
+the items are directories rathre than files. Any item name with a `/` 
 at the end is a **directory**. 
 Depending on your settings, the `ls` command might also use colors to indicate 
 whether each entry is a file or directory. 
@@ -168,7 +168,7 @@ Desktop/      Downloads/    Movies/       Pictures/
 
 In our example (typically a Mac output),
 we can see our home directory contains mostly other directories 
-(or more commonly: **sub-directories**).
+(also commonly called: **sub-directories**).
 If you see any names in your output that don't have trailing slashes,
 those must be **files**.
 
@@ -322,7 +322,7 @@ or available locally via: info '(coreutils) ls invocation'
 **That's a lot of help!** We can't go through all this today, just remember you 
 should always know that `--help` is there for you. 
 
-But when things go wrong there are also error messages that can be helpful:
+And when things go wrong there are also error messages that can be helpful:
 
 ### The `man` command
 
@@ -598,7 +598,8 @@ folder from anywhere in the filesystem by typing:
 $ cd /Users/nelle/Desktop/data-shell
 ~~~
 Try running the `cd` command without arguments to go to our home folder, 
-then run the `cd` command above. Afterwards run `pwd` and `ls -F` 
+then run the `cd` command above substituting your <username> for "nelle". 
+Afterwards run `pwd` and `ls -F` 
 to ensure that we're in the directory we expect.
 (NOTE: This may not work exactly the same depending on your operating system)
 
@@ -607,7 +608,7 @@ to ensure that we're in the directory we expect.
 The shell interprets the character `~` (tilde) at the start of a path to
 mean "the current user's home directory". For example, if Nelle's home
 directory is `/Users/nelle`, then `~/data` is equivalent to
-`/Users/nelle/data`. This only works if it is the first character in the
+`/Users/nelle/data`. This only works when `~` is the first character in the
 path: `here/there/~/elsewhere` is *not* `here/there/Users/nelle/elsewhere`.
 
 Another shortcut is the `-` (dash) character.  `cd` will translate `-` into
@@ -615,7 +616,7 @@ Another shortcut is the `-` (dash) character.  `cd` will translate `-` into
 then type, the full path.  This is a *very* efficient way of moving back
 and forth between directories. The difference between `cd ..` and `cd -` is
 that the former brings you *up*, while the latter brings you *back*. You can
-think of it as the *Last Channel* button on a TV remote.
+think of it as the *Previous Channel* button on a TV remote.
 
 ### Example Exercises 
 
@@ -643,7 +644,7 @@ think of it as the *Last Channel* button on a TV remote.
 >
 > Assuming a directory structure as in the above Figure
 > (File System for Challenge Questions), if `pwd` displays `/Users/backup`,
-> and `-r` tells `ls` to display things in reverse order,
+> and the flag: `-r` tells `ls` to display things in reverse order,
 > what command will result in the following output:
 >
 > ~~~
@@ -680,7 +681,7 @@ a directory called `revised-revised-results-3`)
 
 Nelle names her directories beginning with "year-month-day",
 including leading zeroes for months and days, ("yyyy-mm-dd")
-because the shell displays file and directory names in alphabetical order.
+because the shell displays file and directory names in **alphabetical** order.
 If she used month names,
 December would come before July;
 if she didn't use leading zeroes,
