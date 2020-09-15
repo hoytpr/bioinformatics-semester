@@ -312,7 +312,7 @@ of Special Variables for reference purposes
 What happens if a script is supposed to process a bunch of files, but we
 don't give it any filenames? For example, what if we type:
 ```
-$ bash first-loop.sh
+$ bash species.sh
 
 ```
 In this case NOTHING happens! The script is a LOOP and so the loop
@@ -323,7 +323,7 @@ so it's **`done`**
 On the other hand, if your script runs a direct command
 it will stop and wait for input (it's not `done`). For example
 let's change to the directory `molecules` and run the `sorted.sh` 
-with no command arguments:
+with no command arguments. Here's an example from an earlier script we wrote:
 
 ~~~
 $ cd ../../molecules/
@@ -332,7 +332,8 @@ $ bash sorted.sh
 ~~~
 (You will need to use <kbd>Ctl-C</kbd> to exit this script.)
 
-When you don't give an argument like `*.dat` (or anything else) the `$@` 
+When we aren't using a loop, 
+and you don't give an argument like `*.dat` (or anything else) the `$@` 
 inside of `sorted.sh` expands to
 nothing at all, so the pipeline inside the script is effectively:
 
@@ -400,9 +401,16 @@ use piped commands!
 $ bash do-stats.sh NENE*[AB].txt | wc -l
 ~~~
 
-> Although there is no `echo` output (`echo` is piped to `wc` rather than the terminal) 
-> the output is just the **number** of files processed
-> rather than the names of the files that were processed.
+> Notice first if we run the command without the pipe, we get the 15 filenames. 
+> That's the standard output of the first part of our formula, 
+> THIS is then piped into "wc -l" and so the filenames that are normally 
+> echoed to the terminal, are inputs for the "wc -l" command. 
+> What do you think the results should be? 
+>
+> 15 files = fifteen lines!
+> The output is just the **number** of files processed based on the filename
+> being echoed when every file is used. 
+
 
 2\. Nelle's script is flexible enough
 to let the person running it decide what files to process. 
@@ -419,7 +427,9 @@ delete the output files from our previous run of `do-stats.sh`. The
 `do-stats.sh` script only recognizes files that begin with `NENE` 
 so it did not process those files either! (But it did overwrite them!)
 
-Nelle could have written the new script so it's simpler to run (using `bash do-stats.sh`):
+### BUT there's more
+Nelle could have written the new script so it's even simpler to run
+as shown below. 
 
 ~~~
 # Calculate stats for Site A and Site B data files.
@@ -430,16 +440,19 @@ do
 done
 ~~~
 
+Now she just runs `bash do-stats.sh`
+
 This latter script is good because: It **always selects the right files**
 (For example, Nelle doesn't have to remember to exclude the 'Z' files). 
 
-The disadvantage is that it ***always*** selects ***just*** those 
-files --- Nelle can't run it on **all** files, 
-for example, the `NENE*[GH].txt` files her former supervisor is creating 
-now. (Unless someone edits the script)
+But Nelle didnot do this because the disadvantage is that it ***always*** selects ***just*** those 
+files --- Nelle can't run it on **all** files! 
+This will be important in her new position where she uses the `NENE*[GH].txt` files 
+to maintain her collaboration with her former supervisor who is creating 
+new files now. (Unless someone edits the script)
 
-When Nelle uses `@$` in `do-stats.sh`, 
-she knows her *future self* will be able to handle the larger files 
+The advantage to Nelle using `@$` in `do-stats.sh`, 
+is she knows her *future self* will be able to handle the larger files 
 from the new colleagues in Antarctica, even though they 
 use a different filename convention. Her script is **flexible!**
 
@@ -463,7 +476,7 @@ For example:
 $ history | tail -n 5 > redo-figure-3.sh
 ~~~
 
-The file `redo-figure-3.sh` might now contain:
+The file `redo-figure-3.sh` might now contain something like:
 
 ~~~
 297 bash goostats NENE01729B.txt stats-NENE01729B.txt
@@ -473,17 +486,20 @@ The file `redo-figure-3.sh` might now contain:
 301 history | tail -n 5 > redo-figure-3.sh
 ~~~
 
-Some quick work in an editor can remove the line numbers on the commands,
+This isn't a real script, but you can see how some quick work in an 
+editor can remove the line numbers on the commands,
 and remove the final line of the `history` command.
-Nelle has a completely accurate record of how she created that figure.
+After Nelle created that figure with separate commands, she now has
+a completely accurate record of how she created that figure.
+
 There is a lot of code we haven't covered in 
 Nelle's Figure-3, and we can ignore that for now.
 We will use this method later in the genomics lessons. 
- 
-We are showing this now because it is common practice
+
+**We are showing this now because it is common practice
 to develop shell scripts by running commands at the shell prompt 
 to make sure they're doing the right thing,
-then saving the commands in a file for re-use.
+then saving the commands in a file for re-use.**
 This style of work allows people to recycle
 what they discover about their data and their workflow.
 Remember that with one call to `history`
@@ -504,6 +520,7 @@ you can recover and save your work as a shell script.
 > for datafile in "$@"
 > do
 >     echo $datfile
+>     # notice we misspelled datafile
 >     bash goostats $datafile stats-$datafile
 > done
 > ~~~
