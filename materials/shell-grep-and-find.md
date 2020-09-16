@@ -202,8 +202,10 @@ these is **regular expressions**, which
 is what the "re" in "grep" stands for.) Regular expressions can be very complex
 and if you want to do complex searches, please look at the lesson
 on [the Software Carpentry website](http://v4.software-carpentry.org/regexp/index.html). 
+Another great resource is: [RegexOne](https://regexone.com/lesson/introduction_abcs)
+
 For a small taste of what these special wildcards can do, let's
-find all the ***lines*** in `haiku.txt` that have an 'o' in the second position like this:
+find all the lines in `haiku.txt` that **have an 'o' in the second position of the line**:
 
 ~~~
 $ grep -E '^.o' haiku.txt
@@ -212,15 +214,17 @@ Today it is not working
 Software is like that.
 ~~~
 
-We use the `-E` flag and put the pattern in quotes to prevent the *shell*
-from trying to expand it. (If the pattern contained a `*`, for
-example, the shell would try to expand it **before** running `grep`.) The
-use of `-E` lets `grep` take control of the wildcard pattern matching,
-changing to **regular expression wildcards** which are ***different 
-than the wildcards in the shell***. For example, **`^`** in the pattern *anchors 
-the match to the **start of the line***. Then the **`•`**
+We use the `-E` flag to tell `grep` that we are going to use a 
+PATTERN that is an ***extended*** regular expression. We 
+also put the pattern in quotes to prevent the *shell*
+from trying to expand the regular expression before it runs `grep` just 
+like it would for a wildcard. 
+
+In other words, `-E` means we will be changing to **regular expression wildcards** which are 
+***different than the wildcards in the shell***. For example, **`^`** in the pattern 
+is like a wildcard that only matches the **start of the line***. Then the **`•`**
 *matches any single character* (just like `?` in the shell), while the **`o`**
-*matches the actual letter 'o'*. So we are asking `grep` to output all the lines 
+matches the actual letter "o". So we are asking `grep` to output all the lines 
 that start with any one character followed by an "o" character. 
 
 ### Combining Shell Commands: Tracking a Species
@@ -228,9 +232,11 @@ that start with any one character followed by an "o" character.
 Now we are going to create a **much** more complicated script. 
 But don't worry because you have already covered all the commands 
 you need for this script, and we will give you some hints. But 
-it will take some thought and probably some (hint#1) testing! 
+it will take some thought and probably some (**Hint#1**) testing! 
+<!--
 Feel free to talk with your neighbor about this problem for 5 minutes,
 then we will solve this puzzle together. 
+-->
 
 #### Nelle's undergraduate project
 Nelle is careful to save all her data, and she has 
@@ -246,18 +252,25 @@ Each file has dates, species, and the counts of each species seen, formatted lik
 2013-11-06,deer,2
 ~~~
 
-Nelle wants to find the number of animals she counted, on any date. 
+Nelle wants to look through all or some of these files to 
+find the number of any animals she counted, on any date. 
 But she only wants data for one species at a time. Nelle knows she needs 
 to write a powerful script, but the script needs to be flexible, 
 because there are so many files, and she saw a lot of different animals!
-She wants to tell the script which species to search for, and which directory to search.
-Nelle decides to write a shell script that takes a ***species*** as the first command-line argument 
-and a ***directory*** as the second argument. The script should return one file called `<species>.txt` 
-containing a list of *dates* and the *number* of that species counted on each date.
+She decides to write `count-species.sh` where she will tell the script 
+which species to search for, and which directory to search.
+Nelle decides to write a shell script `count-species.sh` where she will tell the script 
+which species to search for, and which directory to search. In other words
+the script uses ***species*** as the first command-line argument 
+and a ***directory*** as the second argument. 
+
+Nelle knows she can use special variables more than once within a script, and
+decides the script should output only one file called `<species>.txt`. The output  
+file only contains *dates* and the *number* of that species counted on each date.
 
 To be clear, she wants to run a script like this:
 ```
-bash count-species.sh <animalname> <directory>
+bash count-species.sh <species> <directory>
 ```
 AND, using the data file as shown above, the script will create a file named
 for the species (*e.g.* when searching for "rabbit" it would produce `rabbit.txt`) that would contain:
@@ -282,9 +295,13 @@ $1.txt
 cut -d , -f 1,3  
 ~~~
 
+**Hint#1 Testing** Look carefully at what happens when you type 
+`grep -w rabbit -r .`?
+
 **Hint#2:** use `man grep` (or `grep --help`) to look for how to `grep` text 
 *recursively* in a directory and review `man cut` (or `cut --help`) to select more 
 than one *field* in a line.
+
 **Hint#3:** It might help to start by focusing on just one species.
 
 For this lesson at least one example of this file type is provided as `data-shell/data/animal-counts/animals.txt`
@@ -337,9 +354,9 @@ the commands `grep` and `wc` and a `|`, while another might utilize
 
 #### New `grep` Flags
 1. The `-o` flag changes `grep`'s default output from lines, to **o**nly 
-showing the matching pattern within the line!
+showing the ***matching pattern*** within the line!
 
-2. The `-w` flag uses **word boundaries** to make sure that only complete words are matched (this isn't completely new)
+2. Remember the `-w` flag uses **word boundaries** to make sure that only complete words are matched (this isn't completely new)
 
 3. The `-c` flag tells `grep` to "print only a count of selected lines per FILE". 
 
@@ -362,7 +379,7 @@ grep: Beth: No such file or directory
 grep: Amy: No such file or directory
 1528
 ```
-Now we remember that `grep` only takes one pattern at a time, so we'll
+Now we remember that `grep` **only takes one pattern at a time**, so we'll
 probably have to create a `for` loop to enter all the names.
 Let's use "sis" as the variable name:
 
@@ -403,9 +420,8 @@ Amy:
 645
 ```
 This is different! We have MORE counts of each name! The reason is that the
-`-o` flag matches the pattern (e.g. "Jo") and then outputs it. This means 
-every time a "Jo" is found, it would be output to the terminal... but we are piping it to
-`wc -l` to count the number of lines. This is important because even if there are
+`-o` flag matches the pattern (e.g. "Jo") and then outputs and counts it.
+This is important because now even if there are
 multiple matches to "Jo" on a single line, they will be output separately. 
 This seems like we are finished, but we still have another problem...
 We are looking for a pattern like "Jo", but that will also match "John". 
@@ -447,7 +463,7 @@ Beth:
 Amy:
 645
 ``` 
-This is the answer! Congratulations on building up a new command that finds exactly
+****This is the answer!*** Congratulations on building up a new command that finds exactly
 the names of the daughters, and counts them even if they are on the same line. 
 
 
@@ -458,8 +474,8 @@ What if we just used `-c` instead of piping the output to `wc -l`?
 ```
 for sis in Jo Meg Beth Amy
 do
-	echo $sis:
-grep -ocw $sis LittleWomen.txt
+    echo $sis:
+    grep -ocw $sis LittleWomen.txt
 done
 ```
 ```
