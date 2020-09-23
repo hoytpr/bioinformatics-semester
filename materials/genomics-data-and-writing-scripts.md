@@ -34,10 +34,10 @@ sra_metadata   untrimmed_fastq
  $ tar -zcvf shelldata.tar.gz shell_data/
  ```
 This will create a file named `shelldata.tar.gz` on your desktop!
-Now we need to upload `shelldata.tar.gz` to our Cowboy (scratch) home directory. 
+Now we need to upload `shelldata.tar.gz` to our Cowboy home directory. 
 To do this, while still in your Desktop directory type:
 ~~~
-$ scp shelldata.tar.gz <username>@cowboy.hpc.okstate.edu:/scratch/<username>/
+$ scp shelldata.tar.gz <username>@cowboy.hpc.okstate.edu:/home/<username>/
 ~~~
 
 You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
@@ -53,7 +53,7 @@ sra_metadata   untrimmed_fastq
 We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`
 
 ### Writing files review
-We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files.
+<!-- We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files. -->
 We've used a lot of files that already exist, but what if we want to write our own files?
 As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files.
 
@@ -487,7 +487,7 @@ C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-numbe
 2. For Cowboy
 
 ~~~
-C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/
+C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/home/<remote-username>/
 ~~~
 
 #### Downloading Data from your Virtual Machine with PSCP
@@ -501,7 +501,7 @@ C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/h
 2. For Cowboy
 
 ~~~
-C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/scratch/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
+C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
 ~~~
 
 ### Keypoints:
