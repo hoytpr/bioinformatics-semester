@@ -20,7 +20,7 @@ IMPORTANT! Leave your Cowboy login window open! Don't touch it.
 Now open ***another*** terminal window (Windows users who run Putty, can go back to Gitbash). 
 
 We want to take what we've been learning, and move to the next level, so let's do exactly that! 
-Make sure you are on your Desktop by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder
+Make sure you are on your Desktop by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder we recently downloaded, and unzipped.
 
 ~~~
 $ cd

@@ -9,7 +9,7 @@ language: Shell
 
 In previous lessons, you learned how to use the bash shell to interact with your computer through a command line interface. In this lesson, you will be applying this new knowledge for genomics oriented examples and data. These data might be located on a remote supercomputer (or even a remote cloud service). We will spend most of our time learning about the basics of the shell by manipulating some experimental data. Some of the data we’re going to be working with is quite large, and we’re also going to be using several bioinformatics packages in later lessons to work with these data. NOTE, that if we are working with data on a remote server we may have the data preinstalled. 
 
-To avoid having to spend time downloading the data or downloading and installing all of the software, we’re going to begin with the data available locally by [downloading it here]({{ site.baseurl }}/data/shell_data.zip). Also registered students can download it from [Canvas](https://canvas.okstate.edu/files/4300836/download?download_frd=1) then unzip it locally. 
+To avoid having to spend time downloading the data or downloading and installing all of the software, we’re going to begin with the data available locally by [downloading it here]({{ site.baseurl }}/data/shell_data.zip). Also registered students can download it from [Canvas](https://canvas.okstate.edu/files/4300836/download?download_frd=1). Put the file on your desktop and unzip it to create a new hierarchical filesystem called "shell-data" (our previous setup was "data-shell") 
 
 Review sequencing:
 
@@ -89,7 +89,9 @@ Note: When typing your password, it is common in Unix/Linux not see any asterisk
 
 ![Putty login]({{ site.baseurl }}/fig/Putty-logon1.png)
 
-Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is our current default directory, i.e., the directory that the computer assumes we want to run commands in unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is the home directory within system.
+Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is the directory that where the computer assumes we want to run commands. Unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is our **home** directory within system.
+
+But (and this is important) we have TWO "home" directories on Cowboy. The second "home" is on a VERY large storage disk called "scratch". Our second "home" directory will be on /scratch/<username>. This is all done automatically when you are given an account. 
 
 Alright, you are logged on to the system!
 IMPORTANT! If you are going directly to the [NEXT LESSON]({{ site.baseurl}}/materials/genomics-data-and-writing-scripts), leave your Cowboy login window open! **Don’t touch it**.
