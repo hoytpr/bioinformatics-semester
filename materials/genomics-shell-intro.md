@@ -9,7 +9,7 @@ language: Shell
 
 In previous lessons, you learned how to use the bash shell to interact with your computer through a command line interface. In this lesson, you will be applying this new knowledge for genomics oriented examples and data. These data might be located on a remote supercomputer (or even a remote cloud service). We will spend most of our time learning about the basics of the shell by manipulating some experimental data. Some of the data we’re going to be working with is quite large, and we’re also going to be using several bioinformatics packages in later lessons to work with these data. NOTE, that if we are working with data on a remote server we may have the data preinstalled. 
 
-To avoid having to spend time downloading the data or downloading and installing all of the software, we’re going to begin with the data available locally by [downloading it here]({{ site.baseurl }}/data/shell_data.zip). Also registered students can download it from [Canvas](https://canvas.okstate.edu/files/4300836/download?download_frd=1). Put the file on your desktop and unzip it to create a new hierarchical filesystem called "shell-data" (our previous setup was "data-shell") 
+To avoid having to spend time downloading the data or downloading and installing all of the software, we’re going to begin with the data available locally by [downloading it here]({{ site.baseurl }}/data/shell_data.zip). Also registered students can download it from [Canvas](https://canvas.okstate.edu/files/4300836/download?download_frd=1). Put the file on your desktop and unzip it to create a new hierarchical filesystem called "shell_data" (our previous setup was "data-shell") 
 
 Review sequencing:
 
