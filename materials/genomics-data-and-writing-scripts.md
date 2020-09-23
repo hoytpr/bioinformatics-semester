@@ -57,9 +57,7 @@ sra_metadata   untrimmed_fastq
 We've used a lot of files that already exist, but what if we want to write our own files?
 As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files. -->
 
-To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** about what we are doing with the data files in `~/shell_data/untrimmed_fastq`.
-
-This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
+We're going to create a file **to take notes** about what we are doing with the data files in `~/shell_data/untrimmed_fastq`. This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
 
 To modify `README.txt` let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
 then run `nano` to create a file called `README.txt`:
@@ -68,13 +66,21 @@ then run `nano` to create a file called `README.txt`:
 $ cd ~/shell_data/untrimmed_fastq
 $ nano README.txt
 ~~~
+Write something in your file to describe your data and your analysis.
+```
+The files in this directory came from a special stash of teaching files
+We will test them for bad data, and write a script to test any similar file
+```
 
-### Sequencing file formats (breifly)
 
-The .fasta format:
+### Sequencing file formats (briefly)
 
-The .fastq format:
+#### The .fasta format:
 
+#### The .fastq format:
+
+
+We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 
 <!--
@@ -159,19 +165,21 @@ With sequencing results you will always want to pull out bad reads!  You might a
 
 We're going to look for reads with long sequences of N's and write a script to run each time we get new sequences!
 
-Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. 
-
-
-
-
-
-We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
+Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. Try the following command:
+```
+grep -B1 -A2 NNNNNNNNNN *.fastq 
+```
+There appears to be a lot of bad reads! But what about those two dashes that show up? It turns out that when using `grep` it uses `--` as a placeholder for lines that do not match the pattern. We want to get rid of those paceholders, so we'll use a second grep, to natch the `--` and then invert the output with `-v` flag. The command will look like this:
+```
+grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--"
+```
+Run this command and you can see the double-dashes are all gone. 
 
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > scripted_bad_reads.txt
 ~~~
 
-We're going to create a new file to put this `grep` command in. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
+We're going to create a new file and put this `grep` command inside to create a **script**. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
 $ nano bad-reads-script.sh
