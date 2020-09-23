@@ -91,7 +91,7 @@ Note: When typing your password, it is common in Unix/Linux not see any asterisk
 
 Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is the directory that where the computer assumes we want to run commands. Unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is our **home** directory within system.
 
-But (and this is important) we have TWO "home" directories on Cowboy. The second "home" is on a VERY large storage disk called "scratch". Our second "home" directory will be on /scratch/<username>. This is all done automatically when you are given an account. 
+But (and this is important) we have TWO "home" directories on Cowboy. The second "home" is on a VERY large storage disk called "scratch". Our second "home" directory will be on `/scratch/<username>`. This is all done automatically when you are given an account. 
 
 Alright, you are logged on to the system!
 IMPORTANT! If you are going directly to the [NEXT LESSON]({{ site.baseurl}}/materials/genomics-data-and-writing-scripts), leave your Cowboy login window open! **Don’t touch it**.
