@@ -50,24 +50,32 @@ $ ls shell_data
 sra_metadata   untrimmed_fastq
 ```
 
-We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`
+**We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`**
 
 ### Writing files review
-<!-- We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files. -->
+<!-- We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files. 
 We've used a lot of files that already exist, but what if we want to write our own files?
-As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files.
+As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files. -->
 
-To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
+To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** about what we are doing with the data files in `~/shell_data/untrimmed_fastq`.
 
 This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
 
-Let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
+To modify `README.txt` let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
 then run `nano` to create a file called `README.txt`:
 
 ~~~
 $ cd ~/shell_data/untrimmed_fastq
 $ nano README.txt
 ~~~
+
+### Sequencing file formats (breifly)
+
+The .fasta format:
+
+The .fastq format:
+
+
 
 <!--
 
@@ -145,11 +153,19 @@ Now you've written a file. You can take a look at it with `less` or `cat`, or op
 
 ### Writing scripts
 
-A really powerful thing about the command line is that you can write scripts. Scripts let you save commands to run them and also lets you put multiple commands together. Though writing scripts may require an additional time investment initially, this can save you time as you run them repeatedly. Scripts can also address the challenge of reproducibility: if you need to repeat an analysis, you retain a record of your command history within the script.
+A really powerful thing about the command line is that you can write scripts. **Scripts let you save commands to run (execute) them and also lets you put multiple commands together**. Writing scripts may require an additional time investment initially, but they will save you time when you need to run them ***repeatedly***, like a script looking for bad reads (as shown later). Scripts can also address the challenge of ***reproducibility***: if you need to repeat an analysis, you retain a record of your command history **within** the script.
 
-One thing we will commonly want to do with sequencing results is pull out bad reads and write them to a file to see if we can figure out what's going on with them. We're going to look for reads with long sequences of N's like we did before, but now we're going to write a script, so we can run it each time we get new sequences, rather than type the code in by hand each time.
+With sequencing results you will always want to pull out bad reads!  You might also write them to a file to see if you can figure out what's going on with them. Really bad reads cannot identify if a base is an A, G, C, or T, so it is represented by an "N" character. 
 
-Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
+We're going to look for reads with long sequences of N's and write a script to run each time we get new sequences!
+
+Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. 
+
+
+
+
+
+We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > scripted_bad_reads.txt
