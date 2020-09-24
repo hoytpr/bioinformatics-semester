@@ -197,9 +197,9 @@ It will look like nothing happened, but now if you look at `scripted_bad_reads.t
 
 ### Making the script into a program
 
-We had to type `bash` because we needed to tell the computer what program to use to run this script. Instead we can turn this script into its own program. We need to tell it that it's a program by making it executable. We can do this by changing the file permissions. We talked about permissions in [an earlier episode](http://www.datacarpentry.org/shell-genomics/03-working-with-files/).
+We had to type `bash` because we needed to tell the computer what program to use to run this script. Instead we can turn this script into its own program. We need to tell it that it's a program by making it executable. We can do this by changing the file permissions. There is a lot of information about permissions in [a Datacarpentry Workshop you should use for reference](http://www.datacarpentry.org/shell-genomics/03-working-with-files/).
 
-First, let's look at the current permissions.
+First, let's look at the current permissions by using the `-l` (long) listing of `ls`.
 
 ~~~
 $ ls -l bad-reads-script.sh
@@ -257,19 +257,20 @@ To add "execute" permissions to a script use:
 $ chmod +x bad-reads-script.sh
 ~~~
 
-Now let's look at the permissions again.
+Now let's look at the permissions again. Your computer may have automatically 
+placed permissions that are different than those shown here.
 
 ~~~
 $ ls -l bad-reads-script.sh
 -rwxr-xr-x 1 user group 0 Oct 25 21:46 bad-reads-script.sh
 ~~~
 
-Now we see that it says `-rwxr-xr-x`. 
-> NOTE: The `chmod` command will change permissions for all user types
-> when used this way. There are alternate methods that change permissions individually,
-> but we aren't covering those methods at this time.
+Let's look at the permissions as if they are `-rwxr-xr-x`. 
 
-The `x`'s now tell us we 
+> NOTE: The `chmod` command will change permissions for all user types
+> when used this way, but we aren't covering those methods at this time.
+
+The `x`'s now tell us we (the owners of the file)
 can run the script as a program. So, let's try it! We'll need to put `./` at the beginning 
 so the computer knows to look here (the current working directory) for the program.
 
@@ -278,14 +279,15 @@ $ ./bad-reads-script.sh
 ~~~
 
 The script should run the same way as before, but now we've created our very own computer program!
+This is part of the fun of using the shell.
 
 ### Another way to log on to a Remote System
 
-If we want to connect to a remote system and we are already in a bash terminal, 
-We can use the command `ssh` to connect to another remote system. For example, In your Gitbash window (Windows users) or your old local bash window (Macs/Unix) you can type:
+Apple/Mac users, and Linux users can connect to a remote system using their built-in bash terminal. 
+If you are using one of these systems, you can use the command **`ssh`** to connect to another remote system. Windows users can also use their GitBash window (usually). The command to connect is:
 `ssh <username>@cowboy.hpc.okstate.edu`
 
-If you see a warning about the computer not being known, type "yes" to accept the computer.
+If you see a warning about the computer not being known, type "yes" to accept the security information.
 You should then see a request for your password. Type in your password.
 NOTE: You won't see anything when you type your password. The cursor won't even move.
 That's expected, so keep typing!
