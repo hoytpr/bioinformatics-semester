@@ -452,7 +452,7 @@ and use `ls` to make sure the file `local_file.txt` is now in your home folder.
 
 #### Downloading Data from a remote computer with scp
 
-Let's download a text file from our remote machine. You should have a file that contains bad reads called ~/shell_data/scripted_bad_reads.txt.
+Let's download a text file from our remote machine. You should have a file that contains bad reads called `~/shell_data/scripted_bad_reads.txt`.
 
 **Tip:** If you are looking for another (or any) text file in your home directory to use instead try
 
@@ -495,7 +495,7 @@ tools as the putty program we have been using to connect.
 your Downloads folder is appropriate.
 3. Open the windows [PowerShell](https://en.wikipedia.org/wiki/Windows_PowerShell);
 go to your start menu/search enter the term **'cmd'**; you will be able to start the shell
-(the shell should start from C:\Users\<username>).
+(the shell should start from C:\Users\\<username>).
 4. Change to the download directory
 
 ~~~
