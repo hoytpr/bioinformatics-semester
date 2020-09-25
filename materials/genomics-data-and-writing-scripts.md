@@ -80,6 +80,14 @@ We will test them for bad data, and write a script to test any similar file
 ![The fastq format has 4 lines for every sequence read]({{ site.baseurl }}/fig/fastq-format.png)
 
 
+```
+head -n 4 SRR097977.fastq
+@SRR097977.1 209DTAAXX_Lenski2_1_7:8:3:710:178 length=36
+TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT
++SRR097977.1 209DTAAXX_Lenski2_1_7:8:3:710:178 length=36
+CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<
+```
+
 We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 
