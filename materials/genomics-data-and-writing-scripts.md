@@ -495,7 +495,7 @@ tools as the putty program we have been using to connect.
 your Downloads folder is appropriate.
 3. Open the windows [PowerShell](https://en.wikipedia.org/wiki/Windows_PowerShell);
 go to your start menu/search enter the term **'cmd'**; you will be able to start the shell
-(the shell should start from C:\Users\\<username>).
+(the shell should start from `C:\Users\<username>`).
 4. Change to the download directory
 
 ~~~
