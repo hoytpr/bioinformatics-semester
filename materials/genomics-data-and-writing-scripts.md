@@ -169,7 +169,7 @@ Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep
 ```
 grep -B1 -A2 NNNNNNNNNN *.fastq 
 ```
-There appears to be a lot of bad reads! But what about those two dashes that show up? It turns out that when using `grep` it uses `--` as a placeholder for lines that do not match the pattern. We want to get rid of those paceholders, so we'll use a second grep, to natch the `--` and then invert the output with `-v` flag. The command will look like this:
+There appears to be a lot of bad reads! But what about those two dashes that show up? It turns out that when using `grep` it uses `--` as a placeholder for lines that do not match the pattern. To clean up our output we want to get rid of those paceholders, so we'll use a second grep, to match the `--` and then invert the output with `-v` flag. Don't worry about the "backslash" `\` character for now, it's part of using regular expressions which we can discuss later. The command will look like this:
 ```
 grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--"
 ```
@@ -343,7 +343,7 @@ Let's say you want to download some data from [Ensembl](https://uswest.ensembl.o
 tab-delimited file that just tells us what data is available on the Ensembl bacteria server.
 Before we can start our download, we need to know whether we're using ``curl`` or ``wget``.
 
-To see which program is installed on your operating system you shouold type:
+To see which program is installed on your operating system you should type:
  
 ~~~
 $ which curl
