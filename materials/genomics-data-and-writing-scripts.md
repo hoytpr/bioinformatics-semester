@@ -351,7 +351,7 @@ $ which wget
 ~~~
 
 ``which`` is a BASH program that looks through everything you have
-installed, and tells you what folder it is installed to. If it can't
+installed, and tells you where the program is installed. If it can't
 find the program you asked for, it returns nothing, i.e. gives you no
 results.
 
