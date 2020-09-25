@@ -88,7 +88,7 @@ TATTCTGCCATAATGAAATTCGCCACTTGTTAGTGT
 CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<
 ```
 
-We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
+We want the whole FASTQ record, so we're also going to get the one line before the sequence (using `grep -B1`) and the two lines after the sequence (using `grep -A2`). We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 
 <!--
