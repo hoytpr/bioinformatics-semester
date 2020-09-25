@@ -77,7 +77,7 @@ We will test them for bad data, and write a script to test any similar file
 
 #### The .fastq format:
 
-![The fastq format has 4 lines for every sequence read]({{ site.baseurl }}/fig/fastq-format.png.jpg)
+![The fastq format has 4 lines for every sequence read]({{ site.baseurl }}/fig/fastq-format.png)
 
 
 We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
