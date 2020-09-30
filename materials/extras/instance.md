@@ -49,6 +49,6 @@ to AWS and request your instance **by name** to be re-started. A exact copy of
 your instance will be rebuilt (including the software, but not your datafiles) 
 and you can start another analysis. 
 
-Go Back to the [Working with Genomic Data Lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts#cloud)
+Go Back to the [Working with Genomic Data Lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts#Getting)
 to begin moving data using clouds and remote systems.
 

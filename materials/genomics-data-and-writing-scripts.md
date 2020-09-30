@@ -310,7 +310,7 @@ Welcome to Cowboy!
 connect to a remote supercomputer, and now have two active connections!! 
 This is a big step forward when working in genomics!
 
-### Pause for a moment
+## Pause for a moment
 
 Now your training takes on new power! While we had fun learning commands and working 
 with files on our laptops (or desktops), it's important to realize that now you are 
@@ -328,9 +328,9 @@ most analyses begin with moving data into the cloud instance. Below we'll show y
 some commands to download data onto your computer as if it was an instance, 
 or to move data between your computer and the cloud. [For more details on a cloud 
 instance, follow this link.]({{ site.baseurl  }}/materials/extras/instance)
-<a name="cloud"></a>
-### Getting data *from* the cloud
 
+### Getting data *from* the cloud
+<a name="Getting"></a>
 There are two programs that will download data from a remote server to your local
 machine (or your remote instance): `wget` and `curl`. They were designed to do 
 slightly different tasks by default, so you'll need to give the programs 
@@ -491,6 +491,9 @@ NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
 -->
 
+<!--
+Skip this part as SCP works unless using an instance where specific language is needed
+
 #### Windows Only: Uploading Data to your remote computer with PSCP
 
 If you're using a PC, you may also have installed the *PSCP* program. 
@@ -537,6 +540,8 @@ C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/h
 ~~~
 C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
 ~~~
+
+--> 
 
 ### Keypoints:
 - Scripts are a collection of commands executed together.
