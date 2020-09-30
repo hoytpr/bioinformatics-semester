@@ -81,7 +81,7 @@ BUT we will be imitating this process using the Cowboy computer!
 your local machine". For Windows users, this works, mostly, using the 
 Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!
 
-But we couldn't possibly install all those software on all our differentlycomputers and operating systems, and get them to work.
+But we couldn't possibly install all those software on all our differentl computers and operating systems, and expect them to work.
 Imagine if this class had 100 students!
     
 **Option C** might be available where you work using the University's supercomputers. This has now changed as we are migrating to the "Pete"
