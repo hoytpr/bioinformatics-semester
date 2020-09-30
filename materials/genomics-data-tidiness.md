@@ -42,18 +42,22 @@ if you process the same sample twice, you don't usually do it on the same
 day, or if you do, you're aware of it and give them names like A and B.
 
 > ### Unique identifiers
+> The most important aspect of recording data is that all data must 
+> have some sort of well-formatted and completely unique **identifier**.
 > Unique identifiers are a unique name for a sample or set of sequencing data.
 > They are names for that sample (or data) that *only exist* 
-> for that sample or data. Having these
-> unique names makes them much easier to track later.
+> for that sample or data. Having these names consistent and 
+> unique makes them much easier to track later.
+>
+> The "naming" file (by Jenny Bryant) we downloaded earlier is a great reference!
 
 ### Data about the experiment
 
 Data about the experiment is usually collected in spreadsheets, like Excel.
 
-What type of data to collect depends on your experiment and 
+What *type* of data to collect depends on your experiment and 
 you should always check to see if guidelines for metadata standards
-with your type of experiment.
+exist for your type of experiment.
 
 > ### Metadata standards
 > Many disciplines have specific ways to structure their metadata 
@@ -100,14 +104,16 @@ for communication and efficiency.
 
 Fear not! If you have already started your project, and it's 
 not set up this way, there are still opportunities to make 
-updates. One of the biggest and most common challenges 
+improvments. One of the biggest and most common challenges 
 in genomics is tabular data (tables of data) that 
 aren't formatted so computers can use them, or have inconsistencies 
-that make them hard to analyze.
+that make them hard to analyze. This is what is called 
+***data wrangling***.
 
 More practice on how to structure data is outlined in our [Data Carpentry Ecology spreadsheet lesson](http://www.datacarpentry.org/spreadsheet-ecology-lesson/02-common-mistakes/)
 
-Tools like [OpenRefine](http://www.datacarpentry.org/OpenRefine-ecology-lesson/) are VERY POWERFUL tools that can help you clean your tabular data.
+There are data wrangling tools like [OpenRefine](http://www.datacarpentry.org/OpenRefine-ecology-lesson/) are VERY POWERFUL tools that can help you clean your tabular data. If you are working with 
+sequencing data analyses you might want to install OpenRefine and start working with it.
 
 ### Keypoints:
 

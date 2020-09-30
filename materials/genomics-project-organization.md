@@ -74,10 +74,19 @@ documenting your genomics project.
 Here is where the course and the workshops start to diverge into ***options***.    
 **Option A** is to use an online cloud computing resource (currently AWS) as is 
 described in the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html).     
+Note that AWS costs money and we cannot use this option at this time. 
+BUT we will be imitating this process using the Cowboy computer!
+
 **Option B** is on the same page as **Option A** but is "Using the lessons on 
 your local machine". For Windows users, this works, mostly, using the 
-Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!    
-**Option C** might be available where you work using the University's supercomputers.     
+Ubuntu for Windows 10 Bash shell. For Mac or Linux machines, you might want to go for it!!!
+
+But we couldn't possibly install all those software on all our differentlycomputers and operating systems, and get them to work.
+Imagine if this class had 100 students!
+    
+**Option C** might be available where you work using the University's supercomputers. This has now changed as we are migrating to the "Pete"
+supercomputer, so we are going to work with the next option. 
+   
 [**Option D**]({{ site.baseurl }}/materials/genomics-project-organization-optionD/#optionD) 
 is a great option. Clicking this link will open a NEW Lesson on the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
 if the cloud instance remains available.
