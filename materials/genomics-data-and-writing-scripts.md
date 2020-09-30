@@ -414,7 +414,7 @@ to start the transfer locally. **Important**: For this exercise the terminal you
 should be your *local computer terminal* (not one logged into your remote system). If you're
 using a transfer program, use the one installed on your local machine, not your instance.
 
-#### Moving files with SCP or PSCP
+#### Moving files with SCP
 
 `scp` stands for 'secure copy protocol', and is a widely used UNIX tool for moving files
 between computers and should be installed already. The simplest way to use `scp` 
