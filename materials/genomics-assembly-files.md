@@ -80,10 +80,10 @@ For `mcbios.zip` use:
 $ pwd
 /home/<username>
 $ unzip mcbios.zip
-```
+~~~
 
 The output should look similar to:
-```
+~~~
 Archive:  mcbios.zip
    creating: mcbios/
    creating: mcbios/abyss/
@@ -118,8 +118,9 @@ Archive:  mcbios.zip
   inflating: mcbios/soap/soap31/soapk31.pbs
    creating: mcbios/velvet/
   inflating: mcbios/velvet/velvetk31.pbs
-```
+~~~
 Then change into your new `mcbios` directory and see what is there.
+~~~
 $ cd mcbios/
 $ ls
 ~~~
@@ -245,7 +246,7 @@ The base quality in `PE-350.1.fastq` is encoded in Phred+33 or Phred+64 ?`______
 
 The paired end dataset `PE-350.1.fastq` + `PE-350.2.fastq` contains a total of `______` reads. 
 
-(big hint: count # of lines using the terminal shell by typing:    
+(big hint): Count # of lines using the terminal shell by typing:    
   `wc -l PE-350.1.fastq`    
 and divide by 4 
 
@@ -291,7 +292,7 @@ Download your fastqc results using `scp` by reversing the "what you want to move
 $ scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/data/PE-350.1_fastqc.zip .
 $ scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/data/PE-350.2_fastqc.zip .
 ```
-Then use your Graphical User Interface to find these "ZIP" files on your Desktopand unzip them. You will find two new folders:
+Then use your Graphical User Interface to find these "ZIP" files on your Desktop and unzip them. You will find two new folders:
 `PE-350.1_fastqc` and `PE-350.2_fastqc`.
 
 FASTQC generates a HTML report for each FASTQ file you run.  In each folder, double-click on the file `fastqc_report.html` to open it in a browser. This shows a lot of summary information about the sequencing files quality (and the data are pretty good). For more information and to see examples of what bad data look like, read the [FASTQC manual](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) when you have time. 
