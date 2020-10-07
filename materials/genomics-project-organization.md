@@ -91,7 +91,7 @@ supercomputer, so we are going to work with the next option.
 is a great option. Clicking this link will open a NEW Lesson on the [Cyverse "Atmosphere"](https://www.cyverse.org/atmosphere) 
 if the cloud instance remains available.
 
-### Option A using AWS
+### Option A: Example of using AWS
 
 ***AWS:*** Follow the instructions on the [Data Carpentry Genomics Workshop Setup pages](https://datacarpentry.org/genomics-workshop/setup.html). 
 

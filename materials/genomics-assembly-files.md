@@ -12,7 +12,7 @@ This part of the course uses a traditional workshop pedagogy with "slides" for r
 
 Goal: get familiar with genome assemblers, pre-processing, reporting and validation. 
 Exercise will be based on chromosomes of a mutant genotype of bakers’ yeast, as practice 
-of *de-novo* genome assembly. Here we have the benefits of a reference genome to validate 
+of *reference-based* genome assembly. Here we have the benefits of a reference genome to validate 
 our assembly. We must be sure to [acknowledge]({{ site.baseurl }}/materials/acknowledgments) 
 those who helped design these lessons.
 
@@ -39,22 +39,33 @@ Log into the Cowboy Supercomputer:
 > to be moved. If you are teaching this course, please feel free
 > to request any datafiles. This will be fixed in the future.*
 
-Then open your FTP software, and connect to your account on Cowboy.
-You should have been given the file `mcbios.tar.gz`, for you to 
-place on your desktop. **Alternatively, registered students can download the file 
-[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto the Desktop of your local machine**. 
-Use FTP to transfer the file `mcbios.tar.gz`
+Open TWO terminal windows (e.g. GitBash or "terminal"" on Macs or Linux systems) and on one window connect to home directory of your account on Cowboy.
+In the other window, change to your LOCAL Desktop directory.
+
+We need to obtain a file named `mcbios.zip`, for you to 
+place on your local Desktop. Registered students can download the file 
+[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas.** Otherwise the file will be given to you by the instructor**
+
+Now we want to transfer the `mcbios.zip` file to our Cowboy home directory.  
+We can use `scp` just as we did before to transfer the file `mcbios.tar.gz`
 (or `mcbios.zip`) to Cowboy. 
+```
+scp mcbios.zip <username>@cowboy.hpc.okstate.edu:/home/<username>
+```
 
+<!--
 Filezilla FTP software is recommended, and a brief description of how to use Filezilla can be found in the [Filezilla Extra]({{ site.baseurl }}/materials/filezilla-extras) page.
+-->
 
-make sure the `mcbios.zip` file will be uploaded into your `/scratch/username` directory on Cowboy.
-NOTE that you should substitute `username` with your actual 
-username for the computer. For example, if your username was `phoyt`, upload the file to `/scratch/phoyt`.
+REMEMBER that you should substitute `username` with your actual 
+username for the computer. For example, if your username was `phoyt`, the command would be:
+```
+scp mcbios.zip phoyt@cowboy.hpc.okstate.edu:/home/phoyt
+```
 
-Then from your terminal program (Windows users will
-use "Putty") type in the following commands:
+Then switch to your REMOTE terminal Window logged in to Cowboy (Windows users can use Putty if they want).
 
+<!--
 For `mcbios.tar.gz` use:
 ~~~
 $ cd /scratch/<username>
@@ -62,10 +73,53 @@ $ tar xvf mcbios.tar.gz
 $ cd mcbios/
 $ ls
 ~~~
+-->
+
 For `mcbios.zip` use:
 ~~~
-$ cd /scratch/<username>
+$ pwd
+/home/<username>
 $ unzip mcbios.zip
+```
+
+The output should look similar to:
+```
+Archive:  mcbios.zip
+   creating: mcbios/
+   creating: mcbios/abyss/
+   creating: mcbios/abyss/abyss31/
+  inflating: mcbios/abyss/abyss31/abyssk31.pbs
+   creating: mcbios/data/
+   creating: mcbios/data/group1/
+  inflating: mcbios/data/group1/PE-350.1.fastq
+  inflating: mcbios/data/group1/PE-350.2.fastq
+  inflating: mcbios/data/group1/ref.fasta
+   creating: mcbios/data/group2/
+  inflating: mcbios/data/group2/PE-350.1.fastq
+  inflating: mcbios/data/group2/PE-350.2.fastq
+  inflating: mcbios/data/group2/ref.fasta
+   creating: mcbios/data/group3/
+  inflating: mcbios/data/group3/PE-350.1.fastq
+  inflating: mcbios/data/group3/PE-350.2.fastq
+  inflating: mcbios/data/group3/ref.fasta
+   creating: mcbios/data/group4/
+  inflating: mcbios/data/group4/PE-350.1.fastq
+  inflating: mcbios/data/group4/PE-350.2.fastq
+  inflating: mcbios/data/group4/ref.fasta
+   creating: mcbios/data/group5/
+  inflating: mcbios/data/group5/PE-350.1.fastq
+  inflating: mcbios/data/group5/PE-350.2.fastq
+  inflating: mcbios/data/group5/ref.fasta
+   creating: mcbios/results/
+  inflating: mcbios/results/quast.pbs
+   creating: mcbios/soap/
+   creating: mcbios/soap/soap31/
+  inflating: mcbios/soap/soap31/soap.config
+  inflating: mcbios/soap/soap31/soapk31.pbs
+   creating: mcbios/velvet/
+  inflating: mcbios/velvet/velvetk31.pbs
+```
+Then change into your new `mcbios` directory and see what is there.
 $ cd mcbios/
 $ ls
 ~~~
@@ -112,20 +166,18 @@ What you should now have:
 `-- velvet
     `-- velvetk31.pbs
 ~~~
-To see this file structure, type in the command: `tree`.
-Notice that the top of the tree starts with a `dot` or `.` meaning the "current working directory". 
-We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as a note to your future self.
+To see this file structure, type in the command: `tree | less`.
+Notice that the top of the tree starts with a `dot` or `.` meaning the "current working directory".
 
-### Important notes before hands-on
-Since we are using the Cowboy cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
+We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. Using a script allows you to easily modify parameters, and the script also serves as a note to your future self.
+
+### Important note
+Since we are using Cowboy (which is set up as a HPC "cluster", only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
 
 #### The data:
 Move into your `data` directory:
 
-`$ cd /scratch/username/mcbios/data/`  
-OR 
-
-`$ cd data`
+`$ cd data`  
 
 Use `ls` to see what files or directories are present:
 ~~~
@@ -140,24 +192,21 @@ As an example, everyone should look inside the `group1` directory:
 $ cd group1
 $ ls
 ref.fasta  PE-350.1.fastq  PE-350.2.fastq
-$ head PE-350.1.fastq
+~~~
+To see the first read, remember that each read consists of four lines in a fastq file:
+~~~
+$ head -n 4 PE-350.1.fastq
+@DRR001841.41/1
+AAAAGAATGGAAATCTATGTTTTTATTATTACAAGTTTTGAAGATTGCCAAAGAAATCAAGAATTTCGTGAGATTGAAAGTCATCGGGTC
++
+CCCCCCBBCCCCCCCCCCCCCCCBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCB@CCCCCCCCCCCBCCCCACCCCABA>@CCAB6<B
 ~~~
 
 By now, you should all be familiar with `.fastq` sequencer files.
 Our assembly will start using one Illumina library, PE-350, which is a paired end reads library, divided into two datasets: `1.fastq` and `2.fastq`,  which are the paired reads very close to 350 bp apart. Every read in the `1.fastq` file should have a corresponding read in the `2.fastq` file. Also, `ref.fasta` is the included reference sequence for comparison with your assembly.
 
 #### Review FASTQ format
->Learn: What information is included? What does each line mean?
->Four consecutive lines define ONE read in the fastq file
->
->~~~
->@READ-ID
->ATAGAGATAGAGAGAG (the sequence: here showing 16 nucleotides)
->+READ-ID (usually empty. Otherwise will repeat READ-ID)
->;9;7;;.7;3933334 (**quality** identifiers for each of the 16 bases shown)
->~~~
->
->Each base has quality identifier called PHRED score, typically between value 0-40 for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There are also two systems of such conversion, PHRED+33 and PHRED+64. PHRED+33 is used in almost all modern systems including Illumina protocols. PHRED+64 is used ***rarely***, but be aware!
+>Each base has quality identifier called PHRED score, typically between value 0-40 (+33) for Illumina.  The FASTQ file converts the numeric value to a character because they use less space (fewer bits). There is an older scoring system called PHRED+64, but PHRED+33 is used in almost all modern systems including Illumina protocols. PHRED+64 is used ***rarely***, but be aware!
 > 
 >“Phred quality scores are defined as a property which is logarithmically related to the base-calling error probabilities.”
 > 
@@ -181,9 +230,8 @@ which corresponds to and is given the **character** 5 using the reference chart 
 (the "S" range) which is what shows up on the fourth line of every read within a fastq file. 
 
 > The older PHRED+64 system 
-> is rarely used anymore but we are showing it
-> because although it's very, very uncommon to see any sequence data using PHRED+64 
->(the capital "I" range), you might get some old data someday, and you'll need to check!
+> is rarely used anymore so ignore it because although it's very, 
+> very uncommon to see any sequence data using PHRED+64. 
 > The table below shows how you can be sure sequence quality scores 
 > are using PHRED+33, because the PHRED+33 max score is "J", 
 > and the PHRED+64 minimum score is "@".
@@ -201,11 +249,19 @@ The paired end dataset `PE-350.1.fastq` + `PE-350.2.fastq` contains a total of `
   `wc -l PE-350.1.fastq`    
 and divide by 4 
 
-<!--
-
 or make the command line do all the arithmetic): 
 
-`$ expr (cat PE-350.1.fastq | wc -l) / 4`
+`$ expr $(wc -l < PE-350.1.fastq) / 4`
+
+<!--
+Note the difference between 
+
+$ wc -l PE-350.1.fastq
+381536 PE-350.1.fastq
+
+and
+$ wc -l < PE-350.1.fastq
+381536
 -->
 
 ### How good is your sequencing run? Use FASTQC
@@ -229,9 +285,16 @@ to bring up the last command, then use arrow keys to move over to change
 
 fastqc puts the results in the same folder as the data (in this case `data/group1/`)
 
-Download your fastqc results using FTP and Filezilla (Later we'll learn how to perform FTP at the command line!).
+Download your fastqc results using `scp` by reversing the "what you want to move" and "where you want to move it".
 
-FASTQC generates a HTML report for each FASTQ file you run.  Use the Filezilla program to find the folder in `/scratch/username/mcbios/data/group1` (if you are in a different group, use that group's number) which holds the results of your analysis.  Use Filezilla to transfer the `PE-350.1_fastqc.zip` file to your desktop and unzip the file, which generates a folder named `PE-350.1_fastqc` In that folder, double-click on the file `fastqc_report.html` to open it in a browser. This shows that the data are pretty good. For more information and to see examples of what bad data look like, read the [FASTQC manual](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) when you have time. 
+```
+$ scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/data/PE-350.1_fastqc.zip .
+$ scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/data/PE-350.2_fastqc.zip .
+```
+Then use your Graphical User Interface to find these "ZIP" files on your Desktopand unzip them. You will find two new folders:
+`PE-350.1_fastqc` and `PE-350.2_fastqc`.
+
+FASTQC generates a HTML report for each FASTQ file you run.  In each folder, double-click on the file `fastqc_report.html` to open it in a browser. This shows a lot of summary information about the sequencing files quality (and the data are pretty good). For more information and to see examples of what bad data look like, read the [FASTQC manual](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) when you have time. 
 
 #### Assignment
 
