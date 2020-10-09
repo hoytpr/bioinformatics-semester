@@ -207,7 +207,7 @@ $ cd nucmer
 $ module load bio_apps
 $ nucmer ../results/abyss31.fasta ../data/group1/ref.fasta
 ~~~
-"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html)which claims 
+"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims 
 to be the most [user-friendly](http://mummer.sourceforge.net/manual/)
 alignment script for standard DNA sequence alignment. NUCmer uses a three step 
 process - maximal exact matching, match clustering, and alignment extension. 
