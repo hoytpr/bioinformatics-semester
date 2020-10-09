@@ -425,7 +425,7 @@ $ cp abyss21/abyss21-scaffolds.fa ../results/abyss21.fasta
 $ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
 ~~~
 
-Congratualtions! This lesson has shown you how you can assemble genomes using 
+Congratulations! This lesson has shown you how you can assemble genomes using 
 three different software, and using different parameters (K-mers, in this lesson). 
 Now we should check our assemblies in a process called "validation" 
 before sending the best assembly to our collaborators!
