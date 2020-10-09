@@ -20,13 +20,6 @@ Maybe a figure will help.
  
 ![N50]({{ site.baseurl }}/fig/N50.png)
 
-> We are using several pre-made `.pbs` submission scripts, so let's briefly review 
-> the structure of a submission script using the `velvetk21.pbs` we'll use later in 
-> this lesson as an example:
->
-> ![Submission Scripts]({{ site.baseurl }}/fig/PBS-script-details.png)
-
-
 Now that we have completed several assemblies, let's look at our results. Change to the `results` directory and list the files. The output should look similar to the file list below: 
 ~~~
 $ cd ../../results
@@ -39,6 +32,7 @@ These files are the results from all the programs using different K-mer paramete
 If you have a different assembly (*e.g.* different K-mers) using the same assembler, 
 make sure you name them differently, but **consistently**. For example: `abyss29.fasta`   `abyss33.fasta`  `soap33.fasta`  `velvet39.fasta`
 
+<!--
 > Note: Abyss has a command to get the scaffold statistic (N50) of any assembly in 
 > fasta format. Use can use the command `abyss-fac`, which scans the contigs lengths 
 > and outputs the N50 for your assembly. We will cover K-mer comparisons later but 
@@ -47,6 +41,8 @@ make sure you name them differently, but **consistently**. For example: `abyss29
 > $ module load abyss
 > $ abyss-fac velvet31.fasta
 ~~~
+-->
+
 `________________________________________`
 
 ### Validation
@@ -102,6 +98,11 @@ $ zip -r quast.zip quastresults
 $ mail -a quast.zip -r <youremailaddress> <youremailaddress>
 ~~~
 (remember to hit `ctrl-d` to send)
+
+> Or you can use scp as we have done before. From your Desktop in a LOCAL terminal window:
+> ~~~
+> scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/results/quast.zip .
+> ~~~
 
 Check your email, and place the attached `quast.zip` file on your Desktop, 
 extract the file, and double-click on the `report.html` file to open it in 

@@ -55,6 +55,14 @@ ABYSS in this lesson. All of these assemblers are [de-bruijn](https://en.wikiped
 graph based assemblers.
 2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler.
 
+### Submission scripts
+
+> We are using several pre-made `.pbs` submission scripts, so let's briefly review 
+> the structure of a submission script using the `velvetk21.pbs` we'll use later in 
+> this lesson as an example:
+>
+> ![Submission Scripts]({{ site.baseurl }}/fig/PBS-script-details.png)
+
 ### VELVET
 
 `$ cd ../../velvet/`
