@@ -20,7 +20,7 @@ Maybe a figure will help.
  
 ![N50]({{ site.baseurl }}/fig/N50.png)
 
-Now that we have completed several assemblies, let's look at our results. If this is a new class, log onto Cowboy using your terminal window or GitBash. Make sure you are in the `mcbios/results` directory and list the files. Look careefully for incosistent file names such as `velvetk31.fasta` vs. `velvet31.fasta`. The output should look like the file list below: 
+Now that we have completed several assemblies, let's look at our results. If this is a new class, log onto Cowboy using your terminal window or GitBash. Make sure you are in the `mcbios/results` directory and list the files. Look carefully for inconsistent file names such as `velvetk31.fasta` vs. `velvet31.fasta`. The output should look like the file list below: 
 ~~~
 $ cd ../../results
 $ ls
