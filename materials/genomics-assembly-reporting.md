@@ -186,7 +186,7 @@ to eliminate some of the assemblies).
 Because we don't have time to go over all these data with you. We are only 
 showing you that *you can do this*! Spend some time going over everything 
 revealed in these charts. Make new assemblies and put them into your results 
-directory and re-run Quast. Check out the [Quast manual] (https://github.com/ablab/quast) again. *You should be curious*, and that's *good*. 
+directory and re-run Quast. Check out the [Quast manual](https://github.com/ablab/quast) again. *You should be curious*, and that's *good*. 
 
 #### Re-aligning
 
