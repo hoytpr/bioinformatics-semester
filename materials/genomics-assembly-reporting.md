@@ -20,7 +20,7 @@ Maybe a figure will help.
  
 ![N50]({{ site.baseurl }}/fig/N50.png)
 
-Now that we have completed several assemblies, let's look at our results. Change to the `results` directory and list the files. The output should look similar to the file list below: 
+Now that we have completed several assemblies, let's look at our results. If this is a new class, log onto Cowboy using your terminal window or GitBash. Make sure you are in the `mcbios/results` directory and list the files. Look careefully for incosistent file names such as `velvetk31.fasta` vs. `velvet31.fasta`. The output should look like the file list below: 
 ~~~
 $ cd ../../results
 $ ls
@@ -79,25 +79,26 @@ Submit the quast.pbs file:
 
 `$ qsub quast.pbs`
 
-When quast is finished look at the output file to check for obvious errors
+When quast is finished (about one minute) look at the output file to check for fatal errors
 
 `$ less quast.pbs.o<jobid>`  (protip: use TAB autocomplete so you don’t have to type in the jobid)
 
 You may see some warnings that quast could not find genes, or that some images 
 could not be created. That's okay. Quast can do a lot of things we aren't 
-validating today. If there are no fatal errors, send everything to yourself. 
+validating today. If there are no **fatal** errors we will send everything to ourselves. 
 Press `q` to exit the `less` command.
   
-Before we send everything, we will zip the entire `quast` directory. It's good 
+Before we send everything, we will move up a directory then zip the entire `quastresults` directory. It's good 
 practice to compress files when transferring them because they transfer faster, 
 and the use less bandwidth. After the zip command is complete, mail the file to 
 yourself. If you have questions about the commands we are using, *you should 
 be able to use the `man` pages or `--help` to figure things out*. 
 ~~~
+$ cd ..
 $ zip -r quast.zip quastresults
 $ mail -a quast.zip -r <youremailaddress> <youremailaddress>
 ~~~
-(remember to hit `ctrl-d` to send)
+(remember to enter a subject then hit `ctrl-d` to send)
 
 > Or you can use scp as we have done before. From your Desktop in a LOCAL terminal window:
 > ~~~
@@ -112,7 +113,7 @@ see something like the image shown below for Group2:
 
 ![Quast Report html]({{ site.baseurl }}/fig/quast-report-html.png)
 
-Before we cover everything in the web page, notice that the report results are 
+Before we cover information in the web page, notice that the report results are 
 also available as `report.pdf`, and the file `report.tsv` (and `report.txt`) are 
 tab-delimited text files that will open in a spreadsheet as shown below for Group2. 
 Quast is useful software! 
@@ -143,13 +144,13 @@ And there is a problem: it isn't always a clear which assembly is the best. It m
 ***how you set up the experiment, and what you were trying to identify in the assemblies***.
 
 But there are some rules we can use:
-1. Misassembled genomes are very bad. 
-2. Indels (Insertions or Deletions) are very bad.
-3. Runs of `N` or lots of `N`s are bad.
-4. Genome sizes that are close to the reference genome size are good.
-5. Large N50 scores are good.
-6. Combinations of bad things make the assembly worse.
-7. Combinations of good things make the assembly better.
+1. Misassembled genomes are **very** bad. 
+2. Indels (Insertions or Deletions) are **very** bad.
+3. Runs of `N` or lots of `N`s are bad (but fixable)
+4. Genome sizes that are close to the reference genome size are good (but can be wrong).
+5. Large N50 scores are good (but not always).
+6. Combinations of bad things make the assembly ***worse***.
+7. Combinations of good things make the assembly ***better***.
 
 Before you make a decision, click on the blue letters that say `Extended report`.
 Now you have a **lot** more information! Notice you can hover your mouse over the row 
@@ -180,19 +181,20 @@ you'll be able to choose between the **"Quast report"**, or the **"Contig alignm
 (the previous page) or the **"Contig size viewer"** (which should make it easier 
 to eliminate some of the assemblies).
 
-***WE ARE SORRY!***
+***SORRY! BUT THIS IS TOO MUCH***
 
 Because we don't have time to go over all these data with you. We are only 
 showing you that *you can do this*! Spend some time going over everything 
 revealed in these charts. Make new assemblies and put them into your results 
-directory and re-run Quast. *You should be curious*, and that's *good*. 
+directory and re-run Quast. Check out the [Quast manual] (https://github.com/ablab/quast) again. *You should be curious*, and that's *good*. 
 
 #### Re-aligning
 
 It is very common that figuring out which is the best assembly is **hard**. 
 But you can eliminate some of the assemblies based on misassemblies or indels. Once 
 you have eliminated some assemblies you can go back and try more K-mer values! 
-This is probably a good idea 
+
+This is a very good idea 
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
 re-align their own best assemblies using even more (different) software. To try this
 and to show you quickly some additional bioinformatics software, enter the 
@@ -205,21 +207,21 @@ $ cd ../
 $ mkdir nucmer
 $ cd nucmer
 $ module load bio_apps
-$ nucmer ../results/abyss31.fasta ../data/group1/ref.fasta
+$ nucmer ../../results/abyss31.fasta ../../data/group1/ref.fasta
 ~~~
 "NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims 
 to be the most [user-friendly](http://mummer.sourceforge.net/manual/)
 alignment script for standard DNA sequence alignment. NUCmer uses a three step 
 process - maximal exact matching, match clustering, and alignment extension. 
 (But you don't have to learn that for now!) The output of NUCmer is a simple 
-positional chart. You can visualize your `nucmer` 
-assembly as a dot plot using the software `mummerplot`.
+positional chart comparing your best assembly to the reference genome. You can visualize your `nucmer` 
+assembly as a dot plot using the software `mummerplot`. In your `nucmer` directory, run:
 ~~~
 $ mummerplot out.delta --postscript --layout
 ~~~
 But, as you might have guessed, the output of `mummerplot` is a postscript file. 
 When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
-using a shell command:
+using a shell command from your nucmer directory:
 ~~~
 $ ps2pdf out.ps
 ~~~
