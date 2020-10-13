@@ -100,7 +100,7 @@ $ mail -a quast.zip -r <youremailaddress> <youremailaddress>
 ~~~
 (remember to enter a subject then hit `ctrl-d` to send)
 
-> Or you can use scp as we have done before. From your Desktop in a LOCAL terminal window:
+> Or you can use `scp` as we have done before. From your Desktop in a LOCAL terminal window:
 > ~~~
 > scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/results/quast.zip .
 > ~~~
@@ -148,7 +148,7 @@ But there are some rules we can use:
 2. Indels (Insertions or Deletions) are **very** bad.
 3. Runs of `N` or lots of `N`s are bad (but fixable)
 4. Genome sizes that are close to the reference genome size are good (but can be wrong).
-5. Large N50 scores are good (but not always).
+5. Large N50 scores are good (but the largest isn't always the best).
 6. Combinations of bad things make the assembly ***worse***.
 7. Combinations of good things make the assembly ***better***.
 
