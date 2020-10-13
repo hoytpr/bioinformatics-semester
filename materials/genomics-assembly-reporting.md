@@ -178,14 +178,14 @@ rendetion of your aligned genomes. This is a lot of information!
 
 Additionally, if you click on the button at the top left that says "Main menu" 
 you'll be able to choose between the **"Quast report"**, or the **"Contig alignment viewer"** 
-(the previous page) or the **"Contig size viewer"** (which should make it easier 
+(the previous page) or the **"Contig size viewer"** (The Contig size viewer should make it easier 
 to eliminate some of the assemblies).
 
-***SORRY! BUT THIS IS TOO MUCH***
+**SORRY! BUT THIS IS TOO MUCH**
 
 Because we don't have time to go over all these data with you. We are only 
 showing you that *you can do this*! Spend some time going over everything 
-revealed in these charts. Make new assemblies and put them into your results 
+revealed in these charts. Make new assemblies and put them into your `results` 
 directory and re-run Quast. Check out the [Quast manual](https://github.com/ablab/quast) again. *You should be curious*, and that's *good*. 
 
 #### Re-aligning
@@ -194,13 +194,13 @@ It is very common that figuring out which is the best assembly is **hard**.
 But you can eliminate some of the assemblies based on misassemblies or indels. Once 
 you have eliminated some assemblies you can go back and try more K-mer values! 
 
-This is a very good idea 
+Re-aligning is a very good idea 
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
 re-align their own best assemblies using even more (different) software. To try this
 and to show you quickly some additional bioinformatics software, enter the 
 commands below, but change the filename (`abyss31.fasta`) to your **best** assembly. 
 Also remember to change your groupnumber (or this won't work)!!! Then run **`nucmer`**.
-If you don't know your best assembly yet, try using abyss31.fasta:
+If you don't know your best assembly yet, try using `abyss31.fasta`:
 (Note: make sure module `bio_apps` is available)
 ~~~
 $ cd ../
@@ -221,7 +221,7 @@ $ mummerplot out.delta --postscript --layout
 ~~~
 But, as you might have guessed, the output of `mummerplot` is a postscript file. 
 When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
-using a shell command from your nucmer directory:
+using a shell command from your `nucmer` directory:
 ~~~
 $ ps2pdf out.ps
 ~~~
@@ -229,7 +229,7 @@ Then mail the file `out.pdf` to yourself!
 ~~~
 $ mail -a out.pdf -r <youremailaddress> <youremailaddress>
 ~~~
-(remember to hit `ctrl-d` to send)
+(Enter a subject like "nucmer" and remember to hit `ctrl-d` to send)
 
 Repeat the above procedure on the **worst** assembly (has the most misassembled contigs).  How different is it from your best assembly? 
 
