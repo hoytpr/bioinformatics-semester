@@ -100,9 +100,10 @@ $ mail -a quast.zip -r <youremailaddress> <youremailaddress>
 ~~~
 (remember to enter a subject then hit `ctrl-d` to send)
 
-> Or you can use `scp` as we have done before. From your Desktop in a LOCAL terminal window:
+> Or you can use `scp` as we have done before. Enter the following command 
+> using your username from your Desktop in a LOCAL terminal window and don't forget the **`:`**
 > ~~~
-> scp phoyt@cowboy.hpc.okstate.edu/home/phoyt/mcbios/results/quast.zip .
+> scp <username>@cowboy.hpc.okstate.edu:/home/<username>/mcbios/results/quast.zip .
 > ~~~
 
 Check your email, and place the attached `quast.zip` file on your Desktop, 
