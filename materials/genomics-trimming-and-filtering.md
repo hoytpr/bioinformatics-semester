@@ -176,19 +176,26 @@ We saw using FastQC that Nextera adapters were present in our samples.
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
 
-On Cowboy the command is:
+On Cowboy (if the file were present) the command would be:
 
-`$cp /scratch/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
+`$cp /home/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
 
-or to pull the "trimming" file from The Data Carpentry site use:
+This is really just an example of how files can be "hidden" in hidden directories. 
+Can you tell the class which file is actually hidden in the `.hidden` folder?
+
+We are going to pull the "trimming" file from The Data Carpentry site into the 
+`untrimmed_fastq` folder:
 
 `curl -O https://raw.githubusercontent.com/datacarpentry/wrangling-genomics/gh-pages/files/NexteraPE-PE.fa`
 
-From within the dc-genomics AWS cloud use:
+<!--
+If you were using the dc-genomics AWS cloud you could use:
 
 ~~~
 $ cp ~/.miniconda3/pkgs/trimmomatic-0.38-0/share/trimmomatic-0.38-0/adapters/NexteraPE-PE.fa .
 ~~~
+
+-->
 
 Take a quick look at the Nextera trimming file:
 
