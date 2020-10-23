@@ -245,7 +245,7 @@ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE SRR2589044_1.fa
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
             SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
 ~~~
-Notice that the command for trimmomatic is one long line. Save this submission script as `trim1.pbs`, 
+Notice that the command for trimmomatic is ACTUALLY one long line. The `\` backslash characters are used to inform the computer that we are continuing the command on the next line, without having the line "wrap around" so it's easier to see on our computer screen. Save this submission script as `trim1.pbs`, 
 and submit it to Cowboy using
 `qsub trim1.pbs`. 
 
