@@ -22,7 +22,7 @@ with 12 processors, for one hour:
 ```
 #!/bin/bash
 #PBS -q express
-#PBS -l nodes=1:ppn=1
+#PBS -l nodes=1:ppn=12
 #PBS -l walltime=1:00:00
 #PBS -j oe
 cd $PBS_O_WORKDIR
