@@ -134,7 +134,7 @@ However, a complete command for Trimmomatic will look something like the command
 and will not work because we do not have the files it refers to:
 
 ~~~
-$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq  \
+$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR_1056_1.fastq SRR_1056_2.fastq  \
               SRR_1056_1.trimmed.fastq SRR_1056_1un.trimmed.fastq \
               SRR_1056_2.trimmed.fastq SRR_1056_2un.trimmed.fastq \
               ILLUMINACLIP:NexteraPE-PE.fa SLIDINGWINDOW:4:20
@@ -240,7 +240,7 @@ The PBS script looks like this. Open `nano` and copy-paste this into `nano` or t
 #PBS -j oe
 cd $PBS_O_WORKDIR
 module load trimmomatic
-java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads=12 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
+java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
             SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
             SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
@@ -251,7 +251,7 @@ and submit it to Cowboy using
 
 If we were not using submission scripts, we would input the command directly and the **interactive** (one long line) command would look like this:
 ~~~
-$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads=12 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
+$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
             SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
             SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
@@ -261,7 +261,7 @@ The interactive output would look like this:
 ~~~
 TrimmomaticPE: Started with arguments:
  SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
-Multiple cores found: Using 12 threads
+Multiple cores found: Using 2 threads
 Using PrefixPair: 'AGATGTGTATAAGAGACAG' and 'AGATGTGTATAAGAGACAG'
 Using Long Clipping Sequence: 'GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG'
 Using Long Clipping Sequence: 'TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG'
@@ -377,7 +377,7 @@ Because we can't work interactively on Cowboy we should write a submission scrip
 cd $PBS_O_WORKDIR
 module load trimmomatic
 
-for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads=12 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
+for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
 ~~~
 By now, you should be able to understand the variables and commands in this `for` loop, but *this isn't easy*
 and so there is a detailed description of the loop and how it works on this **["Loop-extra" page]({{ site.baseurl }}/materials/loop-extra)**.
