@@ -249,14 +249,14 @@ Notice that the command for trimmomatic is ACTUALLY one long line. The `\` backs
 and submit it to Cowboy using
 `qsub trim1.pbs`. 
 
-The interactive (one long line) command looks like this:
+If we were not using submission scripts, we would input the command directly and the **interactive** (one long line) command would look like this:
 ~~~
 $ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
             SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
             SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
 ~~~
-The interactive output looks like this:
+The interactive output would look like this:
 
 ~~~
 TrimmomaticPE: Started with arguments:
