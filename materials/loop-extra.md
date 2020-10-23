@@ -45,13 +45,13 @@ all files ending in `_1.fastq.gz`. So `infile` represents all the COMPLETE filen
 file, there is a corresponding `_2.fastq.gz` file.
 
 2. The command `do base=$(basename ${infile} _1.fastq.gz)` does a couple things. We've seen the use of `basename`
-before, so we know that the basename of the variable `${infile}` removes the `_1.fastq.gz` from the variable value
+before, so we know that the basename of the variable `${infile}` is removing the `_1.fastq.gz` from the variable value
 and as a result leaves only the **names of the SAMPLES** (e.g. SRR2589044, SRR2584863, SRR2584866, etc.) 
 which are given the variable name `${base}`.
 
-3. The trimmomatic command uses the `infile` variable for the complete name of the `_1.fastq.gz` filenames, then uses 
-the `base` variable to fill in the names for the other filenames for example `_2.fastq.gz`, `_1.trim.fastq.gz`, 
-or `_2.trim.fastq.gz`. Below is a detailed description of the variable, values, and resulting filenames for our loop.  
+3. The trimmomatic command uses the `${infile}` variable for the complete name of the `_1.fastq.gz` filenames, then uses 
+the `${base}` variable to fill in the names for the other filenames for example `${base}_2.fastq.gz`, and `${base}_1.trim.fastq.gz`, 
+or `${base}_2.trim.fastq.gz`. Below is a detailed description of the variable, values, and resulting filenames for our loop.  
 
 #### Broken down:
 
