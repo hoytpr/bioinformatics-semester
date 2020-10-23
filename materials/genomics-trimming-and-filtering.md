@@ -222,8 +222,13 @@ part of a ***pipeline***.
 We will also use a sliding window of size 4bp that will remove bases if their
 average phred score is below 20. We will also
 discard any reads that do not have at least 25 bases remaining after
-all our trimming steps. If using the Cowboy computer, use the submission script shown below, or 
-make sure you are using a "captured" node to work interactively. This command will take a few minutes to run.
+all our trimming steps. If using the Cowboy computer, use the submission script shown below.
+
+<!--
+, or 
+make sure you are using a "captured" node to work interactively. 
+-->
+This command will take a few minutes to run.
 
 The PBS script looks like this. Open `nano` and copy-paste this into `nano` or type it in:
 
