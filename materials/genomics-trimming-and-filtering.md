@@ -275,7 +275,7 @@ TrimmomaticPE: Completed successfully
 
 #### Checking your Trimmomatic outputs
 
-You can see in the otput above that Trimmomatic automatically detected the
+You can see in the output above that Trimmomatic automatically detected the
 quality encoding of our sample is `phred33`. It is always a good idea to
 double-check this or to enter the quality encoding manually.
 
@@ -334,11 +334,11 @@ $ wc -l SRR2589044_2.trim.fastq
 That looks really good!
 
 *However, there is some bad news.* Trimmomatic can only operate on
-one sample at a time and we have more than one sample. The *good* news
+one sample (one set of paired ends) at a time and we have more than one sample. The *good* news
 is that we can use a `for` loop to iterate through our sample files
 quickly! 
 
-We unzipped two of our files before to work with it, let's compress them again before we run our `for` loop.
+We unzipped two of our files before to count lines so let's compress them again before we run our `for` loop.
 
 ~~~
 $ gzip SRR2589044_1.trim.fastq
@@ -349,6 +349,7 @@ In this `for` loop we are going to use two variables which will
 make our loop **flexible** enough to use the same loop over again
 when we want to trim our next set of sequencing sample files.
 
+<!--
 With a captured node on Cowboy, or if we are working in our own "instance" on a cloud
 based system, the `for` loop would look like this:
 ~~~
@@ -363,8 +364,9 @@ $ for infile in *_1.fastq.gz
 ~~~
 
 Notice again that the trimmomatic command is one long line. The `\` indicators 
-tell the shell to "continue on the next line". 
-Without a captured node, we should write a submission script named `trim-loop.pbs` that looks like this:
+tell the shell to "continue on the next line".
+--> 
+Because we can't work interactively on Cowboy we should write a submission script named `trim-loop.pbs` that looks like this:
 
 ~~~
 #!/bin/bash
@@ -384,8 +386,8 @@ We can go through this if we have time.
 submit `trim-loop.pbs` and it should take a few minutes for
 Trimmomatic to run for each of our six input files. Once it's done
 running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic 
-on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we 
-matched the ending `_1.fastq.gz`, we re-ran Trimmomatic on this file, overwriting our first results. 
+on the paired end files named `SRR2589044` before running the for loop, we 
+matched the ending `_1.fastq.gz`, and we re-ran Trimmomatic on this file, overwriting our first results. 
 That's OK, but it's good to be aware that it happened.
 
 <!--
