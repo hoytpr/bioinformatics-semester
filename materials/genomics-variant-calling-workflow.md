@@ -141,7 +141,8 @@ On Cowboy, make a submission script named align.pbs
 #PBS -j oe
 cd $PBS_O_WORKDIR
 module load bwa
-bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
+bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/sub/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/sub/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
+
 ~~~
 
 On a cloud instance the command is:
