@@ -87,6 +87,8 @@ cd $PBS_O_WORKDIR
 module load bwa
 bwa index data/ref_genome/ecoli_rel606.fasta
 ~~~
+
+<!--
 Cloud instance:
 ~~~
 $ bwa index data/ref_genome/ecoli_rel606.fasta
@@ -106,6 +108,8 @@ While the index is created, you will see output something like this:
 [main] Real time: 1.765 sec; CPU: 1.715 sec
 ~~~
 
+-->
+
 ### Align reads to reference genome
 
 The alignment process consists of choosing an appropriate reference genome to map our reads against and then 
@@ -113,7 +117,7 @@ The alignment process consists of choosing an appropriate reference genome to ma
 for high-quality queries as it is faster and more accurate. Unlike our previous lessons using older software, this is 
 the state-of-the-art! BWA-MEM does a lot of same things, but does them automatically. 
 
-An example of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
+An **example** of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
 
 ~~~
 $ bwa mem ref_genome.fasta input_file_R1.fastq input_file_R2.fastq > output.sam
