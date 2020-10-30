@@ -212,6 +212,7 @@ module load samtools/1.9
 samtools sort results/bam/SRR2584866.aligned.bam -o results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 
+<!--
 On a cloud instance:
 ~~~
 $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584866.aligned.bam 
@@ -221,6 +222,8 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 > ~~~
 > [bam_sort_core] merging from 2 files...
 > ~~~
+
+-->
 
 Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
@@ -257,8 +260,8 @@ the output will give you the following statistics about your sorted bam file:
 ~~~
 
 We can't go over all the information provided, but notice that 99.98% of the reads were mapped, and 99.05% were properly mapped as pairs.
-Also notice that when we saved the "unpaired" files during our quality control steps, those show up as 
-"singletons", and a few of them were used (which is better than throwing them away!).
+Also notice that when we saved the "unpaired" files during our quality control steps, those will show up as 
+"singletons", and a few of them could be used (which is better than throwing them away!).
  
 ### Variant calling with bcftools
 
@@ -287,12 +290,18 @@ cd $PBS_O_WORKDIR
 module load bcftools
 bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
 ~~~
+
+<!-- 
 On a cloud instance:
 ~~~
 $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam 
 
 [mpileup] 1 samples in 1 input files
+
+-->
+The output  file should say:
+`[mpileup] 1 samples in 1 input files`
 ~~~
 
 We have now generated a file with coverage information for **every base**.
