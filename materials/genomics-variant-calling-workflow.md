@@ -420,7 +420,7 @@ Many of the metrics can be optionally output using the command line. For example
 ~~~
 This forces `ID=AD` to be output.
 
-**It is important to know that there are variations in `.vcf` files!**
+**It is important to know that there are different formats for `.vcf` files!**
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. We don't have time to cover all these outputs, but hopefully some will look familiar to you and useful.
@@ -428,7 +428,7 @@ to prevent the header lines from wrapping on your terminal screen. We don't have
 ![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
 
 All of the header information, and configuration details are
-followed by RECORDS information for **each of the variations observed**: 
+followed by RECORDS information for **each of the genetic variations observed**: 
 
 ~~~
 #CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
@@ -455,11 +455,11 @@ The first few columns represent the information we have about a ***predicted var
 
 | Column | Description |
 | ------- | ---------- |
-| CHROM | contig location where the variation occurs | 
+| CHROM | chromosomal contig location where the variation occurs | 
 | POS | position within the contig where the variation occurs | 
 | ID | a **`.`** until we add **annotation** information | 
 | REF | reference genotype (forward strand) | 
-| ALT | sample genotype (forward strand) | 
+| ALT | alternate sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
 | FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, OR the name of the filters this variant ***failed*** | 
 | INFO | annotations contained in the INFO field are represented as "tag-value pairs" (TAG=00) separated by colon characters. These typically summarize information from the sample. The header has the definitions of the tag-value pairs. |
@@ -487,10 +487,10 @@ are also separated by colon characters. These and a few other metrics and defini
 | Metric | Definition | 
 | ------- | ---------- |
 | GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REFERENCE genome allele (REF)**. Then, 1 is for the first **Alternate Genome allele (ALT)**, 2 is for the second ALT allele and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and also notice that 1/1 is **homozygous for the alternate allele**. |
-| AD | the unfiltered **a**llele **d**epth, i.e. the number of reads that match each of the reported alleles shown as **`REF/ALT`**|
-| DP | the filtered sequencing **d**e**p**th (AKA:`number of reads`), at the sample level for this allele |
-| GQ | the **g**enotype's Phred-scaled **q**uality score (confidence) for the genotype | 
-| PL | the "Normalized" **P**hred-scaled **likelihoods** of the given genotypes |
+| AD | the unfiltered **a**llele **d**epth, i.e. the number of reads that match each of the reported alleles shown as **`REF/ALT` or `REF,ALT`**|
+| DP | the filtered sequencing **d**e**p**th level (AKA:`number of reads`), of the sample  at this allele |
+| GQ | the **g**enotype's Phred-scaled **q**uality score (confidence) for this genotype | 
+| PL | the "Normalized" **P**hred-scaled **likelihoods** of the this genotype |
 
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and **shows some very significant differences between our `bcftools` created `.vcf` file
