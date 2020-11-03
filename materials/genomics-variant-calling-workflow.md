@@ -488,7 +488,7 @@ are also separated by colon characters. These and a few other metrics and defini
 
 1. When the base in a sequence dataset matches the same base in the same position of a reference sequence, it is called homozygous to the reference or **"HOM/REF"**
 2. When the base in a sequence dataset matches the same base in the same position of a reference sequence ***some of the time but other times matches alternative sequences in the dataset***, it is called heterozygous to the reference or **"REF/ALT"**
-3. When the base in a sequence dataset does NOT match the same base at a specific position of a reference sequence, ***but is always different***, this is called homozygous to the alternative sequence or **"HOM/ALT"** 
+3. When the base in a sequence dataset does NOT match the same base at a specific position of a reference sequence, ***but is always different***, this is called homozygous to the alternative sequence (homozygous recessive) or **"HOM/ALT"** 
 
 ### How VCF files describe these variants
 
