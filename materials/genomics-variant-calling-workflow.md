@@ -486,9 +486,7 @@ are also separated by colon characters. These and a few other metrics and defini
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REF allele**. Then, 1 is for the first ALT allele, 2 is for the second ALT allele and so on. 
-
-So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REF allele**. Then, 1 is for the first ALT allele, 2 is for the second ALT allele and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
 | AD | the unfiltered allele depth, i.e. the number of reads that match each of the reported alleles shown as `REF/ALT`|
 | DP | the filtered sequencing depth (number of reads), at the sample level |
 | GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
