@@ -513,7 +513,7 @@ Now you should notice that the `PL` metric has ***three*** values (`255,0,255`),
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
 we have created this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
 
-#### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
+#### The Broad Institute's [VCF guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format) is an excellent place to learn more about VCF file format.
 
 **[Do the In-class Exercise 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-2-Shell)**
 
