@@ -512,7 +512,7 @@ In this example, at position 873762 the metrics are:
 
 | FORMAT | NA12878 | Meaning |
 | ------ | ------- |
-| GT | 0/1 | Homozygous recessive. Homozygous to the ALT allele |
+| GT | 0/1 | Heterozygous |
 | AD | 173,141 | 173  REF sequences with 141 ALT variations|
 | DP | 282 | Depth or coverage at this allele|
 | GQ | 99 | Probability that `0/1` is correct (99 is MAX) |
