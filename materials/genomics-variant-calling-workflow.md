@@ -495,8 +495,8 @@ are also separated by colon characters. These and a few other metrics and defini
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and **shows some very significant differences between our `bcftools` created `.vcf` file
 and the GATK-produced `.vcf` file**. We don't want to be confusing, but we want you to see they can be different. 
-Notice there can be several short-name metrics under the "FORMAT" column, 
-each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
+Notice there can be several short-name metrics under the "FORMAT" column (separated by colons), 
+each with a corresponding value under the "Results" column (separated by colons), with the column title named `NA12878` in this example. Remember that the default 
 metric values always put the `REF` value before the `ALT` value.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
