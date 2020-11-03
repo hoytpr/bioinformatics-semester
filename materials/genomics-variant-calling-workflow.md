@@ -299,11 +299,12 @@ $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam 
 
 [mpileup] 1 samples in 1 input files
+~~~
 
 -->
 The output  file should say:
 `[mpileup] 1 samples in 1 input files`
-~~~
+
 
 We have now generated a file with coverage information for **every base**.
 
