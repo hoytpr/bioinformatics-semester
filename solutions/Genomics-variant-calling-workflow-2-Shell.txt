@@ -4,9 +4,9 @@
 $ grep -v "#" results/vcf/SRR2584866_final_variants.vcf | wc -l
 766
 
-
-
 There are 766 variants in this file. 
 
-
+Alternate answers:
+$ egrep -v "^#" results/vcf/SRR2584866_final_variants.vcf | wc -l
+$ grep -v "##" results/vcf/SRR2584866_final_variants.vcf | wc -l
 
