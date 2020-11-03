@@ -512,11 +512,11 @@ In this example, at position 873762 the metrics are:
 
 | FORMAT | NA12878 | Meaning |
 | ------ | ------- |
-| GT | 0/1 | Homozygous recessive |
+| GT | 0/1 | Homozygous recessive. Homozygous to the ALT allele |
 | AD | 173,141 | 173  REF sequences with 141 ALT variations|
 | DP | 282 | Depth or coverage at this allele|
 | GQ | 99 | Probability that `0/1` is correct (99 is MAX) |
-| PL | 255,0,255 | Not homozygous at REF, Is heterozygous, Not homozygous at ALT |
+| PL | 255,0,255 | Not homozygous at REF. Is heterozygous. Not homozygous at ALT |
 
 Now you should notice that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
