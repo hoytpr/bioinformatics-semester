@@ -484,17 +484,17 @@ For the file in this lesson, the metrics presented are **GT:PL** which (accordin
 Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric short names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
-| metric | definition | 
+| Metric | Definition | 
 | ------- | ---------- |
-| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REF allele**. Then, 1 is for the first ALT allele, 2 is for the second ALT allele and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and also notice that 1/1 is **homozygous for the alternate allele**. |
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REFERENCE genome allele (REF)**. Then, 1 is for the first **Alternate Genome allele (ALT)**, 2 is for the second ALT allele and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and also notice that 1/1 is **homozygous for the alternate allele**. |
 | AD | the unfiltered **a**llele **d**epth, i.e. the number of reads that match each of the reported alleles shown as **`REF/ALT`**|
-| DP | the filtered sequencing **d**e**p**th (AKA:`number of reads`), at the sample level |
+| DP | the filtered sequencing **d**e**p**th (AKA:`number of reads`), at the sample level for this allele |
 | GQ | the **g**enotype's Phred-scaled **q**uality score (confidence) for the genotype | 
 | PL | the "Normalized" **P**hred-scaled **likelihoods** of the given genotypes |
 
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
-It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
-and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
+It has been opened in a spreadsheet, and **shows some very significant differences between our `bcftools` created `.vcf` file
+and the GATK-produced `.vcf` file**. We don't want to be confusing, but we want you to see they can be different. 
 Notice there can be several short-name metrics under the "FORMAT" column, 
 each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
 metric values always put the `REF` value before the `ALT` value.
