@@ -478,15 +478,17 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 | FORMAT | The **metrics** (short names) of the sample-level annotations presented *in order* | 
 | "Results" (usually a sample name) | lists the values corresponding to those metrics *in order* | 
 
-These last two columns are important for determining if the variant call is real or not. 
+These last two columns are important for determining if the variant call is "real" or not. 
 For the file in this lesson, the metrics presented are **GT:PL** which (according to the header) stand for 
 "**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
-Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric names, and 
+Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric short names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REF allele**. Then, 1 is for the first ALT allele, 2 is for the second ALT allele and so on. 
+
+So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
 | AD | the unfiltered allele depth, i.e. the number of reads that match each of the reported alleles shown as `REF/ALT`|
 | DP | the filtered sequencing depth (number of reads), at the sample level |
 | GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
