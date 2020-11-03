@@ -552,6 +552,8 @@ It can use colors to display mapping quality or base quality, subjected to users
 Samtools viewer is fast enough to work with an 130 GB alignment and because it uses a text interface, you can even 
 display alignments over a network.
 
+### Always fun to try something that might not work
+
 In order to visualize our mapped reads with `tview`, we give it the sorted bam file and the reference file: 
 NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try:
 
