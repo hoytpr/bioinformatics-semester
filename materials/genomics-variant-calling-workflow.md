@@ -538,11 +538,12 @@ cd $PBS_O_WORKDIR
 module load bcftools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
 ```
+<!--
 On a cloud instance just use:
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
-
+-->
 #### Viewing with `tview`
 
 [Samtools](http://www.htslib.org/) implements a very simple text alignment viewer based on the GNU
