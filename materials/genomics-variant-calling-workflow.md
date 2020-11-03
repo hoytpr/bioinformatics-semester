@@ -634,7 +634,7 @@ The line 761 will probably be too long to fit on your screen, but should look li
 This tells us that in the chromosome CP000819.1, at position 4377265, we see a genotype call (`GT`) of `1` which is 
 homozygous variant (**hom-alt** AKA 1/1) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
 (coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's homozygous to the REF (10^-25.5 is very unlikely), but the sequenced
-sample is heterozygous at this location. So it must be homozygous to ALT!! Our `VCF` file matches our `TVIEW` output!
+sample is heterozygous (relative to the REF sequence) at this location. So it must be homozygous to ALT!! Our `VCF` file matches our `TVIEW` output!
 
 Type `Ctrl^C` or `q` to exit `tview`
 
