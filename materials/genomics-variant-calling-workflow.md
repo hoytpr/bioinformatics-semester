@@ -317,7 +317,7 @@ Here's a visual summary of what we are identifying:
 
 To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
-The ploidy.pbs submission script on Cowboy should be:
+The `ploidy.pbs` submission script on Cowboy should be:
 ~~~
 #!/bin/bash
 #PBS -q express
@@ -328,10 +328,15 @@ cd $PBS_O_WORKDIR
 module load bcftools
 bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
 ~~~
+
+<!--
+
 On a cloud instance:
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
+
+-->
 
 For more details on the options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
 
