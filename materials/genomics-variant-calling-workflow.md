@@ -606,7 +606,7 @@ locations. That is good! If that wasn't the case, we should probably reconsider 
 You can use the arrow keys on your keyboard
 to scroll or type `?` for a help menu.
 
-Below the horizontal line, we can see all of the reads in our sample aligned with this region of the reference genome. Only 
+Below the third line, we can see all of the ***reads*** in our sample aligned with this region of the reference genome. Both the `.` and the `,` represent matches to the reference genome. Only 
 positions where the called base differs from the reference are the nucleotides shown. 
 **To navigate to a specific position**, type `g` (for "goto"). A dialogue box will appear. In
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
