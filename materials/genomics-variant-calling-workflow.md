@@ -423,7 +423,7 @@ This forces `ID=AD` to be output.
 **It is important to know that there are variations in `.vcf` files!**
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
-to prevent the header lines from wrapping on your terminal screen. 
+to prevent the header lines from wrapping on your terminal screen. We don't have time to cover all these outputs, but hopefully some will look familiar to you and useful.
 
 ![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
 
