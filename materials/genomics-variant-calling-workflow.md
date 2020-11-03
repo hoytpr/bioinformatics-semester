@@ -536,7 +536,7 @@ Institute's Integrative Genomics Viewer (IGV) which requires
 software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
-On Cowboy, create a submission script called samindex.pbd:
+On Cowboy, create a submission script called samindex.pbs:
 ```
 #!/bin/bash
 #PBS -q express
