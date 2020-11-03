@@ -632,9 +632,9 @@ this box, type the name of the "chromosome" followed by a colon and the position
 The line 761 will probably be too long to fit on your screen, but should look like this:
 `CP000819.1	4377265	.	A	G	225	.	DP=16;VDB=0.921692;SGB=-0.683931;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,4,9;MQ=60	GT:PL	1:255,0`
 This tells us that in the chromosome CP000819.1, at position 4377265, we see a genotype call (`GT`) of `1` which is 
-homozygous variant (**hom-alt**) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
-(coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's heterozygous (10^-25.5 is very unlikely), but the sequenced
-sample is a homozygous variant! Our `VCF` file matches our `TVIEW` output!
+homozygous variant (**hom-alt** AKA 1/1) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
+(coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's homozygous to the REF (10^-25.5 is very unlikely), but the sequenced
+sample is heterozygous at this location. So it must be homozygous to ALT!! Our `VCF` file matches our `TVIEW` output!
 
 Type `Ctrl^C` or `q` to exit `tview`
 
