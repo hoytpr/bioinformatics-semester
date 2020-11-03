@@ -457,16 +457,17 @@ The first few columns represent the information we have about a ***predicted var
 | ------- | ---------- |
 | CHROM | contig location where the variation occurs | 
 | POS | position within the contig where the variation occurs | 
-| ID | a **`.`** until we add annotation information | 
+| ID | a **`.`** until we add **annotation** information | 
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
-| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
-| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters. These typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
+| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, OR the name of the filters this variant ***failed*** | 
+| INFO | annotations contained in the INFO field are represented as "tag-value pairs" (TAG=00) separated by colon characters. These typically summarize information from the sample. The header has the definitions of the tag-value pairs. |
 
-You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
+You can also find additional information on how tag-value pairs are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
-In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
+
+In an ***ideal*** world, the information in the **`QUAL`** column would be all we needed to filter out bad variant calls.
 However, in reality we will need to continue filtering on multiple other metrics. 
 
 The last two columns contain the ***genotypes*** and can be tricky to decode.
