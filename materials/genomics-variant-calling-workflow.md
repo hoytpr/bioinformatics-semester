@@ -544,7 +544,7 @@ On a cloud instance just use:
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 -->
-#### Viewing with `tview`
+#### Viewing with `tview` (optional)
 
 [Samtools](http://www.htslib.org/) implements a very simple text alignment viewer based on the GNU
 `ncurses` library, called `tview`. This alignment viewer works with short indels and shows [MAQ](http://maq.sourceforge.net/) consensus. 
@@ -661,7 +661,10 @@ $ cd ~/Desktop/dc_workshop/files_for_igv
 Now we will transfer our files to that new directory using `scp`. 
 
 When using a remote system, remember to replace put your `<username>` before the `@` symbol, 
+
+<!--
 and the `<ip-address>`, or your AWS (or CyVerse) instance number between the text between the `@` and the `:`.
+-->
 The commands to `scp` are always entered in the terminal window that is connected to your
 **local** computer (not your remote/AWS instance).
 
@@ -672,6 +675,7 @@ $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.ali
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
 ~~~
+<!--
 For an AWS cloud instance:
 ~~~
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/dc_workshop/files_for_igv
@@ -681,6 +685,7 @@ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vc
 ~~~
 
 You will need to type the password for your remote/AWS instance each time you call `scp`. 
+-->
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
