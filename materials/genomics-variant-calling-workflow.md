@@ -484,6 +484,15 @@ For the file in this lesson, the metrics presented are **GT:PL** which (accordin
 Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric short names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
+### Variant Essential Definitions:
+
+1. When the base in a sequence dataset matches the same base in the same position of a reference sequence, it is called homozygous to the reference or **"HOM/REF"**
+2. When the base in a sequence dataset matches the same base in the same position of a reference sequence ***some of the time but other times matches alternative sequences in the dataset***, it is called heterozygous to the reference or **"REF/ALT"**
+3. When the base in a sequence dataset does NOT match the same base at a specific position of a reference sequence, ***but is always different ***, this is called homozygous to the alternative sequence or **"HOM/ALT"** 
+
+### How VCF files describe these variants
+
+
 | Metric | Definition | 
 | ------- | ---------- |
 | GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a **0 for the REFERENCE genome allele (REF)**. Then, 1 is for the first **Alternate Genome allele (ALT)**, 2 is for the second ALT allele and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and also notice that 1/1 is **homozygous for the alternate allele**. |
