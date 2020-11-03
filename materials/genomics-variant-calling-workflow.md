@@ -496,18 +496,18 @@ To be very clear, below is another example of the RECORDS part of a `.vcf` file 
 It has been opened in a spreadsheet, and **shows some very significant differences between our `bcftools` created `.vcf` file
 and the GATK-produced `.vcf` file**. We don't want to be confusing, but we want you to see they can be different. 
 Notice there can be several short-name metrics under the "FORMAT" column (separated by colons), 
-each with a corresponding value under the "Results" column (separated by colons), with the column title named `NA12878` in this example. Remember that the default 
+each with a corresponding value under what we might expect to be the "Results" column (separated by colons), but the column is titled `NA12878` in this example. Remember that the default 
 metric values always put the `REF` value before the `ALT` value.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
 
-| FORMAT | NA12878 |
+| FORMAT | NA12878 | Meaning |
 | ------ | ------- |
-| GT | 0/1 |
-| AD | 173,141 |
-| DP | 282 |
-| GQ | 99 |
-| PL | 255,0,255 |
+| GT | 0/1 | Homozygous recessive |
+| AD | 173,141 | 173 sequences with 141 variations|
+| DP | 282 | Depth or coverage at this allele|
+| GQ | 99 | Probability that `0/1` is correct (99 is MAX) |
+| PL | 255,0,255 | Not homozygous at REF, Is heterozygous, Not homozygous at ALT |
 
 Now you should notice that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
