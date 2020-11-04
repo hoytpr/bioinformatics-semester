@@ -301,9 +301,9 @@ $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 [mpileup] 1 samples in 1 input files
 
 -->
+
 The output  file should say:
 `[mpileup] 1 samples in 1 input files`
-~~~
 
 We have now generated a file with coverage information for **every base**.
 
@@ -327,10 +327,12 @@ cd $PBS_O_WORKDIR
 module load bcftools
 bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
 ~~~
+<!--
 On a cloud instance:
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
+-->
 
 For more details on the options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
 
@@ -340,7 +342,7 @@ The `VCF` format is one of the most famous formats in bioinformatics! Unfortunat
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
-On Cowboy make a submission script named finalvcf.pbs:
+On Cowboy make a submission script named `finalvcf.pbs`:
 ~~~
 #!/bin/bash
 #PBS -q express
