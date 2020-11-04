@@ -229,7 +229,7 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 
 Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
-You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
+You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, *e.g.* `flagstat`.
 On Cowboy, using `nano`, create a submission script named `flagstst.pbs` 
 
 ~~~
@@ -243,7 +243,7 @@ module load samtools/1.9
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 Save this file, and submit it. When it's finished
-the output will give you the following statistics about your sorted bam file:
+the job output will give you the following statistics about your sorted bam file:
 
 ~~~
 351169 + 0 in total (QC-passed reads + QC-failed reads)
@@ -339,7 +339,7 @@ For more details on the options and flags of bcftools, make sure you [read the m
 
 #### Step 3: Filter and report the SNP variants in variant calling format (VCF)
 
-The `VCF` format is one of the most famous formats in bioinformatics! Unfortunately there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `bcftools` package gives us a Perl script we can use to convert (or "parse") the original `.vcf` file into a more standard `.vcf` (final) format. 
+The `VCF` format is one of the most famous formats in bioinformatics! Unfortunately there are multiple versions of this format, making it difficult to work with consistently. Fortunately the `bcftools` package gives us a Perl script we can use to convert (or "parse") the original `.vcf` file into a more standard `.vcf` (final) format, and output this final-formatted file. 
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
