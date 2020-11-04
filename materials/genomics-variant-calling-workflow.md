@@ -279,7 +279,7 @@ variants.
 
 Coverage, is the number of times any position (a specific nucleotide) in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag. The input file is the last part of the command. 
 
-On Cowboy, create a submission script called pileup.pbs:
+On Cowboy, create a submission script called `pileup.pbs`:
 
 ~~~
 #!/bin/bash
@@ -316,7 +316,7 @@ Here's a visual summary of what we are identifying:
 
 To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
-The ploidy.pbs submission script on Cowboy should be:
+The `ploidy.pbs` submission script on Cowboy should be:
 ~~~
 #!/bin/bash
 #PBS -q express
