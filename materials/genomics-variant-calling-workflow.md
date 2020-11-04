@@ -374,7 +374,7 @@ highly specific information.  Let's look at the file using `less`.
 $ less -S results/vcf/SRR2584866_final_variants.vcf
 ~~~
 
-You will see the header (which describes the format), the time and date the file was
+You will see the header (header lines begin with `##` and describes the format), the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
 lots of additional information:
 
