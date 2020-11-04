@@ -353,11 +353,13 @@ cd $PBS_O_WORKDIR
 module load bcftools
 vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
-
+<!--
 On a cloud instance:
 ~~~
 $ vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
+-->
+
 The `vcfutils.pl` script outputs a well-formatted `.vcf` file we can now explore using a text editor. But this is a big and complex file. 
 
 ### Explore the VCF format:
