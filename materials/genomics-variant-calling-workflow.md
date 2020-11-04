@@ -409,11 +409,13 @@ lots of additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
-We should mention that although our output does not have an `ID=AD` metric in the header, but it is common in HEADER 
-lines and `.vcf` files. Many of the metrics can be optionally output using the command line.
-~~~
-##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
-~~~
+> We should mention that although our output does not have an `ID=AD` metric in the header, 
+> but it is common in HEADER 
+> lines and `.vcf` files. Many of the metrics like `ID=AD`can be 
+> optionally output using the command line.
+> ~~~
+> ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the > order listed">
+> ~~~
 **It is important to know that there are variations in `.vcf` files!**
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
