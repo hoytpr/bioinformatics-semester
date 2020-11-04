@@ -131,7 +131,7 @@ We're going to start by aligning the reads from only ***one*** of the
 samples in our dataset (`SRR2584866`). Later, we'll be 
 iterating this whole process on all of our sample files with loops.
 
-On Cowboy, make a submission script named align.pbs
+On Cowboy, make a submission script named `align.pbs`
 
 ~~~
 #!/bin/bash
@@ -142,14 +142,15 @@ On Cowboy, make a submission script named align.pbs
 cd $PBS_O_WORKDIR
 module load bwa
 bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/sub/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/sub/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
-
 ~~~
 
+<!--
 On a cloud instance the command is:
 
 ~~~
 $ bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
 ~~~
+-->
 
 You will see output that starts like this:
 or it will be in the submission script output file: `align.oxxxxxx` 
@@ -188,7 +189,7 @@ displayed below with the different fields highlighted.
 
 ![sam_bam2]({{ site.baseurl }}/fig/sam_bam3.png)
 
-We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`): 
+We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`). This goes very fast so we can do it without using a submission "`pbs`" script: 
 
 ~~~
 $ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.aligned.bam
