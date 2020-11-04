@@ -289,7 +289,7 @@ On Cowboy, create a submission script called pileup.pbs:
 #PBS -j oe
 cd $PBS_O_WORKDIR
 module load bcftools
-bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
+bcftools mpileup --output-type b --output results/bcf/SRR2584866_raw.bcf --fasta-ref data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 
 <!-- 
@@ -299,12 +299,11 @@ $ bcftools mpileup -O b -o results/bcf/SRR2584866_raw.bcf \
 -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam 
 
 [mpileup] 1 samples in 1 input files
-~~~
 
 -->
 The output  file should say:
 `[mpileup] 1 samples in 1 input files`
-
+~~~
 
 We have now generated a file with coverage information for **every base**.
 
@@ -317,7 +316,7 @@ Here's a visual summary of what we are identifying:
 
 To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
-The `ploidy.pbs` submission script on Cowboy should be:
+The ploidy.pbs submission script on Cowboy should be:
 ~~~
 #!/bin/bash
 #PBS -q express
@@ -328,15 +327,10 @@ cd $PBS_O_WORKDIR
 module load bcftools
 bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
 ~~~
-
-<!--
-
 On a cloud instance:
 ~~~
 $ bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf 
 ~~~
-
--->
 
 For more details on the options and flags of bcftools, make sure you [read the manual](https://samtools.github.io/bcftools/bcftools.html). After this step, we should have a lot of information about our variants, compared to the reference genome, but we need to pull out the most important information.
 
@@ -357,12 +351,11 @@ cd $PBS_O_WORKDIR
 module load bcftools
 vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
-<!--
+
 On a cloud instance:
 ~~~
 $ vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
--->
 The `vcfutils.pl` script outputs a well-formatted `.vcf` file we can now explore using a text editor. But this is a big and complex file. 
 
 ### Explore the VCF format:
@@ -411,24 +404,20 @@ lots of additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
-We should mention that although our output does not have an `ID=AD` metric in the header, but `ID=AD` is common in HEADER 
-lines and `.vcf` files. 
-
-Many of the metrics can be optionally output using the command line. For example:
+We should mention that although our output does not have an `ID=AD` metric in the header, but it is common in HEADER 
+lines and `.vcf` files. Many of the metrics can be optionally output using the command line.
 ~~~
 ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
 ~~~
-This forces `ID=AD` to be output.
-
-**It is important to know that there are different formats for `.vcf` files!**
+**It is important to know that there are variations in `.vcf` files!**
 
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
-to prevent the header lines from wrapping on your terminal screen. We don't have time to cover all these outputs, but hopefully some will look familiar to you and useful.
+to prevent the header lines from wrapping on your terminal screen. 
 
 ![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
 
 All of the header information, and configuration details are
-followed by RECORDS information for **each of the genetic variations observed**: 
+followed by RECORDS information for **each of the variations observed**: 
 
 ~~~
 #CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
@@ -455,19 +444,18 @@ The first few columns represent the information we have about a ***predicted var
 
 | Column | Description |
 | ------- | ---------- |
-| CHROM | chromosomal contig location where the variation occurs | 
+| CHROM | contig location where the variation occurs | 
 | POS | position within the contig where the variation occurs | 
-| ID | a **`.`** until we add **annotation** information | 
+| ID | a **`.`** until we add annotation information | 
 | REF | reference genotype (forward strand) | 
-| ALT | alternate sample genotype (forward strand) | 
+| ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
-| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, OR the name of the filters this variant ***failed*** | 
-| INFO | annotations contained in the INFO field are represented as "tag-value pairs" (TAG=00) separated by colon characters. These typically summarize information from the sample. The header has the definitions of the tag-value pairs. |
+| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
+| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters. These typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
 
-You can also find additional information on how tag-value pairs are calculated and how they should be interpreted in the "Variant Annotations" 
+You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
-
-In an ***ideal*** world, the information in the **`QUAL`** column would be all we needed to filter out bad variant calls.
+In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
 However, in reality we will need to continue filtering on multiple other metrics. 
 
 The last two columns contain the ***genotypes*** and can be tricky to decode.
@@ -478,51 +466,42 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 | FORMAT | The **metrics** (short names) of the sample-level annotations presented *in order* | 
 | "Results" (usually a sample name) | lists the values corresponding to those metrics *in order* | 
 
-These last two columns are important for determining if the variant call is "real" or not. 
+These last two columns are important for determining if the variant call is real or not. 
 For the file in this lesson, the metrics presented are **GT:PL** which (according to the header) stand for 
 "**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
-Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric short names, and 
+Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
-### Variant Essential Definitions:
-
-1. When the base in a sequence dataset matches the same base in the same position of a reference sequence, it is called homozygous to the reference or **"HOM/REF"**
-2. When the base in a sequence dataset matches the same base in the same position of a reference sequence ***some of the time but other times matches alternative sequences in the dataset***, it is called heterozygous to the reference or **"REF/ALT"**
-3. When the base in a sequence dataset does NOT match the same base at a specific position of a reference sequence, ***but is always different***, this is called homozygous to the alternative sequence (homozygous recessive) or **"HOM/ALT"** 
-
-### How VCF files describe these variants
-
-
-| Metric | Definition | 
+| metric | definition | 
 | ------- | ---------- |
-| GT | The **g**eno**t**ype of this sample; which for a *diploid* genome is encoded with a **0** for the REFERENCE genome allele (REF). Then, **1** is for the first ALTERNATE Genome allele (ALT), **2** is for the second ALT allele and so on. So **0/0** means homozygous reference "HOM/REF", and **0/1** (or **0/2**...) is heterozygous "REF/ALT", and also notice that **1/1** is homozygous  ***recessive*** or homozygous for the alternate allele or ("HOM/ALT"). |
-| AD | the unfiltered **a**llele **d**epth, *i.e.* the number of reads that match each of the reported alleles shown as **`REF/ALT` or `REF,ALT`**|
-| DP | the filtered sequencing **d**e**p**th level (AKA:`number of reads`), of the sample  at this allele |
-| GQ | the **g**enotype's Phred-scaled **q**uality score (confidence) for this genotype | 
-| PL | the "Normalized" **P**hred-scaled **likelihoods** of the this genotype |
+| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| AD | the unfiltered allele depth, i.e. the number of reads that match each of the reported alleles shown as `REF/ALT`|
+| DP | the filtered sequencing depth (number of reads), at the sample level |
+| GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
+| PL | the "Normalized" Phred-scaled **likelihoods** of the given genotypes |
 
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
-It has been opened in a spreadsheet, and **shows some very significant differences between our `bcftools` created `.vcf` file
-and the GATK-produced `.vcf` file**. We don't want to be confusing, but we want you to see they can be different. 
-Notice there can be several short-name metrics under the "FORMAT" column (separated by colons), 
-each with a corresponding value under what we might expect to be the "Results" column (separated by colons), but the column is titled `NA12878` in this example. Remember that the default 
+It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
+and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
+Notice there can be several short-name metrics under the "FORMAT" column, 
+each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
 metric values always put the `REF` value before the `ALT` value.
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position 873762 the metrics are:
 
-| FORMAT | NA12878 | Meaning |
+| FORMAT | NA12878 |
 | ------ | ------- |
-| GT | 0/1 | Heterozygous |
-| AD | 173,141 | 173  REF sequences with 141 ALT variations|
-| DP | 282 | Depth or coverage at this allele|
-| GQ | 99 | Probability that `0/1` is correct (99 is MAX) |
-| PL | 255,0,255 | Not homozygous at REF. Is heterozygous. Not homozygous at ALT |
+| GT | 0/1 |
+| AD | 173,141 |
+| DP | 282 |
+| GQ | 99 |
+| PL | 255,0,255 |
 
 Now you should notice that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
 we have created this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
 
-#### The Broad Institute's [VCF guide](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format) is an excellent place to learn more about VCF file format.
+#### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
 **[Do the In-class Exercise 2 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-2-Shell)**
 
@@ -536,7 +515,7 @@ Institute's Integrative Genomics Viewer (IGV) which requires
 software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
-On Cowboy, create a submission script called samindex.pbs:
+On Cowboy, create a submission script called samindex.pbd:
 ```
 #!/bin/bash
 #PBS -q express
@@ -547,21 +526,18 @@ cd $PBS_O_WORKDIR
 module load bcftools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
 ```
-<!--
 On a cloud instance just use:
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
--->
-#### Viewing with `tview` (optional)
+
+#### Viewing with `tview`
 
 [Samtools](http://www.htslib.org/) implements a very simple text alignment viewer based on the GNU
 `ncurses` library, called `tview`. This alignment viewer works with short indels and shows [MAQ](http://maq.sourceforge.net/) consensus. 
 It can use colors to display mapping quality or base quality, subjected to users' choice (but we won't specifiy colors for now). 
 Samtools viewer is fast enough to work with an 130 GB alignment and because it uses a text interface, you can even 
 display alignments over a network.
-
-### Always fun to try something that might not work
 
 In order to visualize our mapped reads with `tview`, we give it the sorted bam file and the reference file: 
 NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try:
@@ -606,7 +582,7 @@ locations. That is good! If that wasn't the case, we should probably reconsider 
 You can use the arrow keys on your keyboard
 to scroll or type `?` for a help menu.
 
-Below the third line, we can see all of the ***reads*** in our sample aligned with this region of the reference genome. Both the `.` and the `,` represent matches to the reference genome. Only 
+Below the horizontal line, we can see all of the reads in our sample aligned with this region of the reference genome. Only 
 positions where the called base differs from the reference are the nucleotides shown. 
 **To navigate to a specific position**, type `g` (for "goto"). A dialogue box will appear. In
 this box, type the name of the "chromosome" followed by a colon and the position of the variant you would like to view
@@ -641,9 +617,9 @@ this box, type the name of the "chromosome" followed by a colon and the position
 The line 761 will probably be too long to fit on your screen, but should look like this:
 `CP000819.1	4377265	.	A	G	225	.	DP=16;VDB=0.921692;SGB=-0.683931;MQSB=1;MQ0F=0;AC=1;AN=1;DP4=0,0,4,9;MQ=60	GT:PL	1:255,0`
 This tells us that in the chromosome CP000819.1, at position 4377265, we see a genotype call (`GT`) of `1` which is 
-homozygous variant (**hom-alt** AKA 1/1) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
-(coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's homozygous to the REF (10^-25.5 is very unlikely), but the sequenced
-sample is heterozygous (relative to the REF sequence) at this location. So it must be homozygous to ALT!! Our `VCF` file matches our `TVIEW` output!
+homozygous variant (**hom-alt**) for **A/G**. We also see that `DP=16` so there are 16 reads that map to this nucleotide 
+(coverage of 16) and that the `PL` values are `255,0`, meaning there's no chance it's heterozygous (10^-25.5 is very unlikely), but the sequenced
+sample is a homozygous variant! Our `VCF` file matches our `TVIEW` output!
 
 Type `Ctrl^C` or `q` to exit `tview`
 
@@ -670,10 +646,7 @@ $ cd ~/Desktop/dc_workshop/files_for_igv
 Now we will transfer our files to that new directory using `scp`. 
 
 When using a remote system, remember to replace put your `<username>` before the `@` symbol, 
-
-<!--
 and the `<ip-address>`, or your AWS (or CyVerse) instance number between the text between the `@` and the `:`.
--->
 The commands to `scp` are always entered in the terminal window that is connected to your
 **local** computer (not your remote/AWS instance).
 
@@ -684,7 +657,6 @@ $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.ali
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
 $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
 ~~~
-<!--
 For an AWS cloud instance:
 ~~~
 $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/dc_workshop/files_for_igv
@@ -694,7 +666,6 @@ $ scp dcuser@ec2-34-203-203-131.compute-1.amazonaws.com:~/dc_workshop/results/vc
 ~~~
 
 You will need to type the password for your remote/AWS instance each time you call `scp`. 
--->
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
 to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
