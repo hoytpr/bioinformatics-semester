@@ -14,9 +14,9 @@ Here are the alleles we are describing:
 
 The genotype information for NA12878 at 1:899282.
 
-`1   899282  rs28548431  C   T   [CLIPPED] GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
+`1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
-(Where it says "clipped" we just omitted a lot of annotation). 
+(Where it says "snip" we just omitted a lot of annotation). 
 At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
 
 > This can be confusing, 
@@ -25,7 +25,9 @@ At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`,
 
 The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
 because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF (=had the reference base) 
-and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`. 
+and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`. IN very simple terms the GQ is defined as:
+
+"The difference between the second lowest PL and the lowest PL (which is always 0)"
 
 The lack of certainty is evident in the PL 
 fields which are `103,0,26`.  
@@ -44,7 +46,7 @@ This means there's a slight chance that the genotype assignment
 is incorrect, and more coverage is needed at this site.  
 
 
-### Example 2:
+### Optional Example 2:
 
 Now let's try explaining the example from the Broad institutes example at position 873762. 
 We'll use our own words:
