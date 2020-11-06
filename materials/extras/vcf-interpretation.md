@@ -18,19 +18,32 @@ The genotype information for NA12878 at 1:899282.
 
 (Where it says "clipped" we just omitted a lot of annotation). 
 At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
-This can be confusing, 
-because one might think the "GT" 
-is the genotype `G/T`, but it is not. The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
-because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF (=had the reference base) 
-and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`. The lack of certainty is evident in the PL 
-fields. Notice `PL(0/1) = 0` (the normalized value that corresponds to a likelihood of 1.0) **as is always the case for the *assigned* allele**\*, but 
-the next PL is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) and this is unlikely, but *possible*. So 
-although we're pretty sure there's a variant at this site, there's a slight chance that the genotype assignment 
-is incorrect (the subject may not be **het**) and could possibly be **hom-var** (homozygous with the 
-variant allele). But either way, it's clear that the subject is definitely not **hom-ref** (homozygous with 
-the reference allele) since `PL(0/0) = 103`, which corresponds to a likelihood of 10^(-10.3), a very small number.
 
-\* Think of this as 10^(0) = 1
+> This can be confusing, 
+> because one might think the "GT" 
+> is the genotype `G/T`, but it is not. 
+
+The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
+because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF (=had the reference base) 
+and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`. 
+
+The lack of certainty is evident in the PL 
+fields which are `103,0,26`.  
+
+The call is heterozygous = **het** or PL(0/1)and is given a value of 0. 
+
+But also notice the`REF` **hom-ref** allele
+is 103 or 10^(-103) which is close to 0 and 
+the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) and this is unlikely but *possible*. 
+
+We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
+the reference allele) and actually has a better chance of being **hom-var** 
+(homozygous with the variant allele)!
+
+This means there's a slight chance that the genotype assignment 
+is incorrect, and more coverage is needed at this site.  
+
+
 ### Example 2:
 
 Now let's try explaining the example from the Broad institutes example at position 873762. 

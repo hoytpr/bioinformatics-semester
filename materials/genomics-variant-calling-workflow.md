@@ -375,7 +375,7 @@ highly specific information.  Let's look at the file using `less`.
 $ less -S results/vcf/SRR2584866_final_variants.vcf
 ~~~
 
-You will see the header (header lines begin with `##` and describes the format), the time and date the file was
+You will see the header (header lines begin with `##`) and describes the format, the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
 lots of additional information:
 
@@ -409,6 +409,8 @@ lots of additional information:
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
 ~~~
+
+>**It is important to know that there are variations in `.vcf` files!**
 > We should mention that although our output does not have an `ID=AD` metric in the header, 
 > but it is common in HEADER 
 > lines and `.vcf` files. Many of the metrics like `ID=AD`can be 
@@ -416,15 +418,17 @@ lots of additional information:
 > ~~~
 > ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the > order listed">
 > ~~~
-**It is important to know that there are variations in `.vcf` files!**
 
+<!--
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. 
 
 ![vcf header]({{ site.baseurl }}/fig/vcf-file-header.png)
 
+-->
+
 All of the header information, and configuration details are
-followed by RECORDS information for **each of the variations observed**: 
+followed by **RECORDS** information for **each of the variations observed**: 
 
 ~~~
 #CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
@@ -451,50 +455,50 @@ The first few columns represent the information we have about a ***predicted var
 
 | Column | Description |
 | ------- | ---------- |
-| CHROM | contig location where the variation occurs | 
-| POS | position within the contig where the variation occurs | 
-| ID | a **`.`** until we add annotation information | 
+| CHROM | Chromosomal (or contig) where the variation occurs | 
+| POS | position within the chromosome (or contig) where the variation occurs | 
+| ID | a **`.`** is used until we add annotation information | 
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
-| FILTER | a **`.`** if no quality filters have been applied, PASS if a quality filter is passed, or the name of the filters this variant failed | 
-| INFO | annotations contained in the INFO field are represented as tag-value pairs (TAG=00) separated by colon characters. These typically summarize information from the sample. Check the header for definitions of the tag-value pairs. |
+| FILTER | a **`.`** is used if no quality filters have been applied, "PASS" if a quality filter is passed, or the name(s) of the filters this variant may have failed | 
+| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=00)** separated by **colon** characters. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
 In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
-However, in reality we will need to continue filtering on multiple other metrics. 
+However, in reality we will need to continue filtering using other metrics. 
 
 The last two columns contain the ***genotypes*** and can be tricky to decode.
 
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in order* | 
-| "Results" (usually a sample name) | lists the values corresponding to those metrics *in order* | 
+| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in genomic order*. There can be several metrics (annotation short names) in this column | 
+| "Results" (usually a sample name) | lists each value corresponding to every metric *in genomic order*. | 
 
 These last two columns are important for determining if the variant call is real or not. 
 For the file in this lesson, the metrics presented are **GT:PL** which (according to the header) stand for 
 "**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
-Each of these metrics will have a value, in the "results" column. The values are in the same order as the metric names, and 
+Each of these metrics will have a value, in the "Results" column. The values are in the same order as the metric names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | The ***genotype*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
-| AD | the unfiltered allele depth, i.e. the number of reads that match each of the reported alleles shown as `REF/ALT`|
-| DP | the filtered sequencing depth (number of reads), at the sample level |
-| GQ | the genotype's Phred-scaled quality score (confidence) for the genotype | 
-| PL | the "Normalized" Phred-scaled **likelihoods** of the given genotypes |
+| GT | The ***GenoType*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
+| AD | the unfiltered **A**llele **D**epth, *i.e.* "coverage" or the number of reads that match each of the reported alleles shown as `REF/ALT`|
+| DP | the filtered sequencing **D**e**P**th (Total number of reads), at the this position in the sample |
+| GQ | the **G**enotype's Phred-scaled quality **S**core (confidence) for the genotype | 
+| PL | the "Normalized" **P**hred-scaled **Likelihoods** of the given genotypes |
 
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
-and the GATK-produced `.vcf` file. We don't want to be confusing, but we want you to see they can be different. 
+and the GATK-produced `.vcf` file. We don't want to be confusing, but you should remember they can be different. 
 Notice there can be several short-name metrics under the "FORMAT" column, 
 each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
-metric values always put the `REF` value before the `ALT` value.
+metric values always put the `REF` value before the `ALT` value (`REF/ALT` or `REF,ALT`).
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
-In this example, at position 873762 the metrics are:
+In this example, at position **873762** the metrics are:
 
 | FORMAT | NA12878 |
 | ------ | ------- |
@@ -537,6 +541,8 @@ On a cloud instance just use:
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
+
+<!--
 
 #### Viewing with `tview`
 
@@ -629,6 +635,8 @@ homozygous variant (**hom-alt**) for **A/G**. We also see that `DP=16` so there 
 sample is a homozygous variant! Our `VCF` file matches our `TVIEW` output!
 
 Type `Ctrl^C` or `q` to exit `tview`
+
+-->
 
 ### Viewing with IGV
 
