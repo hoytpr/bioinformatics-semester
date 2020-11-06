@@ -278,7 +278,7 @@ variants.
 
 #### Step 1: Calculate the read coverage of positions in the genome
 
-Coverage, is the number of times any position (a specific nucleotide) in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `-O b` tells samtools to generate a `.bcf` format output file, `-o` specifies where to write the output file, and `-f` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `-o` flag. The input file is the last part of the command. 
+Coverage, is the number of times any position (a specific nucleotide) in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `--output-type b` tells samtools to generate a `.bcf` format output file, `--output` specifies where to write the output file, and `--fasta-ref` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `--output` flag. The input file is the last part of the command. 
 
 On Cowboy, create a submission script called `pileup.pbs`:
 
@@ -377,13 +377,13 @@ $ less -S results/vcf/SRR2584866_final_variants.vcf
 
 You will see the header (header lines begin with `##`) and describes the format, the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
-lots of additional information:
+lots of additional information to annotate SNPs:
 
 ~~~
 ##fileformat=VCFv4.2
 ##FILTER=<ID=PASS,Description="All filters passed">
 ##bcftoolsVersion=1.8+htslib-1.8
-##bcftoolsCommand=mpileup -O b -o results/bcf/SRR2584866_raw.bcf -f data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
+##bcftoolsCommand=mpileup --output-type b --output results/bcf/SRR2584866_raw.bcf --fasta-ref data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
 ##reference=file://data/ref_genome/ecoli_rel606.fasta
 ##contig=<ID=CP000819.1,length=4629812>
 ##ALT=<ID=*,Description="Represents allele(s) other than observed.">
@@ -411,15 +411,17 @@ lots of additional information:
 ~~~
 
 >**It is important to know that there are variations in `.vcf` files!**
-> We should mention that although our output does not have an `ID=AD` metric in the header, 
-> but it is common in HEADER 
-> lines and `.vcf` files. Many of the metrics like `ID=AD`can be 
+> For example, our output does not have an `ID=AD` metric in the header, 
+> but `ID=AD` is common in `.vcf` HEADER 
+> lines and `.vcf` files. 
+
+<!--
+Many of the metrics like `ID=AD`can be 
 > optionally output using the command line.
 > ~~~
 > ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="Allelic depths for the ref and alt alleles in the > order listed">
 > ~~~
 
-<!--
 The image below is just another example of the HEADER region of a `.vcf` file but is an image 
 to prevent the header lines from wrapping on your terminal screen. 
 
@@ -474,41 +476,43 @@ The last two columns contain the ***genotypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in genomic order*. There can be several metrics (annotation short names) in this column | 
-| "Results" (usually a sample name) | lists each value corresponding to every metric *in genomic order*. | 
+| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in a specific order*. There can be several metrics (annotation short names) in this column | 
+| "RESULTS" (This column name varies) | lists each value corresponding to every metric *in the same specific order*. | 
 
-These last two columns are important for determining if the variant call is real or not. 
-For the file in this lesson, the metrics presented are **GT:PL** which (according to the header) stand for 
-"**G**eno**t**ype", and "Normalized, **P**hred-scaled **l**ikelihoods for genotypes as defined in the VCF specification".
-Each of these metrics will have a value, in the "Results" column. The values are in the same order as the metric names, and 
+***These last two columns are important for determining if the variant call is real or not.*** 
+For the file in this lesson, the metrics presented are **GT:PL** which (according to the header definitions) stand for 
+"**G**eno**T**ype", and "Normalized, **P**hred-scaled **L**ikelihoods for genotypes as defined in the VCF specification".
+Each of these metrics will have a value, in the "RESULTS" column. The values are in the same order as the metric names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
 
 | metric | definition | 
 | ------- | ---------- |
-| GT | The ***GenoType*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) is heterozygous, and 1/1 is homozygous for the alternate allele. |
-| AD | the unfiltered **A**llele **D**epth, *i.e.* "coverage" or the number of reads that match each of the reported alleles shown as `REF/ALT`|
+| GT | The called ***GenoType*** of this sample; which for a *diploid* genome is encoded with a 0 for the REF allele, 1 for the first ALT allele, 2 for the second and so on. So 0/0 means homozygous reference, 0/1 (or 0/2...) means heterozygous, and 1/1 means homozygous for the alternate allele. |
+| AD | the unfiltered **A**llele **D**epth, *i.e.* "coverage" or the number of reads that match each of the reported alleles shown as `REF/ALT` or sometimes `REF,ALT`|
 | DP | the filtered sequencing **D**e**P**th (Total number of reads), at the this position in the sample |
-| GQ | the **G**enotype's Phred-scaled quality **S**core (confidence) for the genotype | 
+| GQ | the **G**enotype's Phred-scaled quality **S**core (confidence) for the called genotype | 
 | PL | the "Normalized" **P**hred-scaled **Likelihoods** of the given genotypes |
 
 To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
 and the GATK-produced `.vcf` file. We don't want to be confusing, but you should remember they can be different. 
-Notice there can be several short-name metrics under the "FORMAT" column, 
-each with a corresponding value under the "Results" column, named `NA12878` in this example. Remember that the default 
+
+Notice there are several short-name metrics under the "FORMAT" column, 
+each with a corresponding value under the "RESULTS" column, named `NA12878` in this example. Remember that the default 
 metric values always put the `REF` value before the `ALT` value (`REF/ALT` or `REF,ALT`).
+
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
 In this example, at position **873762** the metrics are:
 
-| FORMAT | NA12878 |
-| ------ | ------- |
-| GT | 0/1 |
-| AD | 173,141 |
-| DP | 282 |
-| GQ | 99 |
-| PL | 255,0,255 |
+| FORMAT | NA12878 | MEANING |
+| ------ | ------- |----------|
+| GT | 0/1 | The called genotype is **het** |
+| AD | 173,141 | there are 173 matches to `REF`, and 141 matches to `ALT` |
+| DP | 282 | There are 282 reads that map to this site |
+| GQ | 99 | This is the highest confidence possible |
+| PL | 255,0,255 | There is a 10^(-255) chance this is **homozygous-ref**, there is 10^(-0) chance this is **het**, and there is 10^(-255) chance this is **homozygous ALT** 
 
-Now you should notice that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
+Now you probably noticed that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
 we have created this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
 
