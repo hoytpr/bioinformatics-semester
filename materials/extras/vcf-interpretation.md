@@ -5,18 +5,18 @@ title: VCF Interpretation
 language: Shell
 ---
 
-We are going to start our interpretation of a variant call paraphrasing the description from the Broad Institute:
+We are going to start our interpretation of a variant calls by paraphrasing the description from the Broad Institute:
 
-Here are the alleles we are describing:
+Here are the SNP alleles we are describing opened in a spreadsheet:
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
 
 ### Example 1:
 
-The genotype information for NA12878 at 1:899282.
+The genotype information for (RESULTS column) named `NA12878` at Chromosome 1 position 899282.
 
 `1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
-(Where it says "snip" we just omitted a lot of annotation). 
+(Where it says "snip" we just omitted some annotation). 
 At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
 
 > This can be confusing, 
