@@ -57,7 +57,7 @@ the reference allele) and actually has a better chance of being **hom-var**
 (homozygous with the variant allele)!
 
 This means there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
-is incorrect, and more coverage is needed at this site.  
+is incorrect, **BUT** more coverage is needed at this site.  
 
 
 ### Optional Example 2:
