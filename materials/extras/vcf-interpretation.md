@@ -22,7 +22,7 @@ variant "call". In cases where all three `PL` values are shown, the result for t
 scores will be `0,<value,<value>` 
 and **hom-alt** will be shown as: `<value>,<value>,0`
 
-The max `<value>` is 255 or 10^(-255) as described below.
+The max `<value>` is 255 representing 10^(-255) as described below.
 
 ### Example 1:
 
