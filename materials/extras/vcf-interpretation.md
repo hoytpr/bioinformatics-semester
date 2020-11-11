@@ -7,8 +7,22 @@ language: Shell
 
 We are going to start our interpretation of a variant calls by paraphrasing the description from the Broad Institute:
 
-Here are the SNP alleles we are describing opened in a spreadsheet:
+First there is an image to help understand the locations and relationships between the headers and the records:
+
+![color VCF]({{ site.baseurl }}/fig/simple-color-VCF-example.png)
+
+Here's an image of the SNP alleles we are describing opened in a spreadsheet:
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
+
+Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
+by definition *NOT a variant*. That is why you will see the first `PL` value left out of some VCF files (like in our `.vcf` file in the lesson). 
+In these cases you will see `PL` scores as: `<value>,0` (**het-ref**/**het**) or `0,<value>` (**hom-alt**). However, 
+as shown below, there may be times when the **hom-ref** value helps define variants, or indicates problems in the 
+variant "call". In cases where all three `PL` values are shown, the result for the **hom-ref** `PL` metric 
+scores will be `0,<value,<value>` 
+and **hom-alt** will be shown as: `<value>,<value>,0`
+
+The max `<value>` is 255 or 10^(-255) as described below.
 
 ### Example 1:
 
@@ -21,13 +35,13 @@ At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`,
 
 > This can be confusing, 
 > because one might think the "GT" 
-> is the genotype `G/T`, but it is not. 
+> is the genotype `G/T`, but `GT` is the ABBREVIATION for the "GenoType" short name metric. 
 
 The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
 because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF (=had the reference base) 
 and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`. IN very simple terms the GQ is defined as:
 
-"The difference between the second lowest PL and the lowest PL (which is always 0)"
+"The difference between the second lowest PL and the **lowest** PL (which is always 0)"
 
 The lack of certainty is evident in the PL 
 fields which are `103,0,26`.  
