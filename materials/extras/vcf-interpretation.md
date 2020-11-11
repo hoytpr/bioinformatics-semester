@@ -11,7 +11,7 @@ First there is an image to help understand the locations and relationships betwe
 
 ![color VCF]({{ site.baseurl }}/fig/simple-color-VCF-example.png)
 
-Here's an image of the SNP alleles we are describing opened in a spreadsheet:
+Here's an image of the SNP alleles we are describing opened in a spreadsheet without the headers:
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
 
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
