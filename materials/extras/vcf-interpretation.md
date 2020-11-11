@@ -46,7 +46,7 @@ and 3 of which matched ALT (=had the alternate base) as indicated by `AD = 1,3`.
 The lack of certainty is evident in the PL 
 fields which are `103,0,26`.  
 
-The call is heterozygous = **het** or PL(0/1)and is given a value of 0. 
+The call is heterozygous = **het** or GT(0/1). 
 
 But also notice the`REF` **hom-ref** allele
 is 103 or 10^(-103) which is close to 0 and 
@@ -56,7 +56,7 @@ We can only conclude that the subject is definitely not **hom-ref** (homozygous 
 the reference allele) and actually has a better chance of being **hom-var** 
 (homozygous with the variant allele)!
 
-This means there's a slight chance that the genotype assignment 
+This means there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
 is incorrect, and more coverage is needed at this site.  
 
 
@@ -74,7 +74,7 @@ First, recognize that a "genotype" (i.e. the `GT` metric) can have three possibi
 
 The called genotype is T/G, and the genotype metric `GT` has the value: 0/1 = a heterozygous allele (**het**)
 
-The confidence metric `GQ` has a value of 99 which is the **MAXIMUM** value you can assign (all confidence levels are capped at 99)
+The confidence metric `GQ` has a value of 99 which is the **MAXIMUM** value you can assign (all `GQ` **confidence** levels are capped at 99)
 
 The total "raw" reads depth metric `DP` has a value of 282 reads.
 
