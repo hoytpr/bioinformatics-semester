@@ -100,6 +100,7 @@ Therefore:
  2. there's not much chance the genotype assignment is incorrect, and 
  3. the sample is **het** (heterozygous) for T/G at this locus.
 
+<!--
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
 by definition *NOT a variant*. That is why you will see this value left out of some VCF files (like in our `.vcf` file in the lesson). 
 In these cases you will see `PL` scores as: `<something>,0` (**het-ref**) or `0,<something>` (**hom-alt**). However, 
@@ -107,3 +108,4 @@ as shown above, there may be times when the **hom-ref** value helps define varia
 variant "call". In cases where all three `PL` values are shown, the result for the **hom-ref** `PL` metric 
 scores will be `0,<something>,<something>` 
 and **hom-alt** will be shown as: `<something>,<something>,0`
+-->
