@@ -7,7 +7,7 @@ language: Shell
 
 We are going to start our interpretation of a variant calls by paraphrasing the description from the Broad Institute:
 
-First there is an image to help understand the locations and relationships between the headers and the records:
+The differences between `VCF` files makes this topic harder to grasp. We will spend a little time on the ***meanings*** of some metrics to help keep your bioinformatics workflow operating. First there is an image to help understand the locations and relationships between the headers and the records:
 
 ![color VCF]({{ site.baseurl }}/fig/simple-color-VCF-example.png)
 
