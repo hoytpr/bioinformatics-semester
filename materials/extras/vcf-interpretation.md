@@ -15,14 +15,16 @@ Here's an image of the SNP alleles we are describing opened in a spreadsheet wit
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
 
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
-by definition *NOT a variant*. That is why you will see the first `PL` value left out of some VCF files (like in our `.vcf` file in the lesson). 
+by definition ***NOT a variant***. That is why you will see the first `PL` value left out of some VCF files (like in our `.vcf` file in the lesson). 
 In these cases you will see `PL` scores as: `<value>,0` (**het-ref**/**het**) or `0,<value>` (**hom-alt**). However, 
 as shown below, there may be times when the **hom-ref** value helps define variants, or indicates problems in the 
 variant "call". In cases where all three `PL` values are shown, the result for the **hom-ref** `PL` metric 
-scores will be `0,<value>,<value>` 
+scores will all be `0,<value>,<value>` 
 and **hom-alt** will be shown as: `<value>,<value>,0`
 
 The max `<value>` is 255 representing 10^(-255) as described below.
+
+If this seems confusing, you are not alone!
 
 ### Example 1:
 
