@@ -510,7 +510,7 @@ In this example, at position **873762** the metrics are:
 | AD | 173,141 | there are 173 matches to `REF`, and 141 matches to `ALT` |
 | DP | 282 | There are 282 reads that map to this site |
 | GQ | 99 | This is the highest confidence possible |
-| PL | 255,0,255 | There is a 10^(-255) chance this is **homozygous-REF**, there is 10^(-0) chance this is **HET**, and there is 10^(-255) chance this is **homozygous ALT** 
+| PL | 255,0,255 | There is a 10^(-25.5) chance this is **homozygous-REF**, there is 10^(-0) chance this is **HET**, and there is 10^(-25.5) chance this is **homozygous ALT** 
 
 Now you probably noticed that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,

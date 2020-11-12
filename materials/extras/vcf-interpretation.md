@@ -21,7 +21,7 @@ as shown below, there may be times when the **hom-ref** value helps define varia
 variant "call". 
 and **hom-alt** will be shown as: `<value>,<value>,0`
 
-If this seems confusing, you are not alone! The max `<value>` is 255 representing 10^(-255) as described below and `0` means 10^(-0) = 1. So `0` is the most certain, and 255 is the least certain. 
+If this seems confusing, you are not alone! The max `<value>` is 255 representing 10^(-25.5) as described below and `0` means 10^(-0) = 1. So `0` is the most certain, and 255 is the least certain. 
 
 
 ### Example 1:
@@ -88,7 +88,7 @@ Now we know that the different VCF file options have asssigned positions, divide
 can have different positions, or may not report some values. 
 * PL@1("Likelihood of homozygous with the REF allele" = **255** (this corresponds to 10^(-25.5) a very small number)
 * PL@2("Likelihood of heterozygous at REF allele" = **0** (the assigned allele is always normalized to zero (the maximum likelyhood)
-* PL@3("Likelihood of homozygous at ALT allele" = **255** (this corresponds to 10^(-255) a very small number)
+* PL@3("Likelihood of homozygous at ALT allele" = **255** (this corresponds to 10^(-25.5) a very small number)
 
 CONCLUSIONS: It's definitely not **hom-ref** or **hom-var**, and must be **het**. And the confidence metric `GQ` is maxxed out at 99 so 
 the certainty is as high as it can get!
