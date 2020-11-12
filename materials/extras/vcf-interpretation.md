@@ -23,7 +23,7 @@ and **hom-alt** will be shown as: `<value>,<value>,0`
 
 If this seems confusing, you are not alone! The max `<value>` is 255 representing 10^(-25.5) as described below and `0` means 10^(-0) = 1. So `0` is the most certain, and 255 is the least certain. 
 
-> **What about haploid vs ploidy?
+> **What about haploid vs ploidy?**
 >
 > This is a great question, and there are more details to be worked out in the very near
 > future. For now, the issue is only partially resolved and when mapping 
