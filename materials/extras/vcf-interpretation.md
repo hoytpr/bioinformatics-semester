@@ -35,8 +35,8 @@ If this seems confusing, you are not alone! The max `<value>` is 255 representin
 > call genotypes as `0`, `1`, `2`... etc.
 > **Note:** This isn't a trivial problem as in humans the autosomes are diploid, 
 > the sex chromosomes are haploid, and mitochondrial genomes are polyploid! 
-> An interessting example of this problem is discussed at (https://www.biostars.org/p/348867/)[https://www.biostars.org/p/348867/] and
-> (https://galaxyproject.org/tutorials/var_hap/)[https://galaxyproject.org/tutorials/var_hap/]
+> Interessting examples of this problem are discussed at [https://www.biostars.org/p/348867/](https://www.biostars.org/p/348867/) and
+> [https://galaxyproject.org/tutorials/var_hap/](https://galaxyproject.org/tutorials/var_hap/)
 
 ### Example 1:
 
