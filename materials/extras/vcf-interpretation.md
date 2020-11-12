@@ -49,7 +49,7 @@ fields which are `103,0,26`.
 The call is heterozygous = **het** or GT(0/1). 
 
 But also notice the`REF` **hom-ref** allele
-is 103 or 10^(-103) which is close to 0 and 
+is 103 or 10^(-10.3) which is close to 0 and 
 the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) and this is unlikely but *possible*. 
 
 We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
