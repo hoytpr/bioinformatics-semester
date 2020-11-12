@@ -23,6 +23,20 @@ and **hom-alt** will be shown as: `<value>,<value>,0`
 
 If this seems confusing, you are not alone! The max `<value>` is 255 representing 10^(-25.5) as described below and `0` means 10^(-0) = 1. So `0` is the most certain, and 255 is the least certain. 
 
+> **What about haploid vs ploidy?
+>
+> This is a great question, and there are more details to be worked out in the very near
+> future. For now, the issue is only partially resolved and when mapping 
+> reads or contigs to a refernce genome 
+> the reference genome (*e.g.* human) is usually represented as haploid.
+> For now, some software try to infer the ploidy level, and other software (*e.g.* BWA-MEM)
+> actively work to use ploidy in the analyses. This is beyond the scope of our lesson, but 
+> you can represent haploid or diploid variants as `REF/ALT` (`0/0`, `0/1`, `0/2`, etc.) and 
+> call genotypes as `0`, `1`, `2`... etc.
+> **Note:** This isn't a trivial problem as in humans the autosomes are diploid, 
+> the sex chromosomes are haploid, and mitochondrial genomes are polyploid! 
+> An interessting example of this problem is discussed at (https://www.biostars.org/p/348867/)[https://www.biostars.org/p/348867/] and
+> (https://galaxyproject.org/tutorials/var_hap/)[https://galaxyproject.org/tutorials/var_hap/]
 
 ### Example 1:
 
