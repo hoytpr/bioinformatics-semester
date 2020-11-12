@@ -462,25 +462,25 @@ The first few columns represent the information we have about a ***predicted var
 | ID | a **`.`** is used until we add annotation information | 
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
-| QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better) |
+| QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better, maximum=99) |
 | FILTER | a **`.`** is used if no quality filters have been applied, "PASS" if a quality filter is passed, or the name(s) of the filters this variant may have failed | 
-| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=00)** separated by **colon** characters. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
+| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=00)** separated by **colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
 In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
 However, in reality we will need to continue filtering using other metrics. 
 
-The last two columns contain the ***genotypes*** and can be tricky to decode.
+The last two columns contain the ***GenoTypes*** and can be tricky to decode.
 
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in a specific order*. There can be several metrics (annotation short names) in this column | 
-| "RESULTS" (This column name varies) | lists each value corresponding to every metric *in the same specific order*. | 
+| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in a specific order*. There can be several metrics (sometimes called annotation short names) in this column | 
+| "RESULTS" (This column name varies) | lists each **value** corresponding to every metric *in the same specific order*. The **value** here is related to the value following the **TAG** in the previous header lines (but may be in a different format) | 
 
 ***These last two columns are important for determining if the variant call is real or not.*** 
-For the file in this lesson, the metrics presented are **GT:PL** which (according to the header definitions) stand for 
+For the file in this lesson, the metrics (we requested) are presented as **GT:PL** which (according to the header definitions) stand for 
 "**G**eno**T**ype", and "Normalized, **P**hred-scaled **L**ikelihoods for genotypes as defined in the VCF specification".
 Each of these metrics will have a value, in the "RESULTS" column. The values are in the same order as the metric names, and 
 are also separated by colon characters. These and a few other metrics and definitions are shown below:
