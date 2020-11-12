@@ -109,9 +109,9 @@ can have different positions, or may not report some values.
 
 ### PL Metric take home for this example
  
-* PL@position-1("Likelihood of homozygous with the REF allele" = **255** (this corresponds to 10^(-25.5) a very small number)
-* PL@position-2("Likelihood of heterozygous at REF allele" = **0** (the assigned allele is always normalized to zero (the maximum likelyhood)
-* PL@position-3("Likelihood of homozygous at ALT allele" = **255** (this corresponds to 10^(-25.5) a very small number)
+* PL@position-1("Likelihood of homozygous with the REF allele") = **255**. This corresponds to 10^(-25.5) a very small number
+* PL@position-2("Likelihood of heterozygous at REF allele") = **0**. The assigned allele is always normalized to zero (the maximum likelyhood)
+* PL@position-3("Likelihood of homozygous at ALT allele") = **255**. This corresponds to 10^(-25.5) a very small number
 
 CONCLUSIONS: It's definitely not **hom-ref** or **hom-var**, and must be **het**. And the confidence metric `GQ` is maxxed out at 99 so 
 the certainty is as high as it can get!
