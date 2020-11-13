@@ -71,12 +71,10 @@ But also notice the`REF` **hom-ref** allele
 is 103 or 10^(-10.3) which is close to 0 (5e-11) and 
 the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) and this is unlikely but *possible*. 
 
-We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
+CONCLUSIONS: We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
 the reference allele) and actually has a better chance of being **hom-var** 
-(homozygous with the variant allele)!
-
-This means there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
-is incorrect, **BUT** more coverage is needed at this site.  
+(homozygous with the variant allele)! The call for position 899282 as **het** is probably correct, but there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
+is incorrect, **therefore more coverage is needed at this site**.  
 
 
 ### Optional Example 2:
