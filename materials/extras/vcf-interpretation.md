@@ -113,14 +113,14 @@ Now we know that the different VCF file options **in each column** have asssigne
 * PL@position-2 ("Likelihood of heterozygous at REF allele") = **0**. The assigned allele is always normalized to zero (the maximum likelyhood)
 * PL@position-3 ("Likelihood of homozygous at ALT allele") = **255**. This corresponds to 10^(-25.5) a very small number
 
-CONCLUSIONS: It's definitely not **hom-ref** or **hom-var**, and must be **het**. And the confidence metric `GQ` is maxxed out at 99 so 
+CONCLUSIONS: Position 873762 is definitely not **hom-ref** or **hom-var**, and must be **het**. Also the confidence metric `GQ` is maxxed out at 99 so 
 the certainty is as high as it can get!
 
 Therefore:   
  
- 1. we're very sure there's a variant at this site, and 
- 2. there's not much chance the genotype assignment is incorrect, and 
- 3. the sample is **het** (heterozygous) for T/G at this locus.
+ 1. We're very sure there's a variant at this site, and 
+ 2. There's not much chance the genotype assignment is incorrect, and 
+ 3. The sample is **het** (heterozygous) for T/G at this locus.
 
 <!--
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
