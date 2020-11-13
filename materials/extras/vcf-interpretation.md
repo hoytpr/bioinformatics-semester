@@ -103,7 +103,7 @@ The allelic reads metric `AD` shows there were 173 reads matching the REF genome
 * This tells us the locus has about a nearly perfect heterozygosity score for a diploid genome (141/282 = 50%)
 * Also, we know some reads were not used for the `GT` metric because 173 + 141 = 314 reads, which is greater than the `DP` "total" reads metric (282).
 
-The likelyhood metrics are shown as `PL` values for each type of allele (always shown as likelihood of 'REF/ALT' or 'REF,ALT'). 
+The likelyhood metrics are shown as `PL` values for each type of allele (always shown as likelihood of `REF/ALT` or `REF,ALT`). 
 
 Now we know that the different VCF file options **in each column** have asssigned positions, divided by colons, and that each metric can have multiple values divided by commas. Also, these will ***vary*** depending on which software generated the file and may not report some metrics values.
 
