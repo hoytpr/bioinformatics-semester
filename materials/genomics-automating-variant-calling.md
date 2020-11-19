@@ -131,7 +131,9 @@ cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 {: .output}
 
 The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our ZIP
-files. Then we run our `for` loop to unzip all of the `.zip` files in this directory.
+files. Then we run our `for` loop to unzip all of the `.zip` files in this directory. 
+Remember that in a script it is extremely important to use **four spaces** indent the `for` loop's
+internal lines!!
 
 ~~~
 echo "Unzipping..."
@@ -155,16 +157,21 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 > 
 > We've used `echo` statements to add progress statements to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
->
+> When using a submission script `.pbs` file the outputs will go to the job output
+> file (e.g. `read-test.o<job-number>`). If the script fails, we will be able to see any
+> error messages in this file by opening it in `nano` or displaying it to the screen
+> using the command `cat read-test.o<job-number> | less`. We will ***always*** want to check
+> this output file!
 {: .callout}
 
-Your full shell script should now look like this:
+Your full shell script should now look like this (extra blank lines are used for clarity):
 
 ~~~
 cd ~/dc_workshop/data/untrimmed_fastq/
 
 echo "Running FastQC ..."
-~/FastQC/fastqc *.fastq
+module load fastqc
+fastqc ~/dc_workshop/data/untrimmed_fastq/*.fastq.gz
 
 mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
 
@@ -184,11 +191,37 @@ echo "Saving summary..."
 cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 
-Save your file and exit `nano`. We can now run our script:
+Save your file and exit `nano`. We can now run our script by creating a `.pbs` file that
+will run our script. If we were operating "interactively" (not using `.pbs` files)
+we could run the script by typing:
 
 ~~~
 $ bash read_qc.sh
 ~~~
+
+So our `.pbs` file will be similar. First we use `nano` to create the `.pbs` file that 
+contains the following:
+
+~~~
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
+#PBS -j oe
+cd $PBS_O_WORKDIR
+bash ~/dc_workshop/scripts/read_qc.sh
+~~~
+
+save this file as **`read-test.pbs`** and exit `nano`
+
+Now submit the `.pbs` (Yes we are using a submission script, to run our script)
+
+~~~
+qsub read-test.pbs
+~~~
+
+Make a note of the job number and check to see when you script completes.
+After the script completes, open the job output file using `cat read-test.o<job-number> | less`. You should see something similar to this:
 
 ~~~
 Running FastQC ...
@@ -203,13 +236,20 @@ Approx 25% complete for SRR097977.fastq
 . 
 ~~~
 
-For each of your sample files, FastQC will ask if you want to replace the existing version with a new version. This is 
-because we have already run FastQC on this samples files and generated all of the outputs. We are now doing this again using
-our scripts. Go ahead and select `A` each time this message appears. It will appear once per sample file (six times total).
+Because we have already run FastQC on these samples files and generated all of the outputs 
+our older files will be overwritten (if they are generated in the same directory). That is
+okay. 
 
+<!--
+
+If we were working interactively on a cloud, we could use the same commands, but we would be
+prompted to decide to overwrite the old files. You can choose `A` to overwrite "all" the 
+old files. 
 ~~~
 replace SRR097977_fastqc/Icons/fastqc_icon.png? [y]es, [n]o, [A]ll, [N]one, [r]ename:
 ~~~
+
+-->
 
 ### Automating the Rest of our Variant Calling Workflow
 
