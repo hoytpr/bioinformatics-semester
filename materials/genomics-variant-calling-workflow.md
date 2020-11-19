@@ -269,10 +269,10 @@ Also notice that when we saved the "unpaired" files during our quality control s
 
 A variant call in our experiment is a conclusion that there is a **nucleotide difference vs. some reference at a given position** in an individual genome
 or transcriptome. This type of variant is often referred to as a **Single Nucleotide Polymorphism (SNP)**. Any variant call is usually accompanied by an estimate of 
-variant frequency (counts, or sometimes coverage) and some measure of confidence (can be a Phred-like score, or even a p-value). 
+variant frequency (counts, or sometimes coverage) and some measure of confidence (can be a Phred-like score, a percentage, or even a p-value). 
 Similar to other steps in this workflow, there are number of tools available for 
-variant calling. In this workshop we will be using `bcftools`, but there are a few things we need to do before actually calling the 
-variants.
+variant calling. In this workshop we will be using `bcftools`, but 
+there are a few things we need to do before actually calling the variants.
 
 ![workflow]({{ site.baseurl }}/fig/variant_calling_workflow.png)
 
