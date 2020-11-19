@@ -64,7 +64,7 @@ In this lesson, we will create **two shell scripts**.
 We'll combine each of the commands we used to run FastQC and 
 process the output files into a single file with a `.sh` (the Bash script) extension. This script will include creating our summary file. 
 
-Let's create a new directory named "scripts" and then use the command `touch` to create a new file where we will write our shell script. Remember, we used
+Let's create a new directory named `scripts` and then use the command `touch` to create a new file where we will write our shell script. Remember, we used
 `nano` to create and open a new file, but the command `touch` allows us to create a new file without opening that file.
 
 ~~~
@@ -130,7 +130,7 @@ cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
-The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our ZIP
+The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our `.zip`
 files. Then we run our `for` loop to unzip all of the `.zip` files in this directory. 
 Remember that in a script it is extremely important to use **four spaces** indent the `for` loop's
 internal lines!!
@@ -153,12 +153,19 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
+Finally, let's add one more line to let us know the script completed the last steps
+successfully"
+
+~~~
+echo "Summary file completed"
+~~~
+
 > ### Using `echo` statements
 > 
 > We've used `echo` statements to add progress statements to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
-> When using a submission script `.pbs` file the outputs will go to the job output
-> file (e.g. `read-test.o<job-number>`). If the script fails, we will be able to see any
+> When using a `.pbs` file to submit jobs, the outputs will go to the job output
+> file (e.g. `read-test.o<job-number>`). If our script fails, we will be able to see any
 > error messages in this file by opening it in `nano` or displaying it to the screen
 > using the command `cat read-test.o<job-number> | less`. We will ***always*** want to check
 > this output file!
@@ -189,6 +196,8 @@ for filename in *.zip
 
 echo "Saving summary..."
 cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+
+echo "Summary file completed"
 ~~~
 
 Save your file and exit `nano`. We can now create a `.pbs` file that
