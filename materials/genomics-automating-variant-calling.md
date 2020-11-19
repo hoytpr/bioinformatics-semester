@@ -174,7 +174,7 @@ echo "Summary file completed"
 {: .callout}
 
 Your full shell script should now look like this (extra blank lines are used for clarity):
-
+**
 ~~~
 cd ~/dc_workshop/data/untrimmed_fastq/
 
@@ -201,7 +201,7 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 
 echo "Summary file completed"
 ~~~
-
+**
 Save your file and exit `nano`. We can now create a `.pbs` file that
 will run our script. If we were operating "interactively" (not using `.pbs` files)
 we could run the script by typing:
