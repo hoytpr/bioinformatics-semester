@@ -162,10 +162,12 @@ echo "Summary file completed"
 
 > ### Using `echo` statements
 > 
-> We've used `echo` statements to add progress statements to our script. Our script will print these statements
+> We've used `echo` commands to add ***progress statements*** to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
 > When using a `.pbs` file to submit jobs, the outputs will go to the job output
-> file (e.g. `read-test.o<job-number>`). If our script fails, we will be able to see any
+> file (e.g. `read-test.o<job-number>`). If our script fails, we will use the `echo` outputs 
+> to track how far the script got before an error message is displayed (if any). 
+> We can then check for
 > error messages in this file by opening it in `nano` or displaying it to the screen
 > using the command `cat read-test.o<job-number> | less`. We will ***always*** want to check
 > this output file!
