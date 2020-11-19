@@ -132,7 +132,7 @@ cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 
 The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our `.zip`
 files. Then we run our `for` loop to unzip all of the `.zip` files in this directory. 
-Remember that in a script it is extremely important to use **four spaces** indent the `for` loop's
+Remember that in a script it is extremely important to use **four spaces** to indent the `for` loop's
 internal lines!!
 
 ~~~
