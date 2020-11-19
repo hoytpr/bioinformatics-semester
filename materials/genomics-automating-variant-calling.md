@@ -333,7 +333,7 @@ bwa index ${genome}
 
 Without modules, or on a cloud instance, the command is:
 ~~~
-bwa index $genome
+bwa index ${genome}
 ~~~
 
 We will now create the directory structure to store our results: 
@@ -341,7 +341,6 @@ We will now create the directory structure to store our results:
 ~~~
 mkdir -p sai sam bam bcf vcf
 ~~~
-
 
 Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. 
 We've already used Trimmomatic to trim these files, and we could re-do that here, 
