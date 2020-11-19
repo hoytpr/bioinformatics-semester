@@ -154,7 +154,7 @@ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 {: .output}
 
 Finally, let's add one more line to let us know the script completed the last steps
-successfully"
+successfully:
 
 ~~~
 echo "Summary file completed"
