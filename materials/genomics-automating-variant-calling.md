@@ -92,18 +92,22 @@ cd ~/dc_workshop/data/untrimmed_fastq/
 ~~~
 
 These next two lines will give us a status message to tell us that we are currently running FastQC, then will run FastQC
-on all of the files in our current directory with a `.fastq` extension. 
+on all of the files in our `~/dc_workshop/data/untrimmed_fastq/` directory 
+with a `.fastq.gz` extension. Remember that to run FastQC, we have 
+to load the module first. Then we call the program as `fastqc` and give it 
+the path and the file names.
 
 ~~~
 echo "Running FastQC ..."
-~/FastQC/fastqc *.fastq
+module load fastqc
+fastqc ~/dc_workshop/data/untrimmed_fastq/*.fastq.gz
 ~~~
 {: .output}
 
 Our next line will create a new directory to hold our FastQC output files. Here we are using the `-p` option for `mkdir`. This 
 option forces `mkdir` to create the new directory, even if one of the parent directories doesn't already exist. It is a good
 idea to use this option in your shell scripts to avoid running into errors if you don't have the directory structure you think
-you do.'
+you do.
 
 ~~~
 mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
