@@ -531,16 +531,16 @@ software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
 On Cowboy, create a submission script called samindex.pbd:
-```
+~~~
 #!/bin/bash
 #PBS -q express
 #PBS -l nodes=1:ppn=1
 #PBS -l walltime=1:00:00
 #PBS -j oe
 cd $PBS_O_WORKDIR
-module load bcftools
+module load samtools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
-```
+~~~
 On a cloud instance just use:
 ~~~
 $ samtools index results/bam/SRR2584866.aligned.sorted.bam
@@ -692,14 +692,14 @@ $ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_fin
 You will need to type the password for your remote/AWS instance each time you call `scp`. 
 -->
 
-Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), double-click the `.zip` file
-to unzip it, and then drag the program into your Applications folder. Windows users will find that IGV installs into 
-their `C:Programs Files/IGV_2.7.2` folder
-and also places a link to the application on their Desktop. You can copy the application link into the `~/Desktop/files_for_igv` 
+Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), onto your Desktop. Double-click the `.zip` file
+to unzip it, and on a Mac drag the program into your Applications folder. Windows users will find that IGV ***installs*** into 
+their `C:Programs Files/IGV_2.8.12` folder (This will vary with newer nversions)
+and also places a link to the application on their Desktop. You can copy the application link into the `~/Desktop/files_for_igv`
 folder you just created, or just open IGV from the Desktop 
 
-1. Open IGV (double-click on the icon/link).
-2. Load our reference genome file (`ecoli_rel606.fasta`) into IGV using the **"Load Genomes from File..."** option under the **"Genomes"** pull-down menu.
+1. Open IGV (double-click on the icon/link). Windows users may need to run the `.bat` batch file through the Windows Command Window.
+2. Find and load our reference genome file (`ecoli_rel606.fasta`) into IGV using the **"Load Genomes from File..."** option under the **"Genomes"** pull-down menu.
 3. Load our BAM file (`SRR2584866.aligned.sorted.bam`) using the **"Load from File..."** option under the **"File"** pull-down menu. 
 4.  Do the same with our VCF file (`SRR2584866_final_variants.vcf`).
 
@@ -711,16 +711,16 @@ There should be two tracks: one corresponding to our BAM file and the other for 
 
 In the **VCF track**, each bar across the top of the plot shows the allele fraction for a single locus. The second bar shows
 the genotypes for each locus in each *sample*. We only have one sample called here so we only see a single line. 
-Cyan = homozygous variant, Grey = reference. Most of what we see are homozygous variants, because E. coli is 
-a haploid organism. But we can see some heterozygous calls, if we know where to look. They will show up as dark-blue. 
+Cyan = homozygous variant, Grey = reference. All of what we see are homozygous variants, because E. coli is 
+a haploid organism. But with diploid organisms this row would show some heterozygous calls, and they will show up as dark-blue. 
 Filtered entries are transparent. There might be variations in 
-the colors for different operating systems.
+the colors for different operating systems (and you can customize them!).
 
 We can zoom in to inspect variants you see in your filtered VCF file to become more familiar with IGV. 
 But first, let's check out our **hom-alt** allele in the *mutL* gene. At the top of IGV, there is a white box 
 with "CP000819.1" (the chromosome number) already entered. Let's go to position 4377265 again. Just click after 
 the CP000819.1 and enter a colon character then the position: `:4377265` and click on "Go".
-Suddenly a lot of information is visible. It should look like this:
+Suddenly a lot of information is visible. It should look similar to this:
 ![igv-at-mutL]({{ site.baseurl }}/fig/igv-screenshot-mutl.png)
 
 Now we can see that at position 4377265, the reference genome sequence (at the bottom) has an "A", 
