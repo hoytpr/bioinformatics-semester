@@ -191,7 +191,7 @@ echo "Saving summary..."
 cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 ~~~
 
-Save your file and exit `nano`. We can now run our script by creating a `.pbs` file that
+Save your file and exit `nano`. We can now create a `.pbs` file that
 will run our script. If we were operating "interactively" (not using `.pbs` files)
 we could run the script by typing:
 
