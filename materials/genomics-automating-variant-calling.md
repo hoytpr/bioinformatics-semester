@@ -406,7 +406,7 @@ the extension and assign the basename to the new variable `base`.
 Add `done` again at the end so we can test our script.
 
 ~~~
-    base=$(basename ${fq1} \_1.trim.sub.fastq)
+    base=$(basename ${fq} \_1.trim.sub.fastq)
     echo "base name is ${base}"
     done
 ~~~
@@ -454,7 +454,7 @@ Remember to delete the `done` line from your script before adding these (indente
     sorted_bam=~/dc_workshop/results/bam/${base}.aligned.sorted.bam
     raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
     variants=~/dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf    
+    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
 ~~~
 {: .output}
 
@@ -481,7 +481,7 @@ If you are on a cloud instance, you can ignore the `module load..` commands. All
 3) sort the BAM file:
 
 ~~~
-    samtools sort -o ${sorted_bam} ${bam} 
+    samtools sort -o ${sorted_bam} ${bam}
 ~~~
 {: .output}
 
@@ -496,21 +496,21 @@ If you are on a cloud instance, you can ignore the `module load..` commands. All
 
 ~~~
     module load bcftools/1.9
-    bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam} 
+    bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
 ~~~
 {: .output}
 
 6) call SNPs with bcftools:
 
 ~~~
-    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
+    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf}
 ~~~
 {: .output}
 
 7) filter and report the SNP variants in variant calling format (VCF):
 
 ~~~
-    vcfutils.pl varFilter ${variants}  > ${final_variants}
+    vcfutils.pl varFilter ${variants} > ${final_variants}
 ~~~
 {: .output}
 
@@ -527,22 +527,22 @@ bwa index ${genome}
 
 mkdir -p sam bam bcf vcf
 
-for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
+for fq in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     do
-    echo "working with file ${fq1}"
+    echo "working with file ${fq}"
 
-    base=$(basename ${fq1} \_1.trim.sub.fastq)
+    base=$(basename ${fq} \_1.trim.sub.fastq)
     echo "base name is ${base}"
     # input files
     fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
     fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
-	# output files
+    # output files
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
     bam=~/dc_workshop/results/bam/${base}.aligned.bam
     sorted_bam=~/dc_workshop/results/bam/${base}.aligned.sorted.bam
     raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
     variants=~/dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf 
+    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
 
     module load bwa
     bwa mem ${genome} ${fq1} ${fq2} > ${sam}
@@ -552,9 +552,9 @@ for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     samtools index ${sorted_bam}
     module load bcftools/1.9
     bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
-    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
+    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf}
     vcfutils.pl varFilter ${variants} > ${final_variants}
-   
+
     done
 ~~~
 {: .output}
@@ -574,12 +574,12 @@ $ bash run_variant_calling.sh
 
 Here is a submissions script made with `nano` named **`bigscript.pbs`**
 ```
-#!/bin/bash 
-#PBS -q express 
-#PBS -l nodes=1:ppn=1 
-#PBS -l walltime=1:00:00 
+#!/bin/bash
+#PBS -q express
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=1:00:00
 #PBS -j oe
-cd $PBS_O_WORKDIR 
+cd $PBS_O_WORKDIR
 bash run_variant_calling.sh
 ```
 submit: `qsub bigscript.pbs`
