@@ -332,12 +332,6 @@ module load bwa
 bwa index ${genome}
 ~~~
 
-
-Without modules, or on a cloud instance, the command is:
-~~~
-bwa index ${genome}
-~~~
-
 We will now create the directory structure to store our results: 
 
 ~~~
