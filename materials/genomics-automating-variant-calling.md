@@ -311,8 +311,7 @@ cd ~/dc_workshop/results
 ~~~
 
 Next we tell our script where to find the reference genome by assigning the `genome` variable to 
-the path to our reference genome: (note: if this line fails, we can use
-a complete path: `genome=/panfs/panfs.cluster/home/<username>/dc_workshop/data/ref_genome/ecoli_rel606.fasta`)
+the path to our reference genome:
 
 ~~~
 genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
