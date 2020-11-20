@@ -446,7 +446,7 @@ our output files as paired-end read files. This will make your script flexible, 
 to read (because you won't need to type out the full name of each of the files). 
 We're using the `base` variable that we 
 defined previously, and ***adding different file name extensions*** to represent the files. 
-We can use the `base` variable to access both the `base_1.trim.sub.fastq` and `base_2.trim.sub.fastq` 
+We can use the `base` variable to access both the `_1.trim.sub.fastq` and `_2.trim.sub.fastq` 
 input files, and to create variables to store the names of our output files. 
 Remember to delete the `done` line from your script before adding these (indented) lines.
 
