@@ -299,9 +299,11 @@ $ nano run_variant_calling.sh
 
 Enter the following pieces of code into your shell script (not into your terminal prompt).
 
-First we start with a little trick: `set -e` which tells our script to exit immediately if there is an error. This does two things: When we fail, we fail FAST, and second it will let us know where the problem was in our script. 
-We follow this by changing our working directory so that we can create new results subdirectories
-in the right location. 
+> OPTIONAL: First we start with a little trick: `set -e` which tells our script to exit immediately if there 
+> is an error. This does two things: When we fail, we fail FAST, and second it will let us know 
+> where the problem was in our script. 
+> We follow this by changing our working directory so that we can create new results subdirectories
+> in the right location. 
 
 ~~~
 set -e
@@ -309,7 +311,8 @@ cd ~/dc_workshop/results
 ~~~
 
 Next we tell our script where to find the reference genome by assigning the `genome` variable to 
-the path to our reference genome: 
+the path to our reference genome: (note: if this line fails, we can use
+a complete path: `genome=/panfs/panfs.cluster/home/phoyt/dc_workshop/data/ref_genome/ecoli_rel606.fasta`)
 
 ~~~
 genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
@@ -366,14 +369,15 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 
 > #### Indentation
 > 
-> All of the statements within your `for` loop (i.e. everything after the `for` line and including the `done` line) 
+> All of the statements within your `for` loop (*i.e.* everything after the `for` line and including the `done` line) 
 > need to be indented with **four spaces**. This indicates to the shell interpretor that these statements are all part of the `for` loop
 > and should be done for each line in the `for` loop.
 > 
 {: .callout}
 
-This is a good time to check that our script is assigning the FASTQ filename variables correctly. Save your script and run it interactively, because we aren't doing 
-any big calculations.
+This is a good time to check that our script is assigning the FASTQ filename variables correctly. 
+Save your script and run it interactively, because we aren't doing 
+any big calculations and it only takes a few seconds.
 
 ~~~
 $ bash run_variant_calling.sh
@@ -408,7 +412,7 @@ your script, and add the next two (indented) lines. These lines extract the **ba
 to a new variable called `base`. Add `done` again at the end so we can test our script.
 
 ~~~
-    base=$(basename ${fq} .trim.sub.fastq)
+    base=$(basename $fq1 \_1.trim.sub.fastq)
     echo "base name is ${base}"
     done
 ~~~
@@ -441,7 +445,7 @@ our output files as paired-end read files. This will make your script flexible, 
 to read (because you won't need to type out the full name of each of the files). 
 We're using the `base` variable that we 
 defined previously, and ***adding different file name extensions*** to represent the files. 
-We can use the `base` variable to access both the `base_1.fastq` and `base_2.fastq` 
+We can use the `base` variable to access both the `base_1.trim.sub.fastq` and `base_2.trim.sub.fastq` 
 input files, and to create variables to store the names of our output files. 
 Remember to delete the `done` line from your script before adding these (indented) lines.
 
@@ -519,21 +523,21 @@ If you are on a cloud instance, you can ignore the `module load..` commands. All
 **Your final script should look like this:**
 
 ~~~
-set -e
+# set -e   <-- did not seem to work on Cowboy
 cd ~/dc_workshop/results
 
 genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 
 module load bwa
-bwa index $genome
+bwa index ${genome}
 
 mkdir -p sam bam bcf vcf
 
 for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     do
-    echo "working with file $fq1"
+    echo "working with file ${fq1}"
 
-    base=$(basename ${fq1} _1.trim.sub.fastq)
+    base=$(basename ${fq1} \_1.trim.sub.fastq)
     echo "base name is $base"
 
     fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
