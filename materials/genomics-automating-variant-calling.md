@@ -178,24 +178,24 @@ Your full shell script should now look like this (extra blank lines are used for
 ~~~
 cd ~/dc_workshop/data/untrimmed_fastq/
 
-echo "Running FastQC ..."
+echo "Running FastQC..."
 module load fastqc
 fastqc ~/dc_workshop/data/untrimmed_fastq/*.fastq.gz
 
 mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
 
 echo "Saving FastQC results..."
-mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/
+mv *zip ~/dc_workshop/results/fastqc_untrimmed_reads/
 mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/
 
 cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 
-echo "Unzipping..."
+echo "Unzipping ..."
 for filename in *.zip
     do
-    unzip $filename
+    unzip ${filename}
     done
-
+	
 echo "Saving summary..."
 cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
 
@@ -335,7 +335,7 @@ bwa index ${genome}
 We will now create the directory structure to store our results: 
 
 ~~~
-mkdir -p sai sam bam bcf vcf
+mkdir -p sam bam bcf vcf
 ~~~
 
 Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. 
