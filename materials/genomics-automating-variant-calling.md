@@ -408,11 +408,12 @@ be specified correctly. Ask for help if you get stuck here!
 
 Now that we've tested the components of our loops so far, we will add our next few steps. Open the script with `nano`, remove the line `done` from the end of
 your script, and add the next two (indented) lines. These lines extract the **base name** of the file
-(by excluding the path and `.trim.sub.fastq` extension) and assign it
+(by excluding the path and `_.trim.sub.fastq` extension) making sure to put the "ESCAPE" charachter **`\`** in front of 
+the extension and assign the basename to the variable `base`.
 to a new variable called `base`. Add `done` again at the end so we can test our script.
 
 ~~~
-    base=$(basename $fq1 \_1.trim.sub.fastq)
+    base=$(basename ${fq1} \_1.trim.sub.fastq)
     echo "base name is ${base}"
     done
 ~~~
@@ -538,7 +539,7 @@ for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     echo "working with file ${fq1}"
 
     base=$(basename ${fq1} \_1.trim.sub.fastq)
-    echo "base name is $base"
+    echo "base name is ${base}"
 
     fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
     fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
