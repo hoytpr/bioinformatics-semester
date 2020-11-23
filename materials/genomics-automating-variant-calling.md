@@ -12,6 +12,19 @@ language: Shell
 - Write a shell script with multiple variables.
 - Incorporate a `for` loop into a shell script.
 
+### Setup
+Check your directories on Cowboy or Pete for the files:
+~~~
+SRR2584863_1.trim.sub.fastq, SRR2584863_2.trim.sub.fastq, SRR2584866_1.trim.sub.fastq, SRR2584866_2.trim.sub.fastq, SRR2589044_1.trim.sub.fastq, SRR2589044_2.trim.sub.fastq
+~~~
+These should be in your `~/dc_workshop/data/trimmed_fastq_small/` directory. If you 
+don't have these files, create a `~/dc_workshop/data/trimmed_fastq_small/` 
+directory (if you don't have one and change into that directory. Then download 
+them from [CANVAS](https://canvas.okstate.edu/files/8837111/download?download_frd=1) using the command:
+~~~
+curl -O https://canvas.okstate.edu/files/8837111/download?download_frd=1 .
+~~~
+
 ### What is a shell script?
 
 You wrote a simple shell script in a [previous lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts) that we used to extract bad reads from our
@@ -64,9 +77,9 @@ In this lesson, we will create **two shell scripts**.
 We'll combine each of the commands we used to run FastQC and 
 process the output files into a single file with a `.sh` (the Bash script) extension. This script will include creating our summary file. 
 
-### Using Zoom Chat and text files
+### Using Zoom Chat and Text Files
 > During a remote session, we may use a chat box to paste text for commands
-> to place in script filess. We have found that in some cases the script
+> to place in script files. We found in some cases the script
 > files had problems with "end-of-line" white space. To avoid this in the future
 > we can run a command `dos2unix` that fixes all the line ends by converting
 > them to Unix-style. This may or may not occur on your system but we wanted you to know
