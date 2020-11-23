@@ -228,7 +228,7 @@ detailed grade. Other problems will be graded as follows:
 - **C- 70-72**
 - **D+ 67-69**
 - **D 60-66**
-- **E <60**
+- **F <60**
 
 
 ## Course Schedule

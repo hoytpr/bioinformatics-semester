@@ -64,6 +64,13 @@ In this lesson, we will create **two shell scripts**.
 We'll combine each of the commands we used to run FastQC and 
 process the output files into a single file with a `.sh` (the Bash script) extension. This script will include creating our summary file. 
 
+### Using Zoom Chat and text files
+> During a remote session, we may use a chat box to paste text for commands
+> to place in script filess. We have found that in some cases the script
+> files had problems with "end-of-line" white space. To avoid this in the future
+> we can run a command `dos2unix` that fixes all the line ends by converting
+> them to Unix-style. This may or may not occur on your system but we wanted you to know
+
 Let's create a new directory named `scripts` and then use the command `touch` to create a new file where we will write our shell script. Remember, we used
 `nano` to create and open a new file, but the command `touch` allows us to create a new file without opening that file.
 
