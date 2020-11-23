@@ -15,12 +15,17 @@ language: Shell
 ### Setup
 Check your directories on Cowboy or Pete for the files:
 ~~~
-SRR2584863_1.trim.sub.fastq, SRR2584863_2.trim.sub.fastq, SRR2584866_1.trim.sub.fastq, SRR2584866_2.trim.sub.fastq, SRR2589044_1.trim.sub.fastq, SRR2589044_2.trim.sub.fastq
+SRR2584863_1.trim.sub.fastq
+SRR2584863_2.trim.sub.fastq
+SRR2584866_1.trim.sub.fastq
+SRR2584866_2.trim.sub.fastq
+SRR2589044_1.trim.sub.fastq
+SRR2589044_2.trim.sub.fastq
 ~~~
 These should be in your `~/dc_workshop/data/trimmed_fastq_small/` directory. If you 
 don't have these files, create a `~/dc_workshop/data/trimmed_fastq_small/` 
-directory (if you don't have one and change into that directory. Then download 
-them from [CANVAS](https://canvas.okstate.edu/files/8837111/download?download_frd=1) using the command:
+directory (if you don't have one) and change into that directory. Then download 
+the files from [CANVAS](https://canvas.okstate.edu/files/8837111/download?download_frd=1) using the command:
 ~~~
 curl -O https://canvas.okstate.edu/files/8837111/download?download_frd=1 .
 ~~~
