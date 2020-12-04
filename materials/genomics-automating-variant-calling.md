@@ -441,17 +441,17 @@ Now if you save and run your script, the final lines of your output should look 
 
 ~~~
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
-base name is SRR2584863_1
+base name is SRR2584863
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
-base name is SRR2584863_2
+base name is SRR2584863
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
-base name is SRR2584866_1
+base name is SRR2584866
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
-base name is SRR2584866_2
+base name is SRR2584866
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
-base name is SRR2589044_1
+base name is SRR2589044
 working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
-base name is SRR2589044_2
+base name is SRR2589044
 ~~~
 {: .output}
 
