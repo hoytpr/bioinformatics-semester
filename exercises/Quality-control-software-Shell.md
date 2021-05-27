@@ -16,6 +16,9 @@ are you in this read?
 (Hint: Look at the options for the `ls` command to see how to show
 file sizes.)
 
+[GO BACK TO LESSON](https://hoytpr.github.io/bioinformatics-semester/materials/genomics-reads-quality-control#qc1)
+
+
 **Overall Read Quality**
 
 3 - Which sample(s) looks the best
@@ -26,3 +29,5 @@ worst?
 
 4 - Which samples failed at least one of FastQC's quality tests? What
 test(s) did those samples fail?
+
+[GO BACK TO LESSON AGAIN](https://hoytpr.github.io/bioinformatics-semester/materials/genomics-reads-quality-control#qc2)

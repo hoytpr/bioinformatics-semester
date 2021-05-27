@@ -12,6 +12,9 @@ language: Shell
 - Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs.
 - Explain when and why command-line interfaces should be used instead of graphical interfaces.
 
+### Setup
+Make sure you've downloaded and installed the files and directories for 
+the [setup for this lesson]({{ site.baseurl }}/computer-setup).
 
 ### Background
 At a high level, computers do four things:
@@ -194,7 +197,11 @@ If the link above doesn't work, you will have to log into Canvas
 at [the course site](https://canvas.okstate.edu/courses/78098), and go to the "Files" to download. 
 Then unzip the file using your computers' GUI operating system and you should have a folder 
 named "data-shell" on your Desktop. This is where we begin exploring the BASH shell.
-To make sure everything is set up properly, in your Shell Window type:
+To make sure everything is set up properly, open your Shell Window and type:
+```
+$ cd
+```
+Hit the "return" key, then type:
 ```
 $ ls Desktop/data-shell
 
