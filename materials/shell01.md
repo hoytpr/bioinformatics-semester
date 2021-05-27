@@ -194,7 +194,7 @@ If the link above doesn't work, you will have to log into Canvas
 at [the course site](https://canvas.okstate.edu/courses/78098), and go to the "Files" to download. 
 Then unzip the file using your computers' GUI operating system and you should have a folder 
 named "data-shell" on your Desktop. This is where we begin exploring the BASH shell.
-To make sure in your Shell Window type:
+To make sure everything is set up properly, in your Shell Window type:
 ```
 $ ls Desktop/data-shell
 
