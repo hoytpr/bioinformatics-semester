@@ -6,7 +6,7 @@ language: Shell
 exercises: ['Genomics Shell Data Wrangling']
 ---
 
-Link to Genomics Shell Data Wrangling Exercises on [Canvas as Genomics Shell and Scripts](https://canvas.okstate.edu/courses/51969/quizzes/108185).
+Link to [Canvas quiz on Genomics Shell and Scripts](https://canvas.okstate.edu/courses/51969/quizzes/108185).
 
 <!--
 

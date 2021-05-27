@@ -4,7 +4,9 @@ topic: Genomics
 title: Writing Scripts for Calling Variants
 language: Shell
 ---
-Uncomment below to work on exercise
+
+Link to [Canvas](https://canvas.okstate.edu/courses/103244/quizzes/263605)
+
 
 <!--
 
@@ -16,6 +18,7 @@ keypoints:
 
 2. Upload variant list
 
+Uncomment below to work on exercise Genomics-writing-scripts-for-calling-variants-Shell.md
+
 -->
 
-Genomics-writing-scripts-for-calling-variants-Shell.md

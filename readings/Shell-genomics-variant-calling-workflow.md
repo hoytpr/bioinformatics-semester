@@ -7,3 +7,4 @@ language: Shell
 
 [Data Carpentry's Variant Calling Workflow](https://datacarpentry.org/wrangling-genomics/04-variant_calling/index.html)
 
+Our lesson may differ from the Data Carpentry sites but will provide the basics.

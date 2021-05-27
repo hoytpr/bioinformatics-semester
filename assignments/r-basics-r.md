@@ -6,12 +6,22 @@ language: R
 exercises: ['Genomics RStudio']
 ---
 
-Exercise development ongoing.
-Use of numerically iterated
+
+These are examples of R-language exercise development that is ongoing.
+
+If you would like to work on these advanced exercises, please tell your instructor.
+
+
+{% include assignment.html %}
+
+<!--
+
+Use of numerically iterated 
 exercises of same name will
 work, but exercises all use
 same filename as exercise
 title. Note, non-numbered
-exercise is last.
+exercise will be **last**. 
 
-{% include assignment.html %}
+
+-->
