@@ -15,7 +15,7 @@ language: Shell
 
 ### Moving to a bigger BASH
 
-IMPORTANT! Leave your Cowboy login window open! Don't touch it.
+IMPORTANT! Leave your Pete login window open! Don't touch it.
 
 Now open ***another*** terminal window (Windows users who run Putty, can go back to Gitbash). 
 
@@ -28,21 +28,21 @@ $ cd ..
 $ ls shell_data
 sra_metadata   untrimmed_fastq
 ~~~
- We are going to move our entire `shell_data` file hierachy onto Cowboy. But before we move `shell_data` to Cowboy, we should compress it into a single file that is small and complete. This takes the command `tar`. From your Desktop directory type:
+ We are going to move our entire `shell_data` file hierachy onto Pete. But before we move `shell_data` to Pete, we should compress it into a single file that is small and complete. This takes the command `tar`. From your Desktop directory type:
  
  ```
  $ tar -zcvf shelldata.tar.gz shell_data/
  ```
 This will create a file named `shelldata.tar.gz` on your desktop!
-Now we need to upload `shelldata.tar.gz` to our Cowboy home directory. 
+Now we need to upload `shelldata.tar.gz` to our Pete home directory. 
 To do this, while still in your Desktop directory type:
 ~~~
-$ scp shelldata.tar.gz <username>@cowboy.hpc.okstate.edu:/home/<username>/
+$ scp shelldata.tar.gz <username>@pete.hpc.okstate.edu:/home/<username>/
 ~~~
 
 You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
 will be uploaded. Finally we want to decompress the directories so they are exactly 
-the same as we had on our local computer. To do this in your Cowboy login window 
+the same as we had on our local computer. To do this in your Pete login window 
 (the terminal we told you to leave open) please type:
 ```
 $ tar -zxvf shelldata.tar.gz
@@ -219,7 +219,7 @@ Here we are adding (`+`) executable permissions (`+x`).
 
 > #### Windows Users: FYI about `chmod`! 
 > `chmod` *will* work when you 
-> are logged onto (or SSH to) a remote system like Cowboy!
+> are logged onto (or SSH to) a remote system like Pete!
 > But **doesn't work in the GitBash terminal on your laptop**
 <!--
 > Windows, defines permissions 
@@ -259,17 +259,17 @@ The script should run the same way as before, but now we've created our very own
 
 If we want to connect to a remote system and we are already in a bash terminal, 
 We can use the command `ssh` to connect to another remote system. For example, In your Gitbash window (Windows users) or your old local bash window (Macs/Unix) you can type:
-`ssh <username>@cowboy.hpc.okstate.edu`
+`ssh <username>@pete.hpc.okstate.edu`
 
 If you see a warning about the computer not being known, type "yes" to accept the computer.
 You should then see a request for your password. Type in your password.
 NOTE: You won't see anything when you type your password. The cursor won't even move.
 That's expected, so keep typing!
 ```
-$ ssh phoyt@cowboy.hpc.okstate.edu
-phoyt@cowboy.hpc.okstate.edu's password:
+$ ssh phoyt@pete.hpc.okstate.edu
+phoyt@pete.hpc.okstate.edu's password:
 Last login: Thu Aug  8 12:28:36 2019 from 139.78.154.30
-Welcome to Cowboy!
+Welcome to Pete!
 ```
 
 **Congratulations!** You have used the command-line interface to
@@ -415,13 +415,13 @@ $  scp local_file.txt <remote-username>@ip.address:/home/<remote-username>/
 ~~~
 $  scp local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
 ~~~
-3. For the Cowboy supercomputer
+3. For the Pete supercomputer
 ~~~
-$  scp local_file.txt <username>@cowboy.hpc.okstate.edu:/home/<username>/
+$  scp local_file.txt <username>@pete.hpc.okstate.edu:/home/<username>/
 ~~~
 
 You may be asked to re-enter your password.  Then you should see the file name printed 
-to the screen. When you are back at your command prompt, switch to the Cowboy Terminal 
+to the screen. When you are back at your command prompt, switch to the Pete Terminal 
 and use `ls` to make sure the file `local_file.txt` is now in your home folder. 
 
 #### Downloading Data from a remote computer with scp
@@ -455,7 +455,7 @@ These directions ***are platform specific*** so please follow the instructions f
 <!--
 NOTE: (The following selection doesn't work
 using the course template instead of the workshop template)
--->
+
 
 #### Windows Only: Uploading Data to your remote computer with PSCP
 
@@ -484,10 +484,10 @@ Locate a file on your computer that you wish to **upload** (be sure you know the
 C:\User\<username>\Downloads> pscp.exe local_file.txt <remote-username>@EC-number-ip.address:/home/<remote-username>/
 ~~~
 
-2. For Cowboy
+2. For Pete
 
 ~~~
-C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc.okstate.edu/home/<remote-username>/
+C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@pete.hpc.okstate.edu/home/<remote-username>/
 ~~~
 
 #### Downloading Data from your Virtual Machine with PSCP
@@ -498,11 +498,13 @@ C:\User\username\Downloads> pscp.exe local_file.txt <remote-username>@cowboy.hpc
 C:\User\<username>\Downloads> pscp.exe <remote-username>@EC-number-ip.address:/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt.
 ~~~
 
-2. For Cowboy
+2. For Pete
 
 ~~~
-C:\User\<username>\Downloads pscp.exe <remote-username>@cowboy.hpc.okstate.edu/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
+C:\User\<username>\Downloads pscp.exe <remote-username>@pete.hpc.okstate.edu/home/<remote-username>/shell_data/untrimmed_fastq/scripted_bad_reads.txt
 ~~~
+
+-->
 
 ### Keypoints:
 - Scripts are a collection of commands executed together.

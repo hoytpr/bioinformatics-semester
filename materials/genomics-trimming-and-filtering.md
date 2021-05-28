@@ -30,7 +30,7 @@ filter poor quality reads and trim poor quality bases from our samples.
 ## Trimmomatic Options
 
 Trimmomatic has a variety of options to trim your reads. If we run the command, we can see some of our options.
-(NOTE: Options display doesn't work on the Cowboy supercomputer)
+(NOTE: Options display doesn't work on the Pete supercomputer)
 
 ~~~
 $ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar
@@ -176,7 +176,7 @@ We saw using FastQC that Nextera adapters were present in our samples.
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
 
-On Cowboy the command is:
+On Pete the command is:
 
 `$cp /scratch/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
 
@@ -215,27 +215,28 @@ part of a ***pipeline***.
 We will also use a sliding window of size 4bp that will remove bases if their
 average phred score is below 20. We will also
 discard any reads that do not have at least 25 bases remaining after
-all our trimming steps. If using the Cowboy computer, use the submission script shown below, or 
+all our trimming steps. If using the Pete computer, use the submission script shown below, or 
 make sure you are using a "captured" node to work interactively. This command will take a few minutes to run.
 
 The PBS script looks like this. Open `nano` and copy-paste this into `nano` or type it in:
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load trimmomatic
 java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
             SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
             SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
 ~~~
-Notice that the command for trimmomatic is one long line. Save this submission script as `trim1.pbs`, 
-and submit it to Cowboy using
-`qsub trim1.pbs`. 
+Notice that the command for trimmomatic is one long line. Save this submission script as `trim1.sbatch`, 
+and submit it to Pete using
+`sbatch trim1.sbatch`. 
 
 The interactive (one long line) command looks like this:
 ~~~
@@ -288,7 +289,7 @@ SRR2589044_2.fastq.gz       SRR2589044_2un.trim.fastq.gz
 Looks like we've just successfully run Trimmomatic on one sample of our FASTQ files!
 Let's check some things to be sure everything worked!
 
-Notice the `trim1.pbs.o<job_number>` file. It should have the same or similar output as shown 
+Notice the `trim1.sbatch.o<job_number>` file. It should have the same or similar output as shown 
 for the interactive output above.
 The output files are also `fastq.gz` (g-zipped) files. But `SRR2589044_1.trim.fastq.gz`
 should be smaller than `SRR2589044_1.fastq.gz` because we've removed reads. We can confirm this:
@@ -337,7 +338,7 @@ In this `for` loop we are going to use two variables which will
 make our loop **flexible** enough to use the same loop over again
 when we want to trim our next set of sequencing sample files.
 
-With a captured node on Cowboy, or if we are working in our own "instance" on a cloud
+With a captured node on Pete, or if we are working in our own "instance" on a cloud
 based system, the `for` loop would look like this:
 ~~~
 $ for infile in *_1.fastq.gz
@@ -352,15 +353,16 @@ $ for infile in *_1.fastq.gz
 
 Notice again that the trimmomatic command is one long line. The `\` indicators 
 tell the shell to "continue on the next line". 
-Without a captured node, we should write a submission script named `trim-loop.pbs` that looks like this:
+Without a captured node, we should write a submission script named `trim-loop.sbatch` that looks like this:
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load trimmomatic
 
 for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
@@ -369,7 +371,7 @@ By now, you should be able to understand the variables and commands in this `for
 and so there is a detailed description of the loop and how it works on this **["Loop-extra" page]({{ site.baseurl }}/materials/loop-extra)**.
 We can go through this if we have time.
 
-submit `trim-loop.pbs` and it should take a few minutes for
+submit `trim-loop.sbatch` and it should take a few minutes for
 Trimmomatic to run for each of our six input files. Once it's done
 running, take a look at your directory contents. You'll notice that even though we ran Trimmomatic 
 on file `SRR2589044` before running the for loop, there is only one set of files for it. Because we 
