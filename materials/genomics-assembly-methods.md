@@ -55,6 +55,28 @@ SPAdes (hopefully) in this lesson. All of these assemblers are [de-bruijn](https
 graph based assemblers.
 2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler.
 
+Here's another trick: You can use this K-mer histogram to estimate the size of
+the genome you sequenced using the following formula:
+
+##### Genome_size = Total_Kmers / peak_Kmer_coverage
+
+For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
+that explain why we want to estimate genome sizes. Briefly,
+K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
+Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
+
+> This is useful because: 
+> 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
+> 2. You might not know anything about your genome size!
+> 
+> Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
+> was "10-fold", you could then estimate the size of your genome being sequenced 
+> was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
+
+We are going to ask you to find the N50 of these assemblies as a useful statistic. 
+We will cover it in detail later, but the N50 represents a metric of the length of a 
+set of sequences in an assembly.
+
 > We are using several pre-made `.sbatch` submission scripts, so let's briefly review 
 > the structure of a submission script using the `velvetk29.sbatch` we'll use later in 
 > this lesson as an example.
@@ -136,7 +158,10 @@ $ velvet-estimate-exp_cov.pl velvet31/stats.txt
 Predicted expected coverage: 18
 velvetg parameters: -exp_cov 18 -cov_cutoff 0
 ~~~
-CONGRATULATIONS on your first assembly!
+***CONGRATULATIONS*** on your first assembly!
+
+> ### What is a coverage histogram used for?
+> (in development)
 
 
 ### SOAPdenovo2
@@ -196,15 +221,15 @@ What printed on the screen?
 ans: `<jobid>.mgmt1`
 
 The `soapk31.sbatch.o<jobid>` is very useful. Use the `more` command to find these information from the log file:
-Paired end library insert size: _____________   
+Paired end library insert size: `_____________`   
 
-Standard deviation ______________
+Standard deviation `______________`
 
-contig stats: n50 ________  
+contig stats: n50 `________`  
 
-max length contig _______ 
+max length contig `_______` 
 
-total __________ 
+total `__________` 
 
 Where are the results stored? 
 FASTA file: `soap31.scafSeq`
@@ -238,9 +263,9 @@ Using what you’ve learned, do the **25** K-mer value.
 
 ### SPAdes
 
-(under development)
+(More under development)
 
-SPAdes (SPAdes – St. Petersburg genome assembler) – is an assembly toolkit containing various assembly pipelines. It is one of the most current asssembly software and is used world-wide.
+SPAdes (SPAdes – St. Petersburg genome assembler) – is a **MODERN** assembly toolkit containing various assembly pipelines. It is one of the most powerful asssembly software and is used world-wide.
 SPAdes works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads. You can also provide additional contigs that will be used as long reads.
 SPAdes supports paired-end reads, mate-pairs and unpaired reads. SPAdes can take as input several paired-end and mate-pair libraries simultaneously. Note, that SPAdes was initially designed for small genomes, but is used for many larger genomes when computation power is available.
 In addition to genome asembly,  SPAdes 3.12.0 includes the following additional pipelines:
@@ -254,7 +279,7 @@ In addition, SPAdes provides several stand-alone programs with relatively simple
 
 `$ cd ../../spades/`
 
-Learn through viewing `spades31.sbatch`
+Learn how we run SPAdes by viewing `spadesk31.sbatch`
  
 `$ nano -w spadesk31.sbatch`
 
@@ -272,7 +297,11 @@ What was printed on the screen after you pressed enter?
 
 `<jobidnumber>.mgmt1` 
 
-The log file, `spades.log` is found in the output directory qand is very useful. At the top it shows you the command you used. It then shows the software versions you loaded. This is very important for making your results reproducible. Spades will even give you recommendations if it thinks you could get better results using different settings.
+The log file, `spades.log` is found in the output directory and is very useful. 
+At the top it shows you the command you used. It then shows the software versions 
+you loaded. This is very important for making your results reproducible. 
+Spades will even give you recommendations if it thinks you could get 
+better results using different settings.
 
 To examine the output file:
 
@@ -281,15 +310,23 @@ To examine the output file:
 (q to quit)
 
 Find these information from the log file:
+
 Paired end library insert size: `_____________`   
 
 Standard deviation `______________`
 
 K-mer maximum  `_________________`
 
-To find contig stats you need to open the `contigs.fasta` file
+To find contig stats you need to use `less` to look at the `contigs.paths` file
 
-max contig length (node 1 in `contigs.paths`) `_______`
+max contig length ("NODE_1" in `contigs.paths`) `_______`
+
+Now remember to copy your output files to the results folder:
+`$ cp spades31/contigs.fasta ../../results/spades31.fasta`
+
+SPAdes doesn't output an N50 score but it outputs lots of other information. We will see the N50 of the SPAdes output later in this Workshop lesson. 
+(All the outputs from SPAdes would require an extra lesson to show you, and we are working on that.)
+
 
 <!--
 
@@ -302,38 +339,6 @@ STOPPED HERE
 
 
 
-
-n50 `________`  
-
-total number of contigs `__________` 
-
-reads used `____________` (did it use all the reads?)
-
-Where are the contigs stored? Save the results!
-
-`$ cp velvet31/contigs.fa ../results/velvet31.fasta`
-
-**Does the assembly get better  if I use a different K-mer size?**
-
-To try different kmers, first copy your pbs script:
-~~~
-$ cp velvetk31.sbatch velvetk21.sbatch
-$ nano -w velvetk21.sbatch
-~~~
-and change K to a different value, currently 31. Try 21, and 25.
-then submit this new job:
-
-`$ sbatch velvetk21.sbatch`
-
-To see kmer coverage differences in a histogram format, we can use the following Perl script on the velvet stats file in each of your results folders: 
-~~~
-$ module load velvet
-$ velvet-estimate-exp_cov.pl velvet31/stats.txt
-    10 |      1 | **********
-<snip>
-Predicted expected coverage: 18
-velvetg parameters: -exp_cov 18 -cov_cutoff 0
-~~~
 
 
 
@@ -528,4 +533,5 @@ $ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
 **Congratulations!** This lesson has shown you how you can assemble genomes using 
 three different software, and using different parameters (K-mers, in this lesson). 
 Now we should check our assemblies in a process called "validation" 
-before sending the best assembly to our collaborators!
+before sending the best assembly to our collaborators! We will learn how to compare the 
+overall assembly of all our assemblers in our [NEXT LESSON]({{ site.baseurl }}/materials/genomics-assembly-reporting)
