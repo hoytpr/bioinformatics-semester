@@ -200,7 +200,7 @@ analyses. Rather than looking at quality scores for each individual read, FastQC
 quality collectively across all reads within a sample. The image below shows one FastQC-generated plot that indicates
 a very high quality sample:
 
-![good_quality](../../fig/good_quality1.8.png)
+![good_quality]({{ site.baseurl }}/fig/good_quality1.8.png)
 
 The x-axis displays the base position in the read, and the y-axis shows quality scores. In this
 example, the sample contains reads that are 40 bp long. This is much shorter than the reads we 
