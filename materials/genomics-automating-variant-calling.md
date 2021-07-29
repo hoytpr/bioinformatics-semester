@@ -470,7 +470,8 @@ for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     echo "base name is ${base}"
 
     fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
-    # By reassigning 'fq1' variable, the loop only runs for '_1.trim.sub.fastq' files
+    # NOTE: By reassigning 'fq1' variable, the loop only runs 
+    # for '_1.trim.sub.fastq' files
     fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
     bam=~/dc_workshop/results/bam/${base}.aligned.bam
