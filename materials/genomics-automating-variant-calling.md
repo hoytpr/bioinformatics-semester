@@ -53,7 +53,7 @@ And here's the one you wrote for running Trimmomatic on all of our `.fastq` samp
 $ for infile in *.fastq
 > do
 > outfile=${infile}\_trim.fastq
-> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE $infile $outfile SLIDINGWINDOW:4:20 MINLEN:20
+> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE ${infile} ${outfile} SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
 
@@ -232,9 +232,7 @@ First, we will create a new script in our `scripts/` directory using `touch`.
 $ cd ~/dc_workshop/scripts
 $ touch run_variant_calling.sh
 $ ls 
-~~~
 
-~~~
 read_qc.sh  run_variant_calling.sh
 ~~~
 
@@ -271,7 +269,7 @@ genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 > definition of your variable by typing into your script: echo $variable_name. 
 {: .callout}
 
-Next we index our reference genome for BWA. Note on Cowboy, and other HPCs with modules, the command is:
+Next we index our reference genome for BWA. Note on Pete, and other HPCs with modules, the commands are:
 
 ~~~
 module load bwa
@@ -338,8 +336,8 @@ If you don't see this output, then you'll need to troubleshoot your script. A co
 be specified correctly. Ask for help if you get stuck here! 
 
 Now that we've tested the components of our loops so far, we will add our next few steps. Open the script with `nano`, remove the line `done` from the end of
-your script, and add the next two (indented) lines. These lines extract the **base name** of the file
-(excluding the path and `.trim.sub.fastq` extension) and assign it
+your script, and add the next two (indented) lines. These lines extract the **basename** of the file name
+***excluding the path and `.trim.sub.fastq` extension***. Then the `basename` is assigned
 to a new variable called `base`. Add `done` again at the end so we can test our script.
 
 ~~~
@@ -373,14 +371,14 @@ to be used to create our output files.
 
 Next we will create variables to store the names of our output files as paired-end read files. This will make your script easier
 to read because you won't need to type out the full name of each of the files. We're using the `base` variable that we just
-defined, and ***adding different file name extensions*** to represent the files. 
+defined, and ***adding different file name extensions*** to represent the different output files. 
 We can use the `base` variable to access both the `base_1.fastq` and `base_2.fastq` input files, and create variables to store the names of our output files. 
 Remember to delete the `done` line from your script before adding these (indented) lines.
 
 ~~~
     # input files
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
-    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
+    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
+    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
     
     # output files
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
@@ -390,9 +388,14 @@ Remember to delete the `done` line from your script before adding these (indente
     variants=~/dc_workshop/results/bcf/${base}_variants.vcf
     final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf    
 ~~~
-{: .output}
 
-Now that we've created our variables, we can start running the steps of our workflow. Remember that on Cowboy, or an HPC with modules, you need to load the module each time. If you are on a cloud instance, you can ignore the `module load..` commands.
+<!--
+
+still obtuse to me how this works for all pairs of files
+
+-->
+
+Now that we've created our variables, we can start running the steps of our workflow. Remember that on Pete, or an HPC with modules, you need to load the module each time. If you are on a cloud instance, you can ignore the `module load..` commands.
 
 1) align the reads to the reference genome and output a `.sam` file:
 
@@ -466,7 +469,8 @@ for fq1 in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     base=$(basename $fq1 _1.trim.sub.fastq)
     echo "base name is ${base}"
 
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
+    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
+    #  Above line reassigns the 'fq1' variable, so loop only runs for '_1.trim.sub.fastq' files
     fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
     bam=~/dc_workshop/results/bam/${base}.aligned.bam
