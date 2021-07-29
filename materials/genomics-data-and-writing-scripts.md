@@ -387,20 +387,20 @@ between computers and should be installed already. The simplest way to use `scp`
 is to run it in your local terminal, and use it to copy a single file:
 
 ~~~
-scp <file I want to move> <where I want to move it>
+scp <file I want to move>: <where I want to move it>
 ~~~
 
 Note that you are always running `scp` locally, but that *doesn't* mean that
 you can only move files from your local computer. You can move a file:
 
 ~~~
-$ scp <local file> <remote cloud instance>
+$ scp <local file>: <remote cloud instance>
 ~~~
 
 Then move it back by re-ordering the to and from fields:
 
 ~~~
-$ scp <remote cloud instance> <local file>
+$ scp <remote cloud instance>: <local file>
 ~~~
 
 #### Uploading Data to your remote computer with scp
