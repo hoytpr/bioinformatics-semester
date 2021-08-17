@@ -7,7 +7,9 @@ title: Computer Setup
 
 ### Shell (most important)
 
-Windows users must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
+**Windows users** must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
+
+**Mac users** will use their "Terminal" program for all "windows" or "shells" we use in this class.
 
 ### Special Note: 
 
