@@ -3,7 +3,7 @@ layout: page
 title: Computer Setup
 ---
 
-***BIOC 6820 students will need their own laptops set up with Git Bash before the course begins, R and RStudio need to be installed later.***
+***BIOC 6820 students will need their own laptops or desktops set up with Git Bash before the course begins, R and RStudio need to be installed later.***
 
 ### Shell (most important)
 
