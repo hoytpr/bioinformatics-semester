@@ -5,14 +5,16 @@ title: Genomics Shell Intro
 language: Shell
 ---
 
-[Introduction to the Command Line for Genomics](https://datacarpentry.org/shell-genomics/)
-[Data Carpentry Genomics Command-line Glossary](https://datacarpentry.org/shell-genomics/reference/)
+[Data Carpentry Genomics Command-line Glossary](https://datacarpentry.org/shell-genomics/reference.html)
+
 [Which Cloud for my Data?](https://datacarpentry.org/cloud-genomics/04-which-cloud/index.html)
 
-(uncomment for working on readings)
+
 
 <!--
 
+(uncomment for working on readings)
+[Introduction to the Command Line for Genomics](https://datacarpentry.org/shell-genomics/)
 #### Starting Genomics
 
 Command line interface (OS shell) and graphic user interface (GUI) are different ways of interacting with a computer’s operating system. The shell is a program that presents a command line interface which allows you to control your computer using commands entered with a keyboard instead of controlling graphical user interfaces (GUIs) with a mouse/keyboard combination.

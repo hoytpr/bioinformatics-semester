@@ -331,7 +331,8 @@ The other way to learn about `ls` is to type:
 $ man ls
 ~~~
 
-This will turn your terminal into a page with a description 
+*This doesn't work on Windows machines*, but on Macs and Linux machines,
+this will turn your terminal into a page with a description 
 of the `ls` command and its options and, if you're lucky, some examples
 of how to use it.
 

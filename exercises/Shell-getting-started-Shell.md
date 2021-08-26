@@ -10,8 +10,6 @@ language: Shell
 Turn in your assignments for this lecture on [Canvas](https://canvas.okstate.edu/courses/51969/quizzes/107709) 
 
 
-(Uncomment below to work on exercise)
-
 <!--
 
 1. From Nelle's 
@@ -38,8 +36,7 @@ if Nelle is in her `Desktop/data-shell/creatures` directory,
 which one-line `cd` command will move her to
 into the /north-pacific-gyre/2012-07-03 directory? 
 
+(Uncomment below to work on exercise) Shell-getting-started-Shell.md
+
 -->
-
-Shell-getting-started-Shell.md
-
 

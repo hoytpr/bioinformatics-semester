@@ -11,7 +11,7 @@ language: Shell
 
 ### Important Objectives to Learn
 
-- Understand you location in a directory hierarchy that matches a given diagram.
+- Understand your location in a directory hierarchy that matches a given diagram.
 - Create files in that hierarchy using an editor or by copying and renaming existing files.
 - Delete, copy and move specified files and/or directories.
 

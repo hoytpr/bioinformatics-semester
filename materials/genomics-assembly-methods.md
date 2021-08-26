@@ -5,9 +5,9 @@ title: Assembly Tools
 language: Shell
 ---
 ### Hands-on Genome Assembly Tools 
-(This workshop-style-lesson is taught on the Cowboy supercomputer at OSU)
+(This workshop-style-lesson is taught on the Pete supercomputer at OSU)
 
-#### DISCLAIMER: These software are pretty much (not yet completely) obsolete.
+#### DISCLAIMER: Some of these software (not all) are pretty much (not yet completely) obsolete.
 
 We are using them to demonstrate some processes used in 
 bioinformatics. We want you to know you can do this!
@@ -51,24 +51,44 @@ Also note that there are assemblers that use a reference genome to assist in ass
 
 1. As inefficient as it seems, it's generally good to run several assemblers and compare results 
 to find the one best for your data! Also, if there is a good-quality reference genome, you should use it. We are using reference-guided assembly with VELVET, SOAPdenovo and 
-ABYSS in this lesson. All of these assemblers are [de-bruijn](https://en.wikipedia.org/wiki/De_Bruijn_graph) (K-mer) 
+SPAdes (hopefully) in this lesson. All of these assemblers are [de-bruijn](https://en.wikipedia.org/wiki/De_Bruijn_graph) (K-mer) 
 graph based assemblers.
 2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler.
 
-### Submission scripts
+Here's another trick: You can use this K-mer histogram to estimate the size of
+the genome you sequenced using the following formula:
 
-> We are using several pre-made `.pbs` submission scripts, so let's briefly review 
-> the structure of a submission script using the `velvetk21.pbs` we'll use later in 
-> this lesson as an example:
+##### Genome_size = Total_Kmers / peak_Kmer_coverage
+
+For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
+that explain why we want to estimate genome sizes. Briefly,
+K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
+Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
+
+> This is useful because: 
+> 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
+> 2. You might not know anything about your genome size!
+> 
+> Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
+> was "10-fold", you could then estimate the size of your genome being sequenced 
+> was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
+
+We are going to ask you to find the N50 of these assemblies as a useful statistic. 
+We will cover it in detail later, but the N50 represents a metric of the length of a 
+set of sequences in an assembly.
+
+> We are using several pre-made `.sbatch` submission scripts, so let's briefly review 
+> the structure of a submission script using the `velvetk29.sbatch` we'll use later in 
+> this lesson as an example.
 >
-> ![Submission Scripts]({{ site.baseurl }}/fig/PBS-script-details.png)
+> ![Submission Scripts]({{ site.baseurl }}/fig/sbatch-image.png)
 
 ### VELVET
 
 `$ cd ../../velvet/`
 
-Understand `velvetk31.pbs` - We will use the text-file editor `nano` to examine our script file, that submits our data to the assemblers. 
-`$ nano -w velvetk31.pbs`
+Understand `velvetk31.sbatch` - We will use the text-file editor `nano` to examine our script file, that submits our data to the assemblers. 
+`$ nano -w velvetk31.sbatch`
 
 Be sure to change the line:
 
@@ -76,32 +96,28 @@ Be sure to change the line:
 
 to ***your*** group number.  You will need to do this for all the submission scripts today.
 
-The first section of our `velvetk31.pbs` script sets up the scheduler requests (the queueing system) and environment variables. The  assembler commands are `velveth` and `velvetg`. What do these commands do?  See the [velvet website here](https://github.com/dzerbino/velvet).  
+The first section of our `velvetk31.sbatch` script sets up the scheduler requests (the queueing system) and environment variables. The  assembler commands are `velveth` and `velvetg`. What do these commands do?  See the [velvet website here](https://github.com/dzerbino/velvet).  
 
-If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `qsub` command as follows.
+If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `sbatch` command as follows.
 
-`$ qsub velvetk31.pbs`
+`$ sbatch velvetk31.sbatch`
  
 What was printed on the screen after you pressed enter? 
 
 `<jobidnumber>.mgmt1` 
 
-The job should run fairly quickly, and when it's complete you will see
-a job "output" file that uses a subscript `o<jobnumber>`. This file 
-is almost always important, and in some software contains the actual data 
-from the software. Other times this file only contains a log of the job 
-outputs or errors/warnings produced during the operations. 
+The log file, `velvetk31.sbatch.o<jobidnumbmer>` is very useful. 
 
 The log file, `velvetk31.pbs.o<jobidnumbmer>` is very useful and contains a lot of 
 the output data we want to look at. 
 
 Options to examine that output file:
 
-`$ tail velvetk31.pbs.o<jobidnumber>`  (HINT: Try using TAB-completion to enter your commands!)
+`$ tail velvetk31.sbatch.o<jobidnumber>`  (HINT: Try using TAB-completion to enter your commands!)
 
 OR
 
-`$ less velvetk31.pbs.o<jobidnumber>`
+`$ less velvetk31.sbatch.o<jobidnumber>`
  
 (q to quit)
 
@@ -128,17 +144,14 @@ Where are the contigs stored? Transfer the results to the results folder!
 
 To try different kmers, first copy your pbs script with a new kmer number:
 ~~~
-$ cp velvetk31.pbs velvetk21.pbs
-$ nano -w velvetk21.pbs 
+$ cp velvetk31.sbatch velvetk21.sbatch
+$ nano -w velvetk21.sbatch
 ~~~
 and change K to a different value, currently 31. First use 21, and then copy
 the pbs script again and use 25.
 Then submit these new jobs:
 
-~~~
-$ qsub velvetk21.pbs
-$ qsub velvetk25.pbs
-~~~
+`$ sbatch velvetk21.sbatch`
 
 To see kmer coverage differences in a histogram format, we can use the following Perl script on the velvet stats file in each of your results folders: 
 ~~~
@@ -149,7 +162,10 @@ $ velvet-estimate-exp_cov.pl velvet31/stats.txt
 Predicted expected coverage: 18
 velvetg parameters: -exp_cov 18 -cov_cutoff 0
 ~~~
-CONGRATULATIONS on your first assembly!
+***CONGRATULATIONS*** on your first assembly!
+
+> ### What is a coverage histogram used for?
+> (in development)
 
 
 ### SOAPdenovo2
@@ -160,7 +176,7 @@ First change to the soap31 subdirectory
 ~~~
 $ cd ../soap/soap31
 $ ls 
-soap.config  soapk31.pbs
+soap.config  soapk31.sbatch
 ~~~
 SOAPdenovo is different as it uses a configuration file `soap.config`, where we tell SOAP what our data are. We include detailed info below so we can move ahead with the computation step.
 
@@ -195,30 +211,30 @@ q1=../../data/group1/PE-350.1.fastq
 q2=../../data/group1/PE-350.2.fastq
 ```
 
-Understand `soapk31.pbs`, it is important to know SOAPdenovo has 4 steps: **pregraph, contig, map, and scaff** are ‘step 1’ and correspond to making a K-mer graph, then **contigging, map reads back, and scaffolding** are steps 2-4 respectively.  These steps can be run separately or all together as we are doing here.  See the command line options section of the manual for more information. 
+Understand `soapk31.sbatch`, it is important to know SOAPdenovo has 4 steps: **pregraph, contig, map, and scaff** are ‘step 1’ and correspond to making a K-mer graph, then **contigging, map reads back, and scaffolding** are steps 2-4 respectively.  These steps can be run separately or all together as we are doing here.  See the command line options section of the manual for more information. 
 
 At this point you don’t need to change the submit script, if you want to look at it:
 
-`$ more soapk31.pbs`
+`$ more soapk31.sbatch`
 
 and to submit the soapdenovo assembly:
 
-`$ qsub soapk31.pbs`
+`$ sbatch soapk31.sbatch`
 
 What printed on the screen? 
 ans: `<jobid>.mgmt1`
 
-Again, the output file `soapk31.pbs.o<jobid>` is very useful. Use the `more` or `less` command to find these information from the log file:
 
-Paired end library insert size: _____________   
+The `soapk31.sbatch.o<jobid>` is very useful. Use the `more` command to find these information from the log file:
+Paired end library insert size: `_____________`   
 
-Standard deviation ______________
+Standard deviation `______________`
 
-contig stats: n50 ________  
+contig stats: n50 `________`  
 
-max length contig _______ 
+max length contig `_______` 
 
-total __________ 
+total `__________` 
 
 Where are the results stored? 
 FASTA file: `soap31.scafSeq`
@@ -234,14 +250,14 @@ To run a different kmer e.g ‘21’, create a new soap directory and copy the s
 $ cd ..
 $ pwd (make sure you’re in the soap directory)
 $ mkdir soap21
-$ cp soap31/soapk31.pbs soap21/soapk21.pbs
+$ cp soap31/soapk31.sbatch soap21/soapk21.sbatch
 $ cp soap31/soap.config soap21/.      (that dot at the end is necessary)
 $ cd soap21
-$ nano -w soapk21.pbs 
+$ nano -w soapk21.sbatch 
 ~~~
-Now modify `soapk21.pbs` and change K from 31 to **21**, and submit your job:
+Now modify `soapk21.sbatch` and change K from 31 to **21**, and submit your job:
 
-`qsub soapk21.pbs`
+`sbatch soapk21.sbatch`
 
 Be sure to copy the result to your appropriate results folder.
 
@@ -250,21 +266,112 @@ Be sure to copy the result to your appropriate results folder.
 Using what you’ve learned, do the **25** K-mer value submitting the job
 and saving the results. 
 
+
+### SPAdes
+
+(More under development)
+
+SPAdes (SPAdes – St. Petersburg genome assembler) – is a **MODERN** assembly toolkit containing various assembly pipelines. It is one of the most powerful asssembly software and is used world-wide.
+SPAdes works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads. You can also provide additional contigs that will be used as long reads.
+SPAdes supports paired-end reads, mate-pairs and unpaired reads. SPAdes can take as input several paired-end and mate-pair libraries simultaneously. Note, that SPAdes was initially designed for small genomes, but is used for many larger genomes when computation power is available.
+In addition to genome asembly,  SPAdes 3.12.0 includes the following additional pipelines:
+
+- metaSPAdes – a pipeline for metagenomic data sets (see metaSPAdes options).
+- plasmidSPAdes – a pipeline for extracting and assembling plasmids from WGS data sets (see plasmidSPAdes options).
+- rnaSPAdes – a de novo transcriptome assembler from RNA-Seq data (see rnaSPAdes manual).
+- truSPAdes – a module for TruSeq barcode assembly (see truSPAdes manual). 
+
+In addition, SPAdes provides several stand-alone programs with relatively simple command-line interface: k-mer counting (`spades-kmercounter`), assembly graph construction (`spades-gbuilder`) and long read to graph aligner (`spades-gmapper`). 
+
+`$ cd ../../spades/`
+
+Learn how we run SPAdes by viewing `spadesk31.sbatch`
+ 
+`$ nano -w spadesk31.sbatch`
+
+Be sure to change the line:
+`export GROUPNUMBER=1` 
+to ***your*** group number. 
+
+SPAdes is a powerful program with many capabilities built in. We can't cover everything today, but be sure to read the [SPAdes manual](https://cab.spbu.ru/files/release3.12.0/manual.html)!
+
+If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `sbatch` command as follows.
+
+`$ sbatch spadesk31.sbatch`
+ 
+What was printed on the screen after you pressed enter? 
+
+`<jobidnumber>.mgmt1` 
+
+The log file, `spades.log` is found in the output directory and is very useful. 
+At the top it shows you the command you used. It then shows the software versions 
+you loaded. This is very important for making your results reproducible. 
+Spades will even give you recommendations if it thinks you could get 
+better results using different settings.
+
+To examine the output file:
+
+`$ less spades.log`
+ 
+(q to quit)
+
+Find these information from the log file:
+
+Paired end library insert size: `_____________`   
+
+Standard deviation `______________`
+
+K-mer maximum  `_________________`
+
+To find contig stats you need to use `less` to look at the `contigs.paths` file
+
+max contig length ("NODE_1" in `contigs.paths`) `_______`
+
+Now remember to copy your output files to the results folder:
+`$ cp spades31/contigs.fasta ../../results/spades31.fasta`
+
+SPAdes doesn't output an N50 score but it outputs lots of other information. We will see the N50 of the SPAdes output later in this Workshop lesson. 
+(All the outputs from SPAdes would require an extra lesson to show you, and we are working on that.)
+
+
+<!--
+
+STOPPED HERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Abyss no longer available when using Pete**
+LOTS OF GOOD STUFF IS NOW GONE FROM THE LESSON
 ### ABYSS
 
 `$ cd ../../abyss/abyss31`
 
 We change to a subdirectory because abyss puts all its output into the **current working directory**.
 
-Use `cat` to display the `abyssk31.pbs` submission script to your terminal, and look 
-through the file so that you understand the parts. ABYSS is simple to execute as it has 
+
+Use `cat` to display the `abyssk31.sbatch` submission script to your terminal, and look 
+through the file so that you understand the parts. ABYSS is simple to run as it has 
 just one command to run
 an entire pipeline of software. Because it runs several software packages, it 
-takes a few minutes to complete. First edit the `abyssk31.pbs` to change 
+takes a few minutes to complete. First edit the `abyssk31.sbatch` to change 
 GROUPNUMBER to your group number.
 ~~~
-$ nano -w abyssk31.pbs
-$ qsub abyssk31.pbs
+$ nano -w abyssk31.sbatch
+$ sbatch abyssk31.sbatch
 ~~~
 
 #### K-mer coverage:
@@ -276,7 +383,7 @@ the K-mer histogram.
 
 <!--
 From the slides (from Kelley et al., 2010) you should remember that 
--->
+
 
 When using 
 K-mer based assembly methods, "good" K-mers should show a peak where coverage 
@@ -315,12 +422,12 @@ chart. In general, it should be similar to this plot for Group1.
 
 ![group1 kmer31 plot]({{ site.baseurl }}/fig/kmers-short-hist-graph.png)
 
-Keep your spreadsheet software open while you return to the terminal window on Cowboy. 
+Keep your spreadsheet software open while you return to the terminal window on Pete. 
 To determine the final **assembled size** of the genome, use `grep` at the command 
 line to extract that information from the output file:
 
 ~~~
-$ grep ^Assembled abyssk31.pbs.o<jobidnumber>
+$ grep ^Assembled abyssk31.sbatch.o<jobidnumber>
 Assembled 563522 k-mer in 245 contigs.
 ~~~
 (Remember this is for "Group 1" and your output may be different). Notice that 
@@ -330,7 +437,7 @@ Remember that the `^` is a special character that tells `grep` to only match the
 
 To determine the ***highest*** K-mer coverage in the histogram use:
 
-`$ grep median abyssk31.pbs.o<jobidnumber>`
+`$ grep median abyssk31.sbatch.o<jobidnumber>`
 
 and put your answer in this box `___________`
 
@@ -360,8 +467,8 @@ all the numbers of the 3rd column. This is
 The formula estimates the genome size (in this case it's a chromosome size) 
 based on K-mer histogram: to be `________` bp.
 
-The log file `abyssk31.pbs.o<jobid>` is very useful. Use the `less` command and search 
-through `abyssk31.pbs.o<jobid>` for "N50" to locate these information:
+The log file `abyssk31.sbatch.o<jobid>` is very useful. Use the `less` command and search 
+through `abyssk31.sbatch.o<jobid>` for "N50" to locate these information:
 
 **contig** stats: n50 `________` 
 
@@ -395,19 +502,19 @@ to work within.
 
 Start by going up into the `abyss` directory using `$ cd ..` and then 
 create new directories for each K-mer you will use. Then copy and simultaneously 
-rename the `abyssk31.pbs` submission script. To use a K-mer of 21 do this:
+rename the `abyssk31.sbatch` submission script. To use a K-mer of 21 do this:
 
 ~~~
 $ pwd  
 /home/<username>/mcbios/abyss
 $ mkdir abyss21
-$ cp abyss31/abyssk31.pbs abyss21/abyssk21.pbs
+$ cp abyss31/abyssk31.sbatch abyss21/abyssk21.sbatch
 $ cd abyss21
-$ nano -w abyssk21.pbs
+$ nano -w abyssk21.sbatch
 ~~~
 Use `nano` to change K from 31 to **21**. Then save the file and submit.
 ~~~
-$ qsub abyssk21.pbs
+$ sbatch abyssk21.sbatch
 ~~~
 Then, go the the same process to use a K-mer value of **25**.
 ~~~
@@ -415,13 +522,13 @@ $ cd ..
 $ pwd  
 /home/<username>/mcbios/abyss
 $ mkdir abyss25
-$ cp abyss31/abyssk31.pbs abyss25/abyssk25.pbs
+$ cp abyss31/abyssk31.sbatch abyss25/abyssk25.sbatch
 $ cd abyss25
-$ nano -w abyssk25.pbs
+$ nano -w abyssk25.sbatch
 ~~~ 
 Remember to change the K-mer value to **25**. Save the file and submit.
 ~~~
-$ qsub abyssk25.pbs
+$ sbatch abyssk25.sbatch
 ~~~
 When the jobs are done, your output files will automatically have the new K-mer in their names! 
 Copy the results to your results folder.
@@ -433,9 +540,14 @@ $ cp abyss21/abyss21-scaffolds.fa ../results/abyss21.fasta
 $ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
 ~~~
 
-Congratulations! This lesson has shown you how you can assemble genomes using 
+-->
+
+
+
+
+
+**Congratulations!** This lesson has shown you how you can assemble genomes using 
 three different software, and using different parameters (K-mers, in this lesson). 
 Now we should check our assemblies in a process called "validation" 
-before sending the best assembly to our collaborators!
-
-
+before sending the best assembly to our collaborators! We will learn how to compare the 
+overall assembly of all our assemblers in our [NEXT LESSON]({{ site.baseurl }}/materials/genomics-assembly-reporting)

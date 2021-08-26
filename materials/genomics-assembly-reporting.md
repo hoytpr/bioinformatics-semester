@@ -4,7 +4,7 @@ element: notes
 title: Assembly Reporting
 language: Shell
 ---
-(This workshop-style lesson is being taught on the Cowboy supercomputer at OSU)
+(This workshop-style lesson is being taught on the Pete supercomputer at OSU)
 
 ### Hands-on Genome Assembly Reporting
 
@@ -20,30 +20,20 @@ Maybe a figure will help.
  
 ![N50]({{ site.baseurl }}/fig/N50.png)
 
-Now that we have completed several assemblies, let's look at our results. If this is a new class, log onto Cowboy using your terminal window or GitBash. Make sure you are in the `mcbios/results` directory and list the files. Look carefully for inconsistent file names such as `velvetk31.fasta` vs. `velvet31.fasta`. The output should look like the file list below: 
+Now that we have completed several assemblies, let's look at our results. Change to the `results` directory and list the files. The output should look similar to the file list below: 
+
 ~~~
 $ cd ../../results
 $ ls
-abyss21.fasta  abyss31.fasta  soap21.fasta  soap41.fasta    velvet31.fasta
-abyss25.fasta  quast.pbs      soap31.fasta  velvet21.fasta  velvet41.fasta
+spades29.fasta  spades31.fasta  soap21.fasta  soap41.fasta    velvet31.fasta
+spades33.fasta  quast.sbatch      soap31.fasta  velvet21.fasta  velvet41.fasta
 ~~~
 
 These files are the results from all the programs using different K-mer parameters. 
 If you have a different assembly (*e.g.* different K-mers) using the same assembler, 
-make sure you name them differently, but **consistently**. For example: `abyss29.fasta`   `abyss33.fasta`  `soap33.fasta`  `velvet39.fasta`
+make sure you name them differently, but **consistently**. For example: `spades29.fasta`   `spades33.fasta`  `soap33.fasta`  `velvet39.fasta`
 
-<!--
-> Note: Abyss has a command to get the scaffold statistic (N50) of any assembly in 
-> fasta format. Use can use the command `abyss-fac`, which scans the contigs lengths 
-> and outputs the N50 for your assembly. We will cover K-mer comparisons later but 
-> thought you might like to know:
-> ~~~ 
-> $ module load abyss
-> $ abyss-fac velvet31.fasta
-~~~
--->
-
-`________________________________________`
+_____________________________________`
 
 ### Validation
 
@@ -53,17 +43,17 @@ We are going to evaluate our assemblies with [quast.py](https://github.com/ablab
 First, make sure you are in `results` directory below the `mcbios` directory. Use
 `nano` to look at the quast PBS submission script.
 
-`$ nano -w quast.pbs`
+`$ nano -w quast.sbatch`
 
 The file looks like this:
 ~~~
 #!/bin/bash
-#
-#PBS -q express
-#PBS -j oe
-#PBS -l nodes=1:ppn=12
-#PBS -l walltime=1:00:00
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=peter.r.hoyt@okstate.edu
+#SBATCH --mail-type=end
 
 module load quast
 
@@ -75,13 +65,13 @@ quast.py --gene-finding  `ls *.fasta`  -o quastresults  -R ${DATADIR}/ref.fasta
 
 When you are ready to run quast, remember to change your groupnumber.  It will analyze all the `*.fasta` files in your `results` directory.
 
-Submit the quast.pbs file:
+Submit the quast.sbatch file:
 
-`$ qsub quast.pbs`
+`$ sbatch quast.sbatch`
 
 When quast is finished (about one minute) look at the output file to check for fatal errors
 
-`$ less quast.pbs.o<jobid>`  (protip: use TAB autocomplete so you don’t have to type in the jobid)
+`$ less quast.sbatch.o<jobid>`  (protip: use TAB autocomplete so you don’t have to type in the jobid)
 
 You may see some warnings that quast could not find genes, or that some images 
 could not be created. That's okay. Quast can do a lot of things we aren't 
@@ -259,7 +249,7 @@ Congratulations!
 You have learned a lot about genome assembly and are using your skills in the bash shell
 to run real data. *It's always good to appreciate these small victories in science*.
 
-Below we present some additional bioinformatics software on Cowboy that you 
+Below we present some additional bioinformatics software on Pete that you 
 might want to try. Although the commands are not exactly the same as those 
 used in our lesson, you should be able to read the manuals, and figure out 
 the commands to run these software on our example files. Some of these 

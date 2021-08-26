@@ -48,16 +48,16 @@ built under the assumption that the data will be provided in a specific format.
 
 <!--
 
-The first step when working on Cowboy is to upload your `shell_data.zip`
+The first step when working on Pete is to upload your `shell_data.zip`
 file which should be on your local Desktop. If it is not on your Desktop, you can 
 download it by clicking on [this link and downloading it here]({{ site.baseurl }}/data/shell_data.zip).
-Once the file is downloaded, use Filezilla to transfer it to your Cowboy home directory
+Once the file is downloaded, use Filezilla to transfer it to your Pete home directory
 or you can use `scp` by typing the following command from your terminal:
 
-For Cowboy:
+For Pete:
 
 ~~~
-$ scp ~/Desktop/shell_data.zip <username>@cowboy.hpc.okstate.edu:/home/<username>/ 
+$ scp ~/Desktop/shell_data.zip <username>@Pete.hpc.okstate.edu:/home/<username>/ 
 ~~~
 
 For AWS:
@@ -214,6 +214,9 @@ of the sequence is very poor quality (`#` = a quality score of 2 which is bad).
 **[Do the In-class Exercises 1 and 2 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 Work on the questions yourself, 
 before looking at the answers (take about 5 minutes).
+
+<a name="qc1"></a>
+
 #### Assessing Quality using FastQC
 In real life, you won't be assessing the quality of your reads by visually inspecting your 
 FASTQ files. Rather, you'll be using a software program to assess read quality and 
@@ -286,10 +289,12 @@ the \* wildcard character can represent "none")
 $ fastqc *.fastq* 
 ~~~
 
-Even though `fastqc` runs quickly, on the Cowboy Computer, we'll need to run `fastqc` 
+Even though `fastqc` runs quickly, on the Pete Computer, we'll need to run `fastqc` 
 from a submission script.
- 
-> If we "capture" a node on Cowboy to run the files interactively, we would 
+
+### Interactive would be great
+
+> If we "capture" a node on Pete to run the files interactively, we would 
 > see an automatically updating output message telling you the 
 > progress of the analysis like this: 
 > 
@@ -302,23 +307,24 @@ from a submission script.
 > Approx 25% complete for SRR2584863_1.fastq
 > ~~~
 
-To create a submission script we will use `nano`. The command is:
-`$ nano fastqc.pbs` and when `nano` opens we will enter the following lines:
+Since this is forbidden, we will create a submission script using `nano`. The command is:
+`$ nano fastqc.sbatch` and when `nano` opens we will enter the following lines:
 
 ```
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@okstate.edu>
+#SBATCH --mail-type=end
 module load fastqc
 fastqc *.fastq* 
 ```
 
-Then save the `.pbs` file and submit it:
+Then save the `.sbatch` file and submit it:
 
-`qsub fastqc.pbs`
+`sbatch fastqc.sbatch`
 
 
 In total, it should take about five minutes for FastQC to run on all
@@ -367,7 +373,7 @@ HTML files as a webpage:
 $ open SRR2584863_1_fastqc.html 
 ~~~
 
-However, if you try this on Cowboy or an Amazon cloud AWS instance, you'll get an error: 
+However, if you try this on Pete or an Amazon cloud AWS instance, you'll get an error: 
 
 ~~~
 Couldn't get a file descriptor referring to the console
@@ -401,10 +407,10 @@ For AWS:
 $ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
-For Cowboy:
+For Pete:
 
 ~~~
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
+$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 As a reminder, the first part
@@ -445,6 +451,7 @@ tabs in a single window or six separate browser windows.
 
 **[Do the In-class Exercises 3 and 4 by clicking on this link.]({{site.baseurl}}/exercises/Quality-control-software-Shell)**
 
+<a name="qc2"></a>
 
 #### Decoding the other FastQC outputs
 We've now looked at quite a few "Per base sequence quality" FastQC graphs, but there are nine other graphs that we haven't talked about! Below we have provided a brief overview of interpretations for each of these plots. For more information, please see the FastQC documentation [here](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/) 
@@ -464,7 +471,7 @@ We've now looked at quite a few "Per base sequence quality" FastQC graphs, but t
 
 Now that we've looked at our HTML reports to get a feel for the data,
 let's look more closely at the other output files. **Go back** to the terminal 
-program that is connected to Cowboy or your cloud instance
+program that is connected to Pete or your cloud instance
 and make sure you're in
 our results subdirectory.   
 

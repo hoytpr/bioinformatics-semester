@@ -24,44 +24,34 @@ Instead we would enter commands by submitting our commands as a "job" in the
 computers "queue". Most of the commands we enter will be identical
 to the commands you would place inside your "job submission script"
 which we'll discuss later, but there's plenty of information 
-on the HPCC site [for new users](https://hpcc.okstate.edu/content/new-user-tutorial)
+on the HPCC site [for new users](https://hpcc.okstate.edu/pete-tutorial.html)
 
 Depending on which system is available, everyone should [have an account](http://hpcc.okstate.edu/requesting-hpcc-account) 
-on the "Cowboy" supercomputer
-by now. If you do not, ask for a temporary account before 
-proceeding with this lesson. 
-
-Log into the Cowboy Supercomputer:
-[Instructions here](https://hpcc.okstate.edu/content/logging-cowboy)
+on the "Pete" supercomputer
+by now. The complete manual for working on the Pete supercomputer is available at [this download link.](https://hpcc.okstate.edu/files/pete-user-manual-v4.pdf) 
 
 > *Special note to curriculum developers:
 > This course was reaching the data limit for Github, so files had 
 > to be moved. If you are teaching this course, please feel free
-> to request any datafiles. This will be fixed in the future.*
+> to request any datafiles. This may not be easy to fix.*
 
-Open TWO terminal windows (e.g. GitBash or "terminal"" on Macs or Linux systems) and on one window connect to home directory of your account on Cowboy.
-In the other window, change to your LOCAL Desktop directory.
+Log onto the Pete computer using Putty (Windows users) or your Terminal Program (Mac and Linux users). 
+Then open your FTP software, and connect to your account on Pete.
+You should have been given the file `mcbios.tar.gz`, for you to 
+place on your desktop. **Alternatively, registered students can download the file 
+[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto the Desktop of your local machine**. 
+Use FTP to transfer the file `mcbios.tar.gz`
+(or `mcbios.zip`) to Pete. 
 
-We need to obtain a file named `mcbios.zip`, for you to 
-place on your local Desktop. Registered students can download the file 
-[mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas.** Otherwise the file will be given to you by the instructor**
-
-Now we want to transfer the `mcbios.zip` file to our Cowboy home directory.  
-We can use `scp` just as we did before to transfer the file `mcbios.tar.gz`
-(or `mcbios.zip`) to Cowboy. 
-```
-scp mcbios.zip <username>@cowboy.hpc.okstate.edu:/home/<username>
-```
 
 <!--
 Filezilla FTP software is recommended, and a brief description of how to use Filezilla can be found in the [Filezilla Extra]({{ site.baseurl }}/materials/filezilla-extras) page.
 -->
 
-REMEMBER that you should substitute `username` with your actual 
-username for the computer. For example, if your username was `phoyt`, the command would be:
-```
-scp mcbios.zip phoyt@cowboy.hpc.okstate.edu:/home/phoyt
-```
+
+make sure the `mcbios.zip` file will be uploaded into your `/scratch/username` directory on Pete.
+NOTE that you should substitute `username` with your actual 
+username for the computer. For example, if your username was `phoyt`, upload the file to `/scratch/phoyt`.
 
 Then switch to your REMOTE terminal Window logged in to Cowboy (Windows users can use Putty if they want).
 
@@ -172,8 +162,8 @@ Notice that the top of the tree starts with a `dot` or `.` meaning the "current 
 
 We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. Using a script allows you to easily modify parameters, and the script also serves as a note to your future self.
 
-### Important note
-Since we are using Cowboy (which is set up as a HPC "cluster", only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
+### Important notes before hands-on
+Since we are using the Pete cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.
 
 #### The data:
 Move into your `data` directory:

@@ -6,10 +6,12 @@ language: R
 ---
 #### Exercise subtitle Genomics RStudio-2
 
-Uncomment below to work on exercise 2
+Review the arguments of the `read.csv()` function
 
 <!--
 ### Working with Dataframes
+
+Uncomment below to work on exercise 2
 
 #### Exercise: Review the arguments of the `read.csv()` function
 

@@ -50,12 +50,13 @@ $ gunzip data/ref_genome/ecoli_rel606.fasta.gz
 ~~~
 
 **[Do the In-class Exercise 1 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-1-Shell)**
+<a name="vcf"></a>
 
 We will also download a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
 and will enable us to run our variant calling workflow quite quickly. 
 
 ~~~
-$ curl -L -o sub.tar.gz https://ndownloader.figshare.com/files/14418248
+$ curl -O https://s3-eu-west-1.amazonaws.com/pfigshare-u-files/14418248/sub.tar.gz
 $ tar xvf sub.tar.gz
 $ mv sub/ ~/dc_workshop/data/trimmed_fastq_small
 ~~~
@@ -75,15 +76,16 @@ alignment sites for our query sequences in a genome, which saves time during ali
 to be run once. The only reason you would want to create a new index is if you are working with a different reference 
 genome or you are using a different tool for alignment.
 
-Cowboy: make a submission script file named `index.pbs`
+Pete: make a submission script file named `index.sbatch`
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load bwa
 bwa index data/ref_genome/ecoli_rel606.fasta
 ~~~
@@ -131,15 +133,18 @@ We're going to start by aligning the reads from only ***one*** of the
 samples in our dataset (`SRR2584866`). Later, we'll be 
 iterating this whole process on all of our sample files with loops.
 
-On Cowboy, make a submission script named `align.pbs`
+
+On Pete, make a submission script named align.sbatch
+
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load bwa
 bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/sub/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/sub/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
 ~~~
@@ -201,15 +206,16 @@ $ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR258486
 
 To manipulate the BAM files, we need to use the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output (only works on samtools after version 1.2).
 
-On Cowboy create a submission script called `bamsort.pbs`:
+On Pete create a submission script called `bamsort.sbatch`:
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load samtools/1.9
 samtools sort results/bam/SRR2584866.aligned.bam -o results/bam/SRR2584866.aligned.sorted.bam
 ~~~
@@ -229,16 +235,17 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 
 Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
 
-You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, *e.g.* `flagstat`.
-On Cowboy, using `nano`, create a submission script named `flagstst.pbs` 
+You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
+On Pete, using `nano`, create a submission script named `flagstst.sbatch` 
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load samtools/1.9
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
@@ -280,15 +287,16 @@ there are a few things we need to do before actually calling the variants.
 
 Coverage, is the number of times any position (a specific nucleotide) in the reference genome can be found in the sequence data. This is different than an "average" coverage of a genome, which is used in high-throughput sequencing. We can perform the first pass on variant calling by counting read coverage of any position in the genome with [bcftools](https://samtools.github.io/bcftools/bcftools.html). We will use the command `mpileup`. The flag `--output-type b` tells samtools to generate a `.bcf` format output file, `--output` specifies where to write the output file, and `--fasta-ref` gives the path to the reference genome file. Note that the `mpileup` command expects the output file path and name to immediately follow the `--output` flag. The input file is the last part of the command. 
 
-On Cowboy, create a submission script called `pileup.pbs`:
+On Pete, create a submission script called pileup.sbatch:
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load bcftools
 bcftools mpileup --output-type b --output results/bcf/SRR2584866_raw.bcf --fasta-ref data/ref_genome/ecoli_rel606.fasta results/bam/SRR2584866.aligned.sorted.bam
 ~~~
@@ -317,14 +325,16 @@ Here's a visual summary of what we are identifying:
 
 To identify SNPs we'll use the bcftools `call` function. Because we are identifying SNPs in a genome, we have to pay attention to the genome "ploidy". We specify ploidy with the flag `--ploidy`, which is **one (1)** for the haploid *E. coli*. The `-m` flag allows for **m**ultiallelic and rare-variant calling, while the `-v` flag tells the program to output **v**ariant sites only (not every site in the genome), and `-o` specifies where to write the **o**utput file. Note that `bcftools call` expects the path to the output file to immediately follow the `-o` flag. The input file is the last part of the command. 
 
-The `ploidy.pbs` submission script on Cowboy should be:
+The ploidy.sbatch submission script on Pete should be:
+
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load bcftools
 bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
 ~~~
@@ -343,14 +353,16 @@ The `VCF` format is one of the most famous formats in bioinformatics! Unfortunat
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
-On Cowboy make a submission script named `finalvcf.pbs`:
+On Pete make a submission script named finalvcf.sbatch:
+
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load bcftools
 vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
@@ -530,15 +542,17 @@ Institute's Integrative Genomics Viewer (IGV) which requires
 software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
-On Cowboy, create a submission script called samindex.pbd:
-~~~
+
+On Pete, create a submission script called samindex.pbd:
+```
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
-module load samtools
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
+module load bcftools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 On a cloud instance just use:
@@ -557,9 +571,9 @@ Samtools viewer is fast enough to work with an 130 GB alignment and because it u
 display alignments over a network.
 
 In order to visualize our mapped reads with `tview`, we give it the sorted bam file and the reference file: 
-NOTE: We can't do this on Cowboy, unless we capture a node. So on Cowboy try:
+NOTE: We can't do this on Pete, unless we capture a node. So on Pete try:
 
-`qsub -I`
+`sbatch -I`
 
 and you should see something like: 
 `job waiting to start`
@@ -672,12 +686,12 @@ The commands to `scp` are always entered in the terminal window that is connecte
 **local** computer (not your remote/AWS instance).
 -->
 
-For Cowboy:
+For Pete:
 ~~~
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@cowboy.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
 ~~~
 <!--
 > Just as an example, these are the same commands if you were using the Amazon cloud:

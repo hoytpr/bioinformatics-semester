@@ -4,12 +4,13 @@ topic: Genomics
 title: Genomics RStudio
 language: R
 ---
-Uncomment below to work on exercise 4
-Genomics in RStudio
+
 Putting it all together - data frames
 
 <!--
 #### Exercise: Putting it all together - data frames
+
+Uncomment below to work on exercise 4
 
 **Using the `Ecoli_metadata` data frame created above, answer the following questions**
 

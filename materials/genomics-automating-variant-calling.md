@@ -61,7 +61,7 @@ Here's the `for` loop you wrote for unzipping `.zip` files:
 ~~~
 $ for filename in *.zip
 > do
-> unzip $filename
+> unzip ${filename}
 > done
 ~~~
 
@@ -70,8 +70,8 @@ And here's the one you wrote for running Trimmomatic on all of our `.fastq` samp
 ~~~
 $ for infile in *.fastq
 > do
-> outfile=$infile\_trim.fastq
-> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE $infile $outfile SLIDINGWINDOW:4:20 MINLEN:20
+> outfile=${infile}\_trim.fastq
+> java -jar ~/Trimmomatic-0.32/trimmomatic-0.32.jar SE ${infile} ${outfile} SLIDINGWINDOW:4:20 MINLEN:20
 > done
 ~~~
 
@@ -153,7 +153,7 @@ The next line moves us to the results directory where we've stored our output.
 ~~~
 cd ~/dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
-{: .output}
+
 
 The next five lines should look very familiar. First we give ourselves a status message to tell us that we're unzipping our `.zip`
 files. Then we run our `for` loop to unzip all of the `.zip` files in this directory. 
@@ -164,7 +164,7 @@ internal lines!!
 echo "Unzipping..."
 for filename in *.zip
     do
-    unzip $filename
+    unzip ${filename}
     done
 ~~~
 {: .output}
@@ -350,7 +350,7 @@ genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 > definition of your variable by including `echo $variable_name` in your script. 
 {: .callout}
 
-Next we index our reference genome for BWA. Note on Cowboy, and other HPCs with modules, the command is:
+Next we index our reference genome for BWA. Note on Pete, and other HPCs with modules, the commands are:
 
 ~~~
 module load bwa
@@ -363,14 +363,8 @@ We will now create the directory structure to store our results:
 mkdir -p sam bam bcf vcf
 ~~~
 
-Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. 
-We've already used Trimmomatic to trim these files, and we could re-do that here, 
-but to save time, we will use the smaller files we've already trimmed in 
-the `~/dc_workshop/data/trimmed_fastq_small/` directory. (You might want to 
-try this later on the bigger files in the `~/dc_workshop/data/trimmed_fastq/` directory.) 
-We will use absolute paths so that all these commands
-within the loop will be executed once for each of the FASTQ files in 
-the `~/dc_workshop/data/trimmed_fastq_small/` directory.
+Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. We've already used Trimmomatic to trim these files, and we could re-do that here, but to save time, we will use the smaller files we've already trimmed in the `data/trimmed_fastq_small/` directory. (You might want to try this later on the bigger files in the `data/trimmed_fastq/` directory.) We will use absolute paths so that all these commands
+within the loop will be executed once for each of the FASTQ files in the `data/trimmed_fastq_small/` directory.
 We will include a few `echo` statements to give us status updates on our progress.
 
 The first thing we do is assign the name of the FASTQ files we're currently working with to a variable called `fq` and
@@ -382,8 +376,6 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
     echo "working with file ${fq}"
     done
 ~~~
-{: .bash}
-
 
 > #### Indentation
 > 
@@ -391,18 +383,15 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
 > need to be indented with **four spaces**. This indicates to the shell interpretor that these statements are all part of the `for` loop
 > and should be done for each line in the `for` loop.
 > 
-{: .callout}
 
 This is a good time to check that our script is assigning the FASTQ filename variables correctly. 
 Save your script and run it interactively, because we aren't doing 
 any big calculations and it only takes a few seconds.
 
-~~~
-$ bash run_variant_calling.sh
-~~~
-{: .bash}
 
 ~~~
+$ bash run_variant_calling.sh
+
 [bwa_index] Pack FASTA... 0.04 sec
 [bwa_index] Construct BWT for the packed sequence...
 [bwa_index] 1.10 seconds elapse.
@@ -425,13 +414,12 @@ If you don't see this output, then you'll need to troubleshoot your script. A co
 be specified correctly. Ask for help if you get stuck here! 
 
 Now that we've tested the components of our loops so far, we will add our next few steps. Open the script with `nano`, remove the line `done` from the end of
-your script, and add the next two (indented) lines. These lines extract the **base name** of the file
-(by excluding the path and `_.trim.sub.fastq` extension) making sure to put the "ESCAPE" charachter **`\`** in front of 
-the extension and assign the basename to the new variable `base`.
-Add `done` again at the end so we can test our script.
+your script, and add the next two (indented) lines. These lines extract the **basename** of the file name
+***excluding the path and `.trim.sub.fastq` extension***. Then the `basename` is assigned
+to a new variable called `base`. Add `done` again at the end so we can test our script.
 
 ~~~
-    base=$(basename ${fq} \_1.trim.sub.fastq)
+    base=$(basename ${fq} .trim.sub.fastq)
     echo "base name is ${base}"
     done
 ~~~
@@ -459,19 +447,16 @@ For each file, you see two statements printed to the terminal window. This is be
 tells you which file the loop is currently working with. The second tells you the base name of the file. This base name is going
 to be used to create our output files.
 
-Next we will create all the variables we know we will need to store the names of 
-our output files as paired-end read files. This will make your script flexible, and easier
-to read (because you won't need to type out the full name of each of the files). 
-We're using the `base` variable that we 
-defined previously, and ***adding different file name extensions*** to represent the files. 
-We can use the `base` variable to access both the `_1.trim.sub.fastq` and `_2.trim.sub.fastq` 
-input files, and to create variables to store the names of our output files. 
+Next we will create variables to store the names of our output files as paired-end read files. This will make your script easier
+to read because you won't need to type out the full name of each of the files. We're using the `base` variable that we just
+defined, and ***adding different file name extensions*** to represent the different output files. 
+We can use the `base` variable to access both the `base_1.fastq` and `base_2.fastq` input files, and create variables to store the names of our output files. 
 Remember to delete the `done` line from your script before adding these (indented) lines.
 
 ~~~
     # input files
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
-    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
+    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
+    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
     
     # output files
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
@@ -481,11 +466,15 @@ Remember to delete the `done` line from your script before adding these (indente
     variants=~/dc_workshop/results/bcf/${base}_variants.vcf
     final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
 ~~~
-{: .output}
 
-Now that we've created our variables, we can start running the steps of our workflow. 
-Remember that on Cowboy, or any HPC with modules, you need to load the module each time. 
-If you are on a cloud instance, you can ignore the `module load..` commands. All these commands are inside our `for` loop, so they must be indented with four spaces.
+
+<!--
+
+still obtuse to me how this works for all pairs of files
+
+-->
+
+Now that we've created our variables, we can start running the steps of our workflow. Remember that on Pete, or an HPC with modules, you need to load the module each time. If you are on a cloud instance, you can ignore the `module load..` commands.
 
 1) align the reads to the reference genome and output a `.sam` file:
 
@@ -506,7 +495,7 @@ If you are on a cloud instance, you can ignore the `module load..` commands. All
 3) sort the BAM file:
 
 ~~~
-    samtools sort -o ${sorted_bam} ${bam}
+    samtools sort -o ${sorted_bam} ${bam} 
 ~~~
 {: .output}
 
@@ -521,21 +510,21 @@ If you are on a cloud instance, you can ignore the `module load..` commands. All
 
 ~~~
     module load bcftools/1.9
-    bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
+    bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam} 
 ~~~
 {: .output}
 
 6) call SNPs with bcftools:
 
 ~~~
-    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf}
+    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
 ~~~
 {: .output}
 
 7) filter and report the SNP variants in variant calling format (VCF):
 
 ~~~
-    vcfutils.pl varFilter ${variants} > ${final_variants}
+    vcfutils.pl varFilter ${variants}  > ${final_variants}
 ~~~
 {: .output}
 
@@ -554,12 +543,14 @@ mkdir -p sam bam bcf vcf
 
 for fq in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     do
-    echo "working with file ${fq}"
+    echo "working with file ${fq1}"
 
-    base=$(basename ${fq} \_1.trim.sub.fastq)
+    base=$(basename $fq1 _1.trim.sub.fastq)
     echo "base name is ${base}"
-    # input files
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq
+
+    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
+    # NOTE: By reassigning 'fq1' variable, the loop only runs 
+    # for '_1.trim.sub.fastq' files
     fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     # output files
     sam=~/dc_workshop/results/sam/${base}.aligned.sam
@@ -570,16 +561,16 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
 
     module load bwa
-    bwa mem ${genome} ${fq1} ${fq2} > ${sam}
+    bwa mem $genome ${fq1} ${fq2} > ${sam}
     module load samtools/1.9
     samtools view -S -b ${sam} > ${bam}
     samtools sort -o ${sorted_bam} ${bam}
     samtools index ${sorted_bam}
     module load bcftools/1.9
     bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
-    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf}
+    bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
     vcfutils.pl varFilter ${variants} > ${final_variants}
-
+   
     done
 ~~~
 {: .output}
@@ -588,26 +579,28 @@ for fq in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
 > It's a good idea to add comments to your code so that you (or a collaborator) can make sense of what you did later. 
 > Look through your existing script. Discuss with a neighbor where you should add comments. Add comments (anything following
 > a `#` character will be interpreted as a comment, bash will not try to run these comments as code). 
-{: .challenge}
+
 
 Now we can run our script:
-With Cowboy, we will create a submission script (below). On a cloud instance the simple command is:
+With Pete, we will create a submission script (below). On a cloud instance the simple command is:
 ~~~
 $ bash run_variant_calling.sh
 ~~~
 {: .bash}
 
-Here is a submissions script made with `nano` named **`bigscript.pbs`**
+Here is a Pete submissions script made with `nano` named `bigscript.sbatch`
 ```
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p batch
+#SBATCH -t 24:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=32
+#SBATCH --mail-user=peter.r.hoyt@okstate.edu
+#SBATCH --mail-type=end
+ 
 bash run_variant_calling.sh
 ```
-submit: `qsub bigscript.pbs`
+submit: `sbatch bigscript.sbatch`
 
 **CONGRATULATIONS!** You have created a powerful pipeline taking raw fastq data, and generating 
 a file with all the sequence variations mapped to a reference genome! You can use this pipeline over and over again by swapping out the fastq files and the reference genome. 

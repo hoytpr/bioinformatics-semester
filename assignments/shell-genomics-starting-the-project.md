@@ -5,8 +5,8 @@ title: Genomics Starting the Project
 language: Shell
 exercises: ['Tidy Data Rules', 'Organizing Early']
 ---
-Find the exercises for Tidy Data and Organizing on
-Canvas as [Genomics Project Organization](https://canvas.okstate.edu/courses/51969/quizzes/108691)
+The Canvas exercises for
+[Genomics Project Organization](https://canvas.okstate.edu/courses/51969/quizzes/108691)
 
 <!--
 

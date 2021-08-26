@@ -3,7 +3,13 @@ layout: page
 title: Computer Setup
 ---
 
-***BIOC 6820 students will need their own laptops set up with Git Bash before the course begins, R and RStudio need to be installed later.***
+***BIOC 6820 students will need their own laptops or desktops set up with Git Bash before the course begins, R and RStudio need to be installed later.***
+
+### Shell (most important)
+
+**Windows users** must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
+
+**Mac users** will use their "Terminal" program for all "windows" or "shells" we use in this class.
 
 ### Special Note: 
 
@@ -11,10 +17,6 @@ title: Computer Setup
 Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST released in June 2019. However, we will likely not be using the Amazon Cloud Services. Instead, we will be using either the free [Cyverse research cloud](https://atmo.cyverse.org/) or the Oklahoma State University "Cowboy" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, otherwise know as ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
  
 > \* A 4-8 core processor at > 3.0GHz, at least 16Gb of RAM, at least 500Gb of free disk space on an SSD drive (1 Tb recommended). 
-
-### Shell
-
-Windows users must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
 
 
 ### R
