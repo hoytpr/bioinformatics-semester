@@ -668,7 +668,7 @@ $ find . -name haiku.txt
 ~~~
 
 `find` did what we asked! It found a `*.txt` file in the 
-current working directory and it was finished! 
+current working directory and it was **finished!** 
 
 To get all the text files,
 let's do what we did with `grep` and
@@ -688,9 +688,9 @@ $ find . -name '*.txt'
 Understand that in these examples the `find` command works harder 
 than commands we've seen in other lessons! 
 Remember the command `find . -name *.txt` **stops** 
-because it is **done**. To be clear, it's done because  
-everything expands specifically as "find a `*.txt` file in the current working directory".
-However, if no `.txt` file is present in the current working directory, **`find` will begin at 
+because it is **done** when it finds `haiku.txt`. To be clear, it's done because  
+wildcards expand first and specifically as "find a `*.txt` file in the current working directory".
+***However***, if no `.txt` file is present in the current working directory, **`find` will begin at 
 the current working directory, and continue finding `.txt` files**! 
 We won't worry about this process for
 now, because we'll always use quotes around our arguments with wildcards. 
@@ -698,7 +698,9 @@ Just be aware that this behavior can happen.
 
 > `ls` and `find` can be made to do similar things given the right options,
 > but under normal circumstances, `ls` lists everything it is told to list,
-> while `find` ***searches*** for things with certain properties and shows them.
+> while `find` ***searches*** for things with certain properties and patterns, then shows them.
+
+### Using $() to combine commands
 
 The command line's power lies in combining tools, and we've seen how to do that with pipes;
 Now let's look at another way to **combine tools using `$()`**.
@@ -721,7 +723,8 @@ $ wc -l $(find . -name '*.txt')
 This is kind of like Math again! When the shell executes this command,
 the first thing it does is run whatever is inside the `$()`.
 Then the `$()` expression is given to the command, and used to generate the command's output.
-In this case, `find` outputs four filenames 
+In this case, `find` outputs **four** filenames, and then `wc -l` gives us the 
+number of lines in each file 
 
 ```
 ./data/one.txt
@@ -738,21 +741,23 @@ $ wc -l ./data/one.txt ./data/LittleWomen.txt ./data/two.txt ./haiku.txt
 
 This is what we wanted! When you think about it, this expansion is 
 exactly what the shell does when it expands wildcards like `*` and `?`,
-but using `$()` lets us turn any command we want into our own "wildcard".
+but ***using `$()` lets us turn any command we want into our own "wildcard".***
 
 **NOTE: It's very common to use `find` and `grep` together**
 because `find` can locate files that match a pattern,
 and `grep` identifies lines inside those files that match another pattern.
 
-To demonstrate how this works, let's find `.pdb` files that contain iron atoms
+To demonstrate how this works, **without leaving Nelles `writing` directory**, 
+let's find `.pdb` files that contain iron atoms
 by looking for the string "FE" in all the `.pdb` files 
-in Nelles `data-shell/data/pdb` directory (we don't even have to 
-leave the `writing` directory to do this!):
+in Nelles `data-shell/data/pdb` directory. 
 
 ```
 $ grep "FE" $(find ../data/pdb/ -name '*.pdb')
 ../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518
 ```
+
+The `grep` and `find` combination can be really powerful!
 
 ### Matching and Subtracting
 
@@ -771,21 +776,28 @@ and the presence of absence:
 
 Yesterday it worked
 ```
-Once again, notice that the pattern "Is" does not match the pattern "is".
-Capitalizations matters! 
+Once again, notice that the pattern "Is" does not match the pattern "is"
+and so "Is" is not subtracted by the `-v` flag.
+Capitalizations matters! Also "Thesis" was not matched (and thus subtracted)
+becaise of word boundaries.
 
 Knowing this about `grep`, let's **first change into the `data-shell/data/pdb`** 
 directory, then examine the following commands to detemine which will 
-show us all files whose names end in "`l.pdb`" (*e.g.*, `nerol.pdb`), but do
-*not* contain the word `meth`?
+show us:
+ 
+1. all files whose names end in "`l.pdb`", 
+2. but do *not* contain the pattern `meth`? (*e.g.*, `nerol.pdb`)
+
 Once you have thought about your answer, you can test the commands below:
+(If working virtually, these will be in the chat box)
 
 1.  `find . -name '*l.pdb' | grep -v meth`
-2.  `find . -name *l.pdb | grep -v meth`**\***
+2.  `find . -name *l.pdb | grep -v meth*`
 
 #### Solution
 * The correct answer is 1. Putting the wildcard match pattern in quotes prevents the shell
-expanding it, so it gets passed to the `find` command. The `find` command outputs the 
+from expanding the wildcard, and the filenames are iterated through, 
+and passed to the `find` command. The `find` command outputs the 
 ***names*** of the files to the `grep` command. 
 
 * Option 2 is **incorrect** because the shell expands `*l.pdb` *first* instead of 
@@ -794,7 +806,7 @@ passing the wildcard expression to `find`.
 \*An error occurs that is unclear:
 ```
 find: paths must precede expression: citronellal.pdb
-Usage: find [-H] [-L] [-P] [-Olevel] [-D help|tree|search|stat|rates|opt|exec] [path...] [expression]
+find: possible unquoted pattern after predicate `-name'?
 ```
 The error is due to the immediate expansion of the wildcard such that the actual command is something like:
 ```
@@ -815,12 +827,12 @@ not understood (because `. -name cholesterol.pdb` is not a path).
 >
 > #### Solution
 > 1. First (like math) find all files with a `.dat` extension in the current directory
-> 2. Count the number of lines in each of these files and pass output to `sort`
+> 2. Count the number of lines in each of these files and rather than display them, pass output to `sort`
 > 3. Sort the output from step 2. numerically
 
 Unfortunately, we don't have any `.dat` files in the `pdb` directory! 
 So where are the `.dat` files? This is a great question! Let's **find** them!
-Assuming they are in our lesson directory structure, they must be within or below
+Assuming `.dat` files are somewhere in our lesson directory structure, they must be within or below
 the `data-shell` directory, which is two directories up from our current 
 working directory. We can check this with `pwd`:
 
@@ -839,10 +851,11 @@ $ find ../.. -name "*.dat"
 ../../creatures/unicorn.dat
 ```
 
-The output `../../creatures/one unicorn.dat` looks odd. This is because there 
-is a file with a ***space*** in the name: "`one unicorn.txt`"! Remember 
+The output `../../creatures/one unicorn.dat` kind of unexpected! This 
+file has a ***space*** in the name: "`one unicorn.txt`"! Remember 
 that `find` works a little harder than most commands, so it searched for 
 and found a name that contains spaces. 
+
 So what happens if we then finish our command and pass those filenames 
 to the `wc -l` command?
 ```
@@ -855,19 +868,21 @@ wc: unicorn.dat: No such file or directory
  163 ../../creatures/unicorn.dat
  652 total
 ```
-It works! There are 163 lines in `basilisk.dat` and `unicorn.data` and their backups. 
-In this case the `sort -n` didn't really do anything. But what about the errors?
-The errors occur because `wc -l` does NOT process filenames with spaces. Instead, 
-`wc` looks for a *directory* named `../../creatures/one` (`data-shell/creatures/one`)
-which does not exist. Similarly, a file named `unicorn.txt` can't be found in the 
-`data-shell/creatures/one` directory (because they don't exist). 
+It works, but what about the errors? 
+There are 163 lines in `basilisk.dat` and `unicorn.data` and their backups. 
+In this case the `sort -n` didn't really do anything. 
+The errors occur because unlike `find`, the `wc -l` command does NOT process filenames with spaces. 
+Instead, `wc` looks for a *directory* named `../../creatures/one` (`data-shell/creatures/one`)
+which does not exist. Similarly, a file named `unicorn.dat` can't be found in the 
+`data-shell/creatures/one` directory (because it doesn't exist). 
 
-> Just for fun:  
+> Just for later:  
 > If your `data-shell/creatures/` directory doesn't have the file `one unicorn.txt` 
 > you can create it using the command:
 > ```
 > touch ../../creatures/"one unicorn.txt"
 > ``` 
+> We will use this new file in the next section.
 
 > ### Very Advanced: Finding Files With Different Properties
 > **Using the help or man pages of `find`**
@@ -896,9 +911,9 @@ which does not exist. Similarly, a file named `unicorn.txt` can't be found in th
 > > ~~~
 > > $ find ./ -type f -mtime -1 -user nelle
 > > ~~~
-But this is not satisfying because user `nelle` doesn't exist on our laptops! To 
-see this command working we will have to use our own username, and we should 
-probably use a longer timeframe. Use `ls -l` to find your username, then substitute it into the following command:
+But this is not satisfying because user `nelle` doesn't exist on our laptops or desktops! To 
+see this command working we will have to use our own username. 
+Use `ls -l` to find your username, then substitute it into the following command:
 ```
 $ find ./ -type f -mtime -60 -user <username>
 ```
