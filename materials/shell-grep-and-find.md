@@ -877,14 +877,6 @@ Instead, `wc` looks for a *directory* named `../../creatures/one` (`data-shell/c
 which does not exist. Similarly, a file named `unicorn.dat` can't be found in the 
 `data-shell/creatures/one` directory (because it doesn't exist). 
 
-> Just for later:  
-> If your `data-shell/creatures/` directory doesn't have the file `one unicorn.txt` 
-> you can create it using the command:
-> ```
-> touch ../../creatures/"one unicorn.txt"
-> ``` 
-> We will use this new file in the next section.
-
 > ### Very Advanced: Finding Files With Different Properties
 > **Using the help or man pages of `find`**
 > The `find` command can be given several other criteria known as "tests"
