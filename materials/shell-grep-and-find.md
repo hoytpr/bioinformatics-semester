@@ -779,7 +779,7 @@ Yesterday it worked
 Once again, notice that the pattern "Is" does not match the pattern "is"
 and so "Is" is not subtracted by the `-v` flag.
 Capitalizations matters! Also "Thesis" was not matched (and thus subtracted)
-becaise of word boundaries.
+because of word boundaries.
 
 Knowing this about `grep`, let's **first change into the `data-shell/data/pdb`** 
 directory, then examine the following commands to detemine which will 
@@ -815,7 +815,7 @@ find . -name cholesterol.pdb citronellal.pdb cyclohexanol.pdb ethanol.pdb (etc.)
 However, the `find` command thinks it is **done** when it finds the 
 first filename with a perfect match: 
 `cholesterol.pdb`. Subsequent names passed to `find` (i.e. `citronellal.pdb`) are 
-not understood (because `. -name cholesterol.pdb` is not a path).
+not understood (because `cholesterol.pdb` is not a path).
 
 > ### `find` Pipeline Reading Comprehension
 >
@@ -851,7 +851,8 @@ $ find ../.. -name "*.dat"
 ../../creatures/unicorn.dat
 ```
 
-The output `../../creatures/one unicorn.dat` kind of unexpected! This 
+(Your output might be slightly different)
+The output **`../../creatures/one unicorn.dat`** kind of unexpected! This 
 file has a ***space*** in the name: "`one unicorn.txt`"! Remember 
 that `find` works a little harder than most commands, so it searched for 
 and found a name that contains spaces. 
