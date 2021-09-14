@@ -179,13 +179,14 @@ SRR098026.fastq-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 The grep command worked, but notice that it added `--` as a marker whenever there were gaps 
 betweeen the bad reads (*i.e.* the good reads!). We want a properly formatted fastq file, so we 
 need to write a better command to get rid of the `--` markers.
-This command should do it! It takes the outptu from the previous command, and then takes
-every except the `--` and overwrites the `scripted_bad_reads_.txt` file. 
+This command should do it! 
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v '\--' > scripted_bad_reads.txt
 ~~~
+It takes the output from the previous command, and then takes
+every except the `--` and overwrites the `scripted_bad_reads_.txt` file. 
 
-To make a script, we're going to create a new file to put this `grep` command in. 
+To make a ***script***, we're going to create a new file to put this `grep` command in. 
 We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
