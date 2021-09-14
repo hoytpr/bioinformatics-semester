@@ -201,7 +201,8 @@ Now comes the fun part. We can **run** this script as a computer program. Type:
 $ bash bad-reads-script.sh
 ~~~
 
-It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can see that there are now reads in the file.
+It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can 
+see that the bad reads are now the fastq formatted reads in the file.
 
 ### Making the script into a program
 
