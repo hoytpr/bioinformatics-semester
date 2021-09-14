@@ -15,9 +15,10 @@ language: Shell
 
 ### Moving to a bigger BASH
 
-IMPORTANT! At this point you should have a Pete login window open, and a GitBash window open. Don't change anything.
+IMPORTANT! At this point you should two terminal windows open. One is a Pete login window open, and the other is a 
+GitBash window open (for Windows users). If you are a Mac or Linux user, you shouls have two different terminal windows open. 
 
-If you don't have a "local" terminal window open, you should open one. (Windows users who run Putty, can switch back to Gitbash). 
+If you don't have a "local" terminal window open, you should open one.
 
 We want to take what we've been learning, and move to the next level, so let's do exactly that! 
 Make sure you are on your **Desktop** by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder we recently downloaded, and unzipped.
