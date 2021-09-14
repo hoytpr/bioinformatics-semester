@@ -37,20 +37,20 @@ This stuff is out of order
 
 As you progress through this lesson, keep in mind that, even if you aren’t going to be doing this exact same workflow in your research, you will be learning some very important lessons about using command-line bioinformatics tools. What you learn here will enable you to use a variety of bioinformatic tools with confidence and greatly enhance your research efficiency and productivity.
 
-This lesson assumes no prior experience with the tools covered in the workshop. However, learners are expected to have some familiarity with biological concepts, including the concept of genomic variation within a population. This lesson is originally part of a workshop that uses data hosted on an Amazon Machine Instance (AMI). We will be working with the Cowboy supercomputer at Oklahoma State University. The access to the required data is provided on the Data Carpentry [Genomics Workshop setup](http://www.datacarpentry.org/genomics-workshop/setup.html) page.
+This lesson assumes no prior experience with the tools covered in the workshop. However, learners are expected to have some familiarity with biological concepts, including the concept of genomic variation within a population. This lesson is originally part of a workshop that uses data hosted on an Amazon Machine Instance (AMI). We will be working with the Pete supercomputer at Oklahoma State University. The access to the required data is provided on the Data Carpentry [Genomics Workshop setup](http://www.datacarpentry.org/genomics-workshop/setup.html) page.
 
 ### Setup Prerequisites
 
-* You will need an account on the Cowboy supercomputer in the HPCC of Oklahoma State University. 
-* You will need to [install "Putty"](https://hpcc.okstate.edu/content/logging-cowboy) if you are using a Windows machine.
+* You will need an account on the Pete supercomputer in the HPCC of Oklahoma State University if you don't have one. 
+* You should have installed the software "Putty" but if not you can download it from [the Putty Download site](https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.76-installer.msi) if you are using a Windows machine.
 
 ### Logging onto a Remote server
 
-##### Connecting to Cowboy with a Mac
+##### Connecting to Pete with a Mac
 
 Open your terminal program and type in: 
 ```
-ssh cowboy.hpc.okstate.edu
+ssh pete.hpc.okstate.edu
 ```
 Then login with your username and password
 
@@ -72,10 +72,10 @@ Then click ‘Open’ (You will be presented with a security warning)
 
 -->
 
-##### Connecting using PC to Cowboy
+##### Connecting using PC to Pete
 
 1. Open Putty
-2. Paste in the ‘Host Name (or IP address)’ section the IP address e.g. cowboy.hpc.okstate.edu
+2. Paste in the ‘Host Name (or IP address)’ section the IP address e.g. pete.hpc.okstate.edu
 
  *Keep the default selection ‘SSH’ and Port (22)*
 
@@ -92,4 +92,4 @@ Note: When typing your password, it is common in Unix/Linux not see any asterisk
 Let’s find out where we are by running the command `pwd` (remember this stands for “print working directory”). At any moment, our current working directory is the directory that where the computer assumes we want to run commands. Unless we explicitly specify something else. Here, the computer’s response is `/home/<username>`, which is our **home** directory within this system.
 
 Alright, you are logged on to the system!
-IMPORTANT! If you are going directly to the [NEXT LESSON]({{ site.baseurl}}/materials/genomics-data-and-writing-scripts), leave your Cowboy login window open! **Don’t touch it**.
+IMPORTANT! If you are going directly to the [NEXT LESSON]({{ site.baseurl}}/materials/genomics-data-and-writing-scripts), leave your Cowboy login window open! **Don’t touch it**. We want both windows to be open.
