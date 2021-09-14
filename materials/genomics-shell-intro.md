@@ -81,7 +81,7 @@ Then click ‘Open’ (You will be presented with a security warning)
 
  ![Putty Configuration]({{ site.baseurl }}/fig/putty1.jpg)
  
-Then click ‘Open’ 
+Then click ‘Open’. If you get a warning message about permissions or certificates, please answer "yes". 
 
 When the Cowboy window opens, you will be asked to provide a login and password
 	
