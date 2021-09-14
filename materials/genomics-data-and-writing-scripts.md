@@ -72,6 +72,9 @@ $ cd ~/shell_data/untrimmed_fastq
 $ nano README.txt
 ~~~
 
+Write in something about where these files came from.
+For example: These files came from my Desktop/data_shell folder.
+
 <!--
 
 You should see something like this: 
