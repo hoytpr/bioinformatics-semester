@@ -183,8 +183,8 @@ This command should do it!
 ~~~
 grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v '\--' > scripted_bad_reads.txt
 ~~~
-It takes the output from the previous command, and then takes
-every except the `--` and overwrites the `scripted_bad_reads_.txt` file. 
+It takes the output from the previous command, and then outputs
+everything except the `--` markers, and overwrites the `scripted_bad_reads_.txt` file. 
 
 To make a ***script***, we're going to create a new file to put this `grep` command in. 
 We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
