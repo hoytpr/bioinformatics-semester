@@ -159,10 +159,34 @@ One thing we will commonly want to do with sequencing results is ***pull out bad
 Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. We want the whole FASTQ record, so we're also going to get the one line above the sequence and the two lines below. We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
 ~~~
-grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > scripted_bad_reads.txt
+grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
 ~~~
 
-We're going to create a new file to put this `grep` command in. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
+Now look at the file using the `cat scripted_bad_reads.txt` command and notice the output:
+
+~~~
+SRR098026.fastq-@SRR098026.133 HWUSI-EAS1599_1:2:1:0:1978 length=35
+SRR098026.fastq:ANNNNNNNNNTTCAGCGACTNNNNNNNNNNGTNGN
+SRR098026.fastq-+SRR098026.133 HWUSI-EAS1599_1:2:1:0:1978 length=35
+SRR098026.fastq-#!!!!!!!!!##########!!!!!!!!!!##!#!
+--
+SRR098026.fastq-@SRR098026.177 HWUSI-EAS1599_1:2:1:1:2025 length=35
+SRR098026.fastq:CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+SRR098026.fastq-+SRR098026.177 HWUSI-EAS1599_1:2:1:1:2025 length=35
+SRR098026.fastq-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+~~~
+
+The grep command worked, but notice that it added `--` as a marker whenever there were gaps 
+betweeen the bad reads (*i.e.* the good reads!). We want a properly formatted fastq file, so we 
+need to write a better command to get rid of the `--` markers.
+This command should do it! It takes the outptu from the previous command, and then takes
+every except the `--` and overwrites the `scripted_bad_reads_.txt` file. 
+~~~
+grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v '\--' > scripted_bad_reads.txt
+~~~
+
+To make a script, we're going to create a new file to put this `grep` command in. 
+We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
 $ nano bad-reads-script.sh
