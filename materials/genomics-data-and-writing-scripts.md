@@ -41,6 +41,7 @@ To do this, while still in your Desktop directory type:
 $ scp shelldata.tar.gz <username>@pete.hpc.okstate.edu:/home/<username>/
 ~~~
 
+If you see an warning such as `tput: No value for $TERM and no -T specified` you can safely ignore it. 
 You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
 will be uploaded. Finally we want to decompress the directories so they are exactly 
 the same as we had on our local computer. To do this in your Pete login window 
