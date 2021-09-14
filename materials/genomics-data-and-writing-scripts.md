@@ -16,7 +16,7 @@ language: Shell
 ### Moving to a bigger BASH
 
 IMPORTANT! At this point you should two terminal windows open. One is a Pete login window open, and the other is a 
-GitBash window open (for Windows users). If you are a Mac or Linux user, you shouls have two different terminal windows open. 
+GitBash window open (for Windows users). If you are a Mac or Linux user, you shoulds have two different terminal windows open. 
 
 If you don't have a "local" terminal window open, you should open one.
 
