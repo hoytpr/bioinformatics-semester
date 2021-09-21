@@ -215,17 +215,20 @@ module load mummer/4.0.0rc1
 nucmer -p spades31 ../results/spades31.fasta ../data/group1/ref.fasta
 
 ~~~
-"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html)which claims to be the most [user-friendly] (http://mummer.sourceforge.net/manual/)
+"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims to be the most [user-friendly] (http://mummer.sourceforge.net/manual/)
 alignment script for standard DNA sequence alignment. NUCmer uses a three step 
 process - maximal exact matching, match clustering, and alignment extension. 
 (But you don't have to learn that for now!) The output of NUCmer is a simple 
 positional chart. You can visualize your `nucmer` 
 assembly as a dot plot using the software `mummerplot`.
+
+
+## The rest of this lesson needs updating 
+
 ~~~
 $ mummerplot spades31.delta --postscript --layout
 ~~~
 
-## The rest of this lesson needs updating 
 
 But, as you might have guessed, the output of `mummerplot` is a postscript file. 
 When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
