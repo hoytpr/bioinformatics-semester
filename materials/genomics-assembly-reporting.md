@@ -199,7 +199,7 @@ This is probably a good idea
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
 re-align their own best assemblies using even more (different) software. To try this
 and to show you quickly some additional bioinformatics software, enter the 
-commands below, but change the filename (`abyss31.fasta`) to your **best** assembly. 
+commands below, but change the filename (`spades31.fasta`) to your **best** assembly. 
 Also remember to change your groupnumber (or this won't work)!!! Then run **`nucmer`**.
 If you don't know your best assembly yet, try using abyss31.fasta:
 (Note: make sure module `mummer/4.0.0rc1` is available)
@@ -225,7 +225,7 @@ assembly as a dot plot using the software `mummerplot`.
 $ mummerplot spades31.delta --postscript --layout
 ~~~
 
-## The rest of thiw lesson needs updating 
+## The rest of this lesson needs updating 
 
 But, as you might have guessed, the output of `mummerplot` is a postscript file. 
 When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
