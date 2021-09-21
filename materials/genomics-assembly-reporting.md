@@ -110,7 +110,8 @@ When the `quast.zip` file is on your Desktop,
 extract the file, and double-click on the `report.html` file to open it in 
 your browser. If the file doesn't open, your browser may need Javascript 
 to be enabled. Note that this `html` web page is interactive! You should 
-see something like the image shown below for Group2:
+see something like the image shown below, except we are only using two Assemblers;
+velvet and SPAdes:
 
 ![Quast Report html]({{ site.baseurl }}/fig/quast-report-html.png)
 
