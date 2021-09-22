@@ -4,9 +4,6 @@ element: notes
 title: Read Processing
 language: Shell
 ---
-### A Genome Assembly Workshop 
-This part of the course uses a traditional workshop pedagogy with "slides" for readings, and 
-"hands-on" exercises that are also lectures (learning while practicing). They are designed to be self-paced but we can work through them in class. 
 
 ### Hands-on Genome Assembly Read Processing
 
@@ -37,28 +34,22 @@ by now. The complete manual for working on the Pete supercomputer is available a
 
 Log onto the Pete computer using Putty (Windows users) or your Terminal Program (Mac and Linux users). 
 Then open your FTP software, and connect to your account on Pete.
-You should have been given the file `mcbios.tar.gz`, for you to 
+You should have been given the file `mcbios.zip`, for you to 
 place on your desktop. **Alternatively, registered students can download the file 
 [mcbios.zip](https://canvas.okstate.edu/courses/51969/files/3495395/download?download_frd=1) from Canvas onto the Desktop of your local machine**. 
-Use FTP to transfer the file `mcbios.tar.gz`
-(or `mcbios.zip`) to Pete. 
+Use FTP to transfer the file `mcbios.zip`
+to Pete. 
 
 Filezilla FTP software is recommended, and a brief description of how to use Filezilla can be found in the [Filezilla Extra]({{ site.baseurl }}/materials/filezilla-extras) page.
 
-make sure the `mcbios.zip` file will be uploaded into your `/scratch/username` directory on Pete.
+Make sure the `mcbios.zip` file will be uploaded into your `/scratch/username` directory on Pete.
 NOTE that you should substitute `username` with your actual 
 username for the computer. For example, if your username was `phoyt`, upload the file to `/scratch/phoyt`.
 
 Then from your terminal program (Windows users will
 use "Putty") type in the following commands:
 
-For `mcbios.tar.gz` use:
-~~~
-$ cd /scratch/<username>
-$ tar xvf mcbios.tar.gz
-$ cd mcbios/
-$ ls
-~~~
+
 For `mcbios.zip` use:
 ~~~
 $ cd /scratch/<username>
@@ -69,16 +60,14 @@ $ ls
 The output should be:
 
 ~~~
-abyss data  results soap velvet 
+data results soap velvet 
 ~~~
 
 ### File Structure 
 
 What you should now have:
 ~~~
-|-- abyss
-|   `-- abyss31
-|       `-- abyssk31.pbs
+
 |-- data
 |   |-- group1
 |   |   |-- PE-350.1.fastq
@@ -102,16 +91,18 @@ What you should now have:
 |       `-- ref.fasta
 |-- results
 |   `-- quast.pbs
-|-- soap
-|   `-- soap31
-|       |-- soap.config
-|       `-- soapk31.pbs
-`-- velvet
-    `-- velvetk31.pbs
+|-- spades
+|   `-- spades31
+|       |-- spadesk31.sbatch
+|-- velvet
+|    |-- velvetk31.pbs
+|    `-- velvet-estimate-exp_cov.pl
+|-- nucmer
+|   `-- nucmer.sbatch
+
 ~~~
-To see this file structure, type in the command: `tree`.
-Notice that the top of the tree starts with a `dot` or `.` meaning the "current working directory". 
-We will dive into each directory for each task:  fastqc, velvet, soap, abyss etc. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as a note to your future self.
+
+We will dive into each directory for each task: velvet, spades, etc. Most folders contain a submission script which includes the commands that we use for each task. It is always a good idea to use a script so you can modify parameters, and the script also serves as a note to your future self.
 
 ### Important notes before hands-on
 Since we are using the Pete cluster, only very small tasks can be done directly on the login nodes.  For each longer activity, we will submit the jobs to the scheduler using “pbs scripts”.  These `.pbs` files are text files that include information for the job scheduler as well as the commands to execute your job.

@@ -171,8 +171,7 @@ the genome you sequenced using the following formula:
 
 ##### Genome_size = Total_Kmers / peak_Kmer_coverage
 
-For more information about K-mers and coverage, there is this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
-that explains why we want to estimate genome sizes. Briefly,
+Why do we want to estimate genome sizes? Briefly,
 K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
 Software can **estimate** your coverage of the genome based on the number of "good" K-mers.
 

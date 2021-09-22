@@ -197,7 +197,17 @@ But you can eliminate some of the assemblies based on misassemblies or indels. O
 you have eliminated some assemblies you can go back and try more K-mer values! 
 This is probably a good idea 
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
-re-align their own best assemblies using even more (different) software. To try this
+re-align their own best assemblies using even more (different) software. 
+
+<!--
+
+
+
+
+
+
+
+To try this
 and to show you quickly some additional bioinformatics software, enter the 
 commands below, but change the filename (`spades31.fasta`) to your **best** assembly. 
 Also remember to change your groupnumber (or this won't work)!!! Then run **`nucmer`**.
@@ -215,10 +225,8 @@ module load mummer/4.0.0rc1
 nucmer -p spades31 ../results/spades31.fasta ../data/group1/ref.fasta
 
 ~~~
-"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims to be the most [user-friendly] (http://mummer.sourceforge.net/manual/)
-alignment script for standard DNA sequence alignment. NUCmer uses a three step 
-process - maximal exact matching, match clustering, and alignment extension. 
-(But you don't have to learn that for now!) The output of NUCmer is a simple 
+"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims to be a [user-friendly] (http://mummer.sourceforge.net/manual/)
+alignment script for standard DNA sequence alignment. The output of NUCmer is a simple 
 positional chart. You can visualize your `nucmer` 
 assembly as a dot plot using the software `mummerplot`.
 
@@ -261,6 +269,10 @@ We did this so that assembly ran faster in workshop. Here is a link to the data 
 [http://www.ncbi.nlm.nih.gov/sra/DRX001304](http://www.ncbi.nlm.nih.gov/sra/DRX001304)
 
 `________________________________________`
+
+-->
+
+
 
 ### EXTRAS:
 
