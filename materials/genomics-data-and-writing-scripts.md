@@ -15,12 +15,13 @@ language: Shell
 
 ### Moving to a bigger BASH
 
-IMPORTANT! Leave your Pete login window open! Don't touch it.
+IMPORTANT! At this point you should two terminal windows open. One is a Pete login window open, and the other is a 
+GitBash window open (for Windows users). If you are a Mac or Linux user, you shoulds have two different terminal windows open. 
 
-Now open ***another*** terminal window (Windows users who run Putty, can go back to Gitbash). 
+If you don't have a "local" terminal window open, you should open one.
 
 We want to take what we've been learning, and move to the next level, so let's do exactly that! 
-Make sure you are on your Desktop by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder we recently downloaded, and unzipped.
+Make sure you are on your **Desktop** by going to your home directory, and from your home directory, go up one directory to the Desktop. Then check you have the `shell_data` folder we recently downloaded, and unzipped.
 
 ~~~
 $ cd
@@ -28,7 +29,7 @@ $ cd ..
 $ ls shell_data
 sra_metadata   untrimmed_fastq
 ~~~
- We are going to move our entire `shell_data` file hierachy onto Pete. But before we move `shell_data` to Pete, we should compress it into a single file that is small and complete. This takes the command `tar`. From your Desktop directory type:
+ We are going to move our entire `shell_data` file hierachy onto Pete. But before we move `shell_data` to Pete, we should compress it into a single file that is small and complete. This takes the command `tar`. Remember we are in our Desktop directory and type:
  
  ```
  $ tar -zcvf shelldata.tar.gz shell_data/
@@ -40,6 +41,7 @@ To do this, while still in your Desktop directory type:
 $ scp shelldata.tar.gz <username>@pete.hpc.okstate.edu:/home/<username>/
 ~~~
 
+If you see an warning such as `tput: No value for $TERM and no -T specified` you can safely ignore it. 
 You will be asked for your password, and then in just a few seconds, `shelldata.tar.gz` 
 will be uploaded. Finally we want to decompress the directories so they are exactly 
 the same as we had on our local computer. To do this in your Pete login window 
@@ -52,14 +54,18 @@ sra_metadata   untrimmed_fastq
 
 **We will go over these commands a little later, otherwise you can use the `--help` or `man` commands to get information about `tar` and `scp`**
 
-### Writing files review
-<!-- We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files. 
-We've used a lot of files that already exist, but what if we want to write our own files?
-As we go through other tutorials, there are a lot of reasons we'll want to write files, or edit existing files. -->
+### Writing files for your future self
+<!-- We don't really need to use the scratch directory for our example directories, but remember this is where you would work on larger data files, such as sequencing files, and other bioinformatics output files. -->
+We've used a lot of files that already exist, but what if we want to remember what we did for our research?
+It's important that when you start a project, you start a file to document your steps.
 
-We're going to create a file **to take notes** about what we are doing with the data files in `~/shell_data/untrimmed_fastq`. This is good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
+To add text to files, we know to use a text editor called Nano. We're going to create a file **to take notes** 
+about what we've been doing with the data files in `~/shell_data/untrimmed_fastq`.
 
-To modify `README.txt` let's change our working directory to `~/shell_data/untrimmed_fastq` using `cd`,
+This is very good practice when working in bioinformatics. Specifically, you should create a file called a `README.txt` that describes the data files in the directory or documents how the files in that directory were generated.  As the name suggests it's a file that we or others should read to understand the information in that directory. If you already have a `README.txt` file, that's good! Let's open it and describe what we've done lately.
+
+Let's change our working directory (which in this case should be our home directory on Pete)
+to `~/shell_data/untrimmed_fastq` using `cd`,
 then run `nano` to create a file called `README.txt`:
 
 ~~~
@@ -90,6 +96,9 @@ CCCCCCCCCCCCCCC>CCCCC7CCCCCCACA?5A5<
 
 We want the whole FASTQ record, so we're also going to get the one line before the sequence (using `grep -B1`) and the two lines after the sequence (using `grep -A2`). We also want to look in all the files that end with `.fastq`, so we're going to use the `*` wildcard.
 
+
+Write in something about where these files came from.
+For example: These files came from my Desktop/data_shell folder.
 
 <!--
 
@@ -171,7 +180,7 @@ A really powerful thing about the command line is that you can write scripts. **
 
 With sequencing results you will always want to pull out bad reads!  You might also write them to a file to see if you can figure out what's going on with them. Really bad reads cannot identify if a base is an A, G, C, or T, so it is represented by an "N" character. 
 
-We're going to look for reads with long sequences of N's and write a script to run each time we get new sequences!
+One thing we will commonly want to do with sequencing results is ***pull out bad reads*** and write them to a file to see if we can figure out what's going wrong with them. We're going to look for reads with long sequences of N's like we did before, but now we're going to write a script, so we can run it each time we get new sequences, rather than type the code in by hand each time.
 
 Bad reads have a lot of N's, so we're going to look for  `NNNNNNNNNN` with `grep`. Try the following command:
 ```
@@ -184,10 +193,35 @@ grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--"
 Run this command and you can see the double-dashes are all gone. 
 
 ~~~
-grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v "\--" > scripted_bad_reads.txt
+grep -B1 -A2 NNNNNNNNNN *.fastq > scripted_bad_reads.txt
 ~~~
 
-We're going to create a new file and put this `grep` command inside to create a **script**. We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
+Now look at the file using the `cat scripted_bad_reads.txt` command and notice the output:
+
+~~~
+SRR098026.fastq-@SRR098026.133 HWUSI-EAS1599_1:2:1:0:1978 length=35
+SRR098026.fastq:ANNNNNNNNNTTCAGCGACTNNNNNNNNNNGTNGN
+SRR098026.fastq-+SRR098026.133 HWUSI-EAS1599_1:2:1:0:1978 length=35
+SRR098026.fastq-#!!!!!!!!!##########!!!!!!!!!!##!#!
+--
+SRR098026.fastq-@SRR098026.177 HWUSI-EAS1599_1:2:1:1:2025 length=35
+SRR098026.fastq:CNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+SRR098026.fastq-+SRR098026.177 HWUSI-EAS1599_1:2:1:1:2025 length=35
+SRR098026.fastq-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+~~~
+
+The grep command worked, but notice that it added `--` as a marker whenever there were gaps 
+betweeen the bad reads (*i.e.* the good reads!). We want a properly formatted fastq file, so we 
+need to write a better command to get rid of the `--` markers.
+This command should do it! 
+~~~
+grep -B1 -A2 NNNNNNNNNN *.fastq | grep -v '\--' > scripted_bad_reads.txt
+~~~
+It takes the output from the previous command, and then outputs
+everything except the `--` markers, and overwrites the `scripted_bad_reads_.txt` file. 
+
+To make a ***script***, we're going to create a new file to put this `grep` command in. 
+We'll call it `bad-reads-script.sh`. The `sh` isn't required, but using that extension tells us that it's a shell script.
 
 ~~~
 $ nano bad-reads-script.sh
@@ -201,11 +235,13 @@ Now comes the fun part. We can **run** this script as a computer program. Type:
 $ bash bad-reads-script.sh
 ~~~
 
-It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can see that there are now reads in the file.
+It will look like nothing happened, but now if you look at `scripted_bad_reads.txt`, you can 
+see that the bad reads are now the fastq formatted reads in the file.
 
 ### Making the script into a program
 
-We had to type `bash` because we needed to tell the computer what program to use to run this script. Instead we can turn this script into its own program. We need to tell it that it's a program by making it executable. We can do this by changing the file permissions. There is a lot of information about permissions in [a Datacarpentry Workshop you should use for reference](http://www.datacarpentry.org/shell-genomics/03-working-with-files/).
+We had to type `bash` because we needed to tell the computer what program to use to run this script. Instead we can turn this script into its own program. We need to tell it that it's a program by making it executable. We can do this by changing the file permissions. 
+may not have talked about permissions before, but a great reference is the Data Carpentries ["Working with files" episode](http://www.datacarpentry.org/shell-genomics/03-working-with-files/).
 
 First, let's look at the current permissions by using the `-l` (long) listing of `ls`.
 

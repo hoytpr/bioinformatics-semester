@@ -22,16 +22,16 @@ Maybe a figure will help.
 
 Now that we have completed several assemblies, let's look at our results. Change to the `results` directory and list the files. The output should look similar to the file list below: 
 
-~~~
+```
 $ cd ../../results
 $ ls
-spades29.fasta  spades31.fasta  soap21.fasta  soap41.fasta    velvet31.fasta
-spades33.fasta  quast.sbatch      soap31.fasta  velvet21.fasta  velvet41.fasta
-~~~
+spades21.fasta  spades31.fasta  velvet31.fasta
+spades25.fasta  quast.sbatch  velvet21.fasta  velvet25.fasta
+```
 
 These files are the results from all the programs using different K-mer parameters. 
 If you have a different assembly (*e.g.* different K-mers) using the same assembler, 
-make sure you name them differently, but **consistently**. For example: `spades29.fasta`   `spades33.fasta`  `soap33.fasta`  `velvet39.fasta`
+make sure you name them differently, but **consistently**. For example: `spades29.fasta`   `spades33.fasta`   `velvet39.fasta`
 
 _____________________________________`
 
@@ -40,7 +40,21 @@ _____________________________________`
 Make sure that you validate the results before releasing it. Some assemblies may appear to have large contigs and scaffolds, but are wrong. Check the assembly!
 
 We are going to evaluate our assemblies with [quast.py](https://github.com/ablab/quast).
-First, make sure you are in `results` directory below the `mcbios` directory. Use
+
+### Downloading QUAST ###
+
+From the `mcbios` directory enter the following command:
+```
+wget https://github.com/ablab/quast/releases/download/quast_5.0.2/quast-5.0.2.tar.gz
+```
+
+This will download the `quast-5.0.2.tar.gz` file. To uncompress it use the command:
+
+```
+tar -xvzf quast-5.0.2.tar.gz
+```
+You should now have a subfolder named `quast-5.0.2`. Now change
+to the `results` directory below the `mcbios` directory. Use
 `nano` to look at the quast PBS submission script.
 
 `$ nano -w quast.sbatch`
@@ -55,52 +69,52 @@ The file looks like this:
 #SBATCH --mail-user=peter.r.hoyt@okstate.edu
 #SBATCH --mail-type=end
 
-module load quast
-
 export GROUPNUMBER=1
 export DATADIR=../data/group${GROUPNUMBER}
 
-quast.py --gene-finding  `ls *.fasta`  -o quastresults  -R ${DATADIR}/ref.fasta
+../quast-5.0.2/quast.py --gene-finding  `ls *.fasta`  -o quastresults  -R ${DATADIR}/ref.fasta
 ~~~
 
-When you are ready to run quast, remember to change your groupnumber.  It will analyze all the `*.fasta` files in your `results` directory.
+When you are ready to run quast, remember to change your groupnumber.  The `quast.sbatch` will analyze 
+all the `*.fasta` files in your `results` directory.
 
 Submit the quast.sbatch file:
 
 `$ sbatch quast.sbatch`
 
-When quast is finished (about one minute) look at the output file to check for fatal errors
+When quast is finished look at the output file to check for obvious errors.
 
-`$ less quast.sbatch.o<jobid>`  (protip: use TAB autocomplete so you don’t have to type in the jobid)
+`$ less slurm<jobid>.out`  (protip: use TAB autocomplete so you don’t have to type in the jobid)
 
 You may see some warnings that quast could not find genes, or that some images 
 could not be created. That's okay. Quast can do a lot of things we aren't 
-validating today. If there are no **fatal** errors we will send everything to ourselves. 
-Press `q` to exit the `less` command.
-  
-Before we send everything, we will move up a directory then zip the entire `quastresults` directory. It's good 
+validating today. If there are no fatal errors, press `q` to exit the `less` command.
+Now you can send everything to yourself. 
+
+Before we send everything, we will zip the entire `quast` directory. It's good 
 practice to compress files when transferring them because they transfer faster, 
-and the use less bandwidth. After the zip command is complete, mail the file to 
-yourself. If you have questions about the commands we are using, *you should 
-be able to use the `man` pages or `--help` to figure things out*. 
+and the use less bandwidth. After the zip command is complete, we can use `scp` to transfer the file
+to our desktop!
 ~~~
 $ cd ..
 $ zip -r quast.zip quastresults
-$ mail -a quast.zip -r <youremailaddress> <youremailaddress>
 ~~~
-(remember to enter a subject then hit `ctrl-d` to send)
 
-> Or you can use `scp` as we have done before. Enter the following command 
-> using your username from your Desktop in a LOCAL terminal window and don't forget the **`:`**
-> ~~~
-> scp <username>@cowboy.hpc.okstate.edu:/home/<username>/mcbios/results/quast.zip .
-> ~~~
+Now switch to your Gitbash Window and from there make sure you are on your Desktop
+by typing `cd ~/Desktop`
 
-Check your email, and place the attached `quast.zip` file on your Desktop, 
+Then (using your own username) download the quast results by typing:
+
+~~~
+$ scp phoyt@pete.hpc.okstate.edu:/scratch/phoyt/mcbios/results/quast.zip .
+~~~
+
+When the `quast.zip` file is on your Desktop, 
 extract the file, and double-click on the `report.html` file to open it in 
 your browser. If the file doesn't open, your browser may need Javascript 
 to be enabled. Note that this `html` web page is interactive! You should 
-see something like the image shown below for Group2:
+see something like the image shown below, except we are only using two Assemblers;
+velvet and SPAdes:
 
 ![Quast Report html]({{ site.baseurl }}/fig/quast-report-html.png)
 
@@ -187,29 +201,47 @@ you have eliminated some assemblies you can go back and try more K-mer values!
 
 Re-aligning is a very good idea 
 when you are first starting to assemble genomes. Some bioinformaticians prefer to 
-re-align their own best assemblies using even more (different) software. To try this
+re-align their own best assemblies using even more (different) software. 
+
+<!--
+
+
+
+
+
+
+
+To try this
 and to show you quickly some additional bioinformatics software, enter the 
-commands below, but change the filename (`abyss31.fasta`) to your **best** assembly. 
+commands below, but change the filename (`spades31.fasta`) to your **best** assembly. 
 Also remember to change your groupnumber (or this won't work)!!! Then run **`nucmer`**.
-If you don't know your best assembly yet, try using `abyss31.fasta`:
-(Note: make sure module `bio_apps` is available)
+If you don't know your best assembly yet, try using abyss31.fasta:
+(Note: make sure module `mummer/4.0.0rc1` is available)
 ~~~
 $ cd ../
 $ mkdir nucmer
 $ cd nucmer
-$ module load bio_apps
-$ nucmer ../../results/abyss31.fasta ../../data/group1/ref.fasta
 ~~~
-"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims 
-to be the most [user-friendly](http://mummer.sourceforge.net/manual/)
-alignment script for standard DNA sequence alignment. NUCmer uses a three step 
-process - maximal exact matching, match clustering, and alignment extension. 
-(But you don't have to learn that for now!) The output of NUCmer is a simple 
-positional chart comparing your best assembly to the reference genome. You can visualize your `nucmer` 
-assembly as a dot plot using the software `mummerplot`. In your `nucmer` directory, run:
+
+Then make a submission script using:
 ~~~
-$ mummerplot out.delta --postscript --layout
+module load mummer/4.0.0rc1
+nucmer -p spades31 ../results/spades31.fasta ../data/group1/ref.fasta
+
 ~~~
+"NUCmer" is part of the ["MUMmer" package](https://mummer4.github.io/tutorial/tutorial.html) which claims to be a [user-friendly] (http://mummer.sourceforge.net/manual/)
+alignment script for standard DNA sequence alignment. The output of NUCmer is a simple 
+positional chart. You can visualize your `nucmer` 
+assembly as a dot plot using the software `mummerplot`.
+
+
+## The rest of this lesson needs updating 
+
+~~~
+$ mummerplot spades31.delta --postscript --layout
+~~~
+
+
 But, as you might have guessed, the output of `mummerplot` is a postscript file. 
 When `mummerplot` is done, you can convert the plot from "postscript" to "PDF"
 using a shell command from your `nucmer` directory:
@@ -241,6 +273,10 @@ We did this so that assembly ran faster in workshop. Here is a link to the data 
 [http://www.ncbi.nlm.nih.gov/sra/DRX001304](http://www.ncbi.nlm.nih.gov/sra/DRX001304)
 
 `________________________________________`
+
+-->
+
+
 
 ### EXTRAS:
 

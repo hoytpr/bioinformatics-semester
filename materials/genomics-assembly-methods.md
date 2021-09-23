@@ -7,7 +7,7 @@ language: Shell
 ### Hands-on Genome Assembly Tools 
 (This workshop-style-lesson is taught on the Pete supercomputer at OSU)
 
-#### DISCLAIMER: Some of these software (not all) are pretty much (not yet completely) obsolete.
+#### DISCLAIMER: Some of these software (not all) nearly obsolete.
 
 We are using them to demonstrate some processes used in 
 bioinformatics. We want you to know you can do this!
@@ -17,11 +17,6 @@ beginner's introduction are already suffering from ["Software collapse"](https:/
 a term introduced in 2019.  
 
 #### Why are we using older software?
-
-Because these software provide an easy consistent example.
-If you can grasp the fundamental concepts presented here, it is very likely 
-you will be able to better judge which software are best for your own projects. 
-It's analogous to the ["Teach a person to fish"](https://en.wiktionary.org/wiki/give_a_man_a_fish_and_you_feed_him_for_a_day;_teach_a_man_to_fish_and_you_feed_him_for_a_lifetime) philosophy.
 
 **Bioinformatics** is rapidly developing and most software used for 
 many important bioinformatics processes like assembly, 
@@ -44,26 +39,22 @@ For an interesting discussion about scientists using outdated software see this
 
 ### Assembly
 
-**Learn**: Not all [assemblers](https://en.wikipedia.org/wiki/Sequence_assembly#Notable_assemblers) are the same or give the same results.
+**Main Point!**: Not all [assemblers](https://en.wikipedia.org/wiki/Sequence_assembly#Notable_assemblers) are the same or give the same results.
 Also note that there are assemblers that use a reference genome to assist in assembly (reference-guided assembly) as opposed to *de novo* assembly which does not use a genome as a reference. 
 
 **Which genome assembler should I use?**
 
 1. As inefficient as it seems, it's generally good to run several assemblers and compare results 
-to find the one best for your data! Also, if there is a good-quality reference genome, you should use it. We are using reference-guided assembly with VELVET, SOAPdenovo and 
-SPAdes (hopefully) in this lesson. All of these assemblers are [de-bruijn](https://en.wikipedia.org/wiki/De_Bruijn_graph) (K-mer) 
-graph based assemblers.
-2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler.
-
-Here's another trick: You can use this K-mer histogram to estimate the size of
-the genome you sequenced using the following formula:
+to find the one best for your data! Also, if there is a good-quality reference genome, you should use it. We are using reference-guided assembly with VELVET, and 
+SPAdes in this lesson. All of these assemblers use [de-bruijn](https://en.wikipedia.org/wiki/De_Bruijn_graph) (K-mer) 
+graph assembly methods.
+2. Some assembly software are optimized for specific organisms or types of data outputs. In these cases you can safely use the recommended assembler
 
 ##### Genome_size = Total_Kmers / peak_Kmer_coverage
 
-For more information about K-mers and coverage, there is **[this old post](https://groups.google.com/forum/#!topic/abyss-users/RdR6alqM7e8)**; or this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
-that explain why we want to estimate genome sizes. Briefly,
+For more information about K-mers and coverage, there is this [EXTRA Page]({{ site.baseurl }}/materials/extras/kmers-and-coverage-discussion)
+that explains why we want to estimate genome sizes. Briefly,
 K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
-Abyss is able to **estimate** your coverage of the genome based on the number of "good" K-mers.
 
 > This is useful because: 
 > 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
@@ -72,10 +63,6 @@ Abyss is able to **estimate** your coverage of the genome based on the number of
 > Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
 > was "10-fold", you could then estimate the size of your genome being sequenced 
 > was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
-
-We are going to ask you to find the N50 of these assemblies as a useful statistic. 
-We will cover it in detail later, but the N50 represents a metric of the length of a 
-set of sequences in an assembly.
 
 > We are using several pre-made `.sbatch` submission scripts, so let's briefly review 
 > the structure of a submission script using the `velvetk29.sbatch` we'll use later in 
@@ -104,9 +91,10 @@ If you understand the script and have changed the group number, press ctrl-x, sa
  
 What was printed on the screen after you pressed enter? 
 
-`<jobidnumber>.mgmt1` 
+`Submitted batch job <jobidnumber>` 
 
-The log file, `velvetk31.sbatch.o<jobidnumbmer>` is very useful. 
+After the job is finished, the log file, your results will be in the `velvet31` folder.
+`velvetk31.sbatch.o<jobidnumbmer>` is very useful. 
 
 The log file, `velvetk31.pbs.o<jobidnumbmer>` is very useful and contains a lot of 
 the output data we want to look at. 
@@ -119,9 +107,14 @@ OR
 
 `$ less velvetk31.sbatch.o<jobidnumber>`
  
-(q to quit)
+You can scroll through the `less` interface by pressing the `enter` key 
+on your keyboard. Also, remember to press `q` to quit the `less` interface.
+But here's a trick to using `less` for searching:
+At the bottom of the `less` interface, there is a "colon" character `:` to the left of your cursor.
+If you press the forward slash button **`/`** on your keyboard, you will see the line is now blank. 
+It is waiting for a search pattern! Try entering something like "Paired end library" and press the `Enter` key.
 
-Find these information from the log file:
+Now use `less` tind these information from the log file:
 Paired end library insert size: `_____________`   
 
 Standard deviation `______________`
@@ -142,31 +135,73 @@ Where are the contigs stored? Transfer the results to the results folder!
 
 **Does the assembly get better  if I use a different K-mer size?**
 
-To try different kmers, first copy your pbs script with a new kmer number:
+To try different kmers, first copy your `.pbs` script with a new name:
+
 ~~~
 $ cp velvetk31.sbatch velvetk21.sbatch
 $ nano -w velvetk21.sbatch
 ~~~
-and change K to a different value, currently 31. First use 21, and then copy
-the pbs script again and use 25.
-Then submit these new jobs:
+
+and change K to a different value, currently 31. Try 21 first, and then 25.
+then submit this new job:
 
 `$ sbatch velvetk21.sbatch`
 
-To see kmer coverage differences in a histogram format, we can use the following Perl script on the velvet stats file in each of your results folders: 
-~~~
+Your results will be in the `velvet31` subfolder.
+
+To see kmer coverage differences in a histogram format, we can use the included Perl script on the velvet `stats.txt` file in each of your results folders: 
+```
 $ module load velvet
 $ velvet-estimate-exp_cov.pl velvet31/stats.txt
     10 |      1 | **********
 <snip>
 Predicted expected coverage: 18
 velvetg parameters: -exp_cov 18 -cov_cutoff 0
-~~~
+```
+
+This is 
+a K-mer histogram. 
+
+![K-mer histogram from slides]({{ site.baseurl }}/fig/kmer-hist.png)
+
+You should learn that when using 
+K-mer based assembly methods, "good" K-mers show a peak where coverage 
+is the most accurate. K-mers at low coverage tend to be those with many errors, 
+and so they are ignored (we're going to ignore them too!). The coverage histogram 
+displays "coverage" vs. the "Number of K-mers". 
+The number of K-mers at every useful level of coverage are shown.
+
+Here's another trick: You can use this K-mer histogram to estimate the size of
+the genome you sequenced using the following formula:
+
+##### Genome_size = Total_Kmers / peak_Kmer_coverage
+
+Why do we want to estimate genome sizes? Briefly,
+K-mers represent a copy of all your sequencing data, broken into small fragments of an exact size.
+Software can **estimate** your coverage of the genome based on the number of "good" K-mers.
+
+> This is useful because: 
+> 1. Assemblers can be confused by repeated sequences and end up very inaccurate. This gives you a second opinion.
+> 2. You might not know anything about your genome size!
+> 
+> Imagine you had 30-billion base pairs of sequencing data, and you ***knew*** your coverage 
+> was "10-fold", you could then estimate the size of your genome being sequenced 
+> was 3-billion base-pairs long (30,000,000,000 ÷ 10 = 3,000,000,000)
+  
+To calculate "Total_Kmers", sum 
+all the numbers of all your K-mers. This is 
+(approximately) the **total number** of all your "good" K-mers.
+
+The formula above estimates the genome size based on K-mer histogram. What is your Group's 
+genome size estimate? `________` bp.
+ 
+
+
 ***CONGRATULATIONS*** on your first assembly!
 
-> ### What is a coverage histogram used for?
-> (in development)
 
+
+<!--
 
 ### SOAPdenovo2
 
@@ -266,12 +301,13 @@ Be sure to copy the result to your appropriate results folder.
 Using what you’ve learned, do the **25** K-mer value submitting the job
 and saving the results. 
 
+-->
 
 ### SPAdes
 
-(More under development)
 
-SPAdes (SPAdes – St. Petersburg genome assembler) – is a **MODERN** assembly toolkit containing various assembly pipelines. It is one of the most powerful asssembly software and is used world-wide.
+SPAdes (SPAdes – St. Petersburg genome Assembler) – is a **MODERN** assembly toolkit. It is one of the most 
+powerful asssembly software because it has several built-in pipelines.
 SPAdes works with Illumina or IonTorrent reads and is capable of providing hybrid assemblies using PacBio, Oxford Nanopore and Sanger reads. You can also provide additional contigs that will be used as long reads.
 SPAdes supports paired-end reads, mate-pairs and unpaired reads. SPAdes can take as input several paired-end and mate-pair libraries simultaneously. Note, that SPAdes was initially designed for small genomes, but is used for many larger genomes when computation power is available.
 In addition to genome asembly,  SPAdes 3.12.0 includes the following additional pipelines:
@@ -281,7 +317,9 @@ In addition to genome asembly,  SPAdes 3.12.0 includes the following additional 
 - rnaSPAdes – a de novo transcriptome assembler from RNA-Seq data (see rnaSPAdes manual).
 - truSPAdes – a module for TruSeq barcode assembly (see truSPAdes manual). 
 
-In addition, SPAdes provides several stand-alone programs with relatively simple command-line interface: k-mer counting (`spades-kmercounter`), assembly graph construction (`spades-gbuilder`) and long read to graph aligner (`spades-gmapper`). 
+SPAdes also provides stand-alone programs with relatively simple command-line interfaces for: k-mer 
+counting (`spades-kmercounter`), assembly graph construction (`spades-gbuilder`) and a 
+long read to graph aligner (`spades-gmapper`). So let's begin:
 
 `$ cd ../../spades/`
 
@@ -293,7 +331,7 @@ Be sure to change the line:
 `export GROUPNUMBER=1` 
 to ***your*** group number. 
 
-SPAdes is a powerful program with many capabilities built in. We can't cover everything today, but be sure to read the [SPAdes manual](https://cab.spbu.ru/files/release3.12.0/manual.html)!
+SPAdes has too many capabilities built-in to cover everything today, but be sure to read the [SPAdes manual](https://cab.spbu.ru/files/release3.12.0/manual.html)!
 
 If you understand the script and have changed the group number, press ctrl-x, save the file and submit it to the queue with the `sbatch` command as follows.
 
@@ -301,9 +339,9 @@ If you understand the script and have changed the group number, press ctrl-x, sa
  
 What was printed on the screen after you pressed enter? 
 
-`<jobidnumber>.mgmt1` 
+`Submitted batch job <jobidnumber>` 
 
-The log file, `spades.log` is found in the output directory and is very useful. 
+When the job is complete, the log file, `spades.log` is found in the output directory named "K31" and is very useful. 
 At the top it shows you the command you used. It then shows the software versions 
 you loaded. This is very important for making your results reproducible. 
 Spades will even give you recommendations if it thinks you could get 
@@ -311,11 +349,9 @@ better results using different settings.
 
 To examine the output file:
 
-`$ less spades.log`
- 
-(q to quit)
+`less spades.log`
 
-Find these information from the log file:
+Find these information from the log file (and remember press `q` to quit):
 
 Paired end library insert size: `_____________`   
 
@@ -327,17 +363,29 @@ To find contig stats you need to use `less` to look at the `contigs.paths` file
 
 max contig length ("NODE_1" in `contigs.paths`) `_______`
 
-Now remember to copy your output files to the results folder:
+**Does the assembly get better  if I use a different K-mer size?**
+
+To try different kmers, first copy your `.pbs` script with a new name:
+~~~
+$ cp spadesk31.sbatch spadesk21.sbatch
+$ nano -w velvetk21.sbatch
+~~~
+and change K to a different value, currently 31. Try 21 first, and then 25.
+then submit this new job:
+
+`$ sbatch velvetk21.sbatch`
+
+
+Now **remember to copy your output files to the results folder:**
 `$ cp spades31/contigs.fasta ../../results/spades31.fasta`
 
-SPAdes doesn't output an N50 score but it outputs lots of other information. We will see the N50 of the SPAdes output later in this Workshop lesson. 
-(All the outputs from SPAdes would require an extra lesson to show you, and we are working on that.)
+SPAdes doesn't output an N50 score but it outputs lots of other information. We will see the N50 of the SPAdes output later in this Workshop lesson.
 
 
 <!--
 
 STOPPED HERE
-
+(All the outputs from SPAdes would require an extra lesson to show you, and we are working on that.)
 
 
 
@@ -547,7 +595,7 @@ $ cp abyss25/abyss25-scaffolds.fa ../results/abyss25.fasta
 
 
 **Congratulations!** This lesson has shown you how you can assemble genomes using 
-three different software, and using different parameters (K-mers, in this lesson). 
+different software, and using different parameters (K-mers, in this lesson). 
 Now we should check our assemblies in a process called "validation" 
 before sending the best assembly to our collaborators! We will learn how to compare the 
 overall assembly of all our assemblers in our [NEXT LESSON]({{ site.baseurl }}/materials/genomics-assembly-reporting)
