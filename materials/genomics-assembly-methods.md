@@ -353,15 +353,13 @@ To examine the output file:
 
 Find these information from the log file (and remember press `q` to quit):
 
-Paired end library insert size: `_____________`   
+What is the Reads length of your sequences: `_____________`   
 
-Standard deviation `______________`
-
-K-mer maximum  `_________________`
+What is the SPAdes version used? `______________`
 
 To find contig stats you need to use `less` to look at the `contigs.paths` file
 
-max contig length ("NODE_1" in `contigs.paths`) `_______`
+What is the max contig length ("NODE_1" in `contigs.paths`) `_______`
 
 **Does the assembly get better  if I use a different K-mer size?**
 
