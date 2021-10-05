@@ -57,7 +57,7 @@ or you can use `scp` by typing the following command from your terminal:
 For Pete:
 
 ~~~
-$ scp ~/Desktop/shell_data.zip <username>@Pete.hpc.okstate.edu:/home/<username>/ 
+$ scp ~/Desktop/shell_data.zip <username>@pete.hpc.okstate.edu:/scratch/<username>/ 
 ~~~
 
 For AWS:
@@ -89,10 +89,14 @@ The data are paired-end, so we will download two files for each sample. We will 
 
 We are going to start in our home directory on our remote system:
 
-To download the data, run the commands below. It will take about 10 minutes to download the files.
+To download the data, run the commands below. It will take about 10 minutes to download the files. If it seems like a file does not want to dowload, hit Cntrl-C to stop it and re-start it. Do the files one at a time so you can monitor this!
+
+**mkdir -p ~/dc_workshop/data/untrimmed_fastq/
+cd ~/dc_workshop/data/untrimmed_fastq**
+
 ~~~
-mkdir -p ~/dc_workshop/data/untrimmed_fastq/
-cd ~/dc_workshop/data/untrimmed_fastq
+mkdir -p /scratch/<username>/dc_workshop/data/untrimmed_fastq/
+cd /scratch/<username>/dc_workshop/data/untrimmed_fastq
 
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/004/SRR2589044/SRR2589044_1.fastq.gz
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/004/SRR2589044/SRR2589044_2.fastq.gz
@@ -111,8 +115,8 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fa
 > avoid needing to download the data and instead use the data files provided in a `.backup/` directory.
 > 
 > ~~~
-> cd ~/dc_workshop/data/untrimmed_fastq
-> cp ~/.backup/untrimmed_fastq/*fastq.gz .
+> cd mkdir -p /scratch/<username>/dc_workshop/data/untrimmed_fastq
+> cp /.backup/untrimmed_fastq/*fastq.gz .
 > ~~~
 > 
 > This command creates a copy of each of the files in the `.backup/untrimmed_fastq/` directory that end in `fastq.gz` and
@@ -257,13 +261,13 @@ ther diagnostic plots to assess sample quality, in addition to the one plotted a
 We will now assess the quality of the reads that we downloaded. First, make sure you're in the `untrimmed_fastq` directory
 
 ~~~
-$ cd ~/dc_workshop/data/untrimmed_fastq/ 
+$ cd /scratch/<username>/dc_workshop/data/untrimmed_fastq/ 
 ~~~
 
 #### Review Exercise
 
 How big are the files?
-(Hint: Remember the options for the `ls` command to see how to show
+(Hint: Remember the options for the `ls -h` command to see how to show
 easily understandable file sizes.)
 
 #### Solution
@@ -294,7 +298,8 @@ from a submission script.
 
 ### Interactive would be great
 
-> If we "capture" a node on Pete to run the files interactively, we would 
+> If we were working on a cloud instance that didn't need submission scripts
+> we could run the files interactively. Then we would 
 > see an automatically updating output message telling you the 
 > progress of the analysis like this: 
 > 
@@ -307,8 +312,10 @@ from a submission script.
 > Approx 25% complete for SRR2584863_1.fastq
 > ~~~
 
-Since this is forbidden, we will create a submission script using `nano`. The command is:
+Since running interactively is forbidden on Pete, we will create a submission script using `nano`. The command is:
 `$ nano fastqc.sbatch` and when `nano` opens we will enter the following lines:
+**From the /scratch/<username>/dc_workshop/data/untrimmed_fastq directory**
+create and submit the following fastqc.sbatch file:
 
 ```
 #!/bin/bash
@@ -318,7 +325,7 @@ Since this is forbidden, we will create a submission script using `nano`. The co
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@okstate.edu>
 #SBATCH --mail-type=end
-module load fastqc
+module load fastqc/0.11.7
 fastqc *.fastq* 
 ```
 
@@ -352,16 +359,16 @@ will move these
 output files into a new directory within our `results/` directory.
 
 ~~~
-$ mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads 
-$ mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/ 
-$ mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/ 
+$ mkdir -p /scratch/<username>/dc_workshop/results/untrimmed_fastq_reads 
+$ mv *.zip /scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/ 
+$ mv *.html /scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/ 
 ~~~
 
-Now we can navigate into this results directory and do some closer
+Now we can **navigate into this results directory** and do some closer
 inspection of our output files.
 
 ~~~
-$ cd ~/dc_workshop/results/fastqc_untrimmed_reads/ 
+$ cd /scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/ 
 ~~~
 
 ### Viewing the FastQC results
@@ -391,8 +398,8 @@ use `scp`, which we learned yesterday in the Shell Genomics lesson.
 
 First we
 will make a new directory on our local computer to store the HTML files
-we're transferring. Let's put it on our desktop for now. Open a new
-terminal window, or a new tab in your terminal program (if your system
+we're transferring. Let's put it on our desktop for now. **Open a new
+terminal (GitBash) window**, or a new tab in your terminal program (if your system
 supports tabs, use the Cmd+t keyboard shortcut) and type: 
 
 ~~~
@@ -401,24 +408,32 @@ $ mkdir -p ~/Desktop/fastqc_html
 
 Now we can transfer our HTML files to our local computer using `scp`.
 
+<!--
 For AWS:
 
 ~~~
 $ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
 ~~~
+-->
 
 For Pete:
 
 ~~~
-$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/fastqc_untrimmed_reads/*.html ~/Desktop/fastqc_html/
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/*.html ~/Desktop/fastqc_html/
 ~~~
 
+<!--
 As a reminder, the first part
 of the command `dcuser@ec2-34-238-162-94.compute-1.amazonaws.com` is
 the address for your remote computer. Make sure you replace everything
 after `dcuser@` with your instance number (the one you used to log in). 
+-->
 
-The second part starts with a `:` and then gives the absolute path
+As a reminder, the first part
+of the command `<username>@pete.hpc.okstate.edu:` is
+the address for your remote computer.
+
+The second part after the `:` then gives the absolute path
 of the files you want to transfer from your remote computer. Don't
 forget the `:`. We used a wildcard (`*.html`) to indicate that we want all of
 the HTML files. 
@@ -470,13 +485,16 @@ We've now looked at quite a few "Per base sequence quality" FastQC graphs, but t
 ## Working with the FastQC text output
 
 Now that we've looked at our HTML reports to get a feel for the data,
-let's look more closely at the other output files. **Go back** to the terminal 
-program that is connected to Pete or your cloud instance
+let's look more closely at the other output files. 
+
+**Go back to the terminal 
+program that is connected to Pete** or your cloud instance
+
 and make sure you're in
-our results subdirectory.   
+our `/scratch/<username>/dc_workshop/results` subdirectory.   
 
 ~~~
-$ cd ~/dc_workshop/results/fastqc_untrimmed_reads/ 
+$ cd /scratch/dc_workshop/results/fastqc_untrimmed_reads/ 
 $ ls 
 ~~~
 
@@ -506,7 +524,7 @@ $ for filename in *.zip
 > done
 ~~~
 
-In this example, the input is six filenames (one filename for each of our `.zip` files).
+In this example, the input is six filenames (or one filename for each of our `.zip` files).
 Each time the loop iterates, it will assign a file name to the variable `filename`
 and run the `unzip` command.
 The first time through the loop,
@@ -578,7 +596,7 @@ Let's see what files are present within one of these output directories.
 ~~~
 $ ls -F SRR2584863_1_fastqc/ 
 fastqc_data.txt  fastqc.fo  fastqc_report.html	Icons/	Images/  summary.txt
-~~~
+~~~o
 
 Use `less` to preview the `summary.txt` file for this sample. 
 
@@ -606,10 +624,11 @@ us whether this sample passed, failed, or is borderline (`WARN`). Remember to qu
 We can make a record of the results we obtained for all our samples
 by concatenating all of our `summary.txt` files into a single file 
 using the `cat` command. We'll call this `full_report.txt` and move
-it to `~/dc_workshop/docs`.
+it to `/scratch/<username>/dc_workshop/docs`.
+(You might have to make this directory)
 
 ~~~
-$ cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt 
+$ cat */summary.txt > /scratch/<username>/dc_workshop/docs/fastqc_summaries.txt 
 ~~~
 
 ### Other notes  -- Optional 
