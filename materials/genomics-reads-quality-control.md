@@ -91,8 +91,9 @@ We are going to start in our home directory on our remote system:
 
 To download the data, run the commands below. It will take about 10 minutes to download the files. If it seems like a file does not want to dowload, hit Cntrl-C to stop it and re-start it. Do the files one at a time so you can monitor this!
 
-**mkdir -p ~/dc_workshop/data/untrimmed_fastq/
-cd ~/dc_workshop/data/untrimmed_fastq**
+**mkdir -p ~/dc_workshop/data/untrimmed_fastq/**
+
+**cd ~/dc_workshop/data/untrimmed_fastq**
 
 ~~~
 mkdir -p /scratch/<username>/dc_workshop/data/untrimmed_fastq/
@@ -488,13 +489,13 @@ Now that we've looked at our HTML reports to get a feel for the data,
 let's look more closely at the other output files. 
 
 **Go back to the terminal 
-program that is connected to Pete** or your cloud instance
+program that is connected to Pete** (or your cloud instance)
 
 and make sure you're in
 our `/scratch/<username>/dc_workshop/results` subdirectory.   
 
 ~~~
-$ cd /scratch/dc_workshop/results/fastqc_untrimmed_reads/ 
+$ cd /scratch/dc_workshop/results/ 
 $ ls 
 ~~~
 
