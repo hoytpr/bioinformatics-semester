@@ -177,8 +177,9 @@ We are going to run Trimmomatic on one of our paired-end samples.
 We saw using FastQC that Nextera adapters were present in our samples. 
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
+The download link is `wget https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/materials/NexteraPR-PE.fa`
 
-On Pete the command is:
+Alternatively on Pete the command is:
 
 `$cp /home/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
 
