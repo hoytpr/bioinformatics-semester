@@ -238,6 +238,7 @@ The PBS script looks like this. Open `nano` and copy-paste this into `nano` or t
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
 module load trimmomatic
+module load jre/1.8.0_221
 java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
             SRR2589044_1.trim.fastq.gz SRR2589044_1un.trim.fastq.gz \
             SRR2589044_2.trim.fastq.gz SRR2589044_2un.trim.fastq.gz \
@@ -379,7 +380,7 @@ Without a captured node, we should write a submission script named `trim-loop.sb
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
 module load trimmomatic
-
+module load jre/1.8.0_221
 for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
 ~~~
 By now, you should be able to understand the variables and commands in this `for` loop, but *this isn't easy*
