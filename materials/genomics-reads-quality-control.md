@@ -89,7 +89,7 @@ The data are paired-end, so we will download two files for each sample. We will 
 
 We are going to start in our home directory on our remote system:
 
-To download the data, run the commands below. It will take about 10 minutes to download the files. If it seems like a file does not want to dowload, hit Cntrl-C to stop it and re-start it. Do the files one at a time so you can monitor this!
+To download the data, run the commands below. It will take about 10 minutes to download the files. **If it seems like a file does not want to dowload, hit Cntrl-C to stop it and re-start it**. Do the files one at a time so you can monitor this! First make the directory to store the files, then enter it.
 
 **mkdir -p dc_workshop/data/untrimmed_fastq/**
 
@@ -106,6 +106,17 @@ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_2.fa
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_1.fastq.gz
 curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fastq.gz 
 ~~~
+
+If the `curl` command is going slow, stop it and use the `wget` command:
+~~~
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/004/SRR2589044/SRR2589044_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/004/SRR2589044/SRR2589044_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/003/SRR2584863/SRR2584863_2.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_1.fastq.gz
+wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR258/006/SRR2584866/SRR2584866_2.fastq.gz 
+~~~
+
 
 <!--
 
@@ -289,10 +300,6 @@ The biggest file (SRR2584863_1.fastq) is not in compressed format
 FastQC can accept multiple file names as input, and on both zipped and unzipped files, so we could
 use the \*.fastq* wildcard to run FastQC on all of the FASTQ files in this directory. (Remember that
 the \* wildcard character can represent "none")
-
-~~~
-$ fastqc *.fastq* 
-~~~
 
 Even though `fastqc` runs quickly, on the Pete Computer, we'll need to run `fastqc` 
 from a submission script.
