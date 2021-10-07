@@ -318,7 +318,15 @@ you start chaining them together, you can do some really powerful things very
 efficiently. 
 
 ### Using `basename` in 'for' loops
-`basename` is a ***function*** (much like a program) in Unix that is helpful for replacing a uniform 
+
+Let's go back and review the `basename` command:
+
+**Change to your older `data-shell` directory**
+
+```
+cd ../../data-shell/data/pdb
+```
+Recall that `basename` is a ***function*** (much like a program) in Unix that is helpful for replacing a uniform 
 part of a name from a list of files. In this case, we will use `basename` 
 to remove the `.pdb` extension from the files that we’ve been working with. 
 
