@@ -427,7 +427,7 @@ $ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fas
 For Pete:
 
 ~~~
-$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/data/untrimmed_fastq_reads/*.html ~/Desktop/fastqc_html/
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 <!--
@@ -499,10 +499,10 @@ let's look more closely at the other output files.
 program that is connected to Pete** (or your cloud instance)
 
 and make sure you're in
-our `/scratch/<username>/dc_workshop/results` subdirectory.   
+our `/scratch/<username>/dc_workshop/results/untrimmed_fastq_reads` subdirectory.   
 
 ~~~
-$ cd /scratch/dc_workshop/results/ 
+$ cd /scratch/dc_workshop/results/untrimmed_fastq_reads/
 $ ls 
 ~~~
 
@@ -636,7 +636,7 @@ it to `/scratch/<username>/dc_workshop/docs`.
 (You might have to make this directory)
 
 ~~~
-$ cat */summary.txt > /scratch/<username>/dc_workshop/docs/fastqc_summaries.txt 
+$ cat */summary.txt > /scratch/<username>/dc_workshop/docs/full_report.txt 
 ~~~
 
 ### Other notes  -- Optional 
