@@ -65,9 +65,9 @@ that the directory we start in depends on the operating system. For Macs and PCs
 ~~~
 $ cd ~/Desktop/shell_data/untrimmed_fastq
 ~~~
-On an HPC we would start in our home directory without a Desktop directory 
+On an the Pete HPC we would start in our home directory on "scratch" without a Desktop directory 
 ~~~
-$ cd ~/shell_data/untrimmed_fastq
+$ cd /scratch/<username>/shell_data/untrimmed_fastq
 ~~~
 Then we can start by searching for `N` strings inside of our fastq files.
 Suppose we want to see how many reads in our file have really bad segments 
