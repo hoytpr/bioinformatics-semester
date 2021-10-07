@@ -29,10 +29,12 @@ filter poor quality reads and trim poor quality bases from our samples.
 
 ## Trimmomatic Options
 
-Trimmomatic has a variety of options to trim your reads. If we run the command, we can see some of our options.
-(NOTE: Options display doesn't work on the Pete supercomputer)
+Trimmomatic has a variety of options to trim your reads. If we run the command without flags or arguments, we can see some of our options. But we have to load the java module first.
+
+
 
 ~~~
+module load jre/1.8.0_221
 $ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar
 ~~~
 
@@ -130,8 +132,8 @@ analysis. ***It is important to understand the steps you are using to
 clean your data***. For more information about the Trimmomatic arguments
 and options, see [the Trimmomatic manual](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf).
 
-However, a complete command for Trimmomatic will look something like the command below. This command is an ***example***
-and will not work because we do not have the files it refers to:
+However, a complete command for Trimmomatic will look something like the command below. **This command is an *example*
+and will not work** because we do not have the files it refers to:
 
 ~~~
 $ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR_1056_1.fastq SRR_1056_2.fastq  \
@@ -145,7 +147,7 @@ In this example, we've told Trimmomatic:
 | code   | meaning |
 | ------- | ---------- |
 | `PE` | that it will be taking a paired end file as input |
-| `-threads 4` | to use four computing threads to run (this will speed up our run) |
+| `-threads 4` | to use four computing threads to run (we can use 32  to speed up our run) |
 | `SRR_1056_1.fastq` | the first input file name |
 | `SRR_1056_2.fastq` | the second input file name |
 | `SRR_1056_1.trimmed.fastq` | the output file for surviving pairs from the `_1` file |
