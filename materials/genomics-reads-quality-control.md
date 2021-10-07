@@ -411,7 +411,7 @@ terminal (GitBash) window**, or a new tab in your terminal program (if your syst
 supports tabs, use the Cmd+t keyboard shortcut) and type: 
 
 ~~~
-$ mkdir -p ~/Desktop/fastqc_html 
+$ mkdir Desktop/fastqc_html 
 ~~~
 
 Now we can transfer our HTML files to our local computer using `scp`.
@@ -427,7 +427,7 @@ $ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fas
 For Pete:
 
 ~~~
-$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/*.html ~/Desktop/fastqc_html/
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/data/untrimmed_fastq_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 <!--
