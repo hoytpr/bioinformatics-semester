@@ -597,7 +597,7 @@ Let's see what files are present within one of these output directories.
 ~~~
 $ ls -F SRR2584863_1_fastqc/ 
 fastqc_data.txt  fastqc.fo  fastqc_report.html	Icons/	Images/  summary.txt
-~~~o
+~~~
 
 Use `less` to preview the `summary.txt` file for this sample. 
 
