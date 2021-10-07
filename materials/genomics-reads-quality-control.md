@@ -91,9 +91,9 @@ We are going to start in our home directory on our remote system:
 
 To download the data, run the commands below. It will take about 10 minutes to download the files. If it seems like a file does not want to dowload, hit Cntrl-C to stop it and re-start it. Do the files one at a time so you can monitor this!
 
-**mkdir -p ~/dc_workshop/data/untrimmed_fastq/**
+**mkdir -p dc_workshop/data/untrimmed_fastq/**
 
-**cd ~/dc_workshop/data/untrimmed_fastq**
+**cd dc_workshop/data/untrimmed_fastq**
 
 ~~~
 mkdir -p /scratch/<username>/dc_workshop/data/untrimmed_fastq/
@@ -139,7 +139,7 @@ let's unzip one of the files so that we
 can look at the fastq format.
 
 ~~~
-$ gunzip SRR2584863_1.fastq.gz 
+$ gunzip SRR2589044_1.fastq.gz
 ~~~
 
 ### Quality Control
@@ -164,7 +164,7 @@ We can view the first complete read in one of the files our dataset by using `he
 the first four lines. 
 
 ~~~
-$ head -n 4 SRR2584863_1.fastq 
+$ head -n 4 SRR2589044_1.fastq.gz 
 ~~~
 
 ~~~
@@ -420,7 +420,7 @@ $ scp dcuser@ec2-34-238-162-94.compute-1.amazonaws.com:~/dc_workshop/results/fas
 For Pete:
 
 ~~~
-$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/*.html ~/Desktop/fastqc_html/
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/untrimmed_fastq_reads/*.html ~/Desktop/fastqc_html/
 ~~~
 
 <!--
