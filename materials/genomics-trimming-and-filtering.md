@@ -183,10 +183,9 @@ Alternatively on Pete the command is:
 
 `$cp /home/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
 
-This is really just an example of how files can be "hidden" in hidden directories. 
-Can you tell the class which file is actually hidden in the `.hidden` folder?
+This is also an example of how files can be "hidden" in hidden directories. 
 
-We are going to pull the "trimming" file from The Data Carpentry site into the 
+We can also pull the "trimming" file from The Data Carpentry site into the 
 `untrimmed_fastq` folder:
 
 `curl -O https://raw.githubusercontent.com/datacarpentry/wrangling-genomics/gh-pages/files/NexteraPE-PE.fa`
@@ -219,7 +218,7 @@ CTGTCTCTTATACACATCTCCGAGCCCACGAGAC
 ~~~
 This is a `.fasta` file that contains the known sequences of adapters used when creating Nextera™
 libraries. They are usually trimmed off but in some cases, they might
-be left for an external software like `trimmomatic` to remove as
+be accidently missed, or left for an external software like `trimmomatic` to remove as
 part of a ***pipeline***. 
 
 We will also use a sliding window of size 4bp that will remove bases if their
