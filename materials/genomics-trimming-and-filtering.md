@@ -125,7 +125,7 @@ The last things Trimmomatic expects are the steps of the trimming parameters:
 | `HEADCROP` |  Cut the specified number of bases from the start of the read. |
 | `MINLEN`  |  Drop an entire read if it is below a specified length. |
 | `TOPHRED33` | Convert quality scores to Phred-33.  |
-| `TOPHRED64` |  Convert quality scores to Phred-64. |
+| `TOPHRED64` |  Convert quality scores to Phred-64.  |
 
 We will use only a few of these options and trimming steps in our
 analysis. ***It is important to understand the steps you are using to
