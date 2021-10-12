@@ -52,13 +52,13 @@ $ gunzip data/ref_genome/ecoli_rel606.fasta.gz
 **[Do the In-class Exercise 1 by clicking on this link.]({{site.baseurl}}/exercises/Genomics-variant-calling-workflow-1-Shell)**
 <a name="vcf"></a>
 
-We will also download a set of trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
-and will enable us to run our variant calling workflow quite quickly. 
+We will also download a set of already trimmed FASTQ files to work with. These are small subsets of our real trimmed data, 
+and will enable us to run our variant calling workflow quite quickly. We will decompress the entire directory (`sub/`) with the sequencing files, then ***move*** (not copy) the directory `sub` to a new directory named `trimmed_fastq_small`.
 
 ~~~
 $ curl -O https://s3-eu-west-1.amazonaws.com/pfigshare-u-files/14418248/sub.tar.gz
 $ tar xvf sub.tar.gz
-$ mv sub/ ~/dc_workshop/data/trimmed_fastq_small
+$ mv /sub data/trimmed_fastq_small
 ~~~
 
 You will also need to create directories for the results that will be generated as part of this workflow. We can do this in a single
