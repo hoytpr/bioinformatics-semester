@@ -40,7 +40,7 @@ The alignment process consists of two steps:
 
 ### Setting up
 
-First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. We will start in our `dc_workshop` directory.
+First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. We will start in our `dc_workshop` directory. Notice we are downloading the file and re-naming it at the same time.
 
 ~~~
 $ cd ~/dc_workshop
@@ -115,9 +115,9 @@ While the index is created, you will see output something like this:
 ### Align reads to reference genome
 
 The alignment process consists of choosing an appropriate reference genome to map our reads against and then 
-***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is the latest and is generally recommended 
-for high-quality queries as it is faster and more accurate. Unlike our previous lessons using older software, this is 
-the state-of-the-art! BWA-MEM does a lot of same things, but does them automatically. 
+***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is one of the best and recommended 
+for high-quality queries because it is faster and more accurate. BWA-MEM does a lot of same things as
+our previous aligners, but BWA does them automatically. 
 
 An **example** of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
 
@@ -125,16 +125,16 @@ An **example** of what a `bwa` command looks like is below. This command will no
 $ bwa mem ref_genome.fasta input_file_R1.fastq input_file_R2.fastq > output.sam
 ~~~
 
-Using this example, take a look at the [bwa options page](http://bio-bwa.sourceforge.net/bwa.shtml). While we are running bwa with the default 
-parameters here, your use case might require a change of parameters. *NOTE: Always read the manual page for any tool before use,
+Using this example, take a look at the [bwa reference manual options page](http://bio-bwa.sourceforge.net/bwa.shtml). We are running `bwa` with the default 
+parameters here, but your use case might require different parameters. *NOTE: Always read the manual page for any tool before use,
 and make sure the options you choose are appropriate for your data.*
 
 We're going to start by aligning the reads from only ***one*** of the 
 samples in our dataset (`SRR2584866`). Later, we'll be 
-iterating this whole process on all of our sample files with loops.
+iterating this whole process on all of our sample files using loops.
 
 
-On Pete, make a submission script named align.sbatch
+On Pete, make a submission script named align.sbatch (making sure to put in your real email)
 
 
 ~~~
@@ -145,7 +145,7 @@ On Pete, make a submission script named align.sbatch
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
-module load bwa
+module load bwa/0.7.17
 bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/sub/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/sub/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
 ~~~
 
@@ -157,8 +157,8 @@ $ bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866
 ~~~
 -->
 
-You will see output that starts like this:
-or it will be in the submission script output file: `align.oxxxxxx` 
+Note that the final output is a `SAM` file. While running the software reports on what it is doing \
+using the `align.oxxxxxx` file, which looks something like this:
 
 ~~~
 [M::bwa_idx_load_from_disk] read 0 ALT contigs
@@ -173,13 +173,13 @@ or it will be in the submission script output file: `align.oxxxxxx`
 [M::mem_pestat] analyzing insert size distribution for orientation FR...
 ~~~
 
-#### SAM/BAM format
+#### SAM/BAM formats
 The [SAM file](https://genome.sph.umich.edu/wiki/SAM),
 is a tab-delimited text file that contains information for each individual read and its alignment to the genome. While we do not 
 have time to go in detail of the features of the SAM format, the paper by 
 [Heng Li et al.](http://bioinformatics.oxfordjournals.org/content/25/16/2078.full) provides a lot more detail on the specification.
 
-**The compressed binary version of SAM is called a BAM file.** We use the BAM file version to reduce size and to allow for *indexing*, which enables efficient random access of the data contained within the file.
+**The compressed binary version of SAM is called a BAM file.** We use the BAM file version to reduce size and allow *indexing*, which enables efficient random access of the data contained within the file.
 
 We can open and look at a SAM file because it is text, but once we start working with the BAM formatted files, we won't be able to look at them with any text editor. 
 So let's go ahead and look at the formatting of a SAM file now. 
@@ -194,12 +194,19 @@ displayed below with the different fields highlighted.
 
 ![sam_bam2]({{ site.baseurl }}/fig/sam_bam3.png)
 
-We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`). This goes very fast so we can do it without using a submission "`pbs`" script: 
+We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`). We will need to use a sbatch submission script: 
 
 ~~~
-$ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.aligned.bam
+#!/bin/bash
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
+module load samtools/1.10
+samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.aligned.bam
 
-[samopen] SAM header is present: 1 sequences.
 ~~~
 
 ### Sorting BAM files by coordinates
@@ -216,7 +223,7 @@ On Pete create a submission script called `bamsort.sbatch`:
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
-module load samtools/1.9
+module load samtools/1.10
 samtools sort results/bam/SRR2584866.aligned.bam -o results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 
