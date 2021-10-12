@@ -119,7 +119,7 @@ The alignment process consists of choosing an appropriate reference genome to ma
 for high-quality queries because it is faster and more accurate. `Bwa-mem` does a lot of same things as
 our previous aligners, but `bwa` does them automatically. 
 
-An **example** of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
+An **example** of what a minimum `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
 
 ~~~
 $ bwa mem ref_genome.fasta input_file_R1.fastq input_file_R2.fastq > output.sam
