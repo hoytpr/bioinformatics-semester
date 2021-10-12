@@ -38,7 +38,7 @@ The alignment process consists of two steps:
 2. Aligning the reads to the reference genome
 
 
-### Setting up
+### Setting up the data
 
 First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. **We will start in our `dc_workshop` directory.** Then we will make a directory to store the reference genome. Notice we are downloading the file and re-naming it at the same time.
 
@@ -115,9 +115,9 @@ While the index is created, you will see output something like this:
 ### Align reads to reference genome
 
 The alignment process consists of choosing an appropriate reference genome to map our reads against and then 
-***deciding on an aligner***. We will use the **BWA-MEM** algorithm, which is one of the best and recommended 
-for high-quality queries because it is faster and more accurate. BWA-MEM does a lot of same things as
-our previous aligners, but BWA does them automatically. 
+***deciding on an aligner***. We decided to use the **bwa_mem** algorithm, which is one of the best, and is recommended 
+for high-quality queries because it is faster and more accurate. `Bwa-mem` does a lot of same things as
+our previous aligners, but `bwa` does them automatically. 
 
 An **example** of what a `bwa` command looks like is below. This command will not run, as we do not have the files `ref_genome.fa`, `input_file_R1.fastq`, or `input_file_R2.fastq`.
 
