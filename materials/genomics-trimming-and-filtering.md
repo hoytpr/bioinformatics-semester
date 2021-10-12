@@ -177,12 +177,15 @@ We are going to run Trimmomatic on one of our paired-end samples.
 We saw using FastQC that Nextera adapters were present in our samples. 
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
-The download link is from Canvas `https://canvas.okstate.edu/files/12302789/download?download_frd=1`
+Try this download link first:
+wget https://raw.githubusercontent.com/hoytpr/bioinformatics-semester/gh-pages/materials/NexteraPE-PE.fa
 
-We can also pull the "trimming" file from The Data Carpentry site into the 
+If that doesn't work 
+we can also pull the "trimming" file from The Data Carpentry site into the 
 `untrimmed_fastq` folder:
 
 `curl -O https://raw.githubusercontent.com/datacarpentry/wrangling-genomics/gh-pages/files/NexteraPE-PE.fa`
+
 
 <!--
 If you were using the dc-genomics AWS cloud you could use:
