@@ -40,7 +40,7 @@ The alignment process consists of two steps:
 
 ### Setting up
 
-First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. **We will start in our `dc_workshop` directory.** Notice we are downloading the file and re-naming it at the same time.
+First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. **We will start in our `dc_workshop` directory.** Then we will make a directory to store the reference genome. Notice we are downloading the file and re-naming it at the same time.
 
 ~~~
 $ cd /scratch/<username>/dc_workshop
