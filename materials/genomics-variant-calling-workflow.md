@@ -258,7 +258,7 @@ module load samtools/1.10
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 Save this file, and submit it. When it's finished
-the job output will give you the multiple statistics about your sorted bam file:
+the `slurm-xxxxxxx.out`job output will give you the multiple statistics about your sorted bam file which you can see using the `cat` command:
 
 ~~~
 351169 + 0 in total (QC-passed reads + QC-failed reads)
