@@ -246,6 +246,8 @@ Notice that the command for trimmomatic is one long line. Save this submission s
 and submit it to Pete using
 `sbatch trim1.sbatch`. 
 
+<!--
+
 If we were not using submission scripts, we would input the command directly and the **interactive** (one long line) command would look like this:
 ~~~
 $ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR2589044_1.fastq.gz SRR2589044_2.fastq.gz \
@@ -269,6 +271,8 @@ Quality encoding detected as phred33
 Input Read Pairs: 1107090 Both Surviving: 885220 (79.96%) Forward Only Surviving: 216472 (19.55%) Reverse Only Surviving: 2850 (0.26%) Dropped: 2548 (0.23%)
 TrimmomaticPE: Completed successfully
 ~~~
+
+-->
 
 #### Checking your Trimmomatic outputs
 
