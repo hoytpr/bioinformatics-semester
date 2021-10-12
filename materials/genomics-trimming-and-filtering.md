@@ -136,7 +136,7 @@ However, a complete command for Trimmomatic will look something like the command
 and will not work** because we do not have the files it refers to:
 
 ~~~
-$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 SRR_1056_1.fastq SRR_1056_2.fastq  \
+$ java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 4 SRR_1056_1.fastq SRR_1056_2.fastq  \
               SRR_1056_1.trimmed.fastq SRR_1056_1un.trimmed.fastq \
               SRR_1056_2.trimmed.fastq SRR_1056_2un.trimmed.fastq \
               ILLUMINACLIP:NexteraPE-PE.fa SLIDINGWINDOW:4:20
