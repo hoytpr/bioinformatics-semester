@@ -427,8 +427,8 @@ SRR2589044_1.fastq.gz
 
 
 We've now completed the trimming and filtering steps of our quality
-control process! Before we move on, let's move our trimmed FASTQ files
-to a new subdirectory within our `data/` directory.
+control process! **Before we move on, let's move our trimmed FASTQ files
+to a new subdirectory within our `data/` directory.**
 
 ~~~
 $ cd ~/dc_workshop/data/untrimmed_fastq
