@@ -40,7 +40,7 @@ The alignment process consists of two steps:
 
 ### Setting up
 
-First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. We will start in our `dc_workshop` directory. Notice we are downloading the file and re-naming it at the same time.
+First we download the reference genome for *E. coli* REL606. Although we could copy or move the file with `cp` or `mv`, most genomics workflows begin with a download step, so we will practice that here. **We will start in our `dc_workshop` directory.** Notice we are downloading the file and re-naming it at the same time.
 
 ~~~
 $ cd ~/dc_workshop
@@ -194,7 +194,8 @@ displayed below with the different fields highlighted.
 
 ![sam_bam2]({{ site.baseurl }}/fig/sam_bam3.png)
 
-We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`). We will need to use a sbatch submission script: 
+We will convert the SAM file to BAM format using the `samtools` program with the `view` command and tell this command that the input is in SAM format (`-S`) and to output BAM format (`-b`). We will need to use a sbatch submission script.
+Name it "sam2bam.sbatch": 
 
 ~~~
 #!/bin/bash
@@ -211,7 +212,7 @@ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.
 
 ### Sorting BAM files by coordinates
 
-To manipulate the BAM files, we continue using the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output (only works on samtools after version 1.2).
+To manipulate the BAM files, we continue using the `samtools` toolset. Our next step is to **sort** the BAM file using the `sort` command from `samtools`. The `-o` flag tells the command where to write the output (only works on samtools after version 1.2).
 
 On Pete create a submission script called `bamsort.sbatch`:
 
@@ -240,10 +241,10 @@ $ samtools sort -o results/bam/SRR2584866.aligned.sorted.bam results/bam/SRR2584
 
 -->
 
-Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, e.g. by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM, and different downstream tools require differently sorted alignment files as input**.
+Why do we sort these files? Because basically, DNA is linear, and putting reads in the same order as the genome, makes the rest of the mapping process run faster! But, SAM/BAM files can be sorted in multiple ways, *e.g.* by location of alignment on the chromosome, by read name, etc. **It is important to be aware that different alignment tools will output differently sorted SAM/BAM file types, and different downstream tools require differently sorted alignment files as input**.
 
 You can use other tools in samtools to learn more about `SRR2584866.aligned.bam`, e.g. `flagstat`.
-On Pete, using `nano`, create a submission script named `flagstst.sbatch` 
+On Pete, using `nano`, create a submission script named `flagstat.sbatch` 
 
 ~~~
 #!/bin/bash
@@ -253,11 +254,11 @@ On Pete, using `nano`, create a submission script named `flagstst.sbatch`
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
-module load samtools/1.9
+module load samtools/1.10
 samtools flagstat results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 Save this file, and submit it. When it's finished
-the job output will give you the following statistics about your sorted bam file:
+the job output will give you the multiple statistics about your sorted bam file:
 
 ~~~
 351169 + 0 in total (QC-passed reads + QC-failed reads)
