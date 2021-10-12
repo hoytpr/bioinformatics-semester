@@ -7,25 +7,28 @@ title: Loop Extra
 
 ```
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=12
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 module load trimmomatic
-for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads=12 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
+module load jre/1.8.0_221
+for infile in *_1.fastq.gz; do base=$(basename ${infile} _1.fastq.gz); java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15; done
 ```
 #### The submission script part
 
 By now we should know the following lines set up the submission as an express queue, on one node, 
-with 12 processors, for one hour:
+with 1 processor, for one hour:
 ```
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=12
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
 ```
 
 The line `module load trimmomatic` sets up the default parameters for `trimmomatic`
@@ -33,11 +36,13 @@ The line `module load trimmomatic` sets up the default parameters for `trimmomat
 #### Now the loop!
 
 ```
-for infile in *_1.fastq.gz; 
-	do base=$(basename ${infile} _1.fastq.gz)
-	java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads=4 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15
-	done
+for infile in *_1.fastq.gz 
+    do base=$(basename ${infile} _1.fastq.gz) 
+    java -jar /opt/trimmomatic/0.38/prebuilt/trimmomatic-0.38.jar PE -threads 2 ${infile} ${base}_2.fastq.gz ${base}_1.trim.fastq.gz ${base}_1un.trim.fastq.gz ${base}_2.trim.fastq.gz ${base}_2un.trim.fastq.gz SLIDINGWINDOW:4:20 MINLEN:25 ILLUMINACLIP:NexteraPE-PE.fa:2:40:15 
+    done
 ```
+
+
 
 1. First we setup the variable `${infile}` as we iterate through the folder looking for
 all files ending in `_1.fastq.gz`. So `${infile}` represents all the COMPLETE filenames that have 
