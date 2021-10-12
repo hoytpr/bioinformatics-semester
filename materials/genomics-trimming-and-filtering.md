@@ -178,7 +178,7 @@ We saw using FastQC that Nextera adapters were present in our samples.
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
 Try this download link first:
-wget https://raw.githubusercontent.com/hoytpr/bioinformatics-semester/gh-pages/materials/NexteraPE-PE.fa
+`wget https://raw.githubusercontent.com/hoytpr/bioinformatics-semester/gh-pages/materials/NexteraPE-PE.fa`
 
 If that doesn't work 
 we can also pull the "trimming" file from The Data Carpentry site into the 
