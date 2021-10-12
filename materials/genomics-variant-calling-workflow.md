@@ -211,7 +211,7 @@ samtools view -S -b results/sam/SRR2584866.aligned.sam > results/bam/SRR2584866.
 
 ### Sorting BAM files by coordinates
 
-To manipulate the BAM files, we need to use the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output (only works on samtools after version 1.2).
+To manipulate the BAM files, we continue using the `samtools` toolset. Our next step is to sort the BAM file using the `sort` command from `samtools`. `-o` tells the command where to write the output (only works on samtools after version 1.2).
 
 On Pete create a submission script called `bamsort.sbatch`:
 
