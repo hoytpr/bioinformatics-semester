@@ -134,7 +134,7 @@ samples in our dataset (`SRR2584866`). Later, we'll be
 iterating this whole process on all of our sample files using loops.
 
 
-On Pete, make a submission script named align.sbatch (making sure to put in your real email)
+On Pete, make a submission script named **`align.sbatch`** (making sure to put in your real email)
 
 
 ~~~
@@ -146,7 +146,7 @@ On Pete, make a submission script named align.sbatch (making sure to put in your
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
 module load bwa/0.7.17
-bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/sub/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/sub/SRR2584866_2.trim.sub.fastq > results/sam/SRR2584866.aligned.sam
+bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq > results/SRR2584866.aligned.sam
 ~~~
 
 <!--
@@ -157,7 +157,7 @@ $ bwa mem data/ref_genome/ecoli_rel606.fasta data/trimmed_fastq_small/SRR2584866
 ~~~
 -->
 
-Note that the final output is a `SAM` file. While running the software reports on what it is doing \
+Note that the final output is a **`.SAM`** file. While performing alignment, the `bwa mem` software reports on what it is doing \
 using the `align.oxxxxxx` file, which looks something like this:
 
 ~~~
