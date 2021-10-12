@@ -107,7 +107,7 @@ output files. These files are described below.
 | option    | meaning |
 | ------- | ---------- |
 |  \<inputFile1>  | Input reads to be trimmed. Typically the file name will contain `_1` or `_R1` in the name.|
-| \<inputFile2> | Input reads to be trimmed. Typically the file name will contain `_2` or `_R2` in the name.|
+|  \<inputFile2> | Input reads to be trimmed. Typically the file name will contain `_2` or `_R2` in the name.|
 |  \<outputFile1P> | Output file that contains surviving pairs from the `_1` file. |
 |  \<outputFile1U> | Output file that contains orphaned reads from the `_1` file. |
 |  \<outputFile2P> | Output file that contains surviving pairs from the `_2` file.|
@@ -120,12 +120,12 @@ The last things Trimmomatic expects are the steps of the trimming parameters:
 | `ILLUMINACLIP` | Perform adapter removal |
 | `SLIDINGWINDOW` | Perform sliding window trimming, cutting once the average quality within the window falls below a threshold. |
 | `LEADING`  | Cut bases off the start of a read, if below a threshold quality.  |
-|  `TRAILING` |  Cut bases off the end of a read, if below a threshold quality. |
+| `TRAILING` |  Cut bases off the end of a read, if below a threshold quality. |
 | `CROP`  |  Cut the read to a specified length from the end. |
-|  `HEADCROP` |  Cut the specified number of bases from the start of the read. |
+| `HEADCROP` |  Cut the specified number of bases from the start of the read. |
 | `MINLEN`  |  Drop an entire read if it is below a specified length. |
-|  `TOPHRED33` | Convert quality scores to Phred-33.  |
-|  `TOPHRED64` |  Convert quality scores to Phred-64. |
+| `TOPHRED33` | Convert quality scores to Phred-33.  |
+| `TOPHRED64` |  Convert quality scores to Phred-64. |
 
 We will use only a few of these options and trimming steps in our
 analysis. ***It is important to understand the steps you are using to
@@ -177,13 +177,7 @@ We are going to run Trimmomatic on one of our paired-end samples.
 We saw using FastQC that Nextera adapters were present in our samples. 
 These adapter sequences usually come with the installation of trimmomatic, in a file
 named `NexteraPE-PE.fa`. To be sure we have it we will first copy this file into our current directory.
-The download link is `wget https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/materials/NexteraPR-PE.fa`
-
-Alternatively on Pete the command is:
-
-`$cp /home/<username>/shell_data/.hidden/NexteraPE-PE.fa .`
-
-This is also an example of how files can be "hidden" in hidden directories. 
+The download link is from Canvas `https://canvas.okstate.edu/files/12302789/download?download_frd=1`
 
 We can also pull the "trimming" file from The Data Carpentry site into the 
 `untrimmed_fastq` folder:
