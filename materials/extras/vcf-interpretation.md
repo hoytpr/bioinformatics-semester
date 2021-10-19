@@ -33,8 +33,8 @@ and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least ce
 
 > **Wait! What about haploid vs ploidy?**
 >
-> This is a great question, and there are more details about ploidy are actively being developed.
-> For now, the issue is only partially resolved and when mapping 
+> This is a great question, and there are more details about ploidy actively being developed.
+> For now, the issue is only partially resolved, and when mapping 
 > reads or contigs to a reference genome 
 > the reference genome (*e.g.* human) is usually represented as haploid.
 > For now, some software try to infer the ploidy level, and other software (*e.g.* BWA-MEM)
