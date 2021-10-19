@@ -559,7 +559,7 @@ software installation and transfer of files.
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
 
 On Pete, create a submission script called samindex.pbd:
-```
+~~~
 #!/bin/bash
 #SBATCH -p express
 #SBATCH -t 1:00:00
@@ -570,10 +570,11 @@ On Pete, create a submission script called samindex.pbd:
 module load bcftools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
-On a cloud instance just use:
-~~~
-$ samtools index results/bam/SRR2584866.aligned.sorted.bam
-~~~
+
+You now have a file named SRR2584866.aligned.sorted.bam.bai in your /results/bam/ directory.
+
+
+
 
 <!--
 
@@ -584,7 +585,6 @@ $ samtools index results/bam/SRR2584866.aligned.sorted.bam
 It can use colors to display mapping quality or base quality, subjected to users' choice (but we won't specifiy colors for now). 
 Samtools viewer is fast enough to work with an 130 GB alignment and because it uses a text interface, you can even 
 display alignments over a network.
-
 In order to visualize our mapped reads with `tview`, we give it the sorted bam file and the reference file: 
 NOTE: We can't do this on Pete, unless we capture a node. So on Pete try:
 
