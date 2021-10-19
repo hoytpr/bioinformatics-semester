@@ -19,13 +19,14 @@ by definition ***NOT a variant***. When that occurs, the first of three `PL` val
 Remember this when you go back to our `SRR2584866_final_variants.vcf` file in the lesson and the `-v` flag in 
 the `bcftools call` command. 
 
+When all three PL values are shown they represent genotype calls for **hom-ref**,**het**,**hom-alt**
 The result for any **hom-ref** allele, when all three `PL` values are always shown, will be `0,<value>,<value>` 
 The result **hom-ref** alleles are not shown in VCF files and only two values are listed for a `PL` metric, as 
-in `SRR2584866_final_variants.vcf` you will 
+in `SRR2584866_final_variants.vcf` you should 
 only see `PL` scores as: `<value>,0` (**hom-alt**) or `0,<value>` (**het**). 
 
 However, the **hom-ref** value can help define variants, or indicate problems in the 
-variant "call" when a **hom-alt** is shown as: `<value>,<value>,0`
+variant "call" when a **hom-alt** is shown as: `<value>,0,<value>` or `<value>,<value>,0`
 
 If this seems confusing, you are not alone! The max `<value>` (the lowest probability) is `255` representing 10^(-25.5) as described below 
 and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least certain. Some examples are below:
@@ -72,9 +73,10 @@ fields which are `103,0,26`.
 
 The call for this allele is heterozygous = **het** or GT value(0/1). 
 
-But also notice the`REF` **hom-ref** allele
-is 103 or 10^(-10.3) which is ***close*** to 0 (5^(-11)) and 
-the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) so it is *unlikely* but ***possible***. 
+But also notice the **hom-ref** allele PL value
+is 103 or 10^(-10.3) which is ***close*** to 0 while 
+the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood 
+of 10^(-2.6), or 0.0025) so it is *unlikely* but ***possible***). 
 
 CONCLUSIONS: We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
 the reference allele) and actually has a better chance of being **hom-var** 
