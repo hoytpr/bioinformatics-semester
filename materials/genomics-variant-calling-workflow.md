@@ -344,7 +344,7 @@ The ploidy.sbatch submission script on Pete should be:
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
 module load bcftools
-bcftools call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
+bcftools call --ploidy 1 -m -v -o results/vcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf
 ~~~
 <!--
 On a cloud instance:
