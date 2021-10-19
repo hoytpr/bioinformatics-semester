@@ -3,7 +3,7 @@ layout: page
 title: Computer Setup
 ---
 
-***BIOC 6820 students will need their own laptops or desktops set up with Git Bash before the course begins, R and RStudio need to be installed later.***
+***BIOC 6820 students will need their own laptops or desktops set up with Git Bash before the course begins, R and RStudio need to be installed later. You will need an account on the "Pete" HPC at Oklahoma State, and a personal (free) account on GitHub***
 
 ### Shell (most important)
 
@@ -14,7 +14,7 @@ title: Computer Setup
 ### Special Note: 
 
 #### Data Carpentry Genomics Workshop 
-Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST released in June 2019. However, we will likely not be using the Amazon Cloud Services. Instead, we will be using either the free [Cyverse research cloud](https://atmo.cyverse.org/) or the Oklahoma State University "Cowboy" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, otherwise know as ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
+Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST previewed in June 2019. In 2021, we will not be using the Amazon Cloud Services. Instead, we will be using the Oklahoma State University "Pete" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, otherwise known as ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
  
 > \* A 4-8 core processor at > 3.0GHz, at least 16Gb of RAM, at least 500Gb of free disk space on an SSD drive (1 Tb recommended). 
 

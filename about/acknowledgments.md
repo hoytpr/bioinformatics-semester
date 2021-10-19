@@ -11,7 +11,7 @@ implemented by [Ethan White](http://ethanwhite.org) and [Zachary Brym](http://za
 details. More recent genomics lessons from the Carpentries were developed thanks to 
 [genomics data experts](https://github.com/datacarpentry/organization-genomics/graphs/contributors) 
 , [genomics wrangling experts](https://github.com/datacarpentry/wrangling-genomics/graphs/contributors) 
-and [shell experts](https://github.com/datacarpentry/shell-genomics/graphs/contributors)) who should 
+and [shell experts](https://github.com/datacarpentry/shell-genomics/graphs/contributors) who should 
 be appreciated. You can cite the material used in this course using the follwing DOI:
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3260609.svg)](https://doi.org/10.5281/zenodo.3260609)
