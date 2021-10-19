@@ -7,39 +7,44 @@ language: Shell
 
 We are going to start our interpretation of a variant calls by paraphrasing the description from the Broad Institute:
 
-The differences between `VCF` files makes this topic harder to grasp. We will spend a little time on the ***meanings*** of some metrics to help keep your bioinformatics workflow operating. First there is an image to help understand the locations and relationships between the headers and the records:
+The differences between `.VCF` files makes this topic harder to grasp. We will spend a little time on the ***meanings*** of some metrics to help keep your bioinformatics workflow operating. First we present an image to help understand the locations and relationships between the headers and the records:
 
 ![color VCF]({{ site.baseurl }}/fig/simple-color-VCF-example.png)
 
-Here's an image of the SNP alleles we are describing opened in a spreadsheet without the headers:
+Here's an image of different SNP alleles from the Lecture (and described below) opened in a spreadsheet without the headers:
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
 
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
-by definition ***NOT a variant***. That is why you will see the first of three `PL` values left out of some VCF files (like in our `.vcf` file in the lesson). In cases where all three `PL` values are shown, the result for the **hom-ref** `PL` metric scores will all be `0,<value>,<value>` 
-In VCF files where only two values are listed for a `PL` metric you will see `PL` scores as: `<value>,0` (**hom-alt**) or `0,<value>` (**het**). 
+by definition ***NOT a variant***. When that occurs, the first of three `PL` values are omitted from VCF files 
+Remember this when you go back to our `SRR2584866_final_variants.vcf` file in the lesson and the `-v` flag in 
+the `bcftools call` command. 
 
-However, 
-as shown below, there may be times when the **hom-ref** value helps define variants, or indicates problems in the 
-variant "call". 
-and **hom-alt** will be shown as: `<value>,<value>,0`
+The result for any **hom-ref** allele, when all three `PL` values are always shown, will be `0,<value>,<value>` 
+The result **hom-ref** alleles are not shown in VCF files and only two values are listed for a `PL` metric, as 
+in `SRR2584866_final_variants.vcf` you will 
+only see `PL` scores as: `<value>,0` (**hom-alt**) or `0,<value>` (**het**). 
 
-If this seems confusing, you are not alone! The max `<value>` is 255 representing 10^(-25.5) as described below and `0` means 10^(-0) = 1. So `0` is the most certain, and 255 is the least certain. 
+However, the **hom-ref** value can help define variants, or indicate problems in the 
+variant "call" when a **hom-alt** is shown as: `<value>,<value>,0`
 
-> **What about haploid vs ploidy?**
+If this seems confusing, you are not alone! The max `<value>` (the lowest probability) is `255` representing 10^(-25.5) as described below 
+and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least certain. Some examples are below:
+
+> **Wait! What about haploid vs ploidy?**
 >
-> This is a great question, and there are more details to be worked out in the very near
-> future. For now, the issue is only partially resolved and when mapping 
+> This is a great question, and there are more details about ploidy are actively being developed.
+> For now, the issue is only partially resolved and when mapping 
 > reads or contigs to a reference genome 
 > the reference genome (*e.g.* human) is usually represented as haploid.
 > For now, some software try to infer the ploidy level, and other software (*e.g.* BWA-MEM)
-> actively work to use ploidy in the analyses. This is beyond the scope of our lesson, but 
+> actively work to use ploidy in the analyses. ***This is beyond the scope of our lesson***, but 
 > you can represent haploid or diploid variants as `REF/ALT` (`0/0`, `0/1`, `0/2`, etc.) and 
 > call genotypes as `0`, `1`, `2`... etc.
 > 
 > **Note:** This isn't a trivial problem as in humans the autosomes are diploid, 
 > the sex chromosomes are haploid, and mitochondrial genomes are polyploid! 
 > 
-> Interessting examples of this problem are discussed at [https://www.biostars.org/p/348867/](https://www.biostars.org/p/348867/) and
+> Interesting examples of this problem are discussed at [https://www.biostars.org/p/348867/](https://www.biostars.org/p/348867/) and
 > [https://galaxyproject.org/tutorials/var_hap/](https://galaxyproject.org/tutorials/var_hap/)
 
 ### Example 1:
@@ -51,7 +56,7 @@ The genotype information for (RESULTS column) named `NA12878` at Chromosome 1 po
 (Where it says "snip" we just omitted some annotation). 
 At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
 
-> This can be confusing, 
+> Yes, this can be confusing, 
 > because one might think the "GT" 
 > is the genotype `G/T`, but `GT` is the "TAG" 
 > ABBREVIATION for the "GenoType" short name metric. 
