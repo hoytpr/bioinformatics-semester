@@ -361,7 +361,7 @@ The `VCF` format is one of the most famous formats in bioinformatics! Unfortunat
 
 Filter the SNPs for the final output in VCF format, using `vcfutils.pl`:
 
-On Pete make a submission script named finalvcf.sbatch:
+On Pete make a submission script named **`finalvcf.sbatch`**:
 
 ~~~
 #!/bin/bash
@@ -388,7 +388,7 @@ The `vcfutils.pl` script outputs a well-formatted `.vcf` file we can now explore
 ![VCF File Parts]({{ site.baseurl }}/fig/vcf-file-basic-parts.png)
 (image credit: The Broad Institute)
 
-The basic parts of a `.vcf` file are the "Header", followed by the "Records". Both parts have important and 
+The ***basic*** parts of a `.vcf` file are the "Header", followed by the "Records". Both parts have important and 
 highly specific information.  Let's look at the file using `less`.
 
 ~~~
@@ -397,7 +397,7 @@ $ less -S results/vcf/SRR2584866_final_variants.vcf
 
 You will see the header (header lines begin with `##`) and describes the format, the time and date the file was
 created, the version of bcftools that was used, the command line parameters used, and 
-lots of additional information to annotate SNPs:
+**lots** of additional information to annotate SNPs.
 
 ~~~
 ##fileformat=VCFv4.2
@@ -428,12 +428,18 @@ lots of additional information to annotate SNPs:
 ##INFO=<ID=MQ,Number=1,Type=Integer,Description="Average mapping quality">
 ##bcftools_callVersion=1.8+htslib-1.8
 ##bcftools_callCommand=call --ploidy 1 -m -v -o results/bcf/SRR2584866_variants.vcf results/bcf/SRR2584866_raw.bcf; Date=Tue Oct  9 18:48:10 2018
+#CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  results/bam/SRR2584866.aligned.sorted.bam
+CP000819.1      1521    .       C       T       207     .       DP=9;VDB=0.993024;SGB=-0.662043;MQSB=0.974597;MQ0F=0;AC=1;AN=1;DP4=0,0,4,5;MQ=60        GT:PL   1:237,0
+CP000819.1      1612    .       A       G       225     .       DP=13;VDB=0.52194;SGB=-0.676189;MQSB=0.950952;MQ0F=0;AC=1;AN=1;DP4=0,0,6,5;MQ=60        GT:PL   1:255,0
 ~~~
 
 >**It is important to know that there are variations in `.vcf` files!**
-> For example, our output does not have an `ID=AD` metric in the header, 
-> but `ID=AD` is common in `.vcf` HEADER 
-> lines and `.vcf` files. 
+> For example, in the **header** we see lots of **descriptors** such as **`ID=AN`** and **`ID=MQ`** (we will learn more about metrics later)
+> but our header output does not have an `ID=AD` descriptor, even though it is commonly used. 
+> Descriptors and their associated **metrics** (*e.g.* **`AN=1`** and **`MQ=60`**) will vary in `.vcf` files made by different softwware. 
+
+All of the header information, descriptors, and configuration details are
+followed by **RECORDS** information for **each of the variations observed**:  
 
 <!--
 Many of the metrics like `ID=AD`can be 
@@ -449,8 +455,7 @@ to prevent the header lines from wrapping on your terminal screen.
 
 -->
 
-All of the header information, and configuration details are
-followed by **RECORDS** information for **each of the variations observed**: 
+
 
 ~~~
 #CHROM  POS  ID  REF  ALT  QUAL  FILTER  INFO  FORMAT  results/bam/SRR2584866.aligned.sorted.bam
@@ -473,21 +478,22 @@ CP000819.1  64042  .  G  A  225  .  DP=18;VDB=0.451328;SGB=-0.689466;MQSB=1;MQ0F
 Here's what the top of the RECORDS might look like if you opened it in a spreadsheet
 ![VCF File top]({{ site.baseurl }}/fig/vcf-file-spreadsheet.png)
 
-The first few columns represent the information we have about a ***predicted variation***. 
+The first four columns represent the information we have about a ***predicted variation***. 
 
 | Column | Description |
 | ------- | ---------- |
 | CHROM | Chromosomal (or contig) where the variation occurs | 
 | POS | position within the chromosome (or contig) where the variation occurs | 
-| ID | a **`.`** is used until we add annotation information | 
+| ID | a **`•`** is used where we did not add annotation information | 
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better, maximum=99) |
-| FILTER | a **`.`** is used if no quality filters have been applied, "PASS" if a quality filter is passed, or the name(s) of the filters this variant may have failed | 
-| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=00)** separated by **colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
+| FILTER | a **`•`** means no quality filters have been applied, "PASS" means a quality filter is passed, or filter names this variant failed to pass | 
+| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=<value>)** separated by **semi-colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
+
 In an ***ideal*** world, the information in the `QUAL` column would be all we needed to filter out bad variant calls.
 However, in reality we will need to continue filtering using other metrics. 
 
@@ -496,7 +502,7 @@ The last two columns contain the ***GenoTypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names) of the sample-level annotations presented *in a specific order*. There can be several metrics (sometimes called annotation short names) in this column | 
+| FORMAT | The **metrics** (short names derived from the header **tags**) of the sample-level annotations presented *in a specific order*. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
 | "RESULTS" (This column name varies) | lists each **value** corresponding to every metric *in the same specific order*. The **value** here is related to the value following the **TAG** in the previous header lines (but may be in a different format) | 
 
 ***These last two columns are important for determining if the variant call is real or not.*** 
