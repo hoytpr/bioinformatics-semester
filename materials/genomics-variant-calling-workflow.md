@@ -502,8 +502,8 @@ The last two columns contain the ***GenoTypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names derived from the header **tags**) of the sample-level annotations presented *in a specific order* and separated by ***colon*** characters. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
-| "RESULTS" (This column name varies) | lists **values** corresponding to every metric *in the same specific order*. The **value** here is the value following the **TAG** in the associated header lines. Values are separated by colons, but where a value (e.g. "PL") has multiple metrics they are separated by commas (e.g. "255,0") | 
+| FORMAT | The **metrics** (with names derived from the header **tags**) of the sample-level annotations presented *in a specific order* and separated by ***colon*** characters. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
+| "RESULTS" (This column name varies) | lists **values** corresponding to every metric *in the same specific order*. The **value** follows the **TAG** for each locus line in the RECORDS. Values are separated by colons, but where a value (e.g. "PL") has multiple metrics they are separated by commas (e.g. "255,0") | 
 
 ***These last two columns are important for determining if the variant call is real or not.*** 
 For the file in this lesson, the metrics (we requested) are presented as **GT:PL** which (according to the header definitions) stand for 
