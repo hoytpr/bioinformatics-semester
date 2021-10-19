@@ -42,39 +42,39 @@ and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least ce
 > call genotypes as `0`, `1`, `2`... etc.
 > 
 > **Note:** This isn't a trivial problem as in humans the autosomes are diploid, 
-> the sex chromosomes are haploid, and mitochondrial genomes are polyploid! 
+> the sex chromosomes are (mostly) haploid, and mitochondrial genomes are polyploid! 
 > 
 > Interesting examples of this problem are discussed at [https://www.biostars.org/p/348867/](https://www.biostars.org/p/348867/) and
 > [https://galaxyproject.org/tutorials/var_hap/](https://galaxyproject.org/tutorials/var_hap/)
 
 ### Example 1:
 
-The genotype information for (RESULTS column) named `NA12878` at Chromosome 1 position 899282.
+The genotype information for (RESULTS column) named `NA12878` at Chromosome 1 position 899282
+(Where it says "snip" we just omitted some annotation).
 
 `1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
-(Where it says "snip" we just omitted some annotation). 
 At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
 
 > Yes, this can be confusing, 
 > because one might think the "GT" 
 > is the genotype `G/T`, but `GT` is the "TAG" 
-> ABBREVIATION for the "GenoType" short name metric. 
+> ABBREVIATION for the "**G**eno**T**ype" short name metric. 
 
 The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
 because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF ( = had the reference base) 
 and 3 of which matched ALT ( = had the alternate base) as indicated by `AD = 1,3`. In very simple terms the GQ is defined as:
 
-"The difference between the second lowest PL and the **lowest** PL (which is always 0)"
+"The difference between the **second lowest** PL and the **lowest** PL (and the lowest PL is always 0)"
 
-The lack of certainty is evident in the PL 
+The lack of certainty in calling this allele is evident in the PL 
 fields which are `103,0,26`.  
 
-The call is heterozygous = **het** or GT (0/1). 
+The call for this allele is heterozygous = **het** or GT value(0/1). 
 
 But also notice the`REF` **hom-ref** allele
-is 103 or 10^(-10.3) which is close to 0 (5e-11) and 
-the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) and this is unlikely but *possible*. 
+is 103 or 10^(-10.3) which is ***close*** to 0 (5^(-11)) and 
+the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood of 10^(-2.6), or 0.0025) so it is *unlikely* but ***possible***. 
 
 CONCLUSIONS: We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
 the reference allele) and actually has a better chance of being **hom-var** 
@@ -93,7 +93,7 @@ at least three possibilities displayed a `REF/ALT`:
 * GT (1/1) "homozygous at ALT allele" (This basically means the base in the REF genome is the variant)
 
 
-`1	873762	.	T	G	[CLIPPED]	GT:AD:DP:GQ:PL	0/1:173,141:282:99:255,0,255`
+`1	873762	.	T	G	<snip>	GT:AD:DP:GQ:PL	0/1:173,141:282:99:255,0,255`
 
 The called genotype is T/G, and the genotype metric `GT` has the value: 0/1 = a heterozygous allele (**het**)
 
