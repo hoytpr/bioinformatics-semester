@@ -488,8 +488,8 @@ The first four columns represent the information we have about a ***predicted va
 | REF | reference genotype (forward strand) | 
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better, maximum=99) |
-| FILTER | a **`•`** means no quality filters have been applied, "PASS" means a quality filter is passed, or filter names this variant failed to pass | 
-| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=<value>)** separated by **semi-colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
+| FILTER | a **`•`** means no quality filters were applied, "PASS" means a quality filter is passed, or a filter name means this variant failed that filter | 
+| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=\<value\>)** separated by **semi-colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
