@@ -502,8 +502,8 @@ The last two columns contain the ***GenoTypes*** and can be tricky to decode.
 
 | column | definition |
 | ------- | ---------- |
-| FORMAT | The **metrics** (short names derived from the header **tags**) of the sample-level annotations presented *in a specific order*. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
-| "RESULTS" (This column name varies) | lists each **value** corresponding to every metric *in the same specific order*. The **value** here is related to the value following the **TAG** in the previous header lines (but may be in a different format) | 
+| FORMAT | The **metrics** (short names derived from the header **tags**) of the sample-level annotations presented *in a specific order* and separated by ***colon*** characters. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
+| "RESULTS" (This column name varies) | lists each **value** corresponding to every metric *in the same specific order*. The **value** here is the value following the **TAG** in the associated header lines (but may be in a different format) | 
 
 ***These last two columns are important for determining if the variant call is real or not.*** 
 For the file in this lesson, the metrics (we requested) are presented as **GT:PL** which (according to the header definitions) stand for 
@@ -519,12 +519,12 @@ are also separated by colon characters. These and a few other metrics and defini
 | GQ | the **G**enotype's Phred-scaled quality **S**core (confidence) for the called genotype | 
 | PL | the "Normalized" **P**hred-scaled **Likelihoods** of the given genotypes |
 
-To be very clear, below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
-It has been opened in a spreadsheet, and shows some very significant differences between our `bcftools` created `.vcf` file
+Below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
+It has been opened in a spreadsheet, and shows some differences between our `bcftools` created `.vcf` file
 and the GATK-produced `.vcf` file. We don't want to be confusing, but you should remember they can be different. 
 
 Notice there are several short-name metrics under the "FORMAT" column, 
-each with a corresponding value under the "RESULTS" column, named `NA12878` in this example. Remember that the default 
+each with a corresponding value under the "RESULTS" column (named `NA12878` in this example). Remember that the default 
 metric values always put the `REF` value before the `ALT` value (`REF/ALT` or `REF,ALT`).
 
 ![VCF File Results Example]({{ site.baseurl }}/fig/vcf-from-broad.png)
@@ -534,7 +534,7 @@ In this example, at position **873762** the metrics are:
 | ------ | ------- |----------|
 | GT | 0/1 | The called genotype is **het** |
 | AD | 173,141 | there are 173 matches to `REF`, and 141 matches to `ALT` |
-| DP | 282 | There are 282 reads that map to this site |
+| DP | 282 | There are 282 total reads that map to this site |
 | GQ | 99 | This is the highest confidence possible |
 | PL | 255,0,255 | There is a 10^(-25.5) chance this is **homozygous-REF**, there is 10^(-0) chance this is **HET**, and there is 10^(-25.5) chance this is **homozygous ALT** 
 
