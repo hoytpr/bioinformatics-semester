@@ -15,20 +15,19 @@ Here's an image of different SNP alleles from the Lecture (and described below) 
 ![allele in excel]({{ site.baseurl }}/fig/vcf-from-broad.png)
 
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
-by definition ***NOT a variant***. When that occurs, the first of three `PL` values are omitted from VCF files 
+by definition ***NOT a variant***. When that occurs, the first of three `PL` values are sometimes omitted from VCF files. 
 Remember this when you go back to our `SRR2584866_final_variants.vcf` file in the lesson and the `-v` flag in 
-the `bcftools call` command. 
+the `bcftools call` command! 
 
 When all three PL values are shown they represent genotype calls for **hom-ref**,**het**,**hom-alt** (`REF,HET,ALT`)
 The result for any **hom-ref** allele, when all three `PL` values are always shown, will be `0,<value>,<value>` 
-The result **hom-ref** alleles are not shown in VCF files and only two values are listed for a `PL` metric, as 
-in `SRR2584866_final_variants.vcf` you should 
-only see `PL` scores as: `<value>,0` (**hom-alt**) or `0,<value>` (**het**). 
+The result when **hom-ref** alleles are not shown in VCF files is the two values listed 
+for a `PL` metric, are: `<value>,0` (**hom-alt**) or `0,<value>` (**het**). 
 
 However, the **hom-ref** value can help define variants, or indicate problems in the 
 variant "call" when a **hom-alt** is shown as: `<value>,0,<value>` or `<value>,<value>,0`
 
-If this seems confusing, you are not alone! The max `<value>` (the lowest probability) is `255` representing 10^(-25.5) as described below 
+If this seems confusing, you are not alone! The max `<value>` (the lowest probability) is `255` representing 10^(-25.5) 
 and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least certain. Some examples are below:
 
 > **Wait! What about haploid vs ploidy?**
@@ -51,7 +50,7 @@ and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least ce
 ### Example 1:
 
 The genotype information for a RESULTS column named `NA12878`, at Chromosome 1 position 899282
-(Where it says "<snip>" we just omitted some annotation).
+(Where it says "\<snip\>" we just omitted some annotation).
 
 `1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
@@ -67,7 +66,7 @@ Notice the confidence indicated by `GQ = 26` [isn't very good](https://software.
 because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched the REF ( = had the reference base) 
 and 3 of which matched the ALT ( = had the alternate base) as indicated by `AD = 1,3`. In very simple terms the GQ is defined as:
 
-"The difference between the **second lowest** PL and the **lowest** PL (and the lowest PL is always 0)"
+"The difference between the **second lowest** PL and the **lowest** PL (the lowest PL is always 0)"
 
 The lack of certainty in calling this allele also shows up in the PL 
 fields which are `103,0,26`.  
@@ -75,7 +74,7 @@ fields which are `103,0,26`.
 The reason for this allele call is because the **hom-ref** allele PL value
 is 103 or 10^(-10.3) which is ***close*** to 0 while 
 the PL for the `ALT` allele **hom-var** is `PL = 26` (which corresponds to a likelihood 
-of 10^(-2.6), or 0.0025) so it is *unlikely* but ***possible***). 
+of 10^(-2.6), or 0.0026) so it is *unlikely* but ***possible***). 
 
 CONCLUSIONS: We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
 the reference allele) and actually has a slim chance of being **hom-var** 
@@ -89,7 +88,7 @@ is incorrect, **therefore more coverage is needed at this site**.
 Now let's try explaining the example from the Broad institutes example at position 873762. 
 We'll use our own words:
 First, recognize that a "genotype" (*i.e.* the `GT` metric) can have 
-at least three possibilities displayed as `REF/ALT` (or `REF,ALT`):
+at least three possibilities displayed as `REF/ALT` (or sometimes `REF,ALT`):
 * GT (0/0) "homozygous with the REF allele" (This basically means there is no variant)
 * GT (0/1) "heterozygous at REF allele" 
 * GT (1/1) "homozygous at ALT allele" (This basically means the base in the REF genome is the variant)
@@ -108,9 +107,9 @@ The allelic reads metric `AD` shows there were 173 reads matching the REF genome
 * This tells us the locus has about a nearly perfect heterozygosity score for a diploid genome (141/282 = 50%)
 * Also, we know some reads were not used for the `GT` metric because 173 + 141 = 314 reads, which is greater than the `DP` "total" reads metric (282).
 
-The likelyhood metrics are shown as `PL` values for each type of allele (always shown as likelihood of `REF/ALT` or `REF,ALT`). 
+The likelyhood metrics are shown as `PL` values for each type of allele are `255,0,255`. 
 
-Now we know that the different VCF file options **in each column** have asssigned positions, divided by colons, 
+Now we know that the different VCF file options **in each column** have assigned positions, divided by colons, 
 and that each metric can have multiple values divided by commas. Also, these will ***vary*** depending on which 
 software generated the file and may not report some metrics values.
 
