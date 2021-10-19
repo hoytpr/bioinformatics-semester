@@ -129,6 +129,7 @@ Therefore:
  2. There's not much chance the genotype assignment is incorrect, and 
  3. The sample is **het** (heterozygous) for T/G at this locus.
 
+Now that it's all very clear, we can [go back to the variant calling workflow page.]({{ site.baseurl }}/materials/genomics-variant-calling-workflow/#vcf2)
 <!--
 Note that a `GT` allele assignment of 0/0 (**hom-ref**) essentially means the reads match the REF genome. Which is 
 by definition *NOT a variant*. That is why you will see this value left out of some VCF files (like in our `.vcf` file in the lesson). 

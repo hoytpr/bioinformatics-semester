@@ -541,6 +541,7 @@ In this example, at position **873762** the metrics are:
 Now you probably noticed that the `PL` metric has ***three*** values (`255,0,255`), rather than the ***two*** values
 we have in our bcftools-produced `.vcf` file. For a detailed breakdown of the variant call at this SNP, using the Broad format,
 we have created this **[extra page on VCF interpretation]({{ site.baseurl }}/materials/extras/vcf-interpretation)**.
+<a name="vcf2"></a>
 
 #### The Broad Institute's [VCF guide](https://www.broadinstitute.org/gatk/guide/article?id=1268) is an excellent place to learn more about VCF file format.
 
