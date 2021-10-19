@@ -89,7 +89,7 @@ is incorrect, **therefore more coverage is needed at this site**.
 Now let's try explaining the example from the Broad institutes example at position 873762. 
 We'll use our own words:
 First, recognize that a "genotype" (*i.e.* the `GT` metric) can have 
-at least three possibilities displayed as `REF/ALT`:
+at least three possibilities displayed as `REF/ALT` (or `REF,ALT`):
 * GT (0/0) "homozygous with the REF allele" (This basically means there is no variant)
 * GT (0/1) "heterozygous at REF allele" 
 * GT (1/1) "homozygous at ALT allele" (This basically means the base in the REF genome is the variant)
