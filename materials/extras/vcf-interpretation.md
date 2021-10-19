@@ -55,7 +55,7 @@ The genotype information for a RESULTS column named `NA12878`, at Chromosome 1 p
 
 `1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
-At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
+At this SNP site, the **called** genotype `GT` is **het** (heterozygous) `GT = 0/1`, which corresponds to the alleles **C/T**. 
 
 > Yes, this can be confusing, 
 > because one might think the "GT" 
@@ -63,7 +63,7 @@ At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`,
 > ABBREVIATION for the "**G**eno**T**ype" short name metric. 
 
 #### The GQ tag
-But, notice the confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
+Notice the confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
 because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched the REF ( = had the reference base) 
 and 3 of which matched the ALT ( = had the alternate base) as indicated by `AD = 1,3`. In very simple terms the GQ is defined as:
 
@@ -72,16 +72,15 @@ and 3 of which matched the ALT ( = had the alternate base) as indicated by `AD =
 The lack of certainty in calling this allele also shows up in the PL 
 fields which are `103,0,26`.  
 
-The call for this allele is heterozygous = **het** or GT value(0/1). 
-
-But also notice the **hom-ref** allele PL value
+The reason for this allele call is because the **hom-ref** allele PL value
 is 103 or 10^(-10.3) which is ***close*** to 0 while 
-the PL for the `ALT` allele **hom-var** is `PL(1/1) = 26` (which corresponds to a likelihood 
+the PL for the `ALT` allele **hom-var** is `PL = 26` (which corresponds to a likelihood 
 of 10^(-2.6), or 0.0025) so it is *unlikely* but ***possible***). 
 
 CONCLUSIONS: We can only conclude that the subject is definitely not **hom-ref** (homozygous with 
-the reference allele) and actually has a better chance of being **hom-var** 
-(homozygous with the variant allele)! The call for position 899282 as **het** is probably correct, but there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
+the reference allele) and actually has a slim chance of being **hom-var** 
+(homozygous with the variant allele)! The call for position 899282 as **het** is probably correct, 
+but there's a slight chance that the genotype assignment of **het** (`GT=0/1`)
 is incorrect, **therefore more coverage is needed at this site**.  
 
 
