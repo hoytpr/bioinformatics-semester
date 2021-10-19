@@ -19,7 +19,7 @@ by definition ***NOT a variant***. When that occurs, the first of three `PL` val
 Remember this when you go back to our `SRR2584866_final_variants.vcf` file in the lesson and the `-v` flag in 
 the `bcftools call` command. 
 
-When all three PL values are shown they represent genotype calls for **hom-ref**,**het**,**hom-alt**
+When all three PL values are shown they represent genotype calls for **hom-ref**,**het**,**hom-alt** (`REF,HET,ALT`)
 The result for any **hom-ref** allele, when all three `PL` values are always shown, will be `0,<value>,<value>` 
 The result **hom-ref** alleles are not shown in VCF files and only two values are listed for a `PL` metric, as 
 in `SRR2584866_final_variants.vcf` you should 
@@ -50,8 +50,8 @@ and `0` means 10^(-0) = 1. So `0` is the most certain, and `255` is the least ce
 
 ### Example 1:
 
-The genotype information for (RESULTS column) named `NA12878` at Chromosome 1 position 899282
-(Where it says "snip" we just omitted some annotation).
+The genotype information for a RESULTS column named `NA12878`, at Chromosome 1 position 899282
+(Where it says "<snip>" we just omitted some annotation).
 
 `1   899282  rs28548431  C   T   <snip> GT:AD:DP:GQ:PL    0/1:1,3:4:26:103,0,26`
 
@@ -62,13 +62,14 @@ At this SNP site, the called genotype `GT` is **het** (heterozygous) `GT = 0/1`,
 > is the genotype `G/T`, but `GT` is the "TAG" 
 > ABBREVIATION for the "**G**eno**T**ype" short name metric. 
 
-The confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
-because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched REF ( = had the reference base) 
-and 3 of which matched ALT ( = had the alternate base) as indicated by `AD = 1,3`. In very simple terms the GQ is defined as:
+#### The GQ tag
+But, notice the confidence indicated by `GQ = 26` [isn't very good](https://software.broadinstitute.org/gatk/documentation/article?id=11075), largely 
+because there were only a total of 4 reads at this site (`DP = 4`), 1 of which matched the REF ( = had the reference base) 
+and 3 of which matched the ALT ( = had the alternate base) as indicated by `AD = 1,3`. In very simple terms the GQ is defined as:
 
 "The difference between the **second lowest** PL and the **lowest** PL (and the lowest PL is always 0)"
 
-The lack of certainty in calling this allele is evident in the PL 
+The lack of certainty in calling this allele also shows up in the PL 
 fields which are `103,0,26`.  
 
 The call for this allele is heterozygous = **het** or GT value(0/1). 
