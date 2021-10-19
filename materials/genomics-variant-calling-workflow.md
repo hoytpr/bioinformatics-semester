@@ -434,12 +434,12 @@ CP000819.1      1612    .       A       G       225     .       DP=13;VDB=0.5219
 ~~~
 
 >**It is important to know that there are variations in `.vcf` files!**
-> For example, in the **header** we see lots of **descriptors** such as **`ID=AN`** and **`ID=MQ`** (we will learn more about metrics later)
-> but our header output does not have an `ID=AD` descriptor, even though it is commonly used. 
-> Descriptors and their associated **metrics** (*e.g.* **`AN=1`** and **`MQ=60`**) will vary in `.vcf` files made by different softwware. 
+> For example, in the **header** we see lots of **descriptors** such as **`ID=AN`** and **`ID=MQ`** referred to as **tag-value pairs**
+> (we will learn more about metrics later)
+> Tag-value pair descriptors and their associated **metrics** (*e.g.* **`AN=1`** and **`MQ=60`**) will vary in `.vcf` files made by different softwware. 
 
-All of the header information, descriptors, and configuration details are
-followed by **RECORDS** information for **each of the variations observed**:  
+All of the header information, tag-pairs, and configuration details are
+followed by **RECORDS**: information for **each of the variations observed**:  
 
 <!--
 Many of the metrics like `ID=AD`can be 
@@ -489,7 +489,7 @@ The first four columns represent the information we have about a ***predicted va
 | ALT | sample genotype (forward strand) | 
 | QUAL | Phred-scaled probability that the observed variant exists at this site (higher is better, maximum=99) |
 | FILTER | a **`•`** means no quality filters were applied, "PASS" means a quality filter is passed, or a filter name means this variant failed that filter | 
-| INFO | annotations contained in the INFO field are represented as **tag-value pairs (TAG=\<value\>)** separated by **semi-colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
+| INFO | ***annotations*** contained in the INFO field are represented as **tag-value pairs (TAG=\<value\>)** separated by **semi-colon** characters. TAGs are **short-names for metrics**. These typically summarize information from the sample. ***Check the header for definitions of the tag-value pairs***. |
 
 You can also find additional information on how they are calculated and how they should be interpreted in the "Variant Annotations" 
 section of the [Broad GATK Tool Documentation](https://www.broadinstitute.org/gatk/guide/tooldocs/). 
@@ -503,7 +503,7 @@ The last two columns contain the ***GenoTypes*** and can be tricky to decode.
 | column | definition |
 | ------- | ---------- |
 | FORMAT | The **metrics** (short names derived from the header **tags**) of the sample-level annotations presented *in a specific order* and separated by ***colon*** characters. There can be several metrics (sometimes called "annotation short names") in this column. We have two metrics: `GT:PL` | 
-| "RESULTS" (This column name varies) | lists each **value** corresponding to every metric *in the same specific order*. The **value** here is the value following the **TAG** in the associated header lines (but may be in a different format) | 
+| "RESULTS" (This column name varies) | lists **values** corresponding to every metric *in the same specific order*. The **value** here is the value following the **TAG** in the associated header lines. Values are separated by colons, but where a value (e.g. "PL") has multiple metrics they are separated by commas (e.g. "255,0") | 
 
 ***These last two columns are important for determining if the variant call is real or not.*** 
 For the file in this lesson, the metrics (we requested) are presented as **GT:PL** which (according to the header definitions) stand for 
@@ -517,7 +517,7 @@ are also separated by colon characters. These and a few other metrics and defini
 | AD | the unfiltered **A**llele **D**epth, *i.e.* "coverage" or the number of reads that match each of the reported alleles shown as `REF/ALT` or sometimes `REF,ALT`|
 | DP | the filtered sequencing **D**e**P**th (Total number of reads), at the this position in the sample |
 | GQ | the **G**enotype's Phred-scaled quality **S**core (confidence) for the called genotype | 
-| PL | the "Normalized" **P**hred-scaled **Likelihoods** of the given genotypes |
+| PL | the "Normalized" **P**hred-scaled **Likelihoods** of the given genotypes. The called genotype is alwayss given a value of "0" |
 
 Below is another example of the RECORDS part of a `.vcf` file borrowed from the [Broad Institute website](https://software.broadinstitute.org/gatk/documentation/article.php?id=1268).
 It has been opened in a spreadsheet, and shows some differences between our `bcftools` created `.vcf` file
