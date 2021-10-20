@@ -683,32 +683,62 @@ regions, known genes, epigenetic features or areas of cross-species conservation
 In order to use IGV, we will need to transfer some files to our local machine. We learned how to do this with `scp`. 
 Open a **new** tab in your LOCAL terminal window **(not the one connected to a remote computer)** and 
 create a new folder named `dc_workshop` on our `Desktop`.
-Then we'll make the directory `files_for_igv` to store the files:
+Then we'll make the directory `igvfiles` to store the files:
 
 ~~~
 $ mkdir ~/Desktop/dc_workshop
-$ mkdir ~/Desktop/dc_workshop/files_for_igv
-$ cd ~/Desktop/dc_workshop/files_for_igv
+$ mkdir ~/Desktop/dc_workshop/igvfiles
 ~~~
 
-Now we will transfer our files to that new directory using `scp`. 
+Now we will transfer our files to that new directory using `scp`. But to make it easier, we will 
+combine all the files we need together into a `.ZIP` file on the Pete HPC so that we only have one file to download
+(and we are being good internet citizens by compressing our data and using less bandwidth). 
+Because compression is a slow process, we will have to write a submission script for this named `zip.batch`
 
+~~~
+#!/bin/bash
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
+
+mkdir igvfiles
+cp results/bam/SRR2584866.aligned.sorted.bam igvfiles
+cp results/bam/SRR2584866.aligned.sorted.bam.bai igvfiles
+cp data/ref_genome/ecoli_rel606.fasta igvfiles
+cp results/vcf/SRR2584866_final_variants.vcf igvfiles
+tar -czvf igvfiles.tar.gz igvfiles/*
+~~~
+
+Now we can download the `igvfiles.tar.gz` file from our GitBash window into our local`dc_workshop` directory.
+
+~~~
+scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/igvfiles.tar.gz ~/Desktop/dc_workshop/
+~~~
+Then decompress our files using the matching igvfiles directory.
+~~~
+tar -zxvf igvfiles.tar.gz
+~~~
+
+**NOTE:** The `tar` command doesn't create directories, which is why we had to make one for our files.
 <!--
 
 When using a remote system, remember to replace put your `<username>` before the `@` symbol, 
 and the `<ip-address>`, or your AWS (or CyVerse) instance number between the text between the `@` and the `:`.
 The commands to `scp` are always entered in the terminal window that is connected to your
 **local** computer (not your remote/AWS instance).
--->
+
 
 For Pete:
 ~~~
-$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
-$ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/bam/SRR2584866.aligned.sorted.bam.bai ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/data/ref_genome/ecoli_rel606.fasta ~/Desktop/dc_workshop/files_for_igv
+$ scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/results/vcf/SRR2584866_final_variants.vcf ~/Desktop/dc_workshop/files_for_igv
 ~~~
-<!--
+
 > Just as an example, these are the same commands if you were using the Amazon cloud:
 > For an AWS cloud instance:
 > ~~~
@@ -719,7 +749,14 @@ $ scp <username>@pete.hpc.okstate.edu:~/dc_workshop/results/vcf/SRR2584866_final
 ~~~
 
 You will need to type the password for your remote/AWS instance each time you call `scp`. 
+Now from our local (desktop) dc_workshop directory, we will unzip our files:
+
+~~~
+gunzip files_for_igv/igvfiles.zip
+~~~
+
 -->
+
 
 Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), onto your Desktop. Double-click the `.zip` file
 to unzip it, and on a Mac drag the program into your Applications folder. Windows users will find that IGV ***installs*** into 
