@@ -558,7 +558,7 @@ software installation and transfer of files.
 
 In order for us to visualize the alignment files, we first need to **index the BAM file** using `samtools`:
 
-On Pete, create a submission script called samindex.pbd:
+On Pete, create a submission script called samindex.sbatch:
 ~~~
 #!/bin/bash
 #SBATCH -p express
@@ -691,9 +691,9 @@ $ mkdir ~/Desktop/dc_workshop/igvfiles
 ~~~
 
 Now we will transfer our files to that new directory using `scp`. But to make it easier, we will 
-combine all the files we need together into a `.ZIP` file on the Pete HPC so that we only have one file to download
+combine all the files we need together into a `.tar.gz` file on the Pete HPC so that we only have one file to download
 (and we are being good internet citizens by compressing our data and using less bandwidth). 
-Because compression is a slow process, we will have to write a submission script for this named `zip.batch`
+Because compression is a slow process, we will have to write a submission script for this named `gz.batch`
 
 ~~~
 #!/bin/bash
@@ -723,6 +723,7 @@ tar -zxvf igvfiles.tar.gz
 ~~~
 
 **NOTE:** The `tar` command doesn't create directories, which is why we had to make one for our files.
+
 <!--
 
 When using a remote system, remember to replace put your `<username>` before the `@` symbol, 
