@@ -717,7 +717,7 @@ Now we can download the `igvfiles.tar.gz` file from our GitBash window into our 
 ~~~
 scp <username>@pete.hpc.okstate.edu:/scratch/<username>/dc_workshop/igvfiles.tar.gz ~/Desktop/dc_workshop/
 ~~~
-Then decompress our files using the matching igvfiles directory.
+Then decompress our files using the matching `igvfiles` directory.
 ~~~
 tar -zxvf igvfiles.tar.gz
 ~~~
@@ -759,9 +759,9 @@ gunzip files_for_igv/igvfiles.zip
 -->
 
 
-Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), onto your Desktop. Double-click the `.zip` file
+Next we need to open the IGV software. If you haven't done so already, you can download IGV from the [Broad Institute's software page](https://www.broadinstitute.org/software/igv/download), onto your Desktop. Download the one with JAVA included. Double-click the `.zip` file
 to unzip it, and on a Mac drag the program into your Applications folder. Windows users will find that IGV ***installs*** into 
-their `C:Programs Files/IGV_2.8.12` folder (This will vary with newer nversions)
+their `C:Programs Files/IGV_2.11.2` folder (This will vary with newer nversions)
 and also places a link to the application on their Desktop. You can copy the application link into the `~/Desktop/files_for_igv`
 folder you just created, or just open IGV from the Desktop 
 
