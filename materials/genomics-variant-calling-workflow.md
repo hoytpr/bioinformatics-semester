@@ -372,7 +372,7 @@ On Pete make a submission script named **`finalvcf.sbatch`**:
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
 module load bcftools
-vcfutils.pl varFilter results/bcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
+vcfutils.pl varFilter results/vcf/SRR2584866_variants.vcf  > results/vcf/SRR2584866_final_variants.vcf
 ~~~
 <!--
 On a cloud instance:
@@ -567,7 +567,7 @@ On Pete, create a submission script called samindex.sbatch:
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
-module load bcftools
+module load samtools
 samtools index results/bam/SRR2584866.aligned.sorted.bam
 ~~~
 
@@ -687,6 +687,9 @@ Then we'll make the directory `igvfiles` to store the files:
 
 ~~~
 $ mkdir ~/Desktop/dc_workshop
+~~~
+If you get an error saying BASH cannnot make the ddirectory because the directory already exists, that is okay.
+~~~
 $ mkdir ~/Desktop/dc_workshop/igvfiles
 ~~~
 
