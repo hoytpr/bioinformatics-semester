@@ -803,7 +803,9 @@ therein to understand how IGV colors the alignments.
 
 **Congratulations again!** You have mapped over a million sequence reads to a full bacterial genome, and everything looks correct!
 
-Now that we've run through our workflow for a single sample, we want to repeat this workflow for our other five
+For a quick review of some scripting using our older shell-data directory, got to [this page]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts).
+
+Now that we've run through our workflow for a single sample, we want to repeat this workflow for more
 samples. However, as usual, we don't want to type each of these individual steps again five more times. That would be very
 time consuming and error-prone, and would become impossible as we gathered more and more samples. Luckily, we
 already know the tools we need to use to automate this workflow and run it on as many files as we want using a
