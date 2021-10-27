@@ -13,7 +13,7 @@ language: Shell
 - Incorporate a `for` loop into a shell script.
 
 ### Setup
-Check your directories on Cowboy or Pete for the files:
+Check your directories on Pete for the files:
 ~~~
 SRR2584863_1.trim.sub.fastq
 SRR2584863_2.trim.sub.fastq
@@ -22,8 +22,8 @@ SRR2584866_2.trim.sub.fastq
 SRR2589044_1.trim.sub.fastq
 SRR2589044_2.trim.sub.fastq
 ~~~
-These should be in your `~/dc_workshop/data/trimmed_fastq_small/` directory. If you 
-don't have these files, create a `~/dc_workshop/data/trimmed_fastq_small/` 
+These should be in your `/scratch/<username>/dc_workshop/data/trimmed_fastq_small/` directory. If you 
+don't have these files, create a `/scratch/<username>/dc_workshop/data/trimmed_fastq_small/` 
 directory (if you don't have one) and change into that directory. Then download 
 the files from [CANVAS](https://canvas.okstate.edu/files/8837111/download?download_frd=1) using the command:
 ~~~
@@ -75,7 +75,7 @@ $ for infile in *.fastq
 > done
 ~~~
 
-In this lesson, we will create **two shell scripts**. 
+In this lesson, we will create **two shell scripts** that can be submitted to Pete. 
 
 ### First Script: Analyzing Quality with FastQC
 
@@ -93,7 +93,7 @@ Let's create a new directory named `scripts` and then use the command `touch` to
 `nano` to create and open a new file, but the command `touch` allows us to create a new file without opening that file.
 
 ~~~
-$ cd ~/dc_workshop
+$ cd /scratch/<username>/dc_workshop
 $ mkdir scripts
 $ cd scripts
 $ touch read_qc.sh
@@ -113,11 +113,11 @@ Use `nano` to place the following pieces of code into your shell script (not int
 Our first line will move us into the `untrimmed_fastq/` directory when we run our script.
 
 ~~~
-cd ~/dc_workshop/data/untrimmed_fastq/
+cd dc_workshop/data/untrimmed_fastq/
 ~~~
 
 These next two lines will give us a status message to tell us that we are currently running FastQC, then will run FastQC
-on all of the files in our `~/dc_workshop/data/untrimmed_fastq/` directory 
+on all of the files in our `/scratch/<username>/dc_workshop/data/untrimmed_fastq/` directory 
 with a `.fastq.gz` extension. Remember that to run FastQC, we have 
 to load the module first. Then we call the program as `fastqc` and give it 
 the path and the file names.
@@ -125,7 +125,7 @@ the path and the file names.
 ~~~
 echo "Running FastQC ..."
 module load fastqc
-fastqc ~/dc_workshop/data/untrimmed_fastq/*.fastq.gz
+fastqc dc_workshop/data/untrimmed_fastq/*.fastq.gz
 ~~~
 {: .output}
 
@@ -135,7 +135,7 @@ idea to use this option in your shell scripts to avoid running into errors if yo
 you do.
 
 ~~~
-mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p dc_workshop/results/fastqc_untrimmed_reads
 ~~~
 
 Our next three lines first give us a status message to tell us we are saving the results from FastQC, then moves all of the files
@@ -143,15 +143,15 @@ with a `.zip` or a `.html` extension to the directory we just created for storin
 
 ~~~
 echo "Saving FastQC results..."
-mv *.zip ~/dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/
+mv *.zip dc_workshop/results/fastqc_untrimmed_reads/
+mv *.html dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
 The next line moves us to the results directory where we've stored our output.
 
 ~~~
-cd ~/dc_workshop/results/fastqc_untrimmed_reads/
+cd dc_workshop/results/fastqc_untrimmed_reads/
 ~~~
 
 
@@ -174,7 +174,7 @@ what we're doing.
 
 ~~~
 echo "Saving summary..."
-cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > dc_workshop/docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
@@ -189,31 +189,31 @@ echo "Summary file completed"
 > 
 > We've used `echo` commands to add ***progress statements*** to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
-> When using a `.pbs` file to submit jobs, the outputs will go to the job output
-> file (e.g. `read-test.o<job-number>`). If our script fails, we will use the `echo` outputs 
+> When using a `.sbatch` file to submit jobs, the outputs will go to the job output
+> file (e.g. `slurm-job-number.out`). If our script fails, we will use the `echo` outputs 
 > to track how far the script got before an error message is displayed (if any). 
 > We can then check for
 > error messages in this file by opening it in `nano` or displaying it to the screen
-> using the command `cat read-test.o<job-number> | less`. We will ***always*** want to check
+> using the command `cat slurm-job-number.out | less`. We will ***always*** want to check
 > this output file!
 {: .callout}
 
 Your full shell script should now look like this (extra blank lines are used for clarity):
 
 ~~~
-cd ~/dc_workshop/data/untrimmed_fastq/
+cd dc_workshop/data/untrimmed_fastq/
 
 echo "Running FastQC..."
 module load fastqc
-fastqc ~/dc_workshop/data/untrimmed_fastq/*.fastq.gz
+fastqc dc_workshop/data/untrimmed_fastq/*.fastq.gz
 
-mkdir -p ~/dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p dc_workshop/results/fastqc_untrimmed_reads
 
 echo "Saving FastQC results..."
-mv *zip ~/dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html ~/dc_workshop/results/fastqc_untrimmed_reads/
+mv *zip dc_workshop/results/fastqc_untrimmed_reads/
+mv *.html dc_workshop/results/fastqc_untrimmed_reads/
 
-cd ~/dc_workshop/results/fastqc_untrimmed_reads/
+cd dc_workshop/results/fastqc_untrimmed_reads/
 
 echo "Unzipping ..."
 for filename in *.zip
@@ -222,42 +222,43 @@ for filename in *.zip
     done
 	
 echo "Saving summary..."
-cat */summary.txt > ~/dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > dc_workshop/docs/fastqc_summaries.txt
 
 echo "Summary file completed"
 ~~~
 
-Save your file and exit `nano`. We can now create a `.pbs` file that
-will run our script. If we were operating "interactively" (not using `.pbs` files)
+Save your file and exit `nano`. We can now create a `.sbatch` file that
+will run our script. If we were operating "interactively" (not using `.sbatch` files)
 we could run the script by typing:
 
 ~~~
 $ bash read_qc.sh
 ~~~
 
-So our `.pbs` file will be similar. First we use `nano` to create the `.pbs` file that 
+So our `.sbatch` file will be similar. First we use `nano` to create the `.sbatch` file that 
 contains the following:
 
 ~~~
 #!/bin/bash
-#PBS -q express
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=1:00:00
-#PBS -j oe
-cd $PBS_O_WORKDIR
-bash ~/dc_workshop/scripts/read_qc.sh
+#SBATCH -p express
+#SBATCH -t 1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --mail-user=<your.email.address@univ.edu>
+#SBATCH --mail-type=end
+bash dc_workshop/scripts/read_qc.sh
 ~~~
 
-save this file as **`read-test.pbs`** and exit `nano`
+save this file as **`read-test.sbatch`** and exit `nano`
 
-Now submit the `.pbs` (Yes we are using a submission script, to run our script)
+Now submit the `.sbatch` (Yes we are using a submission script, to run our script)
 
 ~~~
-qsub read-test.pbs
+sbatch read-test.sbatch
 ~~~
 
 Make a note of the job number and check to see when you script completes.
-After the script completes, open the job output file using `cat read-test.o<job-number> | less`. You should see something similar to this:
+After the script completes, open the job output file using `cat slurm-<job-number>.out | less`. You should see something similar to this:
 
 ~~~
 Running FastQC ...
@@ -309,7 +310,7 @@ We will be creating a script together to do all of these steps.
 First, we will create a new script in our `scripts/` directory using `touch`. 
 
 ~~~
-$ cd ~/dc_workshop/scripts
+$ cd /dc_workshop/scripts
 $ touch run_variant_calling.sh
 $ ls 
 read_qc.sh  run_variant_calling.sh
@@ -332,14 +333,14 @@ Enter the following pieces of code into your shell script (not into your termina
 
 ~~~
 set -e
-cd ~/dc_workshop/results
+cd dc_workshop/results
 ~~~
 
 Next we tell our script where to find the reference genome by assigning the `genome` variable to 
 the path to our reference genome:
 
 ~~~
-genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=dc_workshop/data/ref_genome/ecoli_rel606.fasta
 ~~~
 {: .output}
 
@@ -357,10 +358,11 @@ module load bwa
 bwa index ${genome}
 ~~~
 
-We will now create the directory structure to store our results: 
+We will now create the directory structure to store our results then move up one directory: 
 
 ~~~
 mkdir -p sam bam bcf vcf
+cd ..
 ~~~
 
 Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. We've already used Trimmomatic to trim these files, and we could re-do that here, but to save time, we will use the smaller files we've already trimmed in the `data/trimmed_fastq_small/` directory. (You might want to try this later on the bigger files in the `data/trimmed_fastq/` directory.) We will use absolute paths so that all these commands
@@ -371,7 +373,7 @@ The first thing we do is assign the name of the FASTQ files we're currently work
 tell the script to `echo` the filename back to us so we can check which file we're on.
 
 ~~~
-for fq in ~/dc_workshop/data/trimmed_fastq_small/*.fastq
+for fq in dc_workshop/data/trimmed_fastq_small/*.fastq
     do
     echo "working with file ${fq}"
     done
@@ -401,12 +403,12 @@ $ bash run_variant_calling.sh
 [main] Version: 0.7.5a-r405
 [main] CMD: bwa index /home/dcuser/dc_workshop/data/ref_genome/ecoli_rel606.fasta
 [main] Real time: 1.892 sec; CPU: 1.829 sec
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
 ~~~
 
 You should see "working with file . . . " for each of the six FASTQ files in our `trimmed_fastq_small/` directory.
@@ -428,17 +430,17 @@ to a new variable called `base`. Add `done` again at the end so we can test our 
 Now if you save and run your script, the final lines of your output should look like this: 
 
 ~~~
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
 base name is SRR2584863
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
 base name is SRR2584863
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
 base name is SRR2584866
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
 base name is SRR2584866
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
 base name is SRR2589044
-working with file /home/dcuser/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
+working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
 base name is SRR2589044
 ~~~
 {: .output}
@@ -455,16 +457,16 @@ Remember to delete the `done` line from your script before adding these (indente
 
 ~~~
     # input files
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
-    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
+    fq1=dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
+    fq2=dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
     
     # output files
-    sam=~/dc_workshop/results/sam/${base}.aligned.sam
-    bam=~/dc_workshop/results/bam/${base}.aligned.bam
-    sorted_bam=~/dc_workshop/results/bam/${base}.aligned.sorted.bam
-    raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=~/dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
+    sam=dc_workshop/results/sam/${base}.aligned.sam
+    bam=dc_workshop/results/bam/${base}.aligned.bam
+    sorted_bam=dc_workshop/results/bam/${base}.aligned.sorted.bam
+    raw_bcf=dc_workshop/results/bcf/${base}_raw.bcf
+    variants=dc_workshop/results/bcf/${base}_variants.vcf
+    final_variants=dc_workshop/results/vcf/${base}_final_variants.vcf
 ~~~
 
 
@@ -474,7 +476,7 @@ still obtuse to me how this works for all pairs of files
 
 -->
 
-Now that we've created our variables, we can start running the steps of our workflow. Remember that on Pete, or an HPC with modules, you need to load the module each time. If you are on a cloud instance, you can ignore the `module load..` commands.
+Now that we've created our variables, we can start running the steps of our workflow. Remember that on Pete, or an HPC with modules, you need to load the module each time. (If you are on a cloud instance, you can ignore the `module load..` commands.)
 
 1) align the reads to the reference genome and output a `.sam` file:
 
@@ -487,7 +489,7 @@ Now that we've created our variables, we can start running the steps of our work
 2) convert the SAM file to BAM format:
 
 ~~~
-    module load samtools/1.9
+    module load samtools/1.10
     samtools view -S -b ${sam} > ${bam}
 ~~~
 {: .output}
@@ -509,7 +511,7 @@ Now that we've created our variables, we can start running the steps of our work
 5) calculate the read coverage of positions in the genome:
 
 ~~~
-    module load bcftools/1.9
+    module load bcftools/1.8
     bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam} 
 ~~~
 {: .output}
@@ -531,42 +533,42 @@ Now that we've created our variables, we can start running the steps of our work
 **Your final script should look like this:**
 
 ~~~
-# set -e   <-- did not seem to work on Cowboy
-cd ~/dc_workshop/results
+# set -e   <-- did not seem to work on Pete
+cd dc_workshop/results
 
-genome=~/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=dc_workshop/data/ref_genome/ecoli_rel606.fasta
 
 module load bwa
 bwa index ${genome}
 
 mkdir -p sam bam bcf vcf
-
-for fq in ~/dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
+cd ..
+for fq in dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     do
     echo "working with file ${fq1}"
 
     base=$(basename $fq1 _1.trim.sub.fastq)
     echo "base name is ${base}"
 
-    fq1=~/dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
+    fq1=dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
     # NOTE: By reassigning 'fq1' variable, the loop only runs 
     # for '_1.trim.sub.fastq' files
-    fq2=~/dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
+    fq2=dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     # output files
-    sam=~/dc_workshop/results/sam/${base}.aligned.sam
-    bam=~/dc_workshop/results/bam/${base}.aligned.bam
-    sorted_bam=~/dc_workshop/results/bam/${base}.aligned.sorted.bam
-    raw_bcf=~/dc_workshop/results/bcf/${base}_raw.bcf
-    variants=~/dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=~/dc_workshop/results/vcf/${base}_final_variants.vcf
+    sam=dc_workshop/results/sam/${base}.aligned.sam
+    bam=dc_workshop/results/bam/${base}.aligned.bam
+    sorted_bam=dc_workshop/results/bam/${base}.aligned.sorted.bam
+    raw_bcf=dc_workshop/results/bcf/${base}_raw.bcf
+    variants=dc_workshop/results/bcf/${base}_variants.vcf
+    final_variants=dc_workshop/results/vcf/${base}_final_variants.vcf
 
     module load bwa
     bwa mem $genome ${fq1} ${fq2} > ${sam}
-    module load samtools/1.9
+    module load samtools/1.10
     samtools view -S -b ${sam} > ${bam}
     samtools sort -o ${sorted_bam} ${bam}
     samtools index ${sorted_bam}
-    module load bcftools/1.9
+    module load bcftools/1.8
     bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
     bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
     vcfutils.pl varFilter ${variants} > ${final_variants}
