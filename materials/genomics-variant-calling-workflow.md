@@ -808,7 +808,7 @@ samples. However, as usual, we don't want to type each of these individual steps
 time consuming and error-prone, and would become impossible as we gathered more and more samples. Luckily, we
 already know the tools we need to use to automate this workflow and run it on as many files as we want using a
 single line of code. Those tools are: **wildcards**, **`for` loops**, and **bash scripts**. We'll use all three 
-in [the next lesson]({{ site.baseurl }}/materials/genomics-data-and-writing-scripts). 
+in [the next lesson]({{ site.baseurl }}/materials/genomics-automating-variant-calling). 
 
 > ### Installing Software
 > 
