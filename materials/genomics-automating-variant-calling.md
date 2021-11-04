@@ -337,6 +337,10 @@ Enter the following pieces of code into your shell script (not into your termina
 
 -->
 
+Bash scripts should start with a Shebang! So begin by using:
+~~~
+#!/bin/bash
+~~~
 Next we tell our script where to find the reference genome by assigning the `genome` variable to 
 the path to our reference genome:
 
@@ -534,6 +538,7 @@ Now that we've created our variables, we can start running the steps of our work
 **Your final script should look like this:**
 
 ~~~
+#!/bin/bash
 genome=data/ref_genome/ecoli_rel606.fasta
 
 module load bwa
