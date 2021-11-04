@@ -89,7 +89,7 @@ process the output files into a single file with a `.sh` (the Bash script) exten
 > we can run a command `dos2unix` that fixes all the line ends by converting
 > them to Unix-style. This may or may not occur on your system but we wanted you to know
 
-Let's create a new directory named `scripts` and then use the command `touch` to create a new file where we will write our shell script. Remember, we used
+Let's use the command `touch` to create a new file where we will write our shell script. Remember, we used
 `nano` to create and open a new file, but the command `touch` allows us to create a new file without opening that file.
 
 ~~~
