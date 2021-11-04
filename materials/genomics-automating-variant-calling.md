@@ -94,14 +94,12 @@ Let's create a new directory named `scripts` and then use the command `touch` to
 
 ~~~
 $ cd /scratch/<username>/dc_workshop
-$ mkdir scripts
-$ cd scripts
 $ touch read_qc.sh
 $ ls 
 read_qc.sh
 ~~~
 
-We now have an empty file called `read_qc.sh` in our `scripts/` directory. 
+We now have an empty file called `read_qc.sh` in our `dc_workshop/` directory. 
 Open `read_qc.sh` in `nano` and start building our script.
 
 ~~~
@@ -110,14 +108,17 @@ $ nano read_qc.sh
 
 Use `nano` to place the following pieces of code into your shell script (not into your terminal prompt).
 
-Our first line will move us into the `untrimmed_fastq/` directory when we run our script.
+<!--
+Our first line will move us into the `results` directory when we run our script.
 
 ~~~
-cd dc_workshop/data/untrimmed_fastq/
+cd ../dc_workshop/data/untrimmed_fastq/
 ~~~
+
+-->
 
 These next two lines will give us a status message to tell us that we are currently running FastQC, then will run FastQC
-on all of the files in our `/scratch/<username>/dc_workshop/data/untrimmed_fastq/` directory 
+on all of the files in our `data/untrimmed_fastq/` directory 
 with a `.fastq.gz` extension. Remember that to run FastQC, we have 
 to load the module first. Then we call the program as `fastqc` and give it 
 the path and the file names.
@@ -125,17 +126,18 @@ the path and the file names.
 ~~~
 echo "Running FastQC ..."
 module load fastqc
-fastqc dc_workshop/data/untrimmed_fastq/*.fastq.gz
+fastqc data/untrimmed_fastq/*.fastq.gz
 ~~~
 {: .output}
 
-Our next line will create a new directory to hold our FastQC output files. Here we are using the `-p` option for `mkdir`. This 
+Our next line will create a new directory to hold our FastQC output files which are currently in the `dc_workshop` directory. Here we are using the `-p` option for `mkdir`. This 
 option forces `mkdir` to create the new directory, even if one of the parent directories doesn't already exist. It is a good
 idea to use this option in your shell scripts to avoid running into errors if you don't have the directory structure you think
 you do.
 
 ~~~
-mkdir -p dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p results/fastqc_untrimmed_reads
+mkdir -p docs
 ~~~
 
 Our next three lines first give us a status message to tell us we are saving the results from FastQC, then moves all of the files
@@ -143,15 +145,15 @@ with a `.zip` or a `.html` extension to the directory we just created for storin
 
 ~~~
 echo "Saving FastQC results..."
-mv *.zip dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html dc_workshop/results/fastqc_untrimmed_reads/
+mv *.zip results/fastqc_untrimmed_reads/
+mv *.html results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
 The next line moves us to the results directory where we've stored our output.
 
 ~~~
-cd dc_workshop/results/fastqc_untrimmed_reads/
+cd results/fastqc_untrimmed_reads/
 ~~~
 
 
@@ -174,7 +176,7 @@ what we're doing.
 
 ~~~
 echo "Saving summary..."
-cat */summary.txt > dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > ../../docs/fastqc_summaries.txt
 ~~~
 {: .output}
 
@@ -201,19 +203,18 @@ echo "Summary file completed"
 Your full shell script should now look like this (extra blank lines are used for clarity):
 
 ~~~
-cd dc_workshop/data/untrimmed_fastq/
-
 echo "Running FastQC..."
 module load fastqc
-fastqc dc_workshop/data/untrimmed_fastq/*.fastq.gz
+fastqc data/untrimmed_fastq/*.fastq.gz
 
-mkdir -p dc_workshop/results/fastqc_untrimmed_reads
+mkdir -p results/fastqc_untrimmed_reads
+mkdir -p docs
 
 echo "Saving FastQC results..."
-mv *zip dc_workshop/results/fastqc_untrimmed_reads/
-mv *.html dc_workshop/results/fastqc_untrimmed_reads/
+mv *zip results/fastqc_untrimmed_reads/
+mv *.html results/fastqc_untrimmed_reads/
 
-cd dc_workshop/results/fastqc_untrimmed_reads/
+cd results/fastqc_untrimmed_reads/
 
 echo "Unzipping ..."
 for filename in *.zip
@@ -222,7 +223,7 @@ for filename in *.zip
     done
 	
 echo "Saving summary..."
-cat */summary.txt > dc_workshop/docs/fastqc_summaries.txt
+cat */summary.txt > ../../docs/fastqc_summaries.txt
 
 echo "Summary file completed"
 ~~~
@@ -246,7 +247,7 @@ contains the following:
 #SBATCH --ntasks-per-node=1
 #SBATCH --mail-user=<your.email.address@univ.edu>
 #SBATCH --mail-type=end
-bash dc_workshop/scripts/read_qc.sh
+bash read_qc.sh
 ~~~
 
 save this file as **`read-test.sbatch`** and exit `nano`
@@ -307,16 +308,13 @@ Our variant calling workflow will do the following steps
 
 We will be creating a script together to do all of these steps. 
 
-First, we will create a new script in our `scripts/` directory using `touch`. 
+First, we will create a new script in our `dc_workshop` directory using `touch`. 
 
 ~~~
-$ cd /dc_workshop/scripts
 $ touch run_variant_calling.sh
-$ ls 
-read_qc.sh  run_variant_calling.sh
 ~~~
 
-We now have a new empty file called `run_variant_calling.sh` in our `scripts/` directory. We will open this file in `nano` and start
+We now have a new empty file called `run_variant_calling.sh`. We will open this file in `nano` and start
 building our script, like we did before.
 
 ~~~
@@ -325,24 +323,22 @@ $ nano run_variant_calling.sh
 
 Enter the following pieces of code into your shell script (not into your terminal prompt).
 
+<!--
+
 > OPTIONAL: First we start with a little trick: `set -e` which tells our script to exit immediately if there 
 > is an error. This does two things: When we fail, we fail FAST, and second it will let us know 
 > where the problem was in our script. 
 > We follow this by changing our working directory so that we can create new results subdirectories
 > in the right location. 
 
-~~~
-set -e
-cd dc_workshop/results
-~~~
+-->
 
 Next we tell our script where to find the reference genome by assigning the `genome` variable to 
 the path to our reference genome:
 
 ~~~
-genome=dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=data/ref_genome/ecoli_rel606.fasta
 ~~~
-{: .output}
 
 > #### Creating Variables
 > Within the Bash shell you can create variables at any time (as we did
@@ -361,8 +357,7 @@ bwa index ${genome}
 We will now create the directory structure to store our results then move up one directory: 
 
 ~~~
-mkdir -p sam bam bcf vcf
-cd ..
+mkdir -p results/sam results/bam results/bcf results/vcf
 ~~~
 
 Then we use a **loop** to run the variant calling workflow on each of our FASTQ files. We've already used Trimmomatic to trim these files, and we could re-do that here, but to save time, we will use the smaller files we've already trimmed in the `data/trimmed_fastq_small/` directory. (You might want to try this later on the bigger files in the `data/trimmed_fastq/` directory.) We will use absolute paths so that all these commands
@@ -373,7 +368,7 @@ The first thing we do is assign the name of the FASTQ files we're currently work
 tell the script to `echo` the filename back to us so we can check which file we're on.
 
 ~~~
-for fq in dc_workshop/data/trimmed_fastq_small/*.fastq
+for fq in data/trimmed_fastq_small/*.fastq
     do
     echo "working with file ${fq}"
     done
@@ -401,21 +396,21 @@ $ bash run_variant_calling.sh
 [bwa_index] Pack forward-only FASTA... 0.02 sec
 [bwa_index] Construct SA from BWT and Occ... 0.64 sec
 [main] Version: 0.7.5a-r405
-[main] CMD: bwa index /home/dcuser/dc_workshop/data/ref_genome/ecoli_rel606.fasta
+[main] CMD: bwa index data/ref_genome/ecoli_rel606.fasta
 [main] Real time: 1.892 sec; CPU: 1.829 sec
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
 ~~~
 
 You should see "working with file . . . " for each of the six FASTQ files in our `trimmed_fastq_small/` directory.
 If you don't see this output, then you'll need to troubleshoot your script. A common problem is that your directory might not
 be specified correctly. Ask for help if you get stuck here! 
 
-Now that we've tested the components of our loops so far, we will add our next few steps. Open the script with `nano`, remove the line `done` from the end of
+Now that we've tested the components of our loops so far, we will add our next few steps. Open the script with `nano`, **remove the line `done` from the end** of
 your script, and add the next two (indented) lines. These lines extract the **basename** of the file name
 ***excluding the path and `.trim.sub.fastq` extension***. Then the `basename` is assigned
 to a new variable called `base`. Add `done` again at the end so we can test our script.
@@ -430,17 +425,17 @@ to a new variable called `base`. Add `done` again at the end so we can test our 
 Now if you save and run your script, the final lines of your output should look like this: 
 
 ~~~
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584863_1.trim.sub.fastq
 base name is SRR2584863
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584863_2.trim.sub.fastq
 base name is SRR2584863
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584866_1.trim.sub.fastq
 base name is SRR2584866
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2584866_2.trim.sub.fastq
 base name is SRR2584866
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2589044_1.trim.sub.fastq
 base name is SRR2589044
-working with file /scratch/<username>/dc_workshop/data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
+working with file data/trimmed_fastq_small/SRR2589044_2.trim.sub.fastq
 base name is SRR2589044
 ~~~
 {: .output}
@@ -453,20 +448,20 @@ Next we will create variables to store the names of our output files as paired-e
 to read because you won't need to type out the full name of each of the files. We're using the `base` variable that we just
 defined, and ***adding different file name extensions*** to represent the different output files. 
 We can use the `base` variable to access both the `base_1.fastq` and `base_2.fastq` input files, and create variables to store the names of our output files. 
-Remember to delete the `done` line from your script before adding these (indented) lines.
+Remember to **delete the `done` line from your script** before adding these (indented) lines.
 
 ~~~
     # input files
-    fq1=dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
-    fq2=dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
+    fq1=data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
+    fq2=data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
     
     # output files
-    sam=dc_workshop/results/sam/${base}.aligned.sam
-    bam=dc_workshop/results/bam/${base}.aligned.bam
-    sorted_bam=dc_workshop/results/bam/${base}.aligned.sorted.bam
-    raw_bcf=dc_workshop/results/bcf/${base}_raw.bcf
-    variants=dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=dc_workshop/results/vcf/${base}_final_variants.vcf
+    sam=results/sam/${base}.aligned.sam
+    bam=results/bam/${base}.aligned.bam
+    sorted_bam=results/bam/${base}.aligned.sorted.bam
+    raw_bcf=results/bcf/${base}_raw.bcf
+    variants=results/bcf/${base}_variants.vcf
+    final_variants=results/vcf/${base}_final_variants.vcf
 ~~~
 
 
@@ -533,35 +528,30 @@ Now that we've created our variables, we can start running the steps of our work
 **Your final script should look like this:**
 
 ~~~
-# set -e   <-- did not seem to work on Pete
-cd dc_workshop/results
-
-genome=dc_workshop/data/ref_genome/ecoli_rel606.fasta
+genome=data/ref_genome/ecoli_rel606.fasta
 
 module load bwa
 bwa index ${genome}
 
-mkdir -p sam bam bcf vcf
-cd ..
-for fq in dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
+mkdir -p results/sam results/bam results/bcf results/vcf
+for fq in data/trimmed_fastq_small/*_1.trim.sub.fastq
     do
-    echo "working with file ${fq1}"
+    echo "working with file ${fq}"
 
-    base=$(basename $fq1 _1.trim.sub.fastq)
+    base=$(basename $fq _1.trim.sub.fastq)
     echo "base name is ${base}"
 
-    fq1=dc_workshop/data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
+    fq1=data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
     # NOTE: By reassigning 'fq1' variable, the loop only runs 
     # for '_1.trim.sub.fastq' files
-    fq2=dc_workshop/data/trimmed_fastq_small/${base}_2.trim.sub.fastq
+    fq2=data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     # output files
-    sam=dc_workshop/results/sam/${base}.aligned.sam
-    bam=dc_workshop/results/bam/${base}.aligned.bam
-    sorted_bam=dc_workshop/results/bam/${base}.aligned.sorted.bam
-    raw_bcf=dc_workshop/results/bcf/${base}_raw.bcf
-    variants=dc_workshop/results/bcf/${base}_variants.vcf
-    final_variants=dc_workshop/results/vcf/${base}_final_variants.vcf
-
+    sam=results/sam/${base}.aligned.sam
+    bam=results/bam/${base}.aligned.bam
+    sorted_bam=results/bam/${base}.aligned.sorted.bam
+    raw_bcf=results/bcf/${base}_raw.bcf
+    variants=results/bcf/${base}_variants.vcf
+    final_variants=results/vcf/${base}_final_variants.vcf
     module load bwa
     bwa mem $genome ${fq1} ${fq2} > ${sam}
     module load samtools/1.10
@@ -572,7 +562,7 @@ for fq in dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
     bcftools mpileup -O b -o ${raw_bcf} -f ${genome} ${sorted_bam}
     bcftools call --ploidy 1 -m -v -o ${variants} ${raw_bcf} 
     vcfutils.pl varFilter ${variants} > ${final_variants}
-   
+    echo "done"
     done
 ~~~
 {: .output}
@@ -580,21 +570,18 @@ for fq in dc_workshop/data/trimmed_fastq_small/*_1.trim.sub.fastq
 > ### Exercise
 > It's a good idea to add comments to your code so that you (or a collaborator) can make sense of what you did later. 
 > Look through your existing script. Discuss with a neighbor where you should add comments. Add comments (anything following
-> a `#` character will be interpreted as a comment, bash will not try to run these comments as code). 
+> a `#` character will be interpreted as a comment, bash will not try to run these comments as code).
 
 
 Now we can run our script:
-With Pete, we will create a submission script (below). On a cloud instance the simple command is:
-~~~
-$ bash run_variant_calling.sh
-~~~
-{: .bash}
+With Pete, we will create a submission script as shown below. (On a cloud instance the simple command is: `bash run_variant_calling.sh`
+
 
 Here is a Pete submissions script made with `nano` named `bigscript.sbatch`
 ```
 #!/bin/bash
-#SBATCH -p batch
-#SBATCH -t 24:00:00
+#SBATCH -p express
+#SBATCH -t 1:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 #SBATCH --mail-user=peter.r.hoyt@okstate.edu
