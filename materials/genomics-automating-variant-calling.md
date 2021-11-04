@@ -130,7 +130,7 @@ fastqc data/untrimmed_fastq/*.fastq.gz
 ~~~
 {: .output}
 
-Our next line will create a new directory to hold our FastQC output files which are currently in the `dc_workshop` directory. Here we are using the `-p` option for `mkdir`. This 
+Our next line will create a new directory to hold our FastQC output files which are currently in the `data/untrimmed_fastq/` directory. Here we are using the `-p` option for `mkdir`. This 
 option forces `mkdir` to create the new directory, even if one of the parent directories doesn't already exist. It is a good
 idea to use this option in your shell scripts to avoid running into errors if you don't have the directory structure you think
 you do.
@@ -169,10 +169,8 @@ for filename in *.zip
     unzip ${filename}
     done
 ~~~
-{: .output}
 
-Next we concatenate all of our summary files into a single output file, with a status message to remind ourselves that this is 
-what we're doing.
+Next we concatenate all of our summary files into a single output file, with a status message to remind ourselves that this is what we're doing. Note that the `cat` command, ***by default***, always "appends" files rather than overwrites them. By doing this, all the **summaries** of all the read files (`fastq` files) are combined into ONE file we can scan through (or even search for words like "FAIL").  
 
 ~~~
 echo "Saving summary..."
@@ -192,11 +190,11 @@ echo "Summary file completed"
 > We've used `echo` commands to add ***progress statements*** to our script. Our script will print these statements
 > as it is running and therefore we will be able to see how far our script has progressed.
 > When using a `.sbatch` file to submit jobs, the outputs will go to the job output
-> file (e.g. `slurm-job-number.out`). If our script fails, we will use the `echo` outputs 
+> file (e.g. `slurm-<job-number>.out`). If our script fails, we will use the `echo` outputs 
 > to track how far the script got before an error message is displayed (if any). 
 > We can then check for
 > error messages in this file by opening it in `nano` or displaying it to the screen
-> using the command `cat slurm-job-number.out | less`. We will ***always*** want to check
+> using the command `less slurm-<job-number>.out`. We will ***always*** want to check
 > this output file!
 {: .callout}
 
@@ -211,8 +209,8 @@ mkdir -p results/fastqc_untrimmed_reads
 mkdir -p docs
 
 echo "Saving FastQC results..."
-mv *zip results/fastqc_untrimmed_reads/
-mv *.html results/fastqc_untrimmed_reads/
+mv data/untrimmed_fastq/*zip results/fastqc_untrimmed_reads/
+mv data/untrimmed_fastq/*.html results/fastqc_untrimmed_reads/
 
 cd results/fastqc_untrimmed_reads/
 
@@ -259,7 +257,7 @@ sbatch read-test.sbatch
 ~~~
 
 Make a note of the job number and check to see when you script completes.
-After the script completes, open the job output file using `cat slurm-<job-number>.out | less`. You should see something similar to this:
+After the script completes, open the job output file using `less slurm-<job-number>.out`. You should see something similar to this:
 
 ~~~
 Running FastQC ...
