@@ -145,8 +145,8 @@ with a `.zip` or a `.html` extension to the directory we just created for storin
 
 ~~~
 echo "Saving FastQC results..."
-mv *.zip results/fastqc_untrimmed_reads/
-mv *.html results/fastqc_untrimmed_reads/
+mv data/untrimmed_fastq/*.zip results/fastqc_untrimmed_reads/
+mv data.untrimmed_fastq/*.html results/fastqc_untrimmed_reads/
 ~~~
 {: .output}
 
