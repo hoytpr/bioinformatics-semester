@@ -248,6 +248,12 @@ contains the following:
 bash read_qc.sh
 ~~~
 
+Notice the "Shebang" (**`#!bin/bash`**) at the top of your submission script. When we are running a bash script, even using a submission script, a rule applies:
+
+> **Shebang:** The Shebang command tells the shell (which interprets UNIX commands) to interpret and run the Slurm script using the bash (Bourne-again shell) shell.
+
+> This line should always be added at the very top of your SBATCH/Slurm script, when running a bash script.
+
 save this file as **`read-test.sbatch`** and exit `nano`
 
 Now submit the `.sbatch` (Yes we are using a submission script, to run our script)
