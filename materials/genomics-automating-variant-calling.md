@@ -456,8 +456,10 @@ Remember to **delete the `done` line from your script** before adding these (ind
 
 ~~~
     # input files
-    fq1=data/trimmed_fastq_small/${base}_1.trim.sub.fastq   # <-- 'SRR2584863_1.trim.sub.fastq'
-    fq2=data/trimmed_fastq_small/${base}_2.trim.sub.fastq   # <-- 'SRR2584863_2.trim.sub.fastq'
+    # The first will be 'SRR2584863_1.trim.sub.fastq'
+    # The next will be 'SRR2584863_2.trim.sub.fastq'
+    fq1=data/trimmed_fastq_small/${base}_1.trim.sub.fastq 
+    fq2=data/trimmed_fastq_small/${base}_2.trim.sub.fastq 
     
     # output files
     sam=results/sam/${base}.aligned.sam
@@ -546,8 +548,6 @@ for fq in data/trimmed_fastq_small/*_1.trim.sub.fastq
     echo "base name is ${base}"
 
     fq1=data/trimmed_fastq_small/${base}_1.trim.sub.fastq  
-    # NOTE: By reassigning 'fq1' variable, the loop only runs 
-    # for '_1.trim.sub.fastq' files
     fq2=data/trimmed_fastq_small/${base}_2.trim.sub.fastq
     # output files
     sam=results/sam/${base}.aligned.sam
