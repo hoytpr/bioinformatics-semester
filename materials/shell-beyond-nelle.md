@@ -391,7 +391,7 @@ Now Nelle can reproduce the first stage of her analysis by typing:
 $ bash do-stats.sh NENE*[AB].txt
 ~~~
 
-There several very notable things about this script.
+There are several very notable things about this script.
 
 1\. Because the special variable `$@` makes her script **flexible**
 it will take everything in the command line as input, so Nelle can also 
@@ -445,7 +445,7 @@ Now she just runs `bash do-stats.sh`
 This latter script is good because: It **always selects the right files**
 (For example, Nelle doesn't have to remember to exclude the 'Z' files). 
 
-But Nelle didnot do this because the disadvantage is that it ***always*** selects ***just*** those 
+But Nelle did not do this because the disadvantage is that it ***always*** selects ***just*** those 
 files --- Nelle can't run it on **all** files! 
 This will be important in her new position where she uses the `NENE*[GH].txt` files 
 to maintain her collaboration with her former supervisor who is creating 
