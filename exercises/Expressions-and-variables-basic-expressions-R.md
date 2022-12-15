@@ -17,7 +17,7 @@ the console on the line marked `>` and pressing enter.
 6. 4 \*\* 2
 7. 8 / 2 \*\* 2
 
-Did any of the results surprise you? If so, then might have run in to some order
+Did any of the results surprise you? If so, then might have run into some order
 of operations confusion. The order of operators for math in R are the same as
 for mathematics more generally.
 
