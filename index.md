@@ -6,14 +6,14 @@ layout: default
 This website hosts introductory material for teaching biologists how to interact
 with data including: use of the Unix shell, creating scripts, using genomics tools 
 at the command-line, and creating automated genomics scripts. 
-In the Fall of 2020, due to the N-Cov-2 pandemic, this course 
-is offered as an online/hybrid university course where the students read material 
+In the Fall of 2020, due to the COVID pandemic, this course 
+was changed to be offered as an online/hybrid university course where the students read material 
 and they come to VIRTUAL class (using ZOOM) to work through lecture materials in a hands-on
 workshop-style (active learning) environment. 
 
 This course is **open-source**: meaning other instructors are welcome 
 to modify and use the material for your own 
-courses. It's important to acknowlege those who have contributed to the 
+courses. It's important to acknowledge those who have contributed to the 
 development of this course (see [Acknowledgments]({{ site.baseurl }}/about/acknowledgments), 
 [README]({{ site.baseurl }}/README), and [About]({{ site.baseurl }}/nav/about) pages). 
 We/they strongly encourage collaborative development and contributions by other
