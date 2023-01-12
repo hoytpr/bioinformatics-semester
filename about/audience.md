@@ -3,15 +3,18 @@ layout: page
 title: Audience
 ---
 
-The long-term goal of this site is to help both students that thrive
-in a classroom at a college or university; and free-range,
-self-motivated learners, or folks who are interested
-in learning on-line on their own time (except for the homework). 
-Our initial course offering will be written for the classroom
-students. Building on the material generated will make
+The goals of this site and its lessons are to help students begin, learn, and then
+succeed in using data science practices within a Life Science background.
+The lessons are designed to be used whether a student thrives
+in a classroom setting at a college or university; or whether the student is
+more free-range... a self-motivated learner. The lessons can be used for 
+students to learn on-line and on their own pace (except for the homework) 
+but are also good for students that want the feedback and fluency that comes
+with active learning. The course works when offered in a classroom or online. 
+Instructors and participants will continue to build and share the material, making
 it maximally useful to the broader audience of biologists who want to
 learn how to use programming and bioinformatics software. We are
-interested in helping folks who are complete beginners and welcome those who
+committed to helping folks who are complete beginners, and welcome those who
 already have some programming background.
 
 To encourage folks to use this material, all of the general material on this
@@ -24,7 +27,7 @@ Be sure to [let us know what you think](mailto:{{ site.email }}) so we can be su
 Be sure to let us know [what you think about the course material](mailto:{{ site.email }}) or [let Data Carpentry know what you think about the course website](mailto:datacarpentrysemester@weecology.org) so we can be sure to get you the best experience.
 {% endif %}
 
-Examples of folks who we are trying to help:
+Examples of who we are trying to help include:
 
 **Allen:** An undergraduate student in a biology related field who
 either realizes that computers are going to be important in whatever
@@ -40,8 +43,8 @@ poorly structured spreadsheets that her lab uses is awful), and doing
 all of the analysis that she needs to conduct for her dissertation seems
 like it would be a lot easier if it could be automated.
 
-**Paul:** A faculty member with little computer background who realizes
-that computing has become so central to his area of research that he
-needs to at least have a rough idea of how his students are working the
-magic they do for projects with a lot of programming. Even better he'd
+**Paul:** A faculty member with little computer background who knows
+that computing has become central to his area of research and he
+needs to have a rough idea of how his students are working the programming
+magic they do for projects. Even better he'd
 like to get to the point where he can really engage and help out.

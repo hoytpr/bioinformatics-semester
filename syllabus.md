@@ -3,12 +3,12 @@ layout: page
 title: Syllabus
 catalog: BIOC 6820
 credits: 3
-semester: Fall 2020
+semester: Fall 2022
 professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: peter.r.hoyt@okstate.edu
 phone: 405-744-6206
-schedule: 9:00AM - 10:15AM  T & Th
+schedule: 10:30AM - 11:15AM  T & Th
 location: ZOOM link TBD
 office_hours: Tuesdays 10:30-11am
 office_hours_location: 110FC HBRC
@@ -18,8 +18,8 @@ office_hours_location: 110FC HBRC
 
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
 
-### OSU Fall 2020 Syllabus Attachment
-PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2020-Syllabus-Attachment.pdf)
+### OSU Fall 2022 Syllabus Attachment
+PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2022-Syllabus-Attachment.pdf)
 
 ### Professor
 
@@ -51,7 +51,7 @@ Times: {{ page.office_hours }}
 
 Location: {{ page.office_hours_location }}
 
-Except for emergencies, Dr. Hoyt will only be available for virtual meetings in Fall 2020. 
+Except for emergencies, Dr. Hoyt will only be available for virtual meetings in Fall 2022. 
 *Note: my schedule gets very busy during the semester so
 please try to schedule appointments as far in advance as possible. In general it
 will be very difficult to set up appointments less than 24 hours in advance.*
@@ -89,7 +89,7 @@ Knowledge of basic biology.
 
 ### Purpose of Course
 
-By the end of the course you will be able to use bioinformatic tools to import data 
+By the end of the course you will be able to use a BASH shell and bioinformatic tools to import data 
 into proper formats for genomics, perform analysis on those data, and export the 
 results to graphs, text files, and potentially databases. 
 
@@ -98,9 +98,7 @@ results to graphs, text files, and potentially databases.
 Students completing this course will be able to:
 
 * Write simple computer programs in the BASH shell
-* Automate data analysis
-* Create well structured dataframes*
-* Extract information from dataframes*
+* Automate shell data analysis
 * Apply these tools to address biological questions
 
 
@@ -114,7 +112,7 @@ in research.
 
 ### Teaching Philosophy
 
-This class is taught using learner-centered approach, because
+This class is taught using active learner-centered approach, because
 learning to program and working with data requires actually interacting on
 computers. Self-motivation to learn the coding involved is required
 and often produces a better learning outcome. 
@@ -131,7 +129,7 @@ to learn the material.
 
 ### Quiz/Exam Policy
 
-There are no quizzes or exams in this course.
+Weekly homework resembles quizzes but there will be no exams in this course.
 
 
 ### Make-up policy
@@ -145,7 +143,7 @@ if you fall behind. Reasonable requests for longer extensions will also be grant
 
 ### Assignment policy
 
-Assignments are due Friday night by 11:59 pm Central Time. This allows you to be 
+Assignments are due Saturday night by 11:59 pm Central Time. This allows you to be 
 finished with one week's material before starting the next week's material.
 Assignments should be submitted via [Canvas](https://canvas.okstate.edu/courses/51969/quizzes)
 using the ["quizzes" category](https://canvas.okstate.edu/courses/51969/quizzes). In emergencies, assignments can be submitted by [email](mailto:peter.r.hoyt@okstate.edu). 
@@ -197,7 +195,7 @@ For guidance please read the [Carpentries Code of Conduct](https://docs.carpentr
 * [OSU IT Helpdesk support](http://it.okstate.edu/)
 * [Additional OSU Policies](https://canvas.okstate.edu/courses/51969/pages/osu-policies?module_item_id=1258201)
 
-**Most importantly, if you are struggling for any reason please come talk to me
+**Most importantly, if you are struggling for any reason please come talk to the instructor
 and I will do my best to help.**
 
 
@@ -238,8 +236,6 @@ The details of the course schedule are available on the course website:
 
 
 **Disclaimer:** This syllabus represents our current plans and objectives. As we
-go through the semester, those plans may need to change to enhance the class
-learning opportunity. Such changes will be communicated clearly both on the
+go through the semester, those plans may need to change. Such changes will be 
+communicated clearly both on the
 website and in class.
-
-\* Dataframes in this context includes tabular data

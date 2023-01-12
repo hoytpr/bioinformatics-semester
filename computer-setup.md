@@ -7,31 +7,32 @@ title: Computer Setup
 
 ### Shell (most important)
 
-**Windows users** must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. 
+**Windows users** must download the software [Git for Windows](https://gitforwindows.org/) which includes a Shell called "GitBash" (The instructions are shown below under GitHub). GitBash is called an 'emulator' because it simulates a Linux environment, and all the linux commands we will be using are available inside the GitBash terminal window. As a bonus, it installs "Git" which is a command-line interface you will need later in the course when using GitHub for your data. THis
+course was developed, maintained, and exists on GitHub.
 
-**Mac users** will use their "Terminal" program for all "windows" or "shells" we use in this class.
+**Mac users** are fortunate because they only need to use their "Terminal" program for all "windows" or "shells" we use in this class.
 
 ### Special Note: 
 
 #### Data Carpentry Genomics Workshop 
-Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST previewed in June 2019. In 2021, we will not be using the Amazon Cloud Services. Instead, we will be using the Oklahoma State University "Pete" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, otherwise known as ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
+Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST previewed in June 2019. In 2022 and beyond, we will not be using the Amazon Cloud Services. Instead, we will be using the Oklahoma State University "Pete" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, to install ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
  
 > \* A 4-8 core processor at > 3.0GHz, at least 16Gb of RAM, at least 500Gb of free disk space on an SSD drive (1 Tb recommended). 
 
 
 ### R
 
-Download and install the [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
+Download and install the most recent [R base system](http://cran.rstudio.com/) and [RStudio](http://www.rstudio.com/products/rstudio/download/). Both are needed. Installing RStudio will not automatically install R.
 
 ### GitHub
 
 1. Create an account on GitHub (https://github.com) using the `Sign up for
    GitHub` form on the right side of the page.
 2. Email your username to your instructor.
-3. Once your instructor adds you to the course GitHub organization you will
+3. Once your instructor adds you to the course's GitHub organization you will
    receive an email asking you to accept the invitation. Click on the link to
    accept.
-4. Check if this worked
+4. To confirm you are part of the class:
     1. Go to [https://github.com](https://github.com).
     2. Sign in if necessary.
     3. In the upper left corner click on the drop down with your name.
@@ -39,15 +40,15 @@ Download and install the [R base system](http://cran.rstudio.com/) and [RStudio]
     
 ### Git
 
-#### Windows
+#### For Windows
 
 1.  Download the Git for Windows
     [installer](https://git-for-windows.github.io/).
 2.  Run the installer and follow the steps bellow:
     1. Click on "Next".
     2. Click on "Next".
-    3. Keep "Use Git from the Windows Command Prompt" selected and click on
-       "Next". If you forgot to do the integration with R will not work
+    3. **Keep "Use Git from the Windows Command Prompt" selected** and click on
+       "Next". If you don't do this, the integration with R will not work
        properly. If this happens rerun the installer and select the appropriate
        option.
     4. Click on "Next".
@@ -60,13 +61,13 @@ Download and install the [R base system](http://cran.rstudio.com/) and [RStudio]
     2. File -> New Project -> Version Control -> Git
     3. If you reach a page called `Clone Git Repository` with some fields to fill out everything is working
 
-#### Linux
+#### For Linux
 
 Git is probably already installed. If it is not already available install it via
 your distro's package manager. For Debian/Ubuntu run `sudo apt-get install git`
 and for Fedora run `sudo yum install git`.
 
-#### Mac OS X
+#### For Mac OS X
 
 1. Open up the Terminal, type in "git" and press enter.
 2. This should cause a pop-up window to appear. It will have several options;
@@ -88,7 +89,7 @@ Step 5), try the following:
 For **OS X 10.9 and higher**, install Git for Mac by downloading and running the
 most recent "mavericks" installer from
 [this list](http://sourceforge.net/projects/git-osx-installer/files/).  After
-installing Git, there will not be anything in your `/Applications` folder, as
+installing Git, it will not show up in your `/Applications` folder, because
 Git is a command line program. For older versions of **OS X (10.5-10.8)**
 use the most recent available installer labelled "snow-leopard" [available
 here](http://sourceforge.net/projects/git-osx-installer/files/.)
