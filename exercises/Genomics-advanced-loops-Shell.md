@@ -4,8 +4,8 @@ topic: Genomics
 title: Genomics Advanced Loops
 language: Shell
 ---
-Uncomment below to work on exercise
-
+Exercise under development.
+Name of file will be:
 
 <!--
 #### Exercise Week(?) placeholder for advanced loops

@@ -3,7 +3,9 @@ layout: page
 title: Syllabus
 catalog: BIOC 6820
 credits: 3
-semester: Fall 2022
+=======
+semester: Fall 2023
+
 professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: peter.r.hoyt@okstate.edu
@@ -127,9 +129,13 @@ Keeping up with the assignments or exercises will mitigate your struggles
 to learn the material.
 
 
-### Quiz/Exam Policy
+### Exam/Assignments Policy
 
+<<<<<<< HEAD
 Weekly homework resembles quizzes but there will be no exams in this course.
+=======
+There are no exams in this course but assignments are given weekly (see below)
+>>>>>>> df868b0f8865e49cc5b4fd95267f2b3a572aa121
 
 
 ### Make-up policy
@@ -202,8 +208,7 @@ and I will do my best to help.**
 ## Grading Policies
 
 Grading for this course is tentatively based on 13 assignments. 
-Some assignments (selected at the instructors discretion after the
-assignments have been submitted) will receive a thorough review and a
+Some assignments (as needed) will receive a thorough review and a
 detailed grade. Other problems will be graded as follows:
 
 * Produces the correct answer using the requested approach: 100%
@@ -239,3 +244,8 @@ The details of the course schedule are available on the course website:
 go through the semester, those plans may need to change. Such changes will be 
 communicated clearly both on the
 website and in class.
+<<<<<<< HEAD
+=======
+
+\* Dataframes in this context includes tabular data
+>>>>>>> df868b0f8865e49cc5b4fd95267f2b3a572aa121

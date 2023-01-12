@@ -94,7 +94,7 @@ in the name (or identifier) of that sequence. We know
 that the identifier line immediately precedes the nucleotide sequence line for each read
 in a FASTQ file. We may also want to inspect the quality scores associated with
 each of these reads. To get all of this information, we need a command that will 
-return the line immediately above (or ***b***efore each match and the two lines immediately below (or **a**fter each match (a total of 4 lines).
+return the line immediately above (or ***b***efore each match) and the two lines immediately below (or **a**fter each match): a total of 4 lines.
 
 We can use the `-B` argument for `grep` to return a specific number of lines **B**efore
 each match. The `-A` argument returns a specific number of lines **A**fter each matching line. Here we want one line *before* and the two lines *after* each 
@@ -131,7 +131,7 @@ That means we can redirect the output creating a fastq file called
 grep -B1 -A2 NNNNNNNNNN SRR098026.fastq | grep -v "\--" > bad_reads.fastq
 ```
 
-But you may be wondering what the `\` backslash is for when we use 
+But you may be wondering why the `\` backslash means when we use 
 `grep -v "\--"`. The easiest explanation is that it prevents an error! Try the command without the backslash.
 
 ```

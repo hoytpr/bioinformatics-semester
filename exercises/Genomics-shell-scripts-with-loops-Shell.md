@@ -4,8 +4,9 @@ topic: Genomics
 title: Genomics Scripts With Loops
 language: Shell
 ---
-Uncomment below to work on exercise
-Advanced genomics loops
+Exercise Advanced Genomics Loops under development.
+
+Names of files will be:
 
 <!--
 
@@ -49,6 +50,9 @@ numbers 1. 2. etc. to match the exercise numbers
 -->
 
 Genomics-shell-scripts-with-loops-Shell-1.txt
-Genomics-shell-scripts-with-loops-Shell-2.txt   etc.
+
+Genomics-shell-scripts-with-loops-Shell-2.txt   
+
+etc.
 
 
