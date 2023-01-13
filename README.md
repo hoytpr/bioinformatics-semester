@@ -26,7 +26,7 @@ videos before coming to class and then spending the bulk of class time working
 on exercises with the teacher answering questions and demoing the concepts.
 
 We will primarily operate this course as
-a [online class due to the N-Cov-2 pandemic in 2020](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
+an [online or hybrid class due to the ongoing COVID pandemic that started in 2020](https://hoytpr.github.io/bioinformatics-semester/START-for-self-guided-students). 
 
 The developers encourage collaborative development. This repository was used originally by 
 @ethanwhite to teach a version of this course and [Helpful information](http://www.datacarpentry.org/semester-biology/docs/) 
