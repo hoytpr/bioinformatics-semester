@@ -12,15 +12,16 @@ schedule: 10:30AM - 11:15AM  T & Th
 location: ZOOM link TBD
 office_hours: Tuesdays 10:30-11am
 office_hours_location: 110FC HBRC
+syllabus: ../docs/spring-2023-syllabus-attachment.pdf
 ---
 
 ## {{ site.title }}
 
 {{ page.catalog }}, {{ page.credits }} Credits, {{ page.semester }}
 
-### OSU Fall 2022 Syllabus Attachment
-PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/Fall-2022-Syllabus-Attachment.pdf)
-
+### OSU Spring 2023 Syllabus Attachment
+PDF (when available) can be seen or downloaded [HERE](https://github.com/hoytpr/bioinformatics-semester/blob/gh-pages/docs/spring-2023-syllabus-attachment.pdf)
+or [HERE]({{ page.syllabus }})
 ### Professor
 
 {{ page.professor }}

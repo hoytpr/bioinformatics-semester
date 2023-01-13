@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: About Us
 ---
 
 <a href="{{ site.baseurl }}/about">
@@ -16,12 +16,11 @@ title: About
 {% if site.github.repo == 'https://hoytpr.github.io/bioinformatics-semester/' %}
 Contact Us
 
-<!--
 
-: <a href="{{ site.github.repo }}"> 
+
+: <a href="https://github.com/hoytpr/bioinformatics-semester/issues"> 
   <i class="fa fa-github fa-fw"></i> On GitHub</a>
   
-  -->
   
 : <a href="mailto:{{ site.email }}"> 
   <i class="fa fa-envelope fa-fw"></i> Via Email</a>

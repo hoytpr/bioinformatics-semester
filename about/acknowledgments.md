@@ -3,7 +3,7 @@ layout: page
 title: Acknowledgments
 ---
 
-  #### Primary Contributors
+#### Primary Contributors
 
 Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry.okstate.edu/faculty/dr.-peter-hoyt-1), the original course materials and website 
 design have been primarily developed and
@@ -30,7 +30,7 @@ understandable for a specific target
 audience of Life Scientists, who are
 **truly beginners**, and who want or need
 to be better. To strive toward this 
-goal Dr. Hoyt will embrace The Carpentries active learning pedagogy and continue to
+goal Dr. Hoyt will embrace The Carpentries active learning pedagogy and aspire to
 improve the course through practices of education experts including 
 [Dr. Rochelle Tractenberg](https://cbpr.georgetown.edu/rochelle_tractenberg/#)
 who developed the [Mastery Rubric for Bioinformatics](https://www.biorxiv.org/content/10.1101/655456v1) [published in PlOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0225256) 

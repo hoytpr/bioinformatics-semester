@@ -9,7 +9,7 @@ statistical structure and plotting capability that we hope will be immediately
 useful to a life scientist.
 
 
-1.  R is used widely in a number of disciplines, like ecology, and provides a  
+1.  R is used widely in a number of disciplines, like ecology, and provides a 
     solid platform for beginner scientific programmers. Many graphing and 
     statistical operations are built right into the language.
 2.  It is a broadly useful and powerful language. This means that you should 
