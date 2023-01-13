@@ -15,7 +15,7 @@ course was developed, maintained, and exists on GitHub.
 ### Special Note: 
 
 #### Data Carpentry Genomics Workshop 
-<<<<<<< HEAD
+
 Part of this course is designed to follow the [Data Carpentry Genomics Workshop](https://datacarpentry.org/genomics-workshop/), which was FIRST previewed in June 2019. In 2022 and beyond, we will not be using the Amazon Cloud Services. Instead, we will be using the Oklahoma State University "Pete" supercomputer from the OSU HPCC. If you have a powerful enough personal computer\*, you can follow the instructions at Data Carpentry [Option B](https://datacarpentry.org/genomics-workshop/setup.html#option-b-using-the-lessons-on-your-local-machine) to install all the necessary software. However, Windows OS users may not be able to use a single linux emulator (e.g. GitBash, Cygwin) but ***also*** need to use the **Windows 10** (build 14393 or later) Subsystem for Unix-based Applications, to install ["Bash on Ubuntu on Windows10"](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10).  
  
 > \* A 4-8 core processor at > 3.0GHz, at least 16Gb of RAM, at least 500Gb of free disk space on an SSD drive (1 Tb recommended). 
