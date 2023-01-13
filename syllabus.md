@@ -3,9 +3,7 @@ layout: page
 title: Syllabus
 catalog: BIOC 6820
 credits: 3
-=======
 semester: Fall 2023
-
 professor: Dr. Peter R. Hoyt
 office: Room 110FC in the HBRC Building 
 email: peter.r.hoyt@okstate.edu
@@ -101,6 +99,8 @@ Students completing this course will be able to:
 
 * Write simple computer programs in the BASH shell
 * Automate shell data analysis
+* Create well structured dataframes*
+* Extract information from dataframes*
 * Apply these tools to address biological questions
 
 
@@ -131,11 +131,7 @@ to learn the material.
 
 ### Exam/Assignments Policy
 
-<<<<<<< HEAD
 Weekly homework resembles quizzes but there will be no exams in this course.
-=======
-There are no exams in this course but assignments are given weekly (see below)
->>>>>>> df868b0f8865e49cc5b4fd95267f2b3a572aa121
 
 
 ### Make-up policy
@@ -244,8 +240,5 @@ The details of the course schedule are available on the course website:
 go through the semester, those plans may need to change. Such changes will be 
 communicated clearly both on the
 website and in class.
-<<<<<<< HEAD
-=======
 
 \* Dataframes in this context includes tabular data
->>>>>>> df868b0f8865e49cc5b4fd95267f2b3a572aa121

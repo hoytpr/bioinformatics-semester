@@ -3,7 +3,7 @@ layout: page
 title: Acknowledgments
 ---
 
-#### Primary Contributors
+  #### Primary Contributors
 
 Although this course is taught at OSU by [Dr. Peter R. Hoyt](http://biochemistry.okstate.edu/faculty/dr.-peter-hoyt-1), the original course materials and website 
 design have been primarily developed and
@@ -63,13 +63,13 @@ list of all funding sources, but we will try.
 
 Dr. Hoyt and [OSU](http://info.library.okstate.edu/c.php?g=902101) participate in The Carpentries community. 
 [The Carpentries](https://carpentries.org/) are an organization that teaches foundational 
-coding and data science skills to researchers worldwide. Software Carpentry, 
-Data Carpentry, and Library Carpentry workshops are based on our lessons. 
+coding and data science skills to researchers worldwide. Our lesson is based on Software Carpentry, 
+Data Carpentry, and Library Carpentry workshops. 
 To participate you are expected to follow the [Code of Conduct](http://docs.carpentries.org/topic_folders/policies/code-of-conduct.html). 
 We are a diverse, global community of volunteers. Our community includes 
 [Instructors](https://carpentries.org/instructors/), helpers, Trainers, 
 [Maintainers](https://carpentries.org/maintainers/), Mentors, community champions, 
-member organisations, supporters, workshop organisers, staff and a whole lot more.
+member organizations, supporters, workshop organizers, staff and a whole lot more.
 
 #### Data Carpentry
 
